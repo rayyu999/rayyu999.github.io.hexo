@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="摘要及介绍摘要​        考虑到对更具交互性的Web&#x2F;移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成存根的存根&#x2F;驱动程序生成">
+<meta name="description" content="摘要及介绍摘要​        考虑到对更具交互性的Web&#x2F;移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成桩代码的桩代码&#x2F;驱动程序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文笔记 Automatic Unit Test Generation and Execution for JavaScript Program through Symbolic Execution">
 <meta property="og:url" content="http://yoursite.com/2020/04/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Automatic-Unit-Test-Generation-and-Execution-for-JavaScript-Program-through-Symbolic-Execution/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="og:description" content="摘要及介绍摘要​        考虑到对更具交互性的Web&#x2F;移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成存根的存根&#x2F;驱动程序生成">
+<meta property="og:description" content="摘要及介绍摘要​        考虑到对更具交互性的Web&#x2F;移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成桩代码的桩代码&#x2F;驱动程序">
 <meta property="article:published_time" content="2020-04-16T07:29:36.000Z">
-<meta property="article:modified_time" content="2020-04-16T07:45:04.480Z">
+<meta property="article:modified_time" content="2020-04-16T08:46:12.402Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -341,12 +341,85 @@
       
 
       
-        <h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​        考虑到对更具交互性的Web/移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成存根的存根/驱动程序生成引擎。本文的方法允许全自动生成用于高覆盖率的JavaScript代码单元测试的输入数据，从而以较少的工作量确保目标代码的质量。</p>
+        <h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​        考虑到对更具交互性的Web/移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成桩代码的桩代码/驱动程序生成引擎。本文的方法允许全自动生成用于高覆盖率的JavaScript代码单元测试的输入数据，从而以较少的工作量确保目标代码的质量。</p>
 <a id="more"></a>
 
 
 
-<h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3>
+<h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3><ul>
+<li>本文提出了一种在工具<strong>SymJS</strong>上通过符号执行为JavaScript代码生成测试输入的技术。</li>
+<li>对比现有工具，本文的约束求解器<strong>PASS</strong>[10]允许为具有各种复杂字符串操作的程序生成测试。</li>
+<li>并且不需要对目标代码进行任何修改，而现有的符号执行器需要修改和多次运行，因此适用于现实中的开发。</li>
+<li>本文的自动生成桩代码/驱动程序代码允许完全自动生成测试数据。</li>
+</ul>
+<h3 id="现有的工具"><a href="#现有的工具" class="headerlink" title="现有的工具"></a>现有的工具</h3><p>​        现有的JavaScript代码测试工具包括<strong>Kudzu</strong>[8]和<strong>Jalangi</strong>[9]。kudzu自动生成程序函数的输入数据，目的是自动发现目标中的安全问题。Jalangi允许在正常的具体执行下修改路径约束，以便获得与以前运行不同的结果。然而，由于字符串约束处理方面的限制，以及需要手动创建用于测试的驱动程序/桩代码，这些工具不能应用于现实中JavaScript代码的单元测试。</p>
+<h2 id="背景及基础知识"><a href="#背景及基础知识" class="headerlink" title="背景及基础知识"></a>背景及基础知识</h2><h3 id="符号执行"><a href="#符号执行" class="headerlink" title="符号执行"></a>符号执行</h3><p>​        符号执行（Symbolic Execution）是一种程序分析技术，可以通过分析程序源代码来得到测试输入。通俗来讲，比如说游戏中一个角色在佩戴各种装备之后的面板数值为：攻击力xxx、防御力xxx…；此时通过佩戴装备到获得属性就好比一个程序，佩戴装备的品质就是这个程序的输入，而最后获得的属性就是这个程序的输出；符号执行的过程则是进行分析，从某组给定的属性逆向推导，最后得到某组质量的装备，佩戴这组装备可以获得给定的属性。</p>
+<h4 id="符号执行的基本原理"><a href="#符号执行的基本原理" class="headerlink" title="符号执行的基本原理"></a>符号执行的基本原理</h4><p>​        符号执行的关键思想是把输入变为符号值，那么程序的输出值就是一个符号输入值的函数。在程序执行期间，获得每个执行路径中的变量的值要满足的约束。在获得程序内所有路径的约束之后，通过将约束提供给诸如可满足性模理论（SMT）[7]求解器之类的求解器，可以获得执行每条路径的输入变量的具体值。</p>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/26927127" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26927127</a></p>
+<h4 id="通过符号执行生成测试输入"><a href="#通过符号执行生成测试输入" class="headerlink" title="通过符号执行生成测试输入"></a>通过符号执行生成测试输入</h4><p>​        在程序的符号执行期间，执行每个路径所需要满足的约束是以迭代的方式计算的。在访问程序内每条可能的路径之后，获得所有路径的约束。使用<strong>SMT</strong>等求解器可以获得满足约束条件的变量的具体值。得到的值是与约束条件相对应的，可以用来进行测试。</p>
+<h3 id="SymJS"><a href="#SymJS" class="headerlink" title="SymJS"></a>SymJS</h3><p>​        SymJS解释从目标程序源代码编译的字节码。现有的符号执行器（如<strong>Klee</strong>[2]和<strong>Symbol Pathfinder</strong>[3]）都采用这种方法。处理字节码而不是源代码允许实现符号执行器，而无需处理语言的复杂语法。SymJS被实现为Rhino字节码的解释器，它在执行每条字节码指令时更新程序状态(堆/栈内容和路径条件)。在命中分支指令时，它复制程序状态并继续执行两个分支。</p>
+<table>
+<thead>
+<tr>
+<th align="center">Tool</th>
+<th align="center">Target Lang.</th>
+<th align="center">Sym.VM</th>
+<th align="center">Dep./Cache Solving</th>
+<th align="center">String Solving</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">SymJs</td>
+<td align="center">JavaScript</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td align="center">KLEE [2]</td>
+<td align="center">C</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td align="center">SAGE [6]</td>
+<td align="center">x86 binary</td>
+<td align="center">No</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td align="center">Sym JPF [3]</td>
+<td align="center">Java</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td align="center">Kudzu [8]</td>
+<td align="center">JavaScript</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td align="center">Jalangi [9]</td>
+<td align="center">JavaScript</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">Limited</td>
+</tr>
+</tbody></table>
+<center>
+    <i>符号执行器的比较</i>
+</center>
+
+
+
+
+
+
       
     </div>
     
@@ -516,7 +589,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a></li></ol></li></ol></div>
             
 
           </div>
