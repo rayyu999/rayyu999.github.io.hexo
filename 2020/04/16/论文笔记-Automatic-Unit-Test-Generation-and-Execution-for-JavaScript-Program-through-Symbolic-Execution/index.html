@@ -87,7 +87,7 @@
 <meta property="og:description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+and+Execution+for+J">
 <meta property="og:image" content="d:%5CBlog%5Csource%5Cimages%5CSymJSf2.png">
 <meta property="article:published_time" content="2020-04-16T07:29:36.000Z">
-<meta property="article:modified_time" content="2020-04-17T14:45:56.112Z">
+<meta property="article:modified_time" content="2020-04-17T14:49:49.959Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -591,7 +591,7 @@
 <p>​        JSDoc3主要允许通过<code>@return</code>注释声明返回值类型。为了为图1的代码片段中使用的函数<code>Lib.m2()</code>生成符号桩代码，需要如下所示的注释：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;Number&#125;</span> </span>m2 value */</span></span><br><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
 
-<p>如果将此类注释附加到函数的原始源代码，则可以确定返回值的类型。根据获得的返回值类型，可以以全自动的方式生成图4中的符号桩代码。该示例演示了为返回SymJS原语的函数生成符号桩代码。下面展示了为返回非SymJS基本类型的函数生成符号存根的示例：</p>
+<p>如果将此类注释附加到函数的原始源代码，则可以确定返回值的类型。根据获得的返回值类型，可以以全自动的方式生成图4中的符号桩代码。该示例演示了为返回SymJS原语的函数生成符号桩代码。下面展示了为返回非SymJS基本类型的函数生成符号桩代码的示例：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;tx.Data&#125;</span> </span>data */</span></span><br><span class="line">tx.Ui.getValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
 
 <center>
@@ -605,7 +605,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@param <span class="type">&#123;String&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param <span class="type">&#123;Number&#125;</span> </span>a */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span>(<span class="params">s, a</span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
 
 <p>注释给出了函数的参数类型，允许生成图3中的符号驱动程序。</p>
-<p>​        提出的自动生成符号存根和驱动程序的技术是作为JSDoc3的插件实现的。也可以使用其他来源的类型信息，例如API规范文档。</p>
+<p>​        提出的自动生成符号桩代码和驱动程序的技术是作为JSDoc3的插件实现的。也可以使用其他来源的类型信息，例如API规范文档。</p>
 <h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>​        本文使用一个工业JavaScript程序进行了实验。该程序对应于在本文的自定义Web应用程序实现框架上实现的Web应用程序的客户端部分。该程序调用未在我们的框架中包装的ECMAScript标准中定义的API，并且它只包含对标准API或本文的框架的调用。表V显示了目标程序的统计数据：</p>
 <table>
 <thead>
