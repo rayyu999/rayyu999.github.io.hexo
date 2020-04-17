@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 · Computer Science https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+">
+<meta name="description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+and+Execution+for+J">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文笔记 Automatic Unit Test Generation and Execution for JavaScript Program through Symbolic Execution">
 <meta property="og:url" content="http://yoursite.com/2020/04/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Automatic-Unit-Test-Generation-and-Execution-for-JavaScript-Program-through-Symbolic-Execution/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="og:description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 · Computer Science https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+">
+<meta property="og:description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+and+Execution+for+J">
 <meta property="og:image" content="d:%5CBlog%5Csource%5Cimages%5CSymJSf2.png">
 <meta property="article:published_time" content="2020-04-16T07:29:36.000Z">
-<meta property="article:modified_time" content="2020-04-17T07:53:52.512Z">
+<meta property="article:modified_time" content="2020-04-17T12:38:12.504Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -355,7 +355,7 @@
 
       
         <p><a href="https://www.semanticscholar.org/author/Hideo-Tanida/2725857" target="_blank" rel="noopener">Hideo Tanida</a>, <a href="https://www.semanticscholar.org/author/Guodong-Li/1720073" target="_blank" rel="noopener">Guodong Li</a>, <a href="https://www.semanticscholar.org/author/Indradeep-Ghosh/3291522" target="_blank" rel="noopener">Indradeep Ghosh</a>, <a href="https://www.semanticscholar.org/author/Tadahiro-Uehara/3081128" target="_blank" rel="noopener">Tadahiro Uehara</a></p>
-<p>Published in ICSEA 2014 · Computer Science</p>
+<p>Published in ICSEA 2014</p>
 <p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Automatic+Unit+Test+Generation+and+Execution+for+JavaScript+Program+through+Symbolic+Execution&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Automatic+Unit+Test+Generation+and+Execution+for+JavaScript+Program+through+Symbolic+Execution&amp;btnG=</a></p>
 <h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​        考虑到对更具交互性的Web/移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成桩代码的桩代码/驱动程序生成引擎。本文的方法允许全自动生成用于高覆盖率的JavaScript代码单元测试的输入数据，从而以较少的工作量确保目标代码的质量。</p>
 <a id="more"></a>
@@ -475,7 +475,7 @@
 <h4 id="分支指令"><a href="#分支指令" class="headerlink" title="分支指令"></a>分支指令</h4><p>​        比较指令之后是Rhino字节码中的分支指令。SymJS处理比较和分支指令对，如下所示：</p>
 <p>​        首先，在进行必要的类型转换后，生成与比较结果相对应的布尔公式。假设所创建的公式由符号 $c$ 表示，我们检查 $c$ 及其否定 $\neg c$ 是否与路径条件 $pc$ 一起满足。换句话说，我们检查 $pc \land c$ 和 $pc \land \neg c$ 的可满足性。如果两者都是可满足的，我们建立对应于 $pc \land c$ 和 $pc \land \neg c$ 的状态 $s_1, s_2$，并从状态 $s_1$ 和 $s_2$ 继续执行。如果其中一个是可满足的，则选择与可满足的状态相对应的状态，并从该点继续执行。</p>
 <p>​        SymJS支持两种方式来管理在命中分支等情况下创建的状态。第一种方法是<strong>存储程序状态变量，包括堆/栈的内容</strong>，如[2] [3]中所做的那样。第二种方法是<strong>只记住在分支上走哪一侧。此方法需要在回溯时从初始状态重新执行目标程序。</strong>但是，它得益于其简单的实现和较小的内存占用。这种方法被称为“模糊”，类似于[4] [6]中介绍的技术。但是，本文的技术是在符号执行器上实现的，不需要修改现有JavaScript工具[8] [9]所需的目标代码。</p>
-<p>​        在通过模糊化执行程序的符号过程中，状态仅由分支上的哪一方表示和存储。该信息可用于从程序的初始状态重新执行该程序，并探索目标可能采取的状态空间。在模糊化期间，用与表I中的测试1-6相对应的路径条件象征性地执行图1中的目标程序之后的状态如表IV所示。符号L、R表示在分支指令上走左/右分支。</p>
+<p>​        在通过模糊化执行程序的符号过程中，状态仅由分支上的哪一方表示和存储。该信息可用于从程序的初始状态重新执行该程序，并探索目标可能采取的状态空间。在模糊化期间，用与表I中的测试1-6相对应的路径条件符号执行图1中的目标程序之后的状态如表IV所示。符号L、R表示在分支指令上走左/右分支。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span> (<span class="params">s, a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 0</span></span><br><span class="line">		s = <span class="literal">null</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (s.length &lt;= <span class="number">5</span>) &#123; <span class="comment">// block 1</span></span><br><span class="line">			a = a + status;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 2</span></span><br><span class="line">				Lib.m0(); <span class="comment">// Unreachable</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123; <span class="comment">// block 3</span></span><br><span class="line">				Lib.m1();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (a &lt;= Lib.m2()) &#123; <span class="comment">// block A</span></span><br><span class="line">	a = <span class="number">0</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">// block B</span></span><br><span class="line">	a = a + s.length; <span class="comment">// Error with null s</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <center>
@@ -549,7 +549,38 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> symjs_mk_symbolic_float();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>函数<code>symjs_mk_symbolic_*()</code>是用于在测试生成期间定义新符号变量的表达式。<strong>SymJS允许使用生成的测试输入进行正常的具体执行。</strong>在具体执行期间，函数返回测试输入中包含的具体值。SymJS可以将测试输入导出为JavaScript Object Notation (JSON) 格式的外部文件。文件可以由测试回放库读取，该库在<code>symjs_mk_symbolic_*()</code>函数调用中返回相应的测试输入数据。加载到典型Web浏览器中的测试库可以在没有自定义JavaScript解释器的情况下执行生成的测试。</p>
-<h2 id="符号桩代码及驱动程序的自动生成"><a href="#符号桩代码及驱动程序的自动生成" class="headerlink" title="符号桩代码及驱动程序的自动生成"></a>符号桩代码及驱动程序的自动生成</h2><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] C. Cadar, V . Ganesh, P . M. Pawlowski, D. L. Dill, and D. R. Engler, <em>“EXE: Automatically Generating Inputs of Death,”</em> in Proceedings of the 13th ACM Conference on Computer and Communications Security, 2006, pp. 322–335.</p>
+<h2 id="符号桩代码及驱动程序的自动生成"><a href="#符号桩代码及驱动程序的自动生成" class="headerlink" title="符号桩代码及驱动程序的自动生成"></a>符号桩代码及驱动程序的自动生成</h2><p>​        如第2部分所述，符号桩代码和驱动程序需要对目标函数进行符号执行并获得测试输入。返回符号变量的符号桩代码用于生成从被测函数调用的函数的返回值。需要符号驱动程序来改变传递给测试函数的参数。</p>
+<h3 id="生成符号桩代码和驱动程序的策略"><a href="#生成符号桩代码和驱动程序的策略" class="headerlink" title="生成符号桩代码和驱动程序的策略"></a>生成符号桩代码和驱动程序的策略</h3><p>​        本文的符号桩代码生成技术为指定的函数和类生成桩代码。本文的驱动程序生成技术发出调用指定函数的代码。</p>
+<p>​        对于桩代码生成，生成函数根据调用者期望的返回值类型，创建和返回对象。以下是预期类型与返回对象之间的映射关系：</p>
+<ul>
+<li><p>字符串、整数、布尔值和浮点数这些可以被SymJS作为符号处理的类型（以下称为SymJS基础类型）：</p>
+<p>新定义的相应类型的符号变量。</p>
+</li>
+<li><p>其他类：</p>
+<p>预期类型的新实例化对象。如果该类的目标是生成桩代码，则返回<strong>新实例化的桩代码对象</strong>。</p>
+</li>
+<li><p>Void：不返回任何内容。</p>
+</li>
+</ul>
+<p>​        为了创建类的桩代码，还需要生成构造函数的桩代码。在这里，本文生成空构造函数，这将导致所有无状态对象。我们的方法假设没有对桩代码类的字段的直接访问，并且不为字段生成桩代码。</p>
+<p>​        注意：即使返回值类型不是SymJS的基本类型，也可能得到多个测试输入。如果在返回的对象中定义的函数返回符号标量，会出现这种情况。如果<strong>非SymJS基本类型的对象包含返回SymJS基本类型的对象的函数，并且非SymJS基本类型生成了桩代码</strong>，就会发生这种情况。因此可以通过调用返回非SymJS基本类型的函数来获得多组测试输入。</p>
+<p>​        使用本文的技术生成的符号驱动程序具有以下功能：</p>
+<ul>
+<li>如果待测函数不是静态的、需要一个实例去执行，则实例化对应类的对象并调用该函数</li>
+<li>如果待测函数是静态的，就直接调用函数</li>
+</ul>
+<p>对于传递给函数的参数，驱动程序根据预期类型提供以下对象：</p>
+<ul>
+<li><p>SymJS基本类型：</p>
+<p>新定义的相应类型的符号变量。</p>
+</li>
+<li><p>其他类：</p>
+<p>预期类型的新实例化对象。如果该类的目标是桩代码生成，则传递新实例化的桩代码对象。</p>
+</li>
+</ul>
+<p>​        选择参数的方式类似于解决在符号存根中返回什么的方式。</p>
+<h3 id="从注释生成符号桩代码和驱动程序"><a href="#从注释生成符号桩代码和驱动程序" class="headerlink" title="从注释生成符号桩代码和驱动程序"></a>从注释生成符号桩代码和驱动程序</h3><p>​        上一部分提出的符号桩代码/驱动程序生成策略需要知道来自目标代码的类型信息，生成桩代码需要调用方期望的返回值类型，需要传递给被测函数的参数类型才能生成驱动程序。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] C. Cadar, V . Ganesh, P . M. Pawlowski, D. L. Dill, and D. R. Engler, <em>“EXE: Automatically Generating Inputs of Death,”</em> in Proceedings of the 13th ACM Conference on Computer and Communications Security, 2006, pp. 322–335.</p>
 <p>[2] C. Cadar, D. Dunbar, and D. Engler, <em>“KLEE: Unassisted and Automatic Generation of High-coverage Tests for Complex Systems Programs,”</em> in Proceedings of the 8th USENIX Conference on Operating Systems Design and Implementation, 2008, pp. 209–224.</p>
 <p>[3] C. S. Pǎsǎreanu and N. Rungta, <em>“Symbolic PathFinder: Symbolic Execution of Java Bytecode,”</em> in Proceedings of the IEEE/ACM International Conference on Automated Software Engineering, 2010, pp. 179–180.</p>
 <p>[4] K. Sen, D. Marinov, and G. Agha, <em>“CUTE: A Concolic Unit Testing Engine for C,”</em> in Proceedings of the 10th European Software Engineering Conference, 2005, pp. 263–272.</p>
@@ -741,7 +772,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.2.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号桩代码及驱动程序"><span class="nav-number">2.2.3.</span> <span class="nav-text">符号桩代码及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号桩代码及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号桩代码及驱动程序的自动生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.2.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号桩代码及驱动程序"><span class="nav-number">2.2.3.</span> <span class="nav-text">符号桩代码及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号桩代码及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号桩代码及驱动程序的自动生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成符号桩代码和驱动程序的策略"><span class="nav-number">3.1.</span> <span class="nav-text">生成符号桩代码和驱动程序的策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从注释生成符号桩代码和驱动程序"><span class="nav-number">3.2.</span> <span class="nav-text">从注释生成符号桩代码和驱动程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
