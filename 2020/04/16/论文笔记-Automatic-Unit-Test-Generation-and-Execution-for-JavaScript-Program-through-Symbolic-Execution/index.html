@@ -87,7 +87,7 @@
 <meta property="og:description" content="摘要及介绍摘要​        考虑到对更具交互性的Web&#x2F;移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成桩代码的桩代码&#x2F;驱动程序">
 <meta property="og:image" content="d:%5CBlog%5Csource%5Cimages%5CSymJSf2.png">
 <meta property="article:published_time" content="2020-04-16T07:29:36.000Z">
-<meta property="article:modified_time" content="2020-04-16T15:56:51.113Z">
+<meta property="article:modified_time" content="2020-04-17T03:18:40.398Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -428,6 +428,7 @@
     <i>表I 符号执行器的比较</i>
 </center>
 
+
 <p>​        为了实现目标程序的符号执行，本文修改了原始Rhino对表II中所示指令的解释。堆栈操作、异常处理和变量范围管理的指令处理保持不变。</p>
 <table>
 <thead>
@@ -464,12 +465,14 @@
 <center>
     <i>表II 修改后的指令解释</i>
 </center>
+例如，指令`ADD op1 op2`解释如下：
 
-<p>​        例如，指令<code>ADD op1 op2</code>解释如下：(1)从堆栈中弹出操作数<code>op1</code>和<code>op2</code>。操作数可以采用抽象的值，也可以采用具体的值。(2)检查操作数的类型。如果两个操作数都是字符串，则计算结果是操作数的拼接。如果它们是数值，则结果是操作数的总和。否则，将<strong>根据ECMAScript语言标准转换值</strong>，结果是将获得的值拼接或相加。</p>
+<p>(1)从堆栈中弹出操作数<code>op1</code>和<code>op2</code>。操作数可以使用抽象的值，也可以使用具体的值。</p>
+<p>(2)检查操作数的类型。如果两个操作数都是字符串，则计算结果是操作数的拼接。如果它们是数值，则结果是操作数的总和。否则，将<strong>根据ECMAScript语言标准转换值</strong>，结果是将获得的值拼接或相加。</p>
 <h4 id="分支指令"><a href="#分支指令" class="headerlink" title="分支指令"></a>分支指令</h4><p>​        比较指令之后是Rhino字节码中的分支指令。SymJS处理比较和分支指令对，如下所示：</p>
 <p>​        首先，在进行必要的类型转换后，生成与比较结果相对应的布尔公式。假设所创建的公式由符号 $c$ 表示，我们检查 $c$ 及其否定 $\neg c$ 是否与路径条件 $pc$ 一起满足。换句话说，我们检查 $pc \land c$ 和 $pc \land \neg c$ 的可满足性。如果两者都是可满足的，我们建立对应于 $pc \land c$ 和 $pc \land \neg c$ 的状态 $s_1, s_2$，并从状态 $s_1$ 和 $s_2$ 继续执行。如果其中一个是可满足的，则选择与可满足的状态相对应的状态，并从该点继续执行。</p>
-<p>​        SymJS支持两种方式来管理在命中分支等情况下创建的状态。第一种方法是<strong>存储程序状态变量，包括堆/栈的内容</strong>，如[2] [3]中所做的那样。第二种方法是<strong>只记住在树枝上采取哪一侧。此方法需要在回溯时从初始状态重新执行目标程序。</strong>但是，它得益于其简单的实现和较小的内存占用。这种方法被称为“模糊”，类似于[4] [6]中介绍的技术。但是，我们的技术是在符号执行器上实现的，不需要修改现有JavaScript工具[8] [9]所需的目标代码。</p>
-<p>​        在通过模糊化执行程序的符号过程中，状态仅由分支上的哪一方表示和存储。该信息可用于从程序的初始状态重新执行该程序，并探索目标可能采取的状态空间。在模糊化期间，用与表I中的测试1-6相对应的路径条件象征性地执行图1中的目标程序之后的状态如表IV所示。符号L、R表示在分支指令上采用左/右分支。</p>
+<p>​        SymJS支持两种方式来管理在命中分支等情况下创建的状态。第一种方法是<strong>存储程序状态变量，包括堆/栈的内容</strong>，如[2] [3]中所做的那样。第二种方法是<strong>只记住在分支上走哪一侧。此方法需要在回溯时从初始状态重新执行目标程序。</strong>但是，它得益于其简单的实现和较小的内存占用。这种方法被称为“模糊”，类似于[4] [6]中介绍的技术。但是，本文的技术是在符号执行器上实现的，不需要修改现有JavaScript工具[8] [9]所需的目标代码。</p>
+<p>​        在通过模糊化执行程序的符号过程中，状态仅由分支上的哪一方表示和存储。该信息可用于从程序的初始状态重新执行该程序，并探索目标可能采取的状态空间。在模糊化期间，用与表I中的测试1-6相对应的路径条件象征性地执行图1中的目标程序之后的状态如表IV所示。符号L、R表示在分支指令上走左/右分支。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span> (<span class="params">s, a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 0</span></span><br><span class="line">		s = <span class="literal">null</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (s.length &lt;= <span class="number">5</span>) &#123; <span class="comment">// block 1</span></span><br><span class="line">			a = a + status;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 2</span></span><br><span class="line">				Lib.m0(); <span class="comment">// Unreachable</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123; <span class="comment">// block 3</span></span><br><span class="line">				Lib.m1();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (a &lt;= Lib.m2()) &#123; <span class="comment">// block A</span></span><br><span class="line">	a = <span class="number">0</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">// block B</span></span><br><span class="line">	a = a + s.length; <span class="comment">// Error with null s</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <center>
@@ -533,7 +536,17 @@
 
 <h4 id="PASS"><a href="#PASS" class="headerlink" title="PASS"></a>PASS</h4><p>​        对于表IV中的每个状态表示，可以获得相应的路径条件。如果有可能获得满足约束条件的解，则可以将其用作测试期间的输入。关于数值的约束可以通过SMT求解器来解决，但<strong>SMT不能处理对于字符串的约束</strong>。因此本文使用约束求解器PASS。</p>
 <p>​        <strong>PASS可以处理对整数、位向量、浮点数和字符串的约束。</strong>虽然以前的支持字符串约束的约束解算器使用位向量或自动机，但通过参数化数组传递引入的建模可以实现更高效的求解。因此，它可以解决ECMAScript标准中与字符串操作相对应的大部分约束。</p>
-<h4 id="符号桩代码及驱动程序"><a href="#符号桩代码及驱动程序" class="headerlink" title="符号桩代码及驱动程序"></a>符号桩代码及驱动程序</h4>
+<h4 id="符号桩代码及驱动程序"><a href="#符号桩代码及驱动程序" class="headerlink" title="符号桩代码及驱动程序"></a>符号桩代码及驱动程序</h4><p>​        符号变量是通过符号执行生成测试输入的对象。<strong>SymJS允许通过函数调用定义符号变量。</strong>下面的代码片段显示了定义符号字符串变量的示例。</p>
+<p><code>var s = symjs_mk_symbol_string();</code></p>
+<p>​        以上的例子定义了字符串类型的符号变量，也可以通过<code>symjs_mk_symbolic_int()</code>、<code>symjs_mk_symbolic_bool()</code>和<code>symjs_mk_symbolic_real()</code>分别定义整型、布尔型以及浮点型的符号变量。虽然SymJS只允许字符串、整数、布尔值和浮点数是符号的，但它们的约束作为更复杂的对象的组成部分保留在赋值/引用上，从而允许生成对象组成部分的值不断变化的测试。</p>
+<p>​        为了确定图1中函数<code>func0()</code>的测试输入，需要额外的代码段。首先需要一个如下所示的符号驱动程序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = symjs_mk_symbolic_string();</span><br><span class="line"><span class="keyword">var</span> a = symjs_mk_symbolic_float();</span><br><span class="line">func0(s, a);</span><br></pre></td></tr></table></figure>
+
+<p>驱动程序声明符号变量并将它们作为参数传递给函数。注入依赖项的桩代码也是必需的。如下所示的符号桩代码包括符号变量声明。通过桩代码，包含对<code>Lib.m2()</code>的函数调用的返回值，以测试SymJS获得的输入。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> symjs_mk_symbolic_float();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>函数<code>symjs_mk_symbolic_*()</code>是用于在测试生成期间定义新符号变量的表达式。<strong>SymJS允许使用生成的测试输入进行正常的具体执行。</strong>在具体执行期间，函数返回测试输入中包含的具体值。SymJS可以将测试输入导出为JavaScript Object Notation (JSON) 格式的外部文件。文件可以由测试回放库读取，该库在<code>symjs_mk_symbolic_*()</code>函数调用中返回相应的测试输入数据。加载到典型Web浏览器中的测试库可以在没有自定义JavaScript解释器的情况下执行生成的测试。</p>
+<h2 id="符号桩代码及驱动程序的自动生成"><a href="#符号桩代码及驱动程序的自动生成" class="headerlink" title="符号桩代码及驱动程序的自动生成"></a>符号桩代码及驱动程序的自动生成</h2>
       
     </div>
     
@@ -572,6 +585,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/17/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="prev" title="hexo博客搭建">
+                hexo博客搭建 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -652,7 +669,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -674,7 +691,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -707,7 +724,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.2.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号桩代码及驱动程序"><span class="nav-number">2.2.3.</span> <span class="nav-text">符号桩代码及驱动程序</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.2.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号桩代码及驱动程序"><span class="nav-number">2.2.3.</span> <span class="nav-text">符号桩代码及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号桩代码及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号桩代码及驱动程序的自动生成</span></a></li></ol></div>
             
 
           </div>
