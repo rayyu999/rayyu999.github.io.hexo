@@ -87,7 +87,7 @@
 <meta property="og:description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+and+Execution+for+J">
 <meta property="og:image" content="d:%5CBlog%5Csource%5Cimages%5CSymJSf2.png">
 <meta property="article:published_time" content="2020-04-16T07:29:36.000Z">
-<meta property="article:modified_time" content="2020-04-17T12:38:12.504Z">
+<meta property="article:modified_time" content="2020-04-17T14:37:58.708Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -259,7 +259,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yyw">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/0200416235334.jpg">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -539,14 +539,22 @@
 
 <h4 id="PASS"><a href="#PASS" class="headerlink" title="PASS"></a>PASS</h4><p>​        对于表IV中的每个状态表示，可以获得相应的路径条件。如果有可能获得满足约束条件的解，则可以将其用作测试期间的输入。关于数值的约束可以通过SMT求解器来解决，但<strong>SMT不能处理对于字符串的约束</strong>。因此本文使用约束求解器PASS。</p>
 <p>​        <strong>PASS可以处理对整数、位向量、浮点数和字符串的约束。</strong>虽然以前的支持字符串约束的约束解算器使用位向量或自动机，但通过参数化数组传递引入的建模可以实现更高效的求解。因此，它可以解决ECMAScript标准中与字符串操作相对应的大部分约束。</p>
-<h4 id="符号桩代码及驱动程序"><a href="#符号桩代码及驱动程序" class="headerlink" title="符号桩代码及驱动程序"></a>符号桩代码及驱动程序</h4><p>​        符号变量是通过符号执行生成测试输入的对象。<strong>SymJS允许通过函数调用定义符号变量。</strong>下面的代码片段显示了定义符号字符串变量的示例。</p>
+<h4 id="符号桩代码及驱动程序"><a href="#符号桩代码及驱动程序" class="headerlink" title="符号桩代码及驱动程序"></a>符号桩代码及驱动程序</h4><p>​        符号变量是通过符号执行生成测试输入的对象。<strong>SymJS允许通过函数调用定义符号变量。</strong>下面的代码片段展示了定义符号字符串变量的例子：</p>
 <p><code>var s = symjs_mk_symbol_string();</code></p>
 <p>​        以上的例子定义了字符串类型的符号变量，也可以通过<code>symjs_mk_symbolic_int()</code>、<code>symjs_mk_symbolic_bool()</code>和<code>symjs_mk_symbolic_real()</code>分别定义整型、布尔型以及浮点型的符号变量。虽然SymJS只允许字符串、整数、布尔值和浮点数是符号的，但它们的约束作为更复杂的对象的组成部分保留在赋值/引用上，从而允许生成对象组成部分的值不断变化的测试。</p>
 <p>​        为了确定图1中函数<code>func0()</code>的测试输入，需要额外的代码段。首先需要一个如下所示的符号驱动程序：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = symjs_mk_symbolic_string();</span><br><span class="line"><span class="keyword">var</span> a = symjs_mk_symbolic_float();</span><br><span class="line">func0(s, a);</span><br></pre></td></tr></table></figure>
 
+<center>
+    <i>图3 用于执行图1中代码的符号驱动程序</i>
+</center>
+
 <p>驱动程序声明符号变量并将它们作为参数传递给函数。注入依赖项的桩代码也是必需的。如下所示的符号桩代码包括符号变量声明。通过桩代码，包含对<code>Lib.m2()</code>的函数调用的返回值，以测试SymJS获得的输入。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> symjs_mk_symbolic_float();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<center>
+    <i>图4 提供图1中代码使用的Lib.m2()的符号桩代码</i>
+</center>
 
 <p>函数<code>symjs_mk_symbolic_*()</code>是用于在测试生成期间定义新符号变量的表达式。<strong>SymJS允许使用生成的测试输入进行正常的具体执行。</strong>在具体执行期间，函数返回测试输入中包含的具体值。SymJS可以将测试输入导出为JavaScript Object Notation (JSON) 格式的外部文件。文件可以由测试回放库读取，该库在<code>symjs_mk_symbolic_*()</code>函数调用中返回相应的测试输入数据。加载到典型Web浏览器中的测试库可以在没有自定义JavaScript解释器的情况下执行生成的测试。</p>
 <h2 id="符号桩代码及驱动程序的自动生成"><a href="#符号桩代码及驱动程序的自动生成" class="headerlink" title="符号桩代码及驱动程序的自动生成"></a>符号桩代码及驱动程序的自动生成</h2><p>​        如第2部分所述，符号桩代码和驱动程序需要对目标函数进行符号执行并获得测试输入。返回符号变量的符号桩代码用于生成从被测函数调用的函数的返回值。需要符号驱动程序来改变传递给测试函数的参数。</p>
@@ -580,7 +588,79 @@
 </ul>
 <p>​        选择参数的方式类似于解决在符号存根中返回什么的方式。</p>
 <h3 id="从注释生成符号桩代码和驱动程序"><a href="#从注释生成符号桩代码和驱动程序" class="headerlink" title="从注释生成符号桩代码和驱动程序"></a>从注释生成符号桩代码和驱动程序</h3><p>​        上一部分提出的符号桩代码/驱动程序生成策略需要知道来自目标代码的类型信息，生成桩代码需要调用方期望的返回值类型，需要传递给被测函数的参数类型才能生成驱动程序。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] C. Cadar, V . Ganesh, P . M. Pawlowski, D. L. Dill, and D. R. Engler, <em>“EXE: Automatically Generating Inputs of Death,”</em> in Proceedings of the 13th ACM Conference on Computer and Communications Security, 2006, pp. 322–335.</p>
+<p>​        但是JavaScript是一种动态类型语言，在真正运行前很难确定返回值和参数的类型。很多JavaScript程序对返回值和参数的类型有一个期望，通常是在应用程序编程接口（API）等中给出的。此外，有一种方法可以<strong>用机器可读的方式表示JavaScript代码的类型信息</strong>，就是JSDoc风格的注释。本文从JSDoc3[13]约定的风格的注释中获取类型信息，生成符号桩代码和驱动程序。</p>
+<p>​        JSDoc3主要允许通过<code>@return</code>注释声明返回值类型。为了为图1的代码片段中使用的函数<code>Lib.m2()</code>生成符号桩代码，需要如下所示的注释：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;Number&#125;</span> </span>m2 value */</span></span><br><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果将此类注释附加到函数的原始源代码，则可以确定返回值的类型。根据获得的返回值类型，可以以全自动的方式生成图4中的符号桩代码。该示例演示了为返回SymJS原语的函数生成符号桩代码。下面展示了为返回非SymJS基本类型的函数生成符号存根的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;tx.Data&#125;</span> </span>data */</span></span><br><span class="line">tx.Ui.getValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
+
+<center>
+    ↓
+</center>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tx.Ui.getValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> tx.Data();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>​        符号驱动程序的生成也是一样的。</p>
+<p>​        传递给函数的参数类型通常使用JSDoc3的<code>@param</code>注释给出。函数<code>func0()</code>的符号驱动程序可以从该函数中的注释生成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@param <span class="type">&#123;String&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param <span class="type">&#123;Number&#125;</span> </span>a */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span>(<span class="params">s, a</span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>注释给出了函数的参数类型，允许生成图3中的符号驱动程序。</p>
+<p>​        提出的自动生成符号存根和驱动程序的技术是作为JSDoc3的插件实现的。也可以使用其他来源的类型信息，例如API规范文档。</p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>​        本文使用一个工业JavaScript程序进行了实验。该程序对应于在本文的自定义Web应用程序实现框架上实现的Web应用程序的客户端部分。该程序调用未在我们的框架中包装的ECMAScript标准中定义的API，并且它只包含对标准API或本文的框架的调用。表V显示了目标程序的统计数据：</p>
+<table>
+<thead>
+<tr>
+<th align="center">#Line</th>
+<th align="center">#Function</th>
+<th align="center">#File</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">431</td>
+<td align="center">23</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<center>
+    <i>表V 目标程序的统计数据</i>
+</center>
+
+<h3 id="符号桩代码和驱动程序的生成"><a href="#符号桩代码和驱动程序的生成" class="headerlink" title="符号桩代码和驱动程序的生成"></a>符号桩代码和驱动程序的生成</h3><p>​        使用本文的方法成功地为框架中定义的所有类和函数生成桩代码。表VI列出了生成的桩代码的统计数据：</p>
+<table>
+<thead>
+<tr>
+<th align="center">#Line(Orig.)</th>
+<th align="center">#Line(Stub)</th>
+<th align="center">#Function</th>
+<th align="center">#File</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">2843</td>
+<td align="center">1304</td>
+<td align="center">154</td>
+<td align="center">13</td>
+</tr>
+</tbody></table>
+<center>
+    <i>表VI 用于生成桩代码的框架源代码和生成的桩代码的统计数据</i>
+</center>
+
+<h3 id="生成测试输入和执行测试"><a href="#生成测试输入和执行测试" class="headerlink" title="生成测试输入和执行测试"></a>生成测试输入和执行测试</h3><p>​        所有函数的符号执行在1秒内完成，并生成测试输入。测试输入的数量（将具体值赋给符号变量）在目标函数之间是不同的。对于没有分支的函数，只生成1个测试输入，而对于更复杂的函数，获得的测试数量变化到27个。</p>
+<p>​        利用获得的测试输入来具体执行目标函数。运行在网络浏览器上的测试回放库用于重放测试。使用JSCover[14]测量测试期间的代码覆盖率，获得92%的行覆盖率。结果表明，该技术能够自动生成单元测试输入，实现高代码覆盖率。</p>
+<h3 id="实验中未覆盖的代码"><a href="#实验中未覆盖的代码" class="headerlink" title="实验中未覆盖的代码"></a>实验中未覆盖的代码</h3><p>​        实验结果表明，该方法可以生成代码覆盖率较高的测试输入，但没有达到100%的覆盖率，这意味着目标程序的某些部分没有被执行。以下是未使用我们的方法执行的代码类。</p>
+<p>​        意外类型的代码处理对象没有被覆盖到。由于JavaScript是一种动态类型语言，函数可能会返回意外类型的对象。为了处理这种情况，目标程序包含类型检查和后续错误处理代码。但是，通过本文的技术生成的符号桩代码总是返回源代码批注中描述的类型的对象。这样的桩代码不能利用处理不同于注释类型的对象的代码部分。</p>
+<p>​        没有对象类型前提的代码也没有被覆盖到。目标程序包含在运行时确定对象类型并相应地处理它们的代码片段。然而，本文的技术不能涵盖这样的程序。从返回值类型未知的函数中，我们生成返回默认JavaScript “Object” 的桩代码。因此，与自定义类的对象交互的代码没有被覆盖。</p>
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h2><p>​        本文提出了一种为JavaScript代码自动生成单元测试输入数据的技术。该技术使用符号执行引擎，以便在测试期间实现高代码覆盖率。该技术分为两个阶段，由以下全自动步骤组成：</p>
+<ul>
+<li>基于从注释获得的类型信息生成符号存根/驱动程序</li>
+<li>通过目标代码的符号执行生成测试输入</li>
+</ul>
+<p>​        实验结果显示，该技术可以生成92%的行覆盖率的测试，表明本文的技术可以自动生成和执行JavaScript代码的单元测试。</p>
+<h3 id="Future-Work"><a href="#Future-Work" class="headerlink" title="Future Work"></a>Future Work</h3><p>​        未来的方向包括更多的验证试验和各种目标程序。虽然我们已经用相对较小的程序进行了实验，但也需要在较大的目标上进行实验。</p>
+<p>​        根据实验结果，需要改进符号桩代码。可以使用引发异常的符号桩代码触发代码处理异常。除了更复杂的自动存根生成策略外，手动修改自动生成的存根被认为是增加覆盖率的有效方法。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] C. Cadar, V . Ganesh, P . M. Pawlowski, D. L. Dill, and D. R. Engler, <em>“EXE: Automatically Generating Inputs of Death,”</em> in Proceedings of the 13th ACM Conference on Computer and Communications Security, 2006, pp. 322–335.</p>
 <p>[2] C. Cadar, D. Dunbar, and D. Engler, <em>“KLEE: Unassisted and Automatic Generation of High-coverage Tests for Complex Systems Programs,”</em> in Proceedings of the 8th USENIX Conference on Operating Systems Design and Implementation, 2008, pp. 209–224.</p>
 <p>[3] C. S. Pǎsǎreanu and N. Rungta, <em>“Symbolic PathFinder: Symbolic Execution of Java Bytecode,”</em> in Proceedings of the IEEE/ACM International Conference on Automated Software Engineering, 2010, pp. 179–180.</p>
 <p>[4] K. Sen, D. Marinov, and G. Agha, <em>“CUTE: A Concolic Unit Testing Engine for C,”</em> in Proceedings of the 10th European Software Engineering Conference, 2005, pp. 263–272.</p>
@@ -703,7 +783,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="/images/0200416235334.jpg"
+                src="/images/20200417221334.jpg"
                 alt="yyw" />
             
               <p class="site-author-name" itemprop="name">yyw</p>
@@ -772,7 +852,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.2.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号桩代码及驱动程序"><span class="nav-number">2.2.3.</span> <span class="nav-text">符号桩代码及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号桩代码及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号桩代码及驱动程序的自动生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成符号桩代码和驱动程序的策略"><span class="nav-number">3.1.</span> <span class="nav-text">生成符号桩代码和驱动程序的策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从注释生成符号桩代码和驱动程序"><span class="nav-number">3.2.</span> <span class="nav-text">从注释生成符号桩代码和驱动程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.2.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号桩代码及驱动程序"><span class="nav-number">2.2.3.</span> <span class="nav-text">符号桩代码及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号桩代码及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号桩代码及驱动程序的自动生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成符号桩代码和驱动程序的策略"><span class="nav-number">3.1.</span> <span class="nav-text">生成符号桩代码和驱动程序的策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从注释生成符号桩代码和驱动程序"><span class="nav-number">3.2.</span> <span class="nav-text">从注释生成符号桩代码和驱动程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation"><span class="nav-number">4.</span> <span class="nav-text">Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号桩代码和驱动程序的生成"><span class="nav-number">4.1.</span> <span class="nav-text">符号桩代码和驱动程序的生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成测试输入和执行测试"><span class="nav-number">4.2.</span> <span class="nav-text">生成测试输入和执行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验中未覆盖的代码"><span class="nav-number">4.3.</span> <span class="nav-text">实验中未覆盖的代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusions"><span class="nav-number">5.</span> <span class="nav-text">Conclusions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Work"><span class="nav-number">5.1.</span> <span class="nav-text">Future Work</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
