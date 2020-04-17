@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="Do not go gentle into that good night.">
+<meta name="description" content="Hexo简介​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。 搭建流程（Windows）准备工作安装Git到 https:&#x2F;&#x2F;git-scm.com&#x2F;download 选择对应的平台进行下载安装即可。 安装Node.js到 https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F; 下载安装即可。（Nod">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo博客搭建">
 <meta property="og:url" content="http://yoursite.com/2020/04/17/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="og:description" content="Do not go gentle into that good night.">
+<meta property="og:description" content="Hexo简介​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。 搭建流程（Windows）准备工作安装Git到 https:&#x2F;&#x2F;git-scm.com&#x2F;download 选择对应的平台进行下载安装即可。 安装Node.js到 https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F; 下载安装即可。（Nod">
 <meta property="article:published_time" content="2020-04-16T17:12:11.000Z">
-<meta property="article:modified_time" content="2020-04-17T07:23:02.501Z">
+<meta property="article:modified_time" content="2020-04-17T17:46:53.871Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
@@ -352,7 +352,18 @@
       
 
       
-        
+        <h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
+<h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>安装完后就可以使用cnpm安装hexo：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
+<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><p>建立一个新的文件夹，在命令行中进入这个文件夹。</p>
+
       
     </div>
     
@@ -442,8 +453,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -507,6 +527,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo简介"><span class="nav-number">1.</span> <span class="nav-text">Hexo简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建流程（Windows）"><span class="nav-number">2.</span> <span class="nav-text">搭建流程（Windows）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Git"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Node-js"><span class="nav-number">2.1.2.</span> <span class="nav-text">安装Node.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo"><span class="nav-number">2.2.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式搭建"><span class="nav-number">2.3.</span> <span class="nav-text">正式搭建</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
