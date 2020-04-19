@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="og:description" content="Hexo简介​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。">
 <meta property="article:published_time" content="2020-04-16T17:12:11.000Z">
-<meta property="article:modified_time" content="2020-04-17T17:51:43.239Z">
+<meta property="article:modified_time" content="2020-04-19T14:57:41.104Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
@@ -366,7 +366,30 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
 
 <p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
-<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><p>建立一个新的文件夹，在命令行中进入这个文件夹。</p>
+<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>建立一个名为 <em>Blog</em> 的文件夹，在命令行中进入这个文件夹，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化完成后，在命令行中输入<code>hexo s</code>，此时在浏览器中输入<code>localhost:4000</code>就可以看到博客已经创建好了，并且默认创建了一篇文章。</p>
+<p>确认过后，键盘按 <em>Ctrl + C</em> 即可停止服务。</p>
+<h4 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h4><p>首先登陆到<a href="https://github.com/" target="_blank" rel="noopener">Github</a>，新建一个仓库，命名为 “<strong>你的Github昵称.github.io</strong>“。</p>
+<p>然后需要安装一个git部署插件，在命令行中打开 <em>Blog</em> 目录，输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install --save hexo-deployer-git</span></span><br></pre></td></tr></table></figure>
+
+<p>打开 <em>Blog</em> 目录下的站点配置文件，在文件最后的 <strong><em>repo</em></strong> 处输入刚刚创建的仓库的地址并在下方添加一行：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> https:<span class="comment">//github.com/xxx/xxx.github.io.git</span></span><br><span class="line"><span class="symbol">  branch:</span> master	<span class="meta"># 指定分支，不填默认为master</span></span><br></pre></td></tr></table></figure>
+
+<p>保存退出后，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d</span></span><br></pre></td></tr></table></figure>
+
+<p>部署到远端，此时刷新一下自己的Github仓库页面，会发现多了很多文件。在浏览器中访问 <strong>xxx.github.io</strong>，就可以看到博客已经成功部署。</p>
+<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo n <span class="string">"文章标题"</span></span></span><br></pre></td></tr></table></figure>
+
+<p>就会在博客目录的<code>/source/_posts</code>目录下生成一个markdown文件，使用编辑器打开即可编辑这篇文章。</p>
+<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>在命令行中依次输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo clean	<span class="comment"># 清理缓存文件和已生成的静态文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hexo g	<span class="comment">#生成静态文件</span></span></span><br></pre></td></tr></table></figure>
+
+<p>再使用<code>hexo s</code>就可以在<code>localhost:4000</code>页面看到新生成的文章已经发布到了博客上面。</p>
 
       
     </div>
@@ -541,7 +564,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo简介"><span class="nav-number">1.</span> <span class="nav-text">Hexo简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建流程（Windows）"><span class="nav-number">2.</span> <span class="nav-text">搭建流程（Windows）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Git"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Node-js"><span class="nav-number">2.1.2.</span> <span class="nav-text">安装Node.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo"><span class="nav-number">2.2.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式搭建"><span class="nav-number">2.3.</span> <span class="nav-text">正式搭建</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo简介"><span class="nav-number">1.</span> <span class="nav-text">Hexo简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建流程（Windows）"><span class="nav-number">2.</span> <span class="nav-text">搭建流程（Windows）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Git"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Node-js"><span class="nav-number">2.1.2.</span> <span class="nav-text">安装Node.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo"><span class="nav-number">2.2.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式搭建"><span class="nav-number">2.3.</span> <span class="nav-text">正式搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">2.3.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署到Github"><span class="nav-number">2.3.2.</span> <span class="nav-text">部署到Github</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Hexo"><span class="nav-number">3.</span> <span class="nav-text">使用Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建文章"><span class="nav-number">3.1.</span> <span class="nav-text">新建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布文章"><span class="nav-number">3.2.</span> <span class="nav-text">发布文章</span></a></li></ol></li></ol></div>
             
 
           </div>
