@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="og:description" content="Harsh Chaudhari, Ashish Choudhury, Arpita Patra, Ajith Suresh ACM CCSW 2019 https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2019&#x2F;429 https:&#x2F;&#x2F;dl.acm.org&#x2F;doi&#x2F;10.1145&#x2F;3338466.3358922">
 <meta property="article:published_time" content="2020-04-20T13:37:26.000Z">
-<meta property="article:modified_time" content="2020-04-20T14:07:03.778Z">
+<meta property="article:modified_time" content="2020-04-24T02:31:23.601Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="MPC">
 <meta property="article:tag" content="神经网络">
@@ -363,9 +363,23 @@
 
 
 <h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>安全计算的具体效率一直是近年来许多工作关注的焦点。在本论文中，作者提出了一种具体有效的协议，用于模 $2^l$ 整数环上的安全三方计算（3PC），该协议具有半诚实模型和恶意模型上的安全性。由于环上的计算模拟了现实系统体系结构上的计算，所以环上的安全计算近来获得了发展势头。</p>
-<p>​        在离线-在线范式中，本文的结构具体地呈现了最有效的在线阶段。在半诚实的设置下，本文的协议在在线阶段每个乘法门需要2个环元素的通信。在恶意设置下，本文的协议在在线阶段每个乘法门需要4个元素的通信，比最先进的协议需要的5个元素少。使用选择性中止和公平这两个安全概念来实现的公平恶意协议，与仅针对输出门的中止安全性的恶意协议相比，涉及的通信稍微多一些。</p>
+<p>​        在离线-在线模式中，本文的结构具体地呈现了最有效的在线阶段。在半诚实的设置下，本文的协议在在线阶段每个乘法门需要2个环元素的通信。在恶意设置下，本文的协议在在线阶段每个乘法门需要4个元素的通信，比最先进的协议需要的5个元素少。使用选择性中止和公平这两个安全概念来实现的公平恶意协议，与仅针对输出门的中止安全性的恶意协议相比，涉及的通信稍微多一些。</p>
 <p>​        作者将本文的技术从3PC应用到安全的服务器辅助机器学习（ML）推理机制中，用于一系列预测函数——线性回归、线性SVM回归、Logistic回归和线性SVM分类。本文的设置考虑了拥有训练好的模型参数的模型所有者和查询的客户，后者愿意根据前者的模型参数来学习他查询的预测。输入和计算外包给一组三个非合谋的服务器。本文的构造既迎合了半诚实的世界，也迎合了恶意的世界，比现有的构造表现得更好。</p>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>安全多方计算（MPC，Secure Multi-Party Computation）[10，33，60]，它使得一组相互不信任的 $n$ 方能够对他们的私有输入执行联合计算，使得<strong>任何 $t$ 方的联合都不能获得比输出更多的信息（隐私）或影响计算的真实输出（正确性）</strong>。虽然总体来说，MPC一直是一个广泛研究的主题，但在诚实的多数情况下参与方较少的MPC领域[4，14，16，30，47]最近很受欢迎，主要是因为它的效率和简单性。基于MPC的安全机器学习（ML）的最新进展已经显示出少量各方的应用[45，46，48，55，59]。具有少量参与方的MPC还通过服务器辅助计算来帮助解决使用者数量大上的MPC，其中少量服务器共同保存大量使用者的输入数据并运行评估所需功能的MPC协议。</p>
+<p>​        三方计算（3PC）容忍一种腐败的具体问题最近受到了显著的关注[2，4，14，18，30，35，43，47，51，54]。利用诚实的多数，这种设置允许实现更强的安全目标，如公平性（腐败方只有在所有诚实方都收到输出的情况下才会收到输出），否则这些目标对于不诚实的多数是不可能的[20]。在这项工作中，我们回顾了3PC的具体效率，具体地说，就是输入相关计算的效率。</p>
+<p>​        在使用者较少的情况下，MPC体制提供的两种典型结构是<strong>低延迟</strong>[14，16，34，35，47，54]和<strong>高吞吐量</strong>[2-4，18，30，51]协议。前者依靠秘密共享机制，需要较低的通信开销（带宽）和简单的计算。为了迎合低延迟网络，此类别需要的通信轮数与表示要计算的函数的电路的乘法深度成正比。另一类依赖于乱码电路，需要恒定数量的通信轮次，在互联网等高延迟网络中服务更好。这项工作的重点是高吞吐量3PC。几乎所有的高吞吐量协议都评估表示要以秘密共享方式计算的函数F的电路。非正式地，双方共同维护不变量，即对于电路中的每条线路，该线路上的精确值在各方之间以秘密共享的方式存在，在这种方式下，敌手不会从腐败方的份额中获知关于精确值的信息。在电路评估完成后，各方共同重构秘密共享函数输出。直观地说，安全性是成立的，因为在计算过程中没有显示中间值。所部署的秘密共享方案通常是线性的，从而确保线性门的非交互评估。仅电路中的非线性(即乘法)门需要通信。然后，重点放在改善每个乘法门的通信开销上。最近的文献已经看到了一系列针对少数各方的定制线性秘密共享方案，极大地提高了乘法门的性能[2，30，34]。</p>
+<p>​        在提高效率的方向上，建议将MPC协议分成两个阶段——<strong>执行与输入无关的计算的离线阶段</strong>和<strong>利用离线计算执行快速依赖于输入的计算的在线阶段</strong>[6]。离线阶段提前运行，以一种相对昂贵的方式产生“原材料”，从而产生速度极快的在线阶段。这在一组参与方同意在一段时间内重复执行特定计算的情况下非常有用。通常被称为离线-在线范式[6]，从理论上[6-9，19]和实践[5，21，25，26，38，39，55]都有大量的结构表明了这种范式的有效性。</p>
+<p>​        在另一个提高实际效率的方向上，环上算术电路的安全计算最近获得了发展势头，而传统上域一直是默认选择。环上的计算模拟现实计算机体系结构中的计算，例如大小为32位或64位的CPU字上的计算。在3PC设置中，[12]的工作支持具有被动安全的任意环上的算术电路，而[2]提供主动安全。[25，28]的工作改善了任意环上具有主动安全性的在线通信，但在离线阶段退回到大素数阶域上的计算。这迫使开发人员依赖于字段的外部库（与基于32位和64位环的实际系统架构相比，速度要慢10倍到100倍）。</p>
+<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><ul>
+<li><p>作者遵循离线-在线模式，提出了在环 $\mathbb{Z}<em>{2^l}$（包括布尔环 $\mathbb{Z}</em>{2^1}$）上的3PC构造，具有最有效的在线阶段。</p>
+<p>虽然重点放在在现阶段，但离线阶段的的成本也有注意并保持在可控范围内。</p>
+</li>
+<li><p>作者给出了一系列满足半诚实安全和恶意安全的构造。</p>
+<p>将技术应用于外包环境中的一系列预测函数的安全预测，并构建了一些容忍半诚实和恶意对手的结构。</p>
+</li>
+</ul>
+<p>本文所有的构建都流露出的一个共同特征：在线阶段不到三对参与者之间需要进行功能依赖的通信，从而产生更好的在线性能。</p>
+
       
     </div>
     
@@ -547,7 +561,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贡献"><span class="nav-number">1.3.</span> <span class="nav-text">贡献</span></a></li></ol></li></ol></div>
             
 
           </div>
