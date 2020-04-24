@@ -355,25 +355,13 @@
       
         <h1 id="解决乱码-修改字体-微软雅黑"><a href="#解决乱码-修改字体-微软雅黑" class="headerlink" title="解决乱码+修改字体(微软雅黑)"></a>解决乱码+修改字体(微软雅黑)</h1><p>下载微软雅黑字体,msyh.ttc</p>
 <a id="more"></a>
-
 <h2 id="添加字体"><a href="#添加字体" class="headerlink" title="添加字体"></a>添加字体</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h2 id="修改系统注册表"><a href="#修改系统注册表" class="headerlink" title="修改系统注册表"></a>修改系统注册表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit ~/.deepinwine/Deepin-WeChat/system.reg</span></span><br></pre></td></tr></table></figure>
-
 <p>修改以下两行</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"MS Shell Dlg"</span>=<span class="string">"msyh"</span></span><br><span class="line"><span class="string">"MS Shell Dlg 2"</span>=<span class="string">"msyh"</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h2 id="字体注册"><a href="#字体注册" class="headerlink" title="字体注册"></a>字体注册</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit msyh_config.reg</span></span><br></pre></td></tr></table></figure>
-
 <p>内容添加</p>
 <figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line">[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink]</span><br><span class="line"><span class="string">"Lucida Sans Unicode"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Microsoft Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"MS Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma Bold"</span>=<span class="string">"msyhbd.ttc"</span></span><br><span class="line"><span class="string">"msyh"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial Black"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line">#注册</span><br><span class="line">WINEPREFIX=~/.deepinwine/Deepin-WeChat deepin-wine regedit msyh_config.reg</span><br></pre></td></tr></table></figure>
-
-
-
 <h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2>
       
     </div>

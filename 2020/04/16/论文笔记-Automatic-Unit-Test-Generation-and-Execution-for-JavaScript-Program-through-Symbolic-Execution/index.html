@@ -85,14 +85,14 @@
 <meta property="og:url" content="http://yoursite.com/2020/04/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Automatic-Unit-Test-Generation-and-Execution-for-JavaScript-Program-through-Symbolic-Execution/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="og:description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+and+Execution+for+J">
-<meta property="og:image" content="d:%5CBlog%5Csource%5Cimages%5CSymJSf2.png">
+<meta property="og:image" content="d:/Blog/source/images/SymJSf2.png">
 <meta property="article:published_time" content="2020-04-16T07:29:36.000Z">
 <meta property="article:modified_time" content="2020-04-22T07:21:38.436Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="测试">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="d:%5CBlog%5Csource%5Cimages%5CSymJSf2.png">
+<meta name="twitter:image" content="d:/Blog/source/images/SymJSf2.png">
 
 
 
@@ -359,8 +359,6 @@
 <p>Published in ICSEA 2014</p>
 <p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Automatic+Unit+Test+Generation+and+Execution+for+JavaScript+Program+through+Symbolic+Execution&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Automatic+Unit+Test+Generation+and+Execution+for+JavaScript+Program+through+Symbolic+Execution&amp;btnG=</a></p>
 <a id="more"></a>
-
-
 <h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​        考虑到对更具交互性的Web/移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成存根的存根/驱动程序生成引擎。本文的方法允许全自动生成用于高覆盖率的JavaScript代码单元测试的输入数据，从而以较少的工作量确保目标代码的质量。</p>
 <h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3><ul>
 <li>本文提出了一种在工具<strong>SymJS</strong>上通过符号执行为JavaScript代码生成测试输入的技术；</li>
@@ -375,108 +373,124 @@
 <h4 id="通过符号执行生成测试输入"><a href="#通过符号执行生成测试输入" class="headerlink" title="通过符号执行生成测试输入"></a>通过符号执行生成测试输入</h4><p>​        在程序的符号执行期间，执行每个路径所需要满足的约束是以迭代的方式计算的。在访问程序内每条可能的路径之后，获得所有路径的约束。使用<strong>SMT</strong>等求解器可以获得满足约束条件的变量的具体值。得到的值是与约束条件相对应的，可以用来进行测试。</p>
 <h3 id="SymJS"><a href="#SymJS" class="headerlink" title="SymJS"></a>SymJS</h3><p>SymJS是一个用于自动测试JavaScript Web应用程序客户端的框架，该工具包括一个用于JavaScript的符号执行引擎和一个Web页面的自动的事件资源管理器。而其中符号引擎包括一个符号虚拟机、一个字符串+数字解算器和一个符号可执行DOM模型。</p>
 <p>​        SymJS解释从目标程序源代码编译的字节码。现有的符号执行器（如<strong>Klee</strong>[2]和<strong>Symbol Pathfinder</strong>[3]）都采用这种方法。处理字节码而不是源代码允许实现符号执行器，而无需处理语言的复杂语法。SymJS被实现为Rhino字节码的解释器，它在执行每条字节码指令时更新程序状态(堆/栈内容和路径条件)。在命中分支指令时，它复制程序状态并继续执行两个分支。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">Tool</th>
-<th align="center">Target Lang.</th>
-<th align="center">Sym.VM</th>
-<th align="center">Dep./Cache Solving</th>
-<th align="center">String Solving</th>
+<th style="text-align:center">Tool</th>
+<th style="text-align:center">Target Lang.</th>
+<th style="text-align:center">Sym.VM</th>
+<th style="text-align:center">Dep./Cache Solving</th>
+<th style="text-align:center">String Solving</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">SymJS</td>
-<td align="center">JavaScript</td>
-<td align="center">Yes</td>
-<td align="center">Yes</td>
-<td align="center">Yes</td>
+<tbody>
+<tr>
+<td style="text-align:center">SymJS</td>
+<td style="text-align:center">JavaScript</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
 </tr>
 <tr>
-<td align="center">KLEE [2]</td>
-<td align="center">C</td>
-<td align="center">Yes</td>
-<td align="center">Yes</td>
-<td align="center">No</td>
+<td style="text-align:center">KLEE [2]</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
 </tr>
 <tr>
-<td align="center">SAGE [6]</td>
-<td align="center">x86 binary</td>
-<td align="center">No</td>
-<td align="center">Yes</td>
-<td align="center">No</td>
+<td style="text-align:center">SAGE [6]</td>
+<td style="text-align:center">x86 binary</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
 </tr>
 <tr>
-<td align="center">Sym JPF [3]</td>
-<td align="center">Java</td>
-<td align="center">Yes</td>
-<td align="center">No</td>
-<td align="center">No</td>
+<td style="text-align:center">Sym JPF [3]</td>
+<td style="text-align:center">Java</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
 </tr>
 <tr>
-<td align="center">Kudzu [8]</td>
-<td align="center">JavaScript</td>
-<td align="center">No</td>
-<td align="center">No</td>
-<td align="center">Yes</td>
+<td style="text-align:center">Kudzu [8]</td>
+<td style="text-align:center">JavaScript</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
 </tr>
 <tr>
-<td align="center">Jalangi [9]</td>
-<td align="center">JavaScript</td>
-<td align="center">No</td>
-<td align="center">No</td>
-<td align="center">Limited</td>
+<td style="text-align:center">Jalangi [9]</td>
+<td style="text-align:center">JavaScript</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Limited</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <center>
     <i>表I 符号执行器的比较</i>
 </center>
 
 
 <p>​        为了实现目标程序的符号执行，本文修改了原始Rhino对表II中所示指令的解释。堆栈操作、异常处理和变量范围管理的指令处理保持不变。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">操作</th>
-<th align="center">指令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">指令</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">Arithemetic/Logical Operations</td>
-<td align="center">ADD, SUB, MUL, DIV, MOD, NEG, POS, BITNOT, BITAND, BITOR, BITXOR, LSH, RSH,URSH <em>etc.</em></td>
+<tbody>
+<tr>
+<td style="text-align:center">Arithemetic/Logical Operations</td>
+<td style="text-align:center">ADD, SUB, MUL, DIV, MOD, NEG, POS, BITNOT, BITAND, BITOR, BITXOR, LSH, RSH,URSH <em>etc.</em></td>
 </tr>
 <tr>
-<td align="center">Comparisons</td>
-<td align="center">EQ, NE, GE, GT, LE, LT, NOT, SHEQ, SHNE <em>etc.</em></td>
+<td style="text-align:center">Comparisons</td>
+<td style="text-align:center">EQ, NE, GE, GT, LE, LT, NOT, SHEQ, SHNE <em>etc.</em></td>
 </tr>
 <tr>
-<td align="center">Branches</td>
-<td align="center">IFEQ, IFNE, IFEQ_POP <em>etc.</em></td>
+<td style="text-align:center">Branches</td>
+<td style="text-align:center">IFEQ, IFNE, IFEQ_POP <em>etc.</em></td>
 </tr>
 <tr>
-<td align="center">Function Calls</td>
-<td align="center">RETURN, CALL, TAIL_CALL <em>etc.</em></td>
+<td style="text-align:center">Function Calls</td>
+<td style="text-align:center">RETURN, CALL, TAIL_CALL <em>etc.</em></td>
 </tr>
 <tr>
-<td align="center">Object Manipulations</td>
-<td align="center">NEW, REF, IN, INSTANCEOF, TYPEOF, GETNAME, SETNAME, NAME <em>etc.</em></td>
+<td style="text-align:center">Object Manipulations</td>
+<td style="text-align:center">NEW, REF, IN, INSTANCEOF, TYPEOF, GETNAME, SETNAME, NAME <em>etc.</em></td>
 </tr>
 <tr>
-<td align="center">Object Accesses</td>
-<td align="center">GETPROP, SETPROP, DELPROP, GETELEM, SETELEM, GETREF, SETREF <em>etc.</em></td>
+<td style="text-align:center">Object Accesses</td>
+<td style="text-align:center">GETPROP, SETPROP, DELPROP, GETELEM, SETELEM, GETREF, SETREF <em>etc.</em></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <center>
     <i>表II 修改后的指令解释</i>
 </center>
 例如，指令`ADD op1 op2`解释如下：
 
-<p>(1)从堆栈中弹出操作数<code>op1</code>和<code>op2</code>。操作数可以使用抽象的值，也可以使用具体的值。</p>
-<p>(2)检查操作数的类型。如果两个操作数都是字符串，则计算结果是操作数的拼接。如果它们是数值，则结果是操作数的总和。否则，将<strong>根据ECMAScript语言标准转换值</strong>，结果是将获得的值拼接或相加。</p>
-<h4 id="分支指令"><a href="#分支指令" class="headerlink" title="分支指令"></a>分支指令</h4><p>​        比较指令之后是Rhino字节码中的分支指令。SymJS处理比较和分支指令对，如下所示：</p>
-<p>​        首先，在进行必要的类型转换后，生成与比较结果相对应的布尔公式。假设所创建的公式由符号 $c$ 表示，我们检查 $c$ 及其否定 $\neg c$ 是否与路径条件 $pc$ 一起满足。换句话说，我们检查 $pc \land c$ 和 $pc \land \neg c$ 的可满足性。如果两者都是可满足的，我们建立对应于 $pc \land c$ 和 $pc \land \neg c$ 的状态 $s_1, s_2$，并从状态 $s_1$ 和 $s_2$ 继续执行。如果其中一个是可满足的，则选择与可满足的状态相对应的状态，并从该点继续执行。</p>
-<p>​        SymJS支持两种方式来管理在命中分支等情况下创建的状态。第一种方法是<strong>存储程序状态变量，包括堆/栈的内容</strong>，如[2] [3]中所做的那样。第二种方法是<strong>只记住在分支上走哪一侧。此方法需要在回溯时从初始状态重新执行目标程序。</strong>但是，它得益于其简单的实现和较小的内存占用。这种方法被称为“模糊”，类似于[4] [6]中介绍的技术。但是，本文的技术是在符号执行器上实现的，不需要修改现有JavaScript工具[8] [9]所需的目标代码。</p>
-<p>​        在通过模糊化执行程序的符号过程中，状态仅由分支上的哪一方表示和存储。该信息可用于从程序的初始状态重新执行该程序，并探索目标可能采取的状态空间。在模糊化期间，用与表I中的测试1-6相对应的路径条件符号执行图1中的目标程序之后的状态如表IV所示。符号L、R表示在分支指令上走左/右分支。</p>
+(1)从堆栈中弹出操作数`op1`和`op2`。操作数可以使用抽象的值，也可以使用具体的值。
+
+(2)检查操作数的类型。如果两个操作数都是字符串，则计算结果是操作数的拼接。如果它们是数值，则结果是操作数的总和。否则，将**根据ECMAScript语言标准转换值**，结果是将获得的值拼接或相加。
+
+#### 分支指令
+
+​        比较指令之后是Rhino字节码中的分支指令。SymJS处理比较和分支指令对，如下所示：
+
+​        首先，在进行必要的类型转换后，生成与比较结果相对应的布尔公式。假设所创建的公式由符号 $c$ 表示，我们检查 $c$ 及其否定 $\neg c$ 是否与路径条件 $pc$ 一起满足。换句话说，我们检查 $pc \land c$ 和 $pc \land \neg c$ 的可满足性。如果两者都是可满足的，我们建立对应于 $pc \land c$ 和 $pc \land \neg c$ 的状态 $s_1, s_2$，并从状态 $s_1$ 和 $s_2$ 继续执行。如果其中一个是可满足的，则选择与可满足的状态相对应的状态，并从该点继续执行。
+
+​        SymJS支持两种方式来管理在命中分支等情况下创建的状态。第一种方法是**存储程序状态变量，包括堆/栈的内容**，如[2] [3]中所做的那样。第二种方法是**只记住在分支上走哪一侧。此方法需要在回溯时从初始状态重新执行目标程序。**但是，它得益于其简单的实现和较小的内存占用。这种方法被称为“模糊”，类似于[4] [6]中介绍的技术。但是，本文的技术是在符号执行器上实现的，不需要修改现有JavaScript工具[8] [9]所需的目标代码。
+
+​        在通过模糊化执行程序的符号过程中，状态仅由分支上的哪一方表示和存储。该信息可用于从程序的初始状态重新执行该程序，并探索目标可能采取的状态空间。在模糊化期间，用与表I中的测试1-6相对应的路径条件符号执行图1中的目标程序之后的状态如表IV所示。符号L、R表示在分支指令上走左/右分支。
+
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span> (<span class="params">s, a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 0</span></span><br><span class="line">		s = <span class="literal">null</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (s.length &lt;= <span class="number">5</span>) &#123; <span class="comment">// block 1</span></span><br><span class="line">			a = a + status;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 2</span></span><br><span class="line">				Lib.m0(); <span class="comment">// Unreachable</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123; <span class="comment">// block 3</span></span><br><span class="line">				Lib.m1();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (a &lt;= Lib.m2()) &#123; <span class="comment">// block A</span></span><br><span class="line">	a = <span class="number">0</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">// block B</span></span><br><span class="line">	a = a + s.length; <span class="comment">// Error with null s</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <center>
@@ -486,52 +500,56 @@
 
 
 
-<p><img src="D:%5CBlog%5Csource%5Cimages%5CSymJSf2.png" alt="SymJSf2"></p>
+<p><img src="D:\Blog\source\images\SymJSf2.png" alt="SymJSf2"></p>
 <center>
     <i>图2 代码执行路径</i>
 </center>
 
 
 
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">Test No.</th>
-<th align="left">Blocks Executed</th>
+<th style="text-align:center">Test No.</th>
+<th style="text-align:left">Blocks Executed</th>
 <th>State Representation</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="left">0, A</td>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">0, A</td>
 <td>L;L</td>
 </tr>
 <tr>
-<td align="center">2</td>
-<td align="left">0, B</td>
+<td style="text-align:center">2</td>
+<td style="text-align:left">0, B</td>
 <td>L;R</td>
 </tr>
 <tr>
-<td align="center">3</td>
-<td align="left">1, A</td>
+<td style="text-align:center">3</td>
+<td style="text-align:left">1, A</td>
 <td>R;L;L</td>
 </tr>
 <tr>
-<td align="center">4</td>
-<td align="left">1, B</td>
+<td style="text-align:center">4</td>
+<td style="text-align:left">1, B</td>
 <td>R;L;R</td>
 </tr>
 <tr>
-<td align="center">5</td>
-<td align="left">3, A</td>
+<td style="text-align:center">5</td>
+<td style="text-align:left">3, A</td>
 <td>R;R;R;L</td>
 </tr>
 <tr>
-<td align="center">6</td>
-<td align="left">3, B</td>
+<td style="text-align:center">6</td>
+<td style="text-align:left">3, B</td>
 <td>R;R;R;R</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <center>
     <i>表IV 执行图1代码后的模糊表示</i>
 </center>
@@ -545,14 +563,12 @@
 <p>​        以上的例子定义了字符串类型的符号变量，也可以通过<code>symjs_mk_symbolic_int()</code>、<code>symjs_mk_symbolic_bool()</code>和<code>symjs_mk_symbolic_real()</code>分别定义整型、布尔型以及浮点型的符号变量。虽然SymJS只允许字符串、整数、布尔值和浮点数是符号的，但它们的约束作为更复杂的对象的组成部分保留在赋值/引用上，从而允许生成对象组成部分的值不断变化的测试。</p>
 <p>​        为了确定图1中函数<code>func0()</code>的测试输入，需要额外的代码段。首先需要一个如下所示的符号驱动程序：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = symjs_mk_symbolic_string();</span><br><span class="line"><span class="keyword">var</span> a = symjs_mk_symbolic_float();</span><br><span class="line">func0(s, a);</span><br></pre></td></tr></table></figure>
-
 <center>
     <i>图3 用于执行图1中代码的符号驱动程序</i>
 </center>
 
 <p>驱动程序声明符号变量并将它们作为参数传递给函数。注入依赖项的存根也是必需的。如下所示的符号存根包括符号变量声明。通过存根，包含对<code>Lib.m2()</code>的函数调用的返回值，以测试SymJS获得的输入。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> symjs_mk_symbolic_float();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <center>
     <i>图4 提供图1中代码使用的Lib.m2()的符号存根</i>
 </center>
@@ -592,58 +608,62 @@
 <p>​        但是JavaScript是一种动态类型语言，在真正运行前很难确定返回值和参数的类型。很多JavaScript程序对返回值和参数的类型有一个期望，通常是在应用程序编程接口（API）等中给出的。此外，有一种方法可以<strong>用机器可读的方式表示JavaScript代码的类型信息</strong>，就是JSDoc风格的注释。本文从JSDoc3[13]约定的风格的注释中获取类型信息，生成符号存根和驱动程序。</p>
 <p>​        JSDoc3主要允许通过<code>@return</code>注释声明返回值类型。为了为图1的代码片段中使用的函数<code>Lib.m2()</code>生成符号存根，需要如下所示的注释：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;Number&#125;</span> </span>m2 value */</span></span><br><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
-
 <p>如果将此类注释附加到函数的原始源代码，则可以确定返回值的类型。根据获得的返回值类型，可以以全自动的方式生成图4中的符号存根。该示例演示了为返回SymJS原语的函数生成符号存根。下面展示了为返回非SymJS基本类型的函数生成符号存根的示例：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;tx.Data&#125;</span> </span>data */</span></span><br><span class="line">tx.Ui.getValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
-
 <center>
     ↓
 </center>
 
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tx.Ui.getValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> tx.Data();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>​        符号驱动程序的生成也是一样的。</p>
 <p>​        传递给函数的参数类型通常使用JSDoc3的<code>@param</code>注释给出。函数<code>func0()</code>的符号驱动程序可以从该函数中的注释生成：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@param <span class="type">&#123;String&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param <span class="type">&#123;Number&#125;</span> </span>a */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span>(<span class="params">s, a</span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
 <p>注释给出了函数的参数类型，允许生成图3中的符号驱动程序。</p>
 <p>​        提出的自动生成符号存根和驱动程序的技术是作为JSDoc3的插件实现的。也可以使用其他来源的类型信息，例如API规范文档。</p>
 <h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>​        本文使用一个工业JavaScript程序进行了实验。该程序对应于在本文的自定义Web应用程序实现框架上实现的Web应用程序的客户端部分。该程序调用未在我们的框架中包装的ECMAScript标准中定义的API，并且它只包含对标准API或本文的框架的调用。表V显示了目标程序的统计数据：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">#Line</th>
-<th align="center">#Function</th>
-<th align="center">#File</th>
+<th style="text-align:center">#Line</th>
+<th style="text-align:center">#Function</th>
+<th style="text-align:center">#File</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">431</td>
-<td align="center">23</td>
-<td align="center">1</td>
+<tbody>
+<tr>
+<td style="text-align:center">431</td>
+<td style="text-align:center">23</td>
+<td style="text-align:center">1</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <center>
     <i>表V 目标程序的统计数据</i>
 </center>
 
 <h3 id="符号存根和驱动程序的生成"><a href="#符号存根和驱动程序的生成" class="headerlink" title="符号存根和驱动程序的生成"></a>符号存根和驱动程序的生成</h3><p>​        使用本文的方法成功地为框架中定义的所有类和函数生成存根。表VI列出了生成的存根的统计数据：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">#Line(Orig.)</th>
-<th align="center">#Line(Stub)</th>
-<th align="center">#Function</th>
-<th align="center">#File</th>
+<th style="text-align:center">#Line(Orig.)</th>
+<th style="text-align:center">#Line(Stub)</th>
+<th style="text-align:center">#Function</th>
+<th style="text-align:center">#File</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">2843</td>
-<td align="center">1304</td>
-<td align="center">154</td>
-<td align="center">13</td>
+<tbody>
+<tr>
+<td style="text-align:center">2843</td>
+<td style="text-align:center">1304</td>
+<td style="text-align:center">154</td>
+<td style="text-align:center">13</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <center>
     <i>表VI 用于生成存根的框架源代码和生成的存根的统计数据</i>
 </center>
@@ -855,7 +875,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.2.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号存根及驱动程序"><span class="nav-number">2.2.3.</span> <span class="nav-text">符号存根及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号存根及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号存根及驱动程序的自动生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成符号存根和驱动程序的策略"><span class="nav-number">3.1.</span> <span class="nav-text">生成符号存根和驱动程序的策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从注释生成符号存根和驱动程序"><span class="nav-number">3.2.</span> <span class="nav-text">从注释生成符号存根和驱动程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation"><span class="nav-number">4.</span> <span class="nav-text">Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号存根和驱动程序的生成"><span class="nav-number">4.1.</span> <span class="nav-text">符号存根和驱动程序的生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成测试输入和执行测试"><span class="nav-number">4.2.</span> <span class="nav-text">生成测试输入和执行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验中未覆盖的代码"><span class="nav-number">4.3.</span> <span class="nav-text">实验中未覆盖的代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusions"><span class="nav-number">5.</span> <span class="nav-text">Conclusions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Work"><span class="nav-number">5.1.</span> <span class="nav-text">Future Work</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.1.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号存根及驱动程序"><span class="nav-number">2.2.2.</span> <span class="nav-text">符号存根及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号存根及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号存根及驱动程序的自动生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成符号存根和驱动程序的策略"><span class="nav-number">3.1.</span> <span class="nav-text">生成符号存根和驱动程序的策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从注释生成符号存根和驱动程序"><span class="nav-number">3.2.</span> <span class="nav-text">从注释生成符号存根和驱动程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation"><span class="nav-number">4.</span> <span class="nav-text">Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号存根和驱动程序的生成"><span class="nav-number">4.1.</span> <span class="nav-text">符号存根和驱动程序的生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成测试输入和执行测试"><span class="nav-number">4.2.</span> <span class="nav-text">生成测试输入和执行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验中未覆盖的代码"><span class="nav-number">4.3.</span> <span class="nav-text">实验中未覆盖的代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusions"><span class="nav-number">5.</span> <span class="nav-text">Conclusions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Work"><span class="nav-number">5.1.</span> <span class="nav-text">Future Work</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
