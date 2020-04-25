@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="设S有一个秘密，想以1&#x2F;2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。 ​    例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。 1-out-of-2 OTOT最早在19">
+<meta name="description" content="设S有一个秘密，想以1&#x2F;2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="不经意传输（Oblivious Transfer）">
 <meta property="og:url" content="http://yoursite.com/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="og:description" content="设S有一个秘密，想以1&#x2F;2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。 ​    例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。 1-out-of-2 OTOT最早在19">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20181120192813796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1lhTHVuRG9uZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:description" content="设S有一个秘密，想以1&#x2F;2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。">
+<meta property="og:image" content="d:/Blog/source/images/OTf1.png">
 <meta property="article:published_time" content="2020-04-25T08:22:21.000Z">
-<meta property="article:modified_time" content="2020-04-25T08:23:39.159Z">
+<meta property="article:modified_time" content="2020-04-25T08:37:14.527Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="MPC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181120192813796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1lhTHVuRG9uZw==,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="d:/Blog/source/images/OTf1.png">
 
 
 
@@ -355,10 +355,11 @@
       
 
       
-        <pre><code>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。
-</code></pre><p>​    例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
-<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出[1]，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
-<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT[2],在新的方案中S每次发送2个信息 $m_0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m_{1-b}$ ，R也一无所知。<br><img src="https://img-blog.csdnimg.cn/20181120192813796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1lhTHVuRG9uZw==,size_16,color_FFFFFF,t_70" alt="1-out-2 OT"></p>
+        <p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
+<a id="more"></a>
+<p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
+<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
+<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m_0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m_{1-b}$ ，R也一无所知。<br><img src="D:\Blog\source\images\OTf1.png" alt="1-out-2 OT"></p>
 <h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b_0$ 和 $b_1$，而R只能选择接受其中一个比特 $b_{\theta}$。协议要保证S和R的安全，即：</p>
 <ul>
 <li>S不能知道任何关于 $\theta$ 的信息；</li>
