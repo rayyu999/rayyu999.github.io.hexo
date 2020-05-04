@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="og:description" content="Harsh Chaudhari, Ashish Choudhury, Arpita Patra, Ajith Suresh ACM CCSW 2019 https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2019&#x2F;429 https:&#x2F;&#x2F;dl.acm.org&#x2F;doi&#x2F;10.1145&#x2F;3338466.3358922">
 <meta property="article:published_time" content="2020-04-20T13:37:26.000Z">
-<meta property="article:modified_time" content="2020-05-04T16:39:32.848Z">
+<meta property="article:modified_time" content="2020-05-04T16:45:42.331Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="MPC">
 <meta property="article:tag" content="神经网络">
@@ -563,7 +563,7 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <hr>
 <p>上面的协议的离线阶段中，$P_0$ 仅仅共享了 $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$ 而不是每一个 $\lambda_{p_i} \lambda_{q_i}$；在在线阶段，$P_1, P_2$ 直接计算 $[m_u]$（其中 $u = \vec{p} \odot \vec{q}$）而不是每一个 $m_{p_i q_i}$。</p>
 <p>接下来作者还对恶意设置下的点积进行了讨论：由于在乘法协议中引入了对恶意对手的额外检查，所以上面针对半诚实协议所作的优化是不适用的。对两个 $d$ 维向量的点积，只能 $d$ 次调用协议 $\prod ^{\rm m}_{\rm Mul}$。不过作者还是对在线阶段的开销进行了改进：在在线阶段 $P_1$ 并行地发送 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 给 $P_0$，而 $P_2$ 则发送对应的哈希值给 $P_0$。$P_0$ 收到这些值后进行验证，若一致则将它们“结合”所有的 $m^{\star}_{p_i q_i}$ 然后发送一个单独的 $m^\star_u$ 的哈希值给 $P_1, P_2$，最后 $P_1, P_2$ 在本地验证是否与 $m_u - \sum^d_{j=1}(m_{p_j}m_{q_j} - \delta_{u_j})$。这样做的话就节省了在线阶段的开销，不用每个 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 都发送一次。</p>
-<h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[\![u]\!], [\![v]\!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 $\rm msb<script type="math/tex">(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[\![a]\!]$ 的情况下生成 $\rm msb</script>(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
+<h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[\![u]\!], [\![v]\!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 ${\rm msb}(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[\![a]\!]$ 的情况下生成 ${\rm msb}(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
 <hr>
 <p><strong>Offline:</strong></p>
 <p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]_{P_1} = (p,0)$ and $[\![p]\!]_{P_2} = (p,0)$.</p>
