@@ -85,13 +85,15 @@
 <meta property="og:url" content="http://yoursite.com/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="og:description" content="Harsh Chaudhari, Ashish Choudhury, Arpita Patra, Ajith Suresh ACM CCSW 2019 https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2019&#x2F;429 https:&#x2F;&#x2F;dl.acm.org&#x2F;doi&#x2F;10.1145&#x2F;3338466.3358922">
+<meta property="og:image" content="http://images.yingwai.top/picgo/ASTRAf1.png">
 <meta property="article:published_time" content="2020-04-20T13:37:26.000Z">
-<meta property="article:modified_time" content="2020-05-04T16:45:42.331Z">
+<meta property="article:modified_time" content="2020-05-05T07:32:23.696Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="MPC">
 <meta property="article:tag" content="神经网络">
 <meta property="article:tag" content="加密机器学习">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/ASTRAf1.png">
 
 
 
@@ -489,7 +491,9 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <li>$d, e, f$ 都是随机且私密的</li>
 <li>$f = d e$</li>
 </ul>
-<p>这里假设这个三元组是通过 $\mathcal{F}_{\rm trip}$ 生成的，在[2, 30]中有具体构造，这里用  $\prod _{\rm trip}$ 表示该功能的实例化。下面是作者给出检查有效性的协议 $\prod _{\rm prc}$：</p>
+<p>这里假设这个三元组是通过 $\mathcal{F}_{\rm trip}$ 生成的，在[2, 30]中有具体构造，下面是[30]中的构造：</p>
+<p><img src="http://images.yingwai.top/picgo/ASTRAf1.png" alt=""></p>
+<p>用  $\prod _{\rm trip}$ 表示该功能的实例化，下面是作者给出检查有效性的协议 $\prod _{\rm prc}$：</p>
 <hr>
 <ul>
 <li>Parties locally compute $[\![\rho]\!] = [\![a]\!] - [\![d]\!]$ and $[\![\sigma]\!] = [\![b]\!] - [\![e]\!]$.</li>
@@ -551,7 +555,7 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <p>当没有广播频道的时候，一个非常棘手的问题就会存在：一个腐败的 $P_0$ 可以发送不同的信号给 $P_1$ 和 $P_2$（一个为 abort 而另一个为 continue），以上的重构协议 $\prod_{\rm fRec}([\![y]\!], \mathcal{P})$ 解决了这个问题。在离线阶段 $P_0$ 和 $P_1$ 共同计算出一个关于 $r_1$ 的承诺发送给 $P_2$，同样地 $P_0$ 和 $P_2$ 共同计算出一个关于 $r_2$ 的承诺发送给 $P_1$。这两个承诺就可以确保 $P_1$ 跟 $P_2$ 可以验证它们收到的来自 $P_0$ 的信号是否一致：例如当 $P_1$ 收到 abort 而 $P_2$ 收到 continue，在它们交换信息时，$P_1$ 就可以利用收到的 $o_2$ 证明自己收到了 abort 信号，反过来也是一样的。同时还解决了一个问题，就是当一个腐败的 $P_1$ 收到了 $P_0$ 发送的 continue 信号，但它不能在与 $P_2$ 交换信息时宣称自己收到了 abort 信号，因为它没有 $o_2$，因此无法证明，对于 $P_2$ 腐败的情况也是一样的。</p>
 <p>这里的承诺方案可以通过一个哈希函数来实现，例如：$(c, o) = (\mathcal{H}(x||r),x||r) = Com(x;r)$</p>
 <h2 id="隐私保护机器学习"><a href="#隐私保护机器学习" class="headerlink" title="隐私保护机器学习"></a>隐私保护机器学习</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>对于每一个预测函数，模型拥有者 $\rm M$ 拥有一个训练好的参数向量，想为拥有一个查询向量的客户 $\rm C$ 提供预测服务。在服务器辅助设置中，$\rm M$ 和 $\rm C$ 以共享方式将各自的输入外包给三个不受信任但非合谋的服务器 $\{P_0, P_1, P_2\}$，这些服务器通过为本文的3PC协议开发的技术以共享方式执行计算，并将输出单独重构到客户端。客户只能知道输出，除此之外什么也不知道。</p>
-<h3 id="对于ML的协议"><a href="#对于ML的协议" class="headerlink" title="对于ML的协议"></a>对于ML的协议</h3><h4 id="安全向量点积"><a href="#安全向量点积" class="headerlink" title="安全向量点积"></a>安全向量点积</h4><p>对于向量的 $[\cdot]$-共享和 $[\![\cdot]\!]$-共享，就是对应每个维度的值进行$[\cdot]$-共享和 $[\![\cdot]\!]$-共享，容易知道对于向量来说两种共享仍然是线性的。对于两个 $d$ 维向量的点积，不考虑效率的情况下可以执行$d$ 次 $\prod ^{\rm s}_{\rm Mul}$协议，再对这 $d$ 次执行的结果简单进行相加，各方就可以得到它们的份额。在这里作者给出一个更高效率的向量点积协议 $\prod ^{\rm s}_{\rm dp}$：</p>
+<h3 id="对于ML的协议"><a href="#对于ML的协议" class="headerlink" title="对于ML的协议"></a>对于ML的协议</h3><h4 id="安全向量点积"><a href="#安全向量点积" class="headerlink" title="安全向量点积"></a>安全向量点积</h4><p>对于向量的 $[\cdot]$-共享和 $[\![\cdot]\!]$-共享，就是对应每个维度的值进行$[\cdot]$-共享和 $[\![\cdot]\!]$-共享，容易知道对于向量来说两种共享仍然是线性的。对于两个 $d$ 维向量的点积，不考虑效率的情况下可以执行 $d$ 次 $\prod ^{\rm s}_{\rm Mul}$协议，再对这 $d$ 次执行的结果简单进行相加，各方就可以得到它们的份额。在这里作者给出一个更高效率的向量点积协议 $\prod ^{\rm s}_{\rm dp}$：</p>
 <hr>
 <p><strong>Offline:</strong></p>
 <p>​        $P_0, P_1$ sample random $\lambda_{u,1}, \gamma_{pq,1} \in \mathbb{Z}_{2^l}$, while $P_0, P_2$ sample random $\lambda_{u,2} \in \mathbb{Z}_{2^l}$. $P_0$ locally computes $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$, sets $\gamma_{pq,2} = \gamma_{pq} - \gamma_{pq,1}$ and sends $\gamma_{pq,2}$ to $P_2$.</p>
