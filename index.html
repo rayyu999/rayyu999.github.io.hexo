@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  274 字
+                  321 字
                 </span>
               
 
@@ -384,31 +384,14 @@
 
       
         
-          
-            <h1 id="安装NexT"><a href="#安装NexT" class="headerlink" title="安装NexT"></a>安装NexT</h1><p>参考 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
-<h1 id="打开不蒜子统计开关"><a href="#打开不蒜子统计开关" class="headerlink" title="打开不蒜子统计开关"></a>打开不蒜子统计开关</h1><p>新版的next主题已经把不蒜子集成进去，只需要打开开关即可：</p>
-<ol>
-<li><p>编辑<code>\themes\next\_config.yml</code>，找到里面的<code>busuanzi_count</code>配置项，将<code>enable</code>设为<code>true</code>：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif1.png" alt=""></p>
-<p>当<code>enable: true</code>时，代表开启全局开关。若<code>site_uv</code>、<code>site_pv</code>、<code>page_pv</code>的值均为<code>false</code>时，不蒜子仅作记录而不会在页面上显示。</p>
-</li>
-<li><p>打开对应的站点配置：当<code>site_uv: true</code>时，代表在页面底部显示站点的UV值；当<code>site_pv: true</code>时，代表在页面底部显示站点的PV值。</p>
-</li>
-</ol>
-<h1 id="不蒜子统计不显示的问题"><a href="#不蒜子统计不显示的问题" class="headerlink" title="不蒜子统计不显示的问题"></a>不蒜子统计不显示的问题</h1><p>完成上面的步骤后，进入博客，发现统计人数显示不出来：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif2.png" alt=""></p>
-<p><strong>原因：不蒜子的域名更换了，但是next主题里面写进去的域名还是以前的。</strong></p>
-<p><a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener">不蒜子官网</a>：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif3.png" alt=""></p>
-<p><strong>解决方法：</strong></p>
-<p>打开<code>\themes\next\layout\_third-party\analytics</code>文件夹里面的<code>busuanzi-counter.swig</code>文件，将旧的域名更换为新的域名：</p>
-<p>原来的域名：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif4.png" alt=""></p>
-<p>更换后：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif5.png" alt=""></p>
-<p>此时博客的访客数就可以正常显示了。</p>
-
-          
+          <p>想为自己的博客添加访问统计，经过一番查阅，找到了好用又方便的不蒜子统计，不蒜子是一个极简的网页计数器。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/05/08/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E4%B8%8D%E8%92%9C%E5%AD%90%E7%BB%9F%E8%AE%A1%E8%AE%BF%E5%AE%A2%E6%95%B0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
