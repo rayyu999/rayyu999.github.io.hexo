@@ -539,6 +539,7 @@
 <p><strong>解决方法：</strong></p>
 <p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
 <p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
+<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
 <p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
 <p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
 <p>这时候点击日志就会自动跳转到归档页。</p>
