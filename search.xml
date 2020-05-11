@@ -1,42 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo博客NexT主题使用不蒜子统计访客数</title>
-    <url>/2020/05/08/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E4%B8%8D%E8%92%9C%E5%AD%90%E7%BB%9F%E8%AE%A1%E8%AE%BF%E5%AE%A2%E6%95%B0/</url>
-    <content><![CDATA[<p>想为自己的博客添加访问统计，经过一番查阅，找到了好用又方便的不蒜子统计，不蒜子是一个极简的网页计数器。</p>
-<a id="more"></a>
-<h1 id="安装NexT"><a href="#安装NexT" class="headerlink" title="安装NexT"></a>安装NexT</h1><p>参考 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
-<h1 id="打开不蒜子统计开关"><a href="#打开不蒜子统计开关" class="headerlink" title="打开不蒜子统计开关"></a>打开不蒜子统计开关</h1><p>新版的next主题已经把不蒜子集成进去，只需要打开开关即可：</p>
-<ol>
-<li><p>编辑<code>\themes\next\_config.yml</code>，找到里面的<code>busuanzi_count</code>配置项，将<code>enable</code>设为<code>true</code>：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif1.png" alt=""></p>
-<p>当<code>enable: true</code>时，代表开启全局开关。若<code>site_uv</code>、<code>site_pv</code>、<code>page_pv</code>的值均为<code>false</code>时，不蒜子仅作记录而不会在页面上显示。</p>
-</li>
-<li><p>打开对应的站点配置：当<code>site_uv: true</code>时，代表在页面底部显示站点的UV值；当<code>site_pv: true</code>时，代表在页面底部显示站点的PV值。</p>
-</li>
-</ol>
-<h1 id="不蒜子统计不显示的问题"><a href="#不蒜子统计不显示的问题" class="headerlink" title="不蒜子统计不显示的问题"></a>不蒜子统计不显示的问题</h1><p>完成上面的步骤后，进入博客，发现统计人数显示不出来：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif2.png" alt=""></p>
-<p><strong>原因：不蒜子的域名更换了，但是next主题里面写进去的域名还是以前的。</strong></p>
-<p><a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener">不蒜子官网</a>：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif3.png" alt=""></p>
-<p><strong>解决方法：</strong></p>
-<p>打开<code>\themes\next\layout\_third-party\analytics</code>文件夹里面的<code>busuanzi-counter.swig</code>文件，将旧的域名更换为新的域名：</p>
-<p>原来的域名：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif4.png" alt=""></p>
-<p>更换后：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif5.png" alt=""></p>
-<p>此时博客的访客数就可以正常显示了。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>不蒜子</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CCF推荐国际学术会议和期刊目录（网络与信息安全）</title>
     <url>/2020/04/20/CCF%E6%8E%A8%E8%8D%90%E5%9B%BD%E9%99%85%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE%E5%92%8C%E6%9C%9F%E5%88%8A%E7%9B%AE%E5%BD%95%EF%BC%88%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%EF%BC%89/</url>
     <content><![CDATA[<p><a href="https://www.ccf.org.cn/c/2019-04-25/663625.shtml" target="_blank" rel="noopener">https://www.ccf.org.cn/c/2019-04-25/663625.shtml</a></p>
@@ -532,64 +496,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
-    <url>/2020/05/10/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
-<a id="more"></a>
-<p><strong>解决方法：</strong></p>
-<p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
-<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
-<p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
-<p>这时候点击日志就会自动跳转到归档页。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客搭建</title>
-    <url>/2020/05/08/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<a id="more"></a>
-<h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
-<h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
-<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g cnpm --registry=https://registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
-<p>安装完后就可以使用cnpm安装hexo：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
-<p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
-<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>建立一个名为 <em>Blog</em> 的文件夹，在命令行中进入这个文件夹，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
-<p>初始化完成后，在命令行中输入<code>hexo s</code>，此时在浏览器中输入<code>localhost:4000</code>就可以看到博客已经创建好了，并且默认创建了一篇文章。</p>
-<p>确认过后，键盘按 <em>Ctrl + C</em> 即可停止服务。</p>
-<h4 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h4><p>首先登陆到<a href="https://github.com/" target="_blank" rel="noopener">Github</a>，新建一个仓库，命名为 “<strong>你的Github昵称.github.io</strong>“。</p>
-<p>然后需要安装一个git部署插件，在命令行中打开 <em>Blog</em> 目录，输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install --save hexo-deployer-git</span></span><br></pre></td></tr></table></figure>
-<p>打开 <em>Blog</em> 目录下的站点配置文件，在文件最后的 <strong><em>repo</em></strong> 处输入刚刚创建的仓库的地址并在下方添加一行：</p>
-<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> https:<span class="comment">//github.com/xxx/xxx.github.io.git</span></span><br><span class="line"><span class="symbol">  branch:</span> master	<span class="meta"># 指定分支，不填默认为master</span></span><br></pre></td></tr></table></figure>
-<p>保存退出后，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d</span></span><br></pre></td></tr></table></figure>
-<p>部署到远端，此时刷新一下自己的Github仓库页面，会发现多了很多文件。在浏览器中访问 <strong>xxx.github.io</strong>，就可以看到博客已经成功部署。</p>
-<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo n <span class="string">"文章标题"</span></span></span><br></pre></td></tr></table></figure>
-<p>会在博客目录的<code>/source/_posts</code>目录下生成一个markdown文件，使用编辑器打开即可编辑这篇文章。</p>
-<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>在命令行中依次输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo clean	<span class="comment"># 清理缓存文件和已生成的静态文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hexo g	<span class="comment"># 生成静态文件</span></span></span><br></pre></td></tr></table></figure>
-<p>再使用<code>hexo s</code>命令就可以在<code>localhost:4000</code>页面看到新生成的文章已经发布到了博客上面。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JupyterLab安装</title>
     <url>/2020/05/01/JupyterLab%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<p>JupyterLab 是一个交互式的开发环境，是 Jupyter notebook 的下一代产品，集成了更多的功能，十分好用。</p>
@@ -645,23 +551,6 @@
       <tags>
         <tag>Jupyter</tag>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LaTeX常用符号表示方法</title>
-    <url>/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>图片来源：<a href="https://blog.csdn.net/caiandyong/article/details/53351737" target="_blank" rel="noopener">https://blog.csdn.net/caiandyong/article/details/53351737</a></p>
-<a id="more"></a>
-<h1 id="希腊字母、数学构造、定界符、大型运算符以及标准函数名"><a href="#希腊字母、数学构造、定界符、大型运算符以及标准函数名" class="headerlink" title="希腊字母、数学构造、定界符、大型运算符以及标准函数名"></a>希腊字母、数学构造、定界符、大型运算符以及标准函数名</h1><p><img src="http://images.yingwai.top/picgo/latexf1.jpg" alt=""></p>
-<h1 id="二元运算、关系符"><a href="#二元运算、关系符" class="headerlink" title="二元运算、关系符"></a>二元运算、关系符</h1><p><img src="http://images.yingwai.top/picgo/latexf2.jpg" alt=""></p>
-<h1 id="箭头符号、各种符号以及数学模式重音符"><a href="#箭头符号、各种符号以及数学模式重音符" class="headerlink" title="箭头符号、各种符号以及数学模式重音符"></a>箭头符号、各种符号以及数学模式重音符</h1><p><img src="http://images.yingwai.top/picgo/latexf3.jpg" alt=""></p>
-<h1 id="数列环境、其它风格的字体以及字体大小"><a href="#数列环境、其它风格的字体以及字体大小" class="headerlink" title="数列环境、其它风格的字体以及字体大小"></a>数列环境、其它风格的字体以及字体大小</h1><p><img src="http://images.yingwai.top/picgo/latexf4.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>LaTeX</tag>
       </tags>
   </entry>
   <entry>
@@ -829,27 +718,6 @@
       <tags>
         <tag>密码学</tag>
         <tag>MPC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决Ubuntu deepin-wine微信字体乱码</title>
-    <url>/2020/04/24/%E8%A7%A3%E5%86%B3Ubuntu-deepin-wine%E5%BE%AE%E4%BF%A1%E5%AD%97%E4%BD%93%E4%B9%B1%E7%A0%81/</url>
-    <content><![CDATA[<h1 id="解决乱码-修改字体-微软雅黑"><a href="#解决乱码-修改字体-微软雅黑" class="headerlink" title="解决乱码+修改字体(微软雅黑)"></a>解决乱码+修改字体(微软雅黑)</h1><p>下载微软雅黑字体,msyh.ttc</p>
-<a id="more"></a>
-<h2 id="添加字体"><a href="#添加字体" class="headerlink" title="添加字体"></a>添加字体</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts</span></span><br></pre></td></tr></table></figure>
-<h2 id="修改系统注册表"><a href="#修改系统注册表" class="headerlink" title="修改系统注册表"></a>修改系统注册表</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit ~/.deepinwine/Deepin-WeChat/system.reg</span></span><br></pre></td></tr></table></figure>
-<p>修改以下两行</p>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="string">"MS Shell Dlg"</span>=<span class="string">"msyh"</span></span><br><span class="line"><span class="string">"MS Shell Dlg 2"</span>=<span class="string">"msyh"</span></span><br></pre></td></tr></table></figure>
-<h2 id="字体注册"><a href="#字体注册" class="headerlink" title="字体注册"></a>字体注册</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit msyh_config.reg</span></span><br></pre></td></tr></table></figure>
-<p>内容添加</p>
-<figure class="highlight moonscript"><table><tr><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line">[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink]</span><br><span class="line"><span class="string">"Lucida Sans Unicode"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Microsoft Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"MS Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma Bold"</span>=<span class="string">"msyhbd.ttc"</span></span><br><span class="line"><span class="string">"msyh"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial Black"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line">#注册</span><br><span class="line">WINEPREFIX=~/.deepinwine/Deepin-WeChat deepin-wine regedit msyh_config.reg</span><br></pre></td></tr></table></figure>
-<h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2>]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -1115,6 +983,23 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
         <tag>MPC</tag>
         <tag>神经网络</tag>
         <tag>加密机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 EaSTFLy: Efficient and secure ternary federated learning</title>
+    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-EaSTFLy-Efficient-and-secure-ternary-fe-derate-d-learning/</url>
+    <content><![CDATA[<p><em>Ye Dong, Xiaojun Chen, Liyan Shen, Dakui Wang</em></p>
+<p><a href="https://www.sciencedirect.com/science/journal/01674048" target="_blank" rel="noopener">Computers &amp; Security</a>   <a href="https://www.sciencedirect.com/science/journal/01674048/94/supp/C" target="_blank" rel="noopener">Volume 94</a>, July 2020, 101824</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0167404820300985" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S0167404820300985</a></p>
+<a id="more"></a>
+<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3>]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+        <tag>加密机器学习</tag>
+        <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
@@ -1470,20 +1355,41 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
       </tags>
   </entry>
   <entry>
-    <title>论文笔记 EaSTFLy: Efficient and secure ternary federated learning</title>
-    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-EaSTFLy-Efficient-and-secure-ternary-fe-derate-d-learning/</url>
-    <content><![CDATA[<p><em>Ye Dong, Xiaojun Chen, Liyan Shen, Dakui Wang</em></p>
-<p><a href="https://www.sciencedirect.com/science/journal/01674048" target="_blank" rel="noopener">Computers &amp; Security</a>   <a href="https://www.sciencedirect.com/science/journal/01674048/94/supp/C" target="_blank" rel="noopener">Volume 94</a>, July 2020, 101824</p>
-<p><a href="https://www.sciencedirect.com/science/article/pii/S0167404820300985" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S0167404820300985</a></p>
+    <title>解决Ubuntu deepin-wine微信字体乱码</title>
+    <url>/2020/04/24/%E8%A7%A3%E5%86%B3Ubuntu-deepin-wine%E5%BE%AE%E4%BF%A1%E5%AD%97%E4%BD%93%E4%B9%B1%E7%A0%81/</url>
+    <content><![CDATA[<h1 id="解决乱码-修改字体-微软雅黑"><a href="#解决乱码-修改字体-微软雅黑" class="headerlink" title="解决乱码+修改字体(微软雅黑)"></a>解决乱码+修改字体(微软雅黑)</h1><p>下载微软雅黑字体,msyh.ttc</p>
 <a id="more"></a>
-<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3>]]></content>
+<h2 id="添加字体"><a href="#添加字体" class="headerlink" title="添加字体"></a>添加字体</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改系统注册表"><a href="#修改系统注册表" class="headerlink" title="修改系统注册表"></a>修改系统注册表</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit ~/.deepinwine/Deepin-WeChat/system.reg</span></span><br></pre></td></tr></table></figure>
+<p>修改以下两行</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="string">"MS Shell Dlg"</span>=<span class="string">"msyh"</span></span><br><span class="line"><span class="string">"MS Shell Dlg 2"</span>=<span class="string">"msyh"</span></span><br></pre></td></tr></table></figure>
+<h2 id="字体注册"><a href="#字体注册" class="headerlink" title="字体注册"></a>字体注册</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit msyh_config.reg</span></span><br></pre></td></tr></table></figure>
+<p>内容添加</p>
+<figure class="highlight moonscript"><table><tr><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line">[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink]</span><br><span class="line"><span class="string">"Lucida Sans Unicode"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Microsoft Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"MS Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma Bold"</span>=<span class="string">"msyhbd.ttc"</span></span><br><span class="line"><span class="string">"msyh"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial Black"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line">#注册</span><br><span class="line">WINEPREFIX=~/.deepinwine/Deepin-WeChat deepin-wine regedit msyh_config.reg</span><br></pre></td></tr></table></figure>
+<h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2>]]></content>
       <categories>
-        <category>Papers</category>
+        <category>Env</category>
       </categories>
       <tags>
-        <tag>密码学</tag>
-        <tag>加密机器学习</tag>
-        <tag>联邦学习</tag>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LaTeX常用符号表示方法</title>
+    <url>/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>图片来源：<a href="https://blog.csdn.net/caiandyong/article/details/53351737" target="_blank" rel="noopener">https://blog.csdn.net/caiandyong/article/details/53351737</a></p>
+<a id="more"></a>
+<h1 id="希腊字母、数学构造、定界符、大型运算符以及标准函数名"><a href="#希腊字母、数学构造、定界符、大型运算符以及标准函数名" class="headerlink" title="希腊字母、数学构造、定界符、大型运算符以及标准函数名"></a>希腊字母、数学构造、定界符、大型运算符以及标准函数名</h1><p><img src="http://images.yingwai.top/picgo/latexf1.jpg" alt=""></p>
+<h1 id="二元运算、关系符"><a href="#二元运算、关系符" class="headerlink" title="二元运算、关系符"></a>二元运算、关系符</h1><p><img src="http://images.yingwai.top/picgo/latexf2.jpg" alt=""></p>
+<h1 id="箭头符号、各种符号以及数学模式重音符"><a href="#箭头符号、各种符号以及数学模式重音符" class="headerlink" title="箭头符号、各种符号以及数学模式重音符"></a>箭头符号、各种符号以及数学模式重音符</h1><p><img src="http://images.yingwai.top/picgo/latexf3.jpg" alt=""></p>
+<h1 id="数列环境、其它风格的字体以及字体大小"><a href="#数列环境、其它风格的字体以及字体大小" class="headerlink" title="数列环境、其它风格的字体以及字体大小"></a>数列环境、其它风格的字体以及字体大小</h1><p><img src="http://images.yingwai.top/picgo/latexf4.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>LaTeX</tag>
       </tags>
   </entry>
   <entry>
