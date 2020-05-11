@@ -418,19 +418,14 @@
 
       
         
-          
-            <p>搭好博客后，上去发现底下的翻页按钮显示有问题，显示为<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>，原因不明：</p>
-<p><img src="http://images.yingwai.top/picgo/fanyef1.png" alt=""></p>
-<p><strong>解决办法：</strong></p>
-<p>最简单的办法就是将<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>这个不能正常显示的字体图标改成一般的字符，我就是按照网上的方法改成正常的一般左右键字符 “ &gt; ”。</p>
-<p>到<code>\themes\next\layout\_partials</code>目录下找到<code>pagination.swig</code>文件，将</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-left"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        next_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>改成</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">',</span></span></span><br><span class="line"><span class="tag">        <span class="attr">next_text:</span> '&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>重新部署即可看到已经正常显示了：</p>
-<p><img src="http://images.yingwai.top/picgo/fanyef2.png" alt=""></p>
-
-          
+          <p>搭好博客后，上去发现底下的翻页按钮显示有问题，显示为<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>，原因不明：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E6%8C%89%E9%92%AE%E6%98%BE%E7%A4%BA%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
