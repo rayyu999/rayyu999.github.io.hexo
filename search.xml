@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo博客NexT主题使用不蒜子统计访客数</title>
-    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E4%B8%8D%E8%92%9C%E5%AD%90%E7%BB%9F%E8%AE%A1%E8%AE%BF%E5%AE%A2%E6%95%B0/</url>
-    <content><![CDATA[<p>想为自己的博客添加访问统计，经过一番查阅，找到了好用又方便的不蒜子统计，不蒜子是一个极简的网页计数器。</p>
-<a id="more"></a>
-<h1 id="安装NexT"><a href="#安装NexT" class="headerlink" title="安装NexT"></a>安装NexT</h1><p>参考 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
-<h1 id="打开不蒜子统计开关"><a href="#打开不蒜子统计开关" class="headerlink" title="打开不蒜子统计开关"></a>打开不蒜子统计开关</h1><p>新版的next主题已经把不蒜子集成进去，只需要打开开关即可：</p>
-<ol>
-<li><p>编辑<code>\themes\next\_config.yml</code>，找到里面的<code>busuanzi_count</code>配置项，将<code>enable</code>设为<code>true</code>：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif1.png" alt=""></p>
-<p>当<code>enable: true</code>时，代表开启全局开关。若<code>site_uv</code>、<code>site_pv</code>、<code>page_pv</code>的值均为<code>false</code>时，不蒜子仅作记录而不会在页面上显示。</p>
-</li>
-<li><p>打开对应的站点配置：当<code>site_uv: true</code>时，代表在页面底部显示站点的UV值；当<code>site_pv: true</code>时，代表在页面底部显示站点的PV值。</p>
-</li>
-</ol>
-<h1 id="不蒜子统计不显示的问题"><a href="#不蒜子统计不显示的问题" class="headerlink" title="不蒜子统计不显示的问题"></a>不蒜子统计不显示的问题</h1><p>完成上面的步骤后，进入博客，发现统计人数显示不出来：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif2.png" alt=""></p>
-<p><strong>原因：不蒜子的域名更换了，但是next主题里面写进去的域名还是以前的。</strong></p>
-<p><a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener">不蒜子官网</a>：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif3.png" alt=""></p>
-<p><strong>解决方法：</strong></p>
-<p>打开<code>\themes\next\layout\_third-party\analytics</code>文件夹里面的<code>busuanzi-counter.swig</code>文件，将旧的域名更换为新的域名：</p>
-<p>原来的域名：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif4.png" alt=""></p>
-<p>更换后：</p>
-<p><img src="http://images.yingwai.top/picgo/busuanzif5.png" alt=""></p>
-<p>此时博客的访客数就可以正常显示了。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
-        <tag>不蒜子</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CCF推荐国际学术会议和期刊目录（网络与信息安全）</title>
     <url>/2020/04/20/CCF%E6%8E%A8%E8%8D%90%E5%9B%BD%E9%99%85%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE%E5%92%8C%E6%9C%9F%E5%88%8A%E7%9B%AE%E5%BD%95%EF%BC%88%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%EF%BC%89/</url>
     <content><![CDATA[<p><a href="https://www.ccf.org.cn/c/2019-04-25/663625.shtml" target="_blank" rel="noopener">https://www.ccf.org.cn/c/2019-04-25/663625.shtml</a></p>
@@ -533,6 +496,43 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo博客NexT主题使用不蒜子统计访客数</title>
+    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E4%B8%8D%E8%92%9C%E5%AD%90%E7%BB%9F%E8%AE%A1%E8%AE%BF%E5%AE%A2%E6%95%B0/</url>
+    <content><![CDATA[<p>想为自己的博客添加访问统计，经过一番查阅，找到了好用又方便的不蒜子统计，不蒜子是一个极简的网页计数器。</p>
+<a id="more"></a>
+<h1 id="安装NexT"><a href="#安装NexT" class="headerlink" title="安装NexT"></a>安装NexT</h1><p>参考 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
+<h1 id="打开不蒜子统计开关"><a href="#打开不蒜子统计开关" class="headerlink" title="打开不蒜子统计开关"></a>打开不蒜子统计开关</h1><p>新版的next主题已经把不蒜子集成进去，只需要打开开关即可：</p>
+<ol>
+<li><p>编辑<code>\themes\next\_config.yml</code>，找到里面的<code>busuanzi_count</code>配置项，将<code>enable</code>设为<code>true</code>：</p>
+<p><img src="http://images.yingwai.top/picgo/busuanzif1.png" alt=""></p>
+<p>当<code>enable: true</code>时，代表开启全局开关。若<code>site_uv</code>、<code>site_pv</code>、<code>page_pv</code>的值均为<code>false</code>时，不蒜子仅作记录而不会在页面上显示。</p>
+</li>
+<li><p>打开对应的站点配置：当<code>site_uv: true</code>时，代表在页面底部显示站点的UV值；当<code>site_pv: true</code>时，代表在页面底部显示站点的PV值。</p>
+</li>
+</ol>
+<h1 id="不蒜子统计不显示的问题"><a href="#不蒜子统计不显示的问题" class="headerlink" title="不蒜子统计不显示的问题"></a>不蒜子统计不显示的问题</h1><p>完成上面的步骤后，进入博客，发现统计人数显示不出来：</p>
+<p><img src="http://images.yingwai.top/picgo/busuanzif2.png" alt=""></p>
+<p><strong>原因：不蒜子的域名更换了，但是next主题里面写进去的域名还是以前的。</strong></p>
+<p><a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener">不蒜子官网</a>：</p>
+<p><img src="http://images.yingwai.top/picgo/busuanzif3.png" alt=""></p>
+<p><strong>解决方法：</strong></p>
+<p>打开<code>\themes\next\layout\_third-party\analytics</code>文件夹里面的<code>busuanzi-counter.swig</code>文件，将旧的域名更换为新的域名：</p>
+<p>原来的域名：</p>
+<p><img src="http://images.yingwai.top/picgo/busuanzif4.png" alt=""></p>
+<p>更换后：</p>
+<p><img src="http://images.yingwai.top/picgo/busuanzif5.png" alt=""></p>
+<p>此时博客的访客数就可以正常显示了。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
+        <tag>不蒜子</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
     <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
     <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
@@ -551,44 +551,6 @@
       <tags>
         <tag>Hexo</tag>
         <tag>NexT</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客搭建</title>
-    <url>/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<a id="more"></a>
-<h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
-<h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
-<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g cnpm --registry=https://registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
-<p>安装完后就可以使用cnpm安装hexo：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
-<p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
-<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>建立一个名为 <em>Blog</em> 的文件夹，在命令行中进入这个文件夹，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
-<p>初始化完成后，在命令行中输入<code>hexo s</code>，此时在浏览器中输入<code>localhost:4000</code>就可以看到博客已经创建好了，并且默认创建了一篇文章。</p>
-<p>确认过后，键盘按 <em>Ctrl + C</em> 即可停止服务。</p>
-<h4 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h4><p>首先登陆到<a href="https://github.com/" target="_blank" rel="noopener">Github</a>，新建一个仓库，命名为 “<strong>你的Github昵称.github.io</strong>“。</p>
-<p>然后需要安装一个git部署插件，在命令行中打开 <em>Blog</em> 目录，输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install --save hexo-deployer-git</span></span><br></pre></td></tr></table></figure>
-<p>打开 <em>Blog</em> 目录下的站点配置文件，在文件最后的 <strong><em>repo</em></strong> 处输入刚刚创建的仓库的地址并在下方添加一行：</p>
-<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> https:<span class="comment">//github.com/xxx/xxx.github.io.git</span></span><br><span class="line"><span class="symbol">  branch:</span> master	<span class="meta"># 指定分支，不填默认为master</span></span><br></pre></td></tr></table></figure>
-<p>保存退出后，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d</span></span><br></pre></td></tr></table></figure>
-<p>部署到远端，此时刷新一下自己的Github仓库页面，会发现多了很多文件。在浏览器中访问 <strong>xxx.github.io</strong>，就可以看到博客已经成功部署。</p>
-<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo n <span class="string">"文章标题"</span></span></span><br></pre></td></tr></table></figure>
-<p>会在博客目录的<code>/source/_posts</code>目录下生成一个markdown文件，使用编辑器打开即可编辑这篇文章。</p>
-<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>在命令行中依次输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo clean	<span class="comment"># 清理缓存文件和已生成的静态文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hexo g	<span class="comment"># 生成静态文件</span></span></span><br></pre></td></tr></table></figure>
-<p>再使用<code>hexo s</code>命令就可以在<code>localhost:4000</code>页面看到新生成的文章已经发布到了博客上面。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -647,23 +609,6 @@
       <tags>
         <tag>Jupyter</tag>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LaTeX常用符号表示方法</title>
-    <url>/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>图片来源：<a href="https://blog.csdn.net/caiandyong/article/details/53351737" target="_blank" rel="noopener">https://blog.csdn.net/caiandyong/article/details/53351737</a></p>
-<a id="more"></a>
-<h1 id="希腊字母、数学构造、定界符、大型运算符以及标准函数名"><a href="#希腊字母、数学构造、定界符、大型运算符以及标准函数名" class="headerlink" title="希腊字母、数学构造、定界符、大型运算符以及标准函数名"></a>希腊字母、数学构造、定界符、大型运算符以及标准函数名</h1><p><img src="http://images.yingwai.top/picgo/latexf1.jpg" alt=""></p>
-<h1 id="二元运算、关系符"><a href="#二元运算、关系符" class="headerlink" title="二元运算、关系符"></a>二元运算、关系符</h1><p><img src="http://images.yingwai.top/picgo/latexf2.jpg" alt=""></p>
-<h1 id="箭头符号、各种符号以及数学模式重音符"><a href="#箭头符号、各种符号以及数学模式重音符" class="headerlink" title="箭头符号、各种符号以及数学模式重音符"></a>箭头符号、各种符号以及数学模式重音符</h1><p><img src="http://images.yingwai.top/picgo/latexf3.jpg" alt=""></p>
-<h1 id="数列环境、其它风格的字体以及字体大小"><a href="#数列环境、其它风格的字体以及字体大小" class="headerlink" title="数列环境、其它风格的字体以及字体大小"></a>数列环境、其它风格的字体以及字体大小</h1><p><img src="http://images.yingwai.top/picgo/latexf4.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>LaTeX</tag>
       </tags>
   </entry>
   <entry>
@@ -777,60 +722,26 @@
       </tags>
   </entry>
   <entry>
-    <title>不经意传输（Oblivious Transfer）</title>
-    <url>/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/</url>
-    <content><![CDATA[<p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
+    <title>Hexo博客NexT主题翻页按钮显示不正常的解决方法</title>
+    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E6%8C%89%E9%92%AE%E6%98%BE%E7%A4%BA%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>搭好博客后，上去发现底下的翻页按钮显示有问题，显示为<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>，原因不明：</p>
 <a id="more"></a>
-<p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
-<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
-<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m_0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m_{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
-<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b_0$ 和 $b_1$，而R只能选择接受其中一个比特 $b_{\theta}$。协议要保证S和R的安全，即：</p>
-<ul>
-<li>S不能知道任何关于 $\theta$ 的信息；</li>
-<li>R不能知道任何关于 $b_{1-\theta}$ 的信息。</li>
-</ul>
-<p>为了达成上面两点要求，构造如下协议：</p>
-<ol>
-<li><p>S选择好两个比特信息 $b_0$ 和 $b_1$；</p>
-</li>
-<li><p>S运行密钥生成算法（例如RSA）生成公私钥对（$sk,pk$）；</p>
-</li>
-<li><p>S保密私钥，同时S要生成两个随机数 $x_0$ 和 $x_1$，并将这两个随机数和公钥一并传送给R；</p>
-</li>
-<li><p>R选择 $\theta$，并生成一个数 $r$，R用S的公钥加密 $r$，并生成信息</p>
-<p>​                                <script type="math/tex">v =x_{\theta}+E_{pk}(r)</script></p>
-</li>
-<li><p>S在接收到 $v$ 之后，进行如下计算：</p>
-<p>​                                $r_{0}=D_{s k}\left(v-x_{0}\right)$<br>​                                $r_{1}=D_{s k}\left(v-x_{1}\right)$</p>
-</li>
-<li><p>S进行如下计算：</p>
-<p>​                                $b_{0}^{\prime}=b_{0}+r_{0}$<br>​                                $b_{1}^{\prime}=b_{1}+r_{1}$</p>
-<p>并将 $b’_0$ 和 $b’_1$ 传送给R；</p>
-</li>
-<li><p>接收到 $b’_0$ 和 $b’_1$ 后，R进行如下计算：</p>
-<p>​                                $b_\theta = b’_\theta - r$</p>
-</li>
-</ol>
-<h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>进行如下推导：</p>
-<p>​                                $b_{\theta}^{\prime}-r=b_{\theta}+r_{\theta}-r=b_{\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
-<p>而</p>
-<p>​                        $D_{s k}(v-x_\theta)=D_{s k}\left(x_\theta+E_{p k}(r)-x_{\theta}\right)=D_{s k}\left(E_{p k}(r)\right)=r$</p>
-<p>因此可得</p>
-<p>​                                            $b’_\theta - r = b_\theta$</p>
-<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b_{1-\theta}$。R得到 $b’_\theta$ 和 $b’_{1-\theta}$ 之后，由协议可知R可以正确计算 $b’_\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
-<p>​                        $b_{1-\theta}^{\prime}-r=b_{1-\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
-<p>而</p>
-<p>​                    $D_{s k}\left(v-x_{\theta}\right)=D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right) \neq r$</p>
-<p>而且根据加密的特性，$D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
-<h3 id="对于R的安全性"><a href="#对于R的安全性" class="headerlink" title="对于R的安全性"></a>对于R的安全性</h3><p>R的安全性要求S不能获得关于 $\theta$ 任何有价值的信息。</p>
-<p>因为 $r$ 是随机数，所以 $E_{pk}(r)$ 与随机数是不可区分的。因此 $v$ 与随机数是不可区分的，所以S不能从 $v$ 获得关于 $\theta$ 有价值的信息。</p>
+<p><img src="http://images.yingwai.top/picgo/fanyef1.png" alt=""></p>
+<p><strong>解决办法：</strong></p>
+<p>最简单的办法就是将<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>这个不能正常显示的字体图标改成一般的字符，我就是按照网上的方法改成正常的一般左右键字符 “ &gt; ”。</p>
+<p>到<code>\themes\next\layout\_partials</code>目录下找到<code>pagination.swig</code>文件，将</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-left"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        next_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">',</span></span></span><br><span class="line"><span class="tag">        <span class="attr">next_text:</span> '&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>重新部署即可看到已经正常显示了：</p>
+<p><img src="http://images.yingwai.top/picgo/fanyef2.png" alt=""></p>
 ]]></content>
       <categories>
-        <category>Study</category>
+        <category>Env</category>
       </categories>
       <tags>
-        <tag>密码学</tag>
-        <tag>MPC</tag>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
       </tags>
   </entry>
   <entry>
@@ -852,6 +763,96 @@
       <tags>
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用you-get下载网址视频</title>
+    <url>/2020/05/14/%E4%BD%BF%E7%94%A8you-get%E4%B8%8B%E8%BD%BD%E7%BD%91%E5%9D%80%E8%A7%86%E9%A2%91/</url>
+    <content><![CDATA[<p>很多时候想随时随地在线看视频不是那么容易，尤其是YouTube上的视频，所以把视频下载到本地还是有必要的，这里就介绍一个下载视频的工具——you-get。</p>
+<a id="more"></a>
+<p>you-get是基于Python开发的，实际它不只支持视频下载，还支持图片、音乐等。而且，只要视频的地址，一行代码就可。</p>
+<h1 id="安装you-get"><a href="#安装you-get" class="headerlink" title="安装you-get"></a>安装you-get</h1><p>安装you-get的方式有很多，下面三种择其一即可。</p>
+<h2 id="使用pip安装"><a href="#使用pip安装" class="headerlink" title="使用pip安装"></a>使用pip安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip3 install you-get</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://images.yingwai.top/picgo/yougetf1.png" alt=""></p>
+<h2 id="Git克隆"><a href="#Git克隆" class="headerlink" title="Git克隆"></a>Git克隆</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/soimort/you-get.git</span></span><br></pre></td></tr></table></figure>
+<p>然后直接运行<code>./setup.py</code>即可</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python3 setup.py install</span></span><br></pre></td></tr></table></figure>
+<h2 id="通过HomeBrew安装（Mac）"><a href="#通过HomeBrew安装（Mac）" class="headerlink" title="通过HomeBrew安装（Mac）"></a>通过HomeBrew安装（Mac）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew install you-get</span></span><br></pre></td></tr></table></figure>
+<h1 id="下载视频"><a href="#下载视频" class="headerlink" title="下载视频"></a>下载视频</h1><p>命令行中输入以下代码下载视频：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<p>这里以B站某视频为例：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf2.png" alt=""></p>
+<p>下载好的视频存放在系统盘的用户目录下。</p>
+<h1 id="查看视频信息"><a href="#查看视频信息" class="headerlink" title="查看视频信息"></a>查看视频信息</h1><p>命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get -i <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<p>用刚刚下载的视频测试，结果如下：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf3.png" alt=""></p>
+<p>可以看到它的默认设置不是MP4格式的视频，如果想要换成这种格式，可以在命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get --itag=18 <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="支持的网站"><a href="#支持的网站" class="headerlink" title="支持的网站"></a>支持的网站</h1><p>除了B站，还可以用you-get下载国内外很多主流网站的视频、图片和音乐。</p>
+<p>这里列出支持的国外网站：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf4.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客搭建</title>
+    <url>/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<a id="more"></a>
+<h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
+<h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g cnpm --registry=https://registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
+<p>安装完后就可以使用cnpm安装hexo：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
+<p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
+<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>建立一个名为 <em>Blog</em> 的文件夹，在命令行中进入这个文件夹，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
+<p>初始化完成后，在命令行中输入<code>hexo s</code>，此时在浏览器中输入<code>localhost:4000</code>就可以看到博客已经创建好了，并且默认创建了一篇文章。</p>
+<p>确认过后，键盘按 <em>Ctrl + C</em> 即可停止服务。</p>
+<h4 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h4><p>首先登陆到<a href="https://github.com/" target="_blank" rel="noopener">Github</a>，新建一个仓库，命名为 “<strong>你的Github昵称.github.io</strong>“。</p>
+<p>然后需要安装一个git部署插件，在命令行中打开 <em>Blog</em> 目录，输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install --save hexo-deployer-git</span></span><br></pre></td></tr></table></figure>
+<p>打开 <em>Blog</em> 目录下的站点配置文件，在文件最后的 <strong><em>repo</em></strong> 处输入刚刚创建的仓库的地址并在下方添加一行：</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> https:<span class="comment">//github.com/xxx/xxx.github.io.git</span></span><br><span class="line"><span class="symbol">  branch:</span> master	<span class="meta"># 指定分支，不填默认为master</span></span><br></pre></td></tr></table></figure>
+<p>保存退出后，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d</span></span><br></pre></td></tr></table></figure>
+<p>部署到远端，此时刷新一下自己的Github仓库页面，会发现多了很多文件。在浏览器中访问 <strong>xxx.github.io</strong>，就可以看到博客已经成功部署。</p>
+<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo n <span class="string">"文章标题"</span></span></span><br></pre></td></tr></table></figure>
+<p>会在博客目录的<code>/source/_posts</code>目录下生成一个markdown文件，使用编辑器打开即可编辑这篇文章。</p>
+<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>在命令行中依次输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo clean	<span class="comment"># 清理缓存文件和已生成的静态文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hexo g	<span class="comment"># 生成静态文件</span></span></span><br></pre></td></tr></table></figure>
+<p>再使用<code>hexo s</code>命令就可以在<code>localhost:4000</code>页面看到新生成的文章已经发布到了博客上面。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 EaSTFLy: Efficient and secure ternary federated learning</title>
+    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-EaSTFLy-Efficient-and-secure-ternary-fe-derate-d-learning/</url>
+    <content><![CDATA[<p><em>Ye Dong, Xiaojun Chen, Liyan Shen, Dakui Wang</em></p>
+<p><a href="https://www.sciencedirect.com/science/journal/01674048" target="_blank" rel="noopener">Computers &amp; Security</a>   <a href="https://www.sciencedirect.com/science/journal/01674048/94/supp/C" target="_blank" rel="noopener">Volume 94</a>, July 2020, 101824</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0167404820300985" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S0167404820300985</a></p>
+<a id="more"></a>
+<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3>]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+        <tag>隐私保护机器学习</tag>
+        <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
@@ -1114,9 +1115,66 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
       </categories>
       <tags>
         <tag>密码学</tag>
+        <tag>隐私保护机器学习</tag>
         <tag>MPC</tag>
         <tag>神经网络</tag>
-        <tag>隐私保护机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>不经意传输（Oblivious Transfer）</title>
+    <url>/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/</url>
+    <content><![CDATA[<p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
+<a id="more"></a>
+<p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
+<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
+<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m_0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m_{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b_0$ 和 $b_1$，而R只能选择接受其中一个比特 $b_{\theta}$。协议要保证S和R的安全，即：</p>
+<ul>
+<li>S不能知道任何关于 $\theta$ 的信息；</li>
+<li>R不能知道任何关于 $b_{1-\theta}$ 的信息。</li>
+</ul>
+<p>为了达成上面两点要求，构造如下协议：</p>
+<ol>
+<li><p>S选择好两个比特信息 $b_0$ 和 $b_1$；</p>
+</li>
+<li><p>S运行密钥生成算法（例如RSA）生成公私钥对（$sk,pk$）；</p>
+</li>
+<li><p>S保密私钥，同时S要生成两个随机数 $x_0$ 和 $x_1$，并将这两个随机数和公钥一并传送给R；</p>
+</li>
+<li><p>R选择 $\theta$，并生成一个数 $r$，R用S的公钥加密 $r$，并生成信息</p>
+<p>​                                <script type="math/tex">v =x_{\theta}+E_{pk}(r)</script></p>
+</li>
+<li><p>S在接收到 $v$ 之后，进行如下计算：</p>
+<p>​                                $r_{0}=D_{s k}\left(v-x_{0}\right)$<br>​                                $r_{1}=D_{s k}\left(v-x_{1}\right)$</p>
+</li>
+<li><p>S进行如下计算：</p>
+<p>​                                $b_{0}^{\prime}=b_{0}+r_{0}$<br>​                                $b_{1}^{\prime}=b_{1}+r_{1}$</p>
+<p>并将 $b’_0$ 和 $b’_1$ 传送给R；</p>
+</li>
+<li><p>接收到 $b’_0$ 和 $b’_1$ 后，R进行如下计算：</p>
+<p>​                                $b_\theta = b’_\theta - r$</p>
+</li>
+</ol>
+<h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>进行如下推导：</p>
+<p>​                                $b_{\theta}^{\prime}-r=b_{\theta}+r_{\theta}-r=b_{\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
+<p>而</p>
+<p>​                        $D_{s k}(v-x_\theta)=D_{s k}\left(x_\theta+E_{p k}(r)-x_{\theta}\right)=D_{s k}\left(E_{p k}(r)\right)=r$</p>
+<p>因此可得</p>
+<p>​                                            $b’_\theta - r = b_\theta$</p>
+<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b_{1-\theta}$。R得到 $b’_\theta$ 和 $b’_{1-\theta}$ 之后，由协议可知R可以正确计算 $b’_\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
+<p>​                        $b_{1-\theta}^{\prime}-r=b_{1-\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
+<p>而</p>
+<p>​                    $D_{s k}\left(v-x_{\theta}\right)=D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right) \neq r$</p>
+<p>而且根据加密的特性，$D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
+<h3 id="对于R的安全性"><a href="#对于R的安全性" class="headerlink" title="对于R的安全性"></a>对于R的安全性</h3><p>R的安全性要求S不能获得关于 $\theta$ 任何有价值的信息。</p>
+<p>因为 $r$ 是随机数，所以 $E_{pk}(r)$ 与随机数是不可区分的。因此 $v$ 与随机数是不可区分的，所以S不能从 $v$ 获得关于 $\theta$ 有价值的信息。</p>
+]]></content>
+      <categories>
+        <category>Study</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+        <tag>MPC</tag>
       </tags>
   </entry>
   <entry>
@@ -1472,23 +1530,6 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
       </tags>
   </entry>
   <entry>
-    <title>论文笔记 EaSTFLy: Efficient and secure ternary federated learning</title>
-    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-EaSTFLy-Efficient-and-secure-ternary-fe-derate-d-learning/</url>
-    <content><![CDATA[<p><em>Ye Dong, Xiaojun Chen, Liyan Shen, Dakui Wang</em></p>
-<p><a href="https://www.sciencedirect.com/science/journal/01674048" target="_blank" rel="noopener">Computers &amp; Security</a>   <a href="https://www.sciencedirect.com/science/journal/01674048/94/supp/C" target="_blank" rel="noopener">Volume 94</a>, July 2020, 101824</p>
-<p><a href="https://www.sciencedirect.com/science/article/pii/S0167404820300985" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S0167404820300985</a></p>
-<a id="more"></a>
-<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3>]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>密码学</tag>
-        <tag>隐私保护机器学习</tag>
-        <tag>联邦学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>论文笔记 Eﬀicient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
     <url>/2020/04/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-E%EF%AC%80icient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
     <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
@@ -1521,32 +1562,26 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
       </categories>
       <tags>
         <tag>密码学</tag>
-        <tag>神经网络</tag>
         <tag>隐私保护机器学习</tag>
+        <tag>神经网络</tag>
         <tag>同态加密</tag>
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客NexT主题翻页按钮显示不正常的解决方法</title>
-    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E6%8C%89%E9%92%AE%E6%98%BE%E7%A4%BA%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>搭好博客后，上去发现底下的翻页按钮显示有问题，显示为<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>，原因不明：</p>
+    <title>LaTeX常用符号表示方法</title>
+    <url>/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>图片来源：<a href="https://blog.csdn.net/caiandyong/article/details/53351737" target="_blank" rel="noopener">https://blog.csdn.net/caiandyong/article/details/53351737</a></p>
 <a id="more"></a>
-<p><img src="http://images.yingwai.top/picgo/fanyef1.png" alt=""></p>
-<p><strong>解决办法：</strong></p>
-<p>最简单的办法就是将<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>这个不能正常显示的字体图标改成一般的字符，我就是按照网上的方法改成正常的一般左右键字符 “ &gt; ”。</p>
-<p>到<code>\themes\next\layout\_partials</code>目录下找到<code>pagination.swig</code>文件，将</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-left"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        next_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>改成</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">',</span></span></span><br><span class="line"><span class="tag">        <span class="attr">next_text:</span> '&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>重新部署即可看到已经正常显示了：</p>
-<p><img src="http://images.yingwai.top/picgo/fanyef2.png" alt=""></p>
+<h1 id="希腊字母、数学构造、定界符、大型运算符以及标准函数名"><a href="#希腊字母、数学构造、定界符、大型运算符以及标准函数名" class="headerlink" title="希腊字母、数学构造、定界符、大型运算符以及标准函数名"></a>希腊字母、数学构造、定界符、大型运算符以及标准函数名</h1><p><img src="http://images.yingwai.top/picgo/latexf1.jpg" alt=""></p>
+<h1 id="二元运算、关系符"><a href="#二元运算、关系符" class="headerlink" title="二元运算、关系符"></a>二元运算、关系符</h1><p><img src="http://images.yingwai.top/picgo/latexf2.jpg" alt=""></p>
+<h1 id="箭头符号、各种符号以及数学模式重音符"><a href="#箭头符号、各种符号以及数学模式重音符" class="headerlink" title="箭头符号、各种符号以及数学模式重音符"></a>箭头符号、各种符号以及数学模式重音符</h1><p><img src="http://images.yingwai.top/picgo/latexf3.jpg" alt=""></p>
+<h1 id="数列环境、其它风格的字体以及字体大小"><a href="#数列环境、其它风格的字体以及字体大小" class="headerlink" title="数列环境、其它风格的字体以及字体大小"></a>数列环境、其它风格的字体以及字体大小</h1><p><img src="http://images.yingwai.top/picgo/latexf4.jpg" alt=""></p>
 ]]></content>
       <categories>
         <category>Env</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
+        <tag>LaTeX</tag>
       </tags>
   </entry>
 </search>
