@@ -357,6 +357,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -364,7 +374,7 @@
 
           
             <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-eye"></i> 阅读
+            <span class="page-pv"><i class="fa fa-eye"></i>
             <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
             </span>
           
@@ -746,6 +756,9 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
           
 
   
+    <div class="comments" id="comments">
+    </div>
+  
 
 
 
@@ -1064,6 +1077,28 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'RcahzI7T72d3tInBb4DYpXnX-gzGzoHsz',
+        appKey: '2xECk7XrFVzL88rsxkOs2W5a',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
