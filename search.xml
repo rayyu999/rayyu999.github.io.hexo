@@ -496,50 +496,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客NexT主题翻页按钮显示不正常的解决方法</title>
-    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E6%8C%89%E9%92%AE%E6%98%BE%E7%A4%BA%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>搭好博客后，上去发现底下的翻页按钮显示有问题，显示为<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>，原因不明：</p>
-<a id="more"></a>
-<p><img src="http://images.yingwai.top/picgo/fanyef1.png" alt=""></p>
-<p><strong>解决办法：</strong></p>
-<p>最简单的办法就是将<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>这个不能正常显示的字体图标改成一般的字符，我就是按照网上的方法改成正常的一般左右键字符 “ &gt; ”。</p>
-<p>到<code>\themes\next\layout\_partials</code>目录下找到<code>pagination.swig</code>文件，将</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-left"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        next_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>改成</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">',</span></span></span><br><span class="line"><span class="tag">        <span class="attr">next_text:</span> '&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>重新部署即可看到已经正常显示了：</p>
-<p><img src="http://images.yingwai.top/picgo/fanyef2.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
-    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
-<a id="more"></a>
-<p><strong>解决方法：</strong></p>
-<p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
-<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
-<p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
-<p>这时候点击日志就会自动跳转到归档页。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo博客NexT主题使用不蒜子统计访客数</title>
     <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E4%B8%8D%E8%92%9C%E5%AD%90%E7%BB%9F%E8%AE%A1%E8%AE%BF%E5%AE%A2%E6%95%B0/</url>
     <content><![CDATA[<p>想为自己的博客添加访问统计，经过一番查阅，找到了好用又方便的不蒜子统计，不蒜子是一个极简的网页计数器。</p>
@@ -574,6 +530,85 @@
         <tag>Hexo</tag>
         <tag>NexT</tag>
         <tag>不蒜子</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
+    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
+<a id="more"></a>
+<p><strong>解决方法：</strong></p>
+<p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
+<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
+<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
+<p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
+<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
+<p>这时候点击日志就会自动跳转到归档页。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JupyterLab安装</title>
+    <url>/2020/05/01/JupyterLab%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>JupyterLab 是一个交互式的开发环境，是 Jupyter notebook 的下一代产品，集成了更多的功能，十分好用。</p>
+<a id="more"></a>
+<h1 id="安装Miniconda"><a href="#安装Miniconda" class="headerlink" title="安装Miniconda"></a>安装Miniconda</h1><p>1、进入清华大学开源软件镜像站找到Miniconda: <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/</a></p>
+<p><img src="http://images.yingwai.top/picgo/jupyterinstallf1.png" alt=""></p>
+<p>2、找到Miniconda的Linux版本，右键复制链接地址，然后在服务器中下载：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py37_4.8.2-Linux-x86_64.sh</span></span><br></pre></td></tr></table></figure>
+<p>3、安装刚刚下载的Miniconda：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bash Miniconda3-py37_4.8.2-Linux-x86_64.sh</span></span><br></pre></td></tr></table></figure>
+<p>根据提示按enter键或输入yes即可。</p>
+<p>4、安装成功后，会在当前用户目录下生成一个miniconda3文件夹。</p>
+<h2 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h2><p>在终端中输入以下命令安装pip：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> conda install pip</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加清华源"><a href="#添加清华源" class="headerlink" title="添加清华源"></a>添加清华源</h3><p>如果下载速度太慢，可以将conda默认的软件源更换为国内的清华源：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> conda config --<span class="built_in">set</span> show_channel_urls yes</span></span><br></pre></td></tr></table></figure>
+<p>添加完成后可以使用<code>conda info</code>命令查看是否添加成功。</p>
+<h1 id="安装并配置JupyterLab"><a href="#安装并配置JupyterLab" class="headerlink" title="安装并配置JupyterLab"></a>安装并配置JupyterLab</h1><p>准备工作完成后，就可以开始安装Jupyterlab。</p>
+<h2 id="安装JupyterLab"><a href="#安装JupyterLab" class="headerlink" title="安装JupyterLab"></a>安装JupyterLab</h2><p>在终端中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip install jupyterlab</span></span><br></pre></td></tr></table></figure>
+<h2 id="远程访问配置"><a href="#远程访问配置" class="headerlink" title="远程访问配置"></a>远程访问配置</h2><p>在终端中打开ipython：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ipython</span></span><br><span class="line"></span><br><span class="line">In [1]: from notebook.auth import passwd</span><br><span class="line"></span><br><span class="line">In [2]: passwd()</span><br><span class="line">Enter password:		# 输入你要设置的密码</span><br><span class="line">Verify password:</span><br><span class="line">Out[2]: 'xxxxx...'</span><br></pre></td></tr></table></figure>
+<p>这里输出的字符串要复制下来。</p>
+<p>执行完上面的命令后，退出ipython，然后在终端中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> jupyter lab --generate-config</span></span><br></pre></td></tr></table></figure>
+<p>修改配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi .jupyter/jupyter_notebook_config.py</span></span><br></pre></td></tr></table></figure>
+<p>更改内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将ip设置为*，意味允许任何IP访问</span></span><br><span class="line">c.NotebookApp.ip = '*'</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这里的密码就是上面生成的那一串</span></span><br><span class="line">c.NotebookApp.password = 'xxxxx...' </span><br><span class="line"><span class="meta">#</span><span class="bash"> 服务器上并没有浏览器可以供Jupyter打开 </span></span><br><span class="line">c.NotebookApp.open_browser = False </span><br><span class="line"><span class="meta">#</span><span class="bash"> 监听端口设置为8888或其他自己喜欢的端口 </span></span><br><span class="line">c.NotebookApp.port = 8888</span><br><span class="line"><span class="meta">#</span><span class="bash"> 允许远程访问 </span></span><br><span class="line">c.NotebookApp.allow_remote_access = True</span><br></pre></td></tr></table></figure>
+<p>启动jupyter服务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> jupyter lab --allow-root</span></span><br></pre></td></tr></table></figure>
+<p>此时在浏览器搜索框中输入<code>你的服务器ip:你设置的端口</code>，然后在打开的页面中输入密码就可以进入jupyterlab：</p>
+<p><img src="http://images.yingwai.top/picgo/jupyterinstallf2.png" alt=""></p>
+<h2 id="后台运行JupyterLab程序"><a href="#后台运行JupyterLab程序" class="headerlink" title="后台运行JupyterLab程序"></a>后台运行JupyterLab程序</h2><p>JupyterLab启动后占用了一个终端窗口，可以用<code>nohup</code>命令使JupyterLab在后台运行，并且关闭当前终端也不会停止运行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nohup jupyter lab &amp;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>nohup</code>命令</p>
+<p>用途：Run COMMAND, ignoring hangup signals.</p>
+<p>输出文件：程序的输出默认重定向到当前文件夹下的<code>nohup.out</code>文件中。也可以通过<code>nohup COMMAND &gt; FILE</code>命令的方式将输出文件重定位到指定的<code>FILE</code>文件中。如果要查看JupyterLab的日志文件，可以打开<code>nohup.out</code>文件进行查看。</p>
+</li>
+<li><p><code>&amp;</code>命令</p>
+<p>作用：在后台运行程序</p>
+</li>
+</ul>
+<h2 id="查看、关闭后台运行进程"><a href="#查看、关闭后台运行进程" class="headerlink" title="查看、关闭后台运行进程"></a>查看、关闭后台运行进程</h2><p><code>job -l</code>命令查看当前终端中后台运行的进程，如果关闭终端后不能显示，需要使用<code>ps</code>命令。</p>
+<p><code>ps -aux | grep jupyter</code>查看运行的<code>jupyter</code>进程：</p>
+<p><img src="http://images.yingwai.top/picgo/jupyterinstallf3.png" alt=""></p>
+<p>用户名后面的数字就是JupyterLab的pid，使用<code>kill -9 pid</code>命令关闭运行中的JupyterLab。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Jupyter</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -687,134 +722,26 @@
       </tags>
   </entry>
   <entry>
-    <title>LaTeX常用符号表示方法</title>
-    <url>/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>图片来源：<a href="https://blog.csdn.net/caiandyong/article/details/53351737" target="_blank" rel="noopener">https://blog.csdn.net/caiandyong/article/details/53351737</a></p>
+    <title>Hexo博客NexT主题翻页按钮显示不正常的解决方法</title>
+    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E6%8C%89%E9%92%AE%E6%98%BE%E7%A4%BA%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>搭好博客后，上去发现底下的翻页按钮显示有问题，显示为<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>，原因不明：</p>
 <a id="more"></a>
-<h1 id="希腊字母、数学构造、定界符、大型运算符以及标准函数名"><a href="#希腊字母、数学构造、定界符、大型运算符以及标准函数名" class="headerlink" title="希腊字母、数学构造、定界符、大型运算符以及标准函数名"></a>希腊字母、数学构造、定界符、大型运算符以及标准函数名</h1><p><img src="http://images.yingwai.top/picgo/latexf1.jpg" alt=""></p>
-<h1 id="二元运算、关系符"><a href="#二元运算、关系符" class="headerlink" title="二元运算、关系符"></a>二元运算、关系符</h1><p><img src="http://images.yingwai.top/picgo/latexf2.jpg" alt=""></p>
-<h1 id="箭头符号、各种符号以及数学模式重音符"><a href="#箭头符号、各种符号以及数学模式重音符" class="headerlink" title="箭头符号、各种符号以及数学模式重音符"></a>箭头符号、各种符号以及数学模式重音符</h1><p><img src="http://images.yingwai.top/picgo/latexf3.jpg" alt=""></p>
-<h1 id="数列环境、其它风格的字体以及字体大小"><a href="#数列环境、其它风格的字体以及字体大小" class="headerlink" title="数列环境、其它风格的字体以及字体大小"></a>数列环境、其它风格的字体以及字体大小</h1><p><img src="http://images.yingwai.top/picgo/latexf4.jpg" alt=""></p>
+<p><img src="http://images.yingwai.top/picgo/fanyef1.png" alt=""></p>
+<p><strong>解决办法：</strong></p>
+<p>最简单的办法就是将<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>这个不能正常显示的字体图标改成一般的字符，我就是按照网上的方法改成正常的一般左右键字符 “ &gt; ”。</p>
+<p>到<code>\themes\next\layout\_partials</code>目录下找到<code>pagination.swig</code>文件，将</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-left"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        next_text: '<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.prev or page.next %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    &#123;&#123;</span><br><span class="line">      paginator(&#123;</span><br><span class="line">        prev_text: '<span class="tag">&lt;<span class="name">',</span></span></span><br><span class="line"><span class="tag">        <span class="attr">next_text:</span> '&gt;</span>',</span><br><span class="line">        mid_size: 1</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>重新部署即可看到已经正常显示了：</p>
+<p><img src="http://images.yingwai.top/picgo/fanyef2.png" alt=""></p>
 ]]></content>
       <categories>
         <category>Env</category>
       </categories>
       <tags>
-        <tag>LaTeX</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JupyterLab安装</title>
-    <url>/2020/05/01/JupyterLab%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>JupyterLab 是一个交互式的开发环境，是 Jupyter notebook 的下一代产品，集成了更多的功能，十分好用。</p>
-<a id="more"></a>
-<h1 id="安装Miniconda"><a href="#安装Miniconda" class="headerlink" title="安装Miniconda"></a>安装Miniconda</h1><p>1、进入清华大学开源软件镜像站找到Miniconda: <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/</a></p>
-<p><img src="http://images.yingwai.top/picgo/jupyterinstallf1.png" alt=""></p>
-<p>2、找到Miniconda的Linux版本，右键复制链接地址，然后在服务器中下载：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py37_4.8.2-Linux-x86_64.sh</span></span><br></pre></td></tr></table></figure>
-<p>3、安装刚刚下载的Miniconda：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bash Miniconda3-py37_4.8.2-Linux-x86_64.sh</span></span><br></pre></td></tr></table></figure>
-<p>根据提示按enter键或输入yes即可。</p>
-<p>4、安装成功后，会在当前用户目录下生成一个miniconda3文件夹。</p>
-<h2 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h2><p>在终端中输入以下命令安装pip：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> conda install pip</span></span><br></pre></td></tr></table></figure>
-<h3 id="添加清华源"><a href="#添加清华源" class="headerlink" title="添加清华源"></a>添加清华源</h3><p>如果下载速度太慢，可以将conda默认的软件源更换为国内的清华源：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> conda config --<span class="built_in">set</span> show_channel_urls yes</span></span><br></pre></td></tr></table></figure>
-<p>添加完成后可以使用<code>conda info</code>命令查看是否添加成功。</p>
-<h1 id="安装并配置JupyterLab"><a href="#安装并配置JupyterLab" class="headerlink" title="安装并配置JupyterLab"></a>安装并配置JupyterLab</h1><p>准备工作完成后，就可以开始安装Jupyterlab。</p>
-<h2 id="安装JupyterLab"><a href="#安装JupyterLab" class="headerlink" title="安装JupyterLab"></a>安装JupyterLab</h2><p>在终端中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip install jupyterlab</span></span><br></pre></td></tr></table></figure>
-<h2 id="远程访问配置"><a href="#远程访问配置" class="headerlink" title="远程访问配置"></a>远程访问配置</h2><p>在终端中打开ipython：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ipython</span></span><br><span class="line"></span><br><span class="line">In [1]: from notebook.auth import passwd</span><br><span class="line"></span><br><span class="line">In [2]: passwd()</span><br><span class="line">Enter password:		# 输入你要设置的密码</span><br><span class="line">Verify password:</span><br><span class="line">Out[2]: 'xxxxx...'</span><br></pre></td></tr></table></figure>
-<p>这里输出的字符串要复制下来。</p>
-<p>执行完上面的命令后，退出ipython，然后在终端中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> jupyter lab --generate-config</span></span><br></pre></td></tr></table></figure>
-<p>修改配置文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi .jupyter/jupyter_notebook_config.py</span></span><br></pre></td></tr></table></figure>
-<p>更改内容如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将ip设置为*，意味允许任何IP访问</span></span><br><span class="line">c.NotebookApp.ip = '*'</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这里的密码就是上面生成的那一串</span></span><br><span class="line">c.NotebookApp.password = 'xxxxx...' </span><br><span class="line"><span class="meta">#</span><span class="bash"> 服务器上并没有浏览器可以供Jupyter打开 </span></span><br><span class="line">c.NotebookApp.open_browser = False </span><br><span class="line"><span class="meta">#</span><span class="bash"> 监听端口设置为8888或其他自己喜欢的端口 </span></span><br><span class="line">c.NotebookApp.port = 8888</span><br><span class="line"><span class="meta">#</span><span class="bash"> 允许远程访问 </span></span><br><span class="line">c.NotebookApp.allow_remote_access = True</span><br></pre></td></tr></table></figure>
-<p>启动jupyter服务：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> jupyter lab --allow-root</span></span><br></pre></td></tr></table></figure>
-<p>此时在浏览器搜索框中输入<code>你的服务器ip:你设置的端口</code>，然后在打开的页面中输入密码就可以进入jupyterlab：</p>
-<p><img src="http://images.yingwai.top/picgo/jupyterinstallf2.png" alt=""></p>
-<h2 id="后台运行JupyterLab程序"><a href="#后台运行JupyterLab程序" class="headerlink" title="后台运行JupyterLab程序"></a>后台运行JupyterLab程序</h2><p>JupyterLab启动后占用了一个终端窗口，可以用<code>nohup</code>命令使JupyterLab在后台运行，并且关闭当前终端也不会停止运行：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nohup jupyter lab &amp;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>nohup</code>命令</p>
-<p>用途：Run COMMAND, ignoring hangup signals.</p>
-<p>输出文件：程序的输出默认重定向到当前文件夹下的<code>nohup.out</code>文件中。也可以通过<code>nohup COMMAND &gt; FILE</code>命令的方式将输出文件重定位到指定的<code>FILE</code>文件中。如果要查看JupyterLab的日志文件，可以打开<code>nohup.out</code>文件进行查看。</p>
-</li>
-<li><p><code>&amp;</code>命令</p>
-<p>作用：在后台运行程序</p>
-</li>
-</ul>
-<h2 id="查看、关闭后台运行进程"><a href="#查看、关闭后台运行进程" class="headerlink" title="查看、关闭后台运行进程"></a>查看、关闭后台运行进程</h2><p><code>job -l</code>命令查看当前终端中后台运行的进程，如果关闭终端后不能显示，需要使用<code>ps</code>命令。</p>
-<p><code>ps -aux | grep jupyter</code>查看运行的<code>jupyter</code>进程：</p>
-<p><img src="http://images.yingwai.top/picgo/jupyterinstallf3.png" alt=""></p>
-<p>用户名后面的数字就是JupyterLab的pid，使用<code>kill -9 pid</code>命令关闭运行中的JupyterLab。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Jupyter</tag>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用you-get下载网址视频</title>
-    <url>/2020/05/14/%E4%BD%BF%E7%94%A8you-get%E4%B8%8B%E8%BD%BD%E7%BD%91%E5%9D%80%E8%A7%86%E9%A2%91/</url>
-    <content><![CDATA[<p>很多时候想随时随地在线看视频不是那么容易，尤其是YouTube上的视频，所以把视频下载到本地还是有必要的，这里就介绍一个下载视频的工具——you-get。</p>
-<a id="more"></a>
-<p>you-get是基于Python开发的，实际它不只支持视频下载，还支持图片、音乐等。而且，只要视频的地址，一行代码即可。</p>
-<h1 id="安装you-get"><a href="#安装you-get" class="headerlink" title="安装you-get"></a>安装you-get</h1><p>安装you-get的方式有很多，下面三种择其一即可。</p>
-<h2 id="使用pip安装"><a href="#使用pip安装" class="headerlink" title="使用pip安装"></a>使用pip安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip3 install you-get</span></span><br></pre></td></tr></table></figure>
-<p><img src="http://images.yingwai.top/picgo/yougetf1.png" alt=""></p>
-<h2 id="Git克隆"><a href="#Git克隆" class="headerlink" title="Git克隆"></a>Git克隆</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/soimort/you-get.git</span></span><br></pre></td></tr></table></figure>
-<p>然后直接运行<code>./setup.py</code>即可</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python3 setup.py install</span></span><br></pre></td></tr></table></figure>
-<h2 id="通过HomeBrew安装（Mac）"><a href="#通过HomeBrew安装（Mac）" class="headerlink" title="通过HomeBrew安装（Mac）"></a>通过HomeBrew安装（Mac）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew install you-get</span></span><br></pre></td></tr></table></figure>
-<h1 id="下载视频"><a href="#下载视频" class="headerlink" title="下载视频"></a>下载视频</h1><p>命令行中输入以下代码下载视频：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
-<p>这里以B站某视频为例：</p>
-<p><img src="http://images.yingwai.top/picgo/yougetf2.png" alt=""></p>
-<p>下载好的视频存放在系统盘的用户目录下。</p>
-<h1 id="查看视频信息"><a href="#查看视频信息" class="headerlink" title="查看视频信息"></a>查看视频信息</h1><p>命令行输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get -i <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
-<p>用刚刚下载的视频测试，结果如下：</p>
-<p><img src="http://images.yingwai.top/picgo/yougetf3.png" alt=""></p>
-<p>可以看到它的默认设置不是MP4格式的视频，如果想要换成这种格式，可以在命令行输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get --itag=18 <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="支持的网站"><a href="#支持的网站" class="headerlink" title="支持的网站"></a>支持的网站</h1><p>除了B站，还可以用you-get下载国内外很多主流网站的视频、图片和音乐。</p>
-<p>这里列出支持的国外网站：</p>
-<p><img src="http://images.yingwai.top/picgo/yougetf4.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决Ubuntu deepin-wine微信字体乱码</title>
-    <url>/2020/04/24/%E8%A7%A3%E5%86%B3Ubuntu-deepin-wine%E5%BE%AE%E4%BF%A1%E5%AD%97%E4%BD%93%E4%B9%B1%E7%A0%81/</url>
-    <content><![CDATA[<h1 id="解决乱码-修改字体-微软雅黑"><a href="#解决乱码-修改字体-微软雅黑" class="headerlink" title="解决乱码+修改字体(微软雅黑)"></a>解决乱码+修改字体(微软雅黑)</h1><p>下载微软雅黑字体,msyh.ttc</p>
-<a id="more"></a>
-<h2 id="添加字体"><a href="#添加字体" class="headerlink" title="添加字体"></a>添加字体</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts</span></span><br></pre></td></tr></table></figure>
-<h2 id="修改系统注册表"><a href="#修改系统注册表" class="headerlink" title="修改系统注册表"></a>修改系统注册表</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit ~/.deepinwine/Deepin-WeChat/system.reg</span></span><br></pre></td></tr></table></figure>
-<p>修改以下两行</p>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="string">"MS Shell Dlg"</span>=<span class="string">"msyh"</span></span><br><span class="line"><span class="string">"MS Shell Dlg 2"</span>=<span class="string">"msyh"</span></span><br></pre></td></tr></table></figure>
-<h2 id="字体注册"><a href="#字体注册" class="headerlink" title="字体注册"></a>字体注册</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit msyh_config.reg</span></span><br></pre></td></tr></table></figure>
-<p>内容添加</p>
-<figure class="highlight moonscript"><table><tr><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line">[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink]</span><br><span class="line"><span class="string">"Lucida Sans Unicode"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Microsoft Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"MS Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma Bold"</span>=<span class="string">"msyhbd.ttc"</span></span><br><span class="line"><span class="string">"msyh"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial Black"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line">#注册</span><br><span class="line">WINEPREFIX=~/.deepinwine/Deepin-WeChat deepin-wine regedit msyh_config.reg</span><br></pre></td></tr></table></figure>
-<h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2>]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Ubuntu</tag>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
       </tags>
   </entry>
   <entry>
@@ -856,6 +783,238 @@
       </tags>
   </entry>
   <entry>
+    <title>解决Ubuntu deepin-wine微信字体乱码</title>
+    <url>/2020/04/24/%E8%A7%A3%E5%86%B3Ubuntu-deepin-wine%E5%BE%AE%E4%BF%A1%E5%AD%97%E4%BD%93%E4%B9%B1%E7%A0%81/</url>
+    <content><![CDATA[<h1 id="解决乱码-修改字体-微软雅黑"><a href="#解决乱码-修改字体-微软雅黑" class="headerlink" title="解决乱码+修改字体(微软雅黑)"></a>解决乱码+修改字体(微软雅黑)</h1><p>下载微软雅黑字体,msyh.ttc</p>
+<a id="more"></a>
+<h2 id="添加字体"><a href="#添加字体" class="headerlink" title="添加字体"></a>添加字体</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改系统注册表"><a href="#修改系统注册表" class="headerlink" title="修改系统注册表"></a>修改系统注册表</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit ~/.deepinwine/Deepin-WeChat/system.reg</span></span><br></pre></td></tr></table></figure>
+<p>修改以下两行</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="string">"MS Shell Dlg"</span>=<span class="string">"msyh"</span></span><br><span class="line"><span class="string">"MS Shell Dlg 2"</span>=<span class="string">"msyh"</span></span><br></pre></td></tr></table></figure>
+<h2 id="字体注册"><a href="#字体注册" class="headerlink" title="字体注册"></a>字体注册</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit msyh_config.reg</span></span><br></pre></td></tr></table></figure>
+<p>内容添加</p>
+<figure class="highlight moonscript"><table><tr><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line">[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink]</span><br><span class="line"><span class="string">"Lucida Sans Unicode"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Microsoft Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"MS Sans Serif"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Tahoma Bold"</span>=<span class="string">"msyhbd.ttc"</span></span><br><span class="line"><span class="string">"msyh"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line"><span class="string">"Arial Black"</span>=<span class="string">"msyh.ttc"</span></span><br><span class="line">#注册</span><br><span class="line">WINEPREFIX=~/.deepinwine/Deepin-WeChat deepin-wine regedit msyh_config.reg</span><br></pre></td></tr></table></figure>
+<h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2>]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用you-get下载网址视频</title>
+    <url>/2020/05/14/%E4%BD%BF%E7%94%A8you-get%E4%B8%8B%E8%BD%BD%E7%BD%91%E5%9D%80%E8%A7%86%E9%A2%91/</url>
+    <content><![CDATA[<p>很多时候想随时随地在线看视频不是那么容易，尤其是YouTube上的视频，所以把视频下载到本地还是有必要的，这里就介绍一个下载视频的工具——you-get。</p>
+<a id="more"></a>
+<p>you-get是基于Python开发的，实际它不只支持视频下载，还支持图片、音乐等。而且，只要视频的地址，一行代码即可。</p>
+<h1 id="安装you-get"><a href="#安装you-get" class="headerlink" title="安装you-get"></a>安装you-get</h1><p>安装you-get的方式有很多，下面三种择其一即可。</p>
+<h2 id="使用pip安装"><a href="#使用pip安装" class="headerlink" title="使用pip安装"></a>使用pip安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip3 install you-get</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://images.yingwai.top/picgo/yougetf1.png" alt=""></p>
+<h2 id="Git克隆"><a href="#Git克隆" class="headerlink" title="Git克隆"></a>Git克隆</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/soimort/you-get.git</span></span><br></pre></td></tr></table></figure>
+<p>然后直接运行<code>./setup.py</code>即可</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python3 setup.py install</span></span><br></pre></td></tr></table></figure>
+<h2 id="通过HomeBrew安装（Mac）"><a href="#通过HomeBrew安装（Mac）" class="headerlink" title="通过HomeBrew安装（Mac）"></a>通过HomeBrew安装（Mac）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew install you-get</span></span><br></pre></td></tr></table></figure>
+<h1 id="下载视频"><a href="#下载视频" class="headerlink" title="下载视频"></a>下载视频</h1><p>命令行中输入以下代码下载视频：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<p>这里以B站某视频为例：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf2.png" alt=""></p>
+<p>下载好的视频存放在系统盘的用户目录下。</p>
+<h1 id="查看视频信息"><a href="#查看视频信息" class="headerlink" title="查看视频信息"></a>查看视频信息</h1><p>命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get -i <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<p>用刚刚下载的视频测试，结果如下：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf3.png" alt=""></p>
+<p>可以看到它的默认设置不是MP4格式的视频，如果想要换成这种格式，可以在命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get --itag=18 <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="支持的网站"><a href="#支持的网站" class="headerlink" title="支持的网站"></a>支持的网站</h1><p>除了B站，还可以用you-get下载国内外很多主流网站的视频、图片和音乐。</p>
+<p>这里列出支持的国外网站：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf4.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LaTeX常用符号表示方法</title>
+    <url>/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>图片来源：<a href="https://blog.csdn.net/caiandyong/article/details/53351737" target="_blank" rel="noopener">https://blog.csdn.net/caiandyong/article/details/53351737</a></p>
+<a id="more"></a>
+<h1 id="希腊字母、数学构造、定界符、大型运算符以及标准函数名"><a href="#希腊字母、数学构造、定界符、大型运算符以及标准函数名" class="headerlink" title="希腊字母、数学构造、定界符、大型运算符以及标准函数名"></a>希腊字母、数学构造、定界符、大型运算符以及标准函数名</h1><p><img src="http://images.yingwai.top/picgo/latexf1.jpg" alt=""></p>
+<h1 id="二元运算、关系符"><a href="#二元运算、关系符" class="headerlink" title="二元运算、关系符"></a>二元运算、关系符</h1><p><img src="http://images.yingwai.top/picgo/latexf2.jpg" alt=""></p>
+<h1 id="箭头符号、各种符号以及数学模式重音符"><a href="#箭头符号、各种符号以及数学模式重音符" class="headerlink" title="箭头符号、各种符号以及数学模式重音符"></a>箭头符号、各种符号以及数学模式重音符</h1><p><img src="http://images.yingwai.top/picgo/latexf3.jpg" alt=""></p>
+<h1 id="数列环境、其它风格的字体以及字体大小"><a href="#数列环境、其它风格的字体以及字体大小" class="headerlink" title="数列环境、其它风格的字体以及字体大小"></a>数列环境、其它风格的字体以及字体大小</h1><p><img src="http://images.yingwai.top/picgo/latexf4.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>LaTeX</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</title>
+    <url>/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/</url>
+    <content><![CDATA[<p><em>Samira Khodabandehlou</em></p>
+<p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=</a></p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>电子商务推荐系统已经转变为客户非常重要的决策辅助工具，利用信息技术和客户信息提供在线个性化推荐。同时，协同过滤推荐系统是电子商务系统成功的关键组成部分之一。尽管有协同过滤现在的普及和成功，这些系统仍然面临着一系列严重的限制，包括冷启动、用户-项目矩阵稀疏、可扩展性和用户兴趣在这段时间内的变化，这些都阻碍了对客户的准确推荐。虽然已有很多研究提出了克服这些局限性的方法，但还没有提供一个全面的模型来降低这些局限性：1)在产品类别层面上基于LRFM变量进行客户细分，以评估与公司的客户关系的长度、最近程度、频率和购买产品类别的金额；2)在每个聚类级别上基于用户-类别矩阵提取关联规则；3)根据人口统计变量进行客户细分；4)改变用户-项目矩阵并降低其维数；5)通过将细分方法的结果与CF加权组合来开发新的相似度函数。根据所获得的结果，本研究提出的系统消除了传统的CF约束，为客户的偏好提供了更准确、更合适的建议。</p>
+<p><strong>关键词：</strong>协同过滤；数据挖掘；电子商务；推荐系统；时态信息。</p>
+<p>本研究的主要目标包括：找出传统协同过滤在向合适的用户推荐合适商品方面的局限性，提出一个全面的、全新的推荐系统来消除传统CF的局限性，用真实的数据对推荐系统进行评估，以提供更准确、更符合顾客口味的推荐。</p>
+<h1 id="理论背景"><a href="#理论背景" class="headerlink" title="理论背景"></a>理论背景</h1><h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><p><strong>推荐系统</strong>是提高电子商务环境中决策过程质量的有用工具，因为它们通过提供必要的信息和有用的建议来帮助在线决策者选择与他们的愿望和要求一致的项目(Shambour and Lu，2015；Son，2016)。事实上，识别用户偏好的能力是个性化RS的核心(Kim等人，2011年)。Ricci等人。(2011)将RS定义为特定类型的信息系统，该信息系统：</p>
+<ol>
+<li>帮助客户选择他们没有亲身体验的项目；</li>
+<li>向顾客推荐商品；</li>
+<li>通过为客户提供信息来帮助他们决定购买哪种商品。</li>
+</ol>
+<p>创建推荐系统有五个阶段：收集数据、分析用户信息、计算相似度、选择邻居、预测并提出前N个项目的列表(Yahya和Al-Shamri，2016)。这些系统出现在20世纪90年代中期，通常分为三类(Lee，2010；Resnick，1994)：</p>
+<ol>
+<li><p><strong>协同过滤</strong>：这些系统根据一组被称为邻居的相似用户或相似项目的得分提供推荐(Kim等人，2005年)。CF是Netflix和Amazon等著名电子商务公司使用的最受欢迎的RS之一(Hernando等人，2016；Kim等人，2005年)。这些系统又根据它们用于预测用户偏好的算法类型分为两类(Ghazarian和Nematbakhsh，2014)：</p>
+<ul>
+<li><strong>基于记忆</strong>：这些系统使用用户项目评分矩阵和KNN算法来识别用户的邻居并预测他们的偏好(Ghazarian和Nematbakhsh，2014年；Hernando等人，2016年；Kim等人，2011年)，其中使用皮尔逊相关系数等方法计算用户之间的相似性(Bobadilla等人，2012年)。在本研究中，使用KNN算法和皮尔逊相关系数来提供建议。</li>
+<li><strong>基于模型</strong>：这些系统使用分段等方法处理用户的档案数据以提供建议，从而改进计算(Ghazarian和Nematbakhsh，2014；Hernando等人，2016)。</li>
+</ul>
+<p>尽管CF方法很受欢迎并取得了成功，但它们仍然面临着一些严重的限制。这些限制包括：</p>
+<ul>
+<li><strong>冷启动</strong>：在多个用户购买某个项目之前，系统不能向某人推荐该项目。这个问题被称为冷启动。用户的冷启动是指最近加入推荐系统并且没有关于他或她的足够信息的用户(Elahi等人，2016；Hu和Pu，2011；Kim等人，2011；Lee，2010；Son，2016；Sharma和Ray，2016)。</li>
+<li><strong>可伸缩性</strong>：由于客户数据和产品数据的绝对数量，系统必须花费大量的金钱和时间来提取所有客户之间的相似性，导致其生产率较低(Hu和Pu，2011；Hernando等人，2016；Keramati和Khaleghi，2014；Lee，2010)。</li>
+<li><strong>用户-项目矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致用户-项目矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
+<li><strong>用户偏好的改变</strong>：用户的品味和偏好可能会随着时间的推移而改变。例如，一位最近生了孩子的母亲可能对购买婴儿服装感兴趣，她最近的购买可能反映了这种新的关注。这是当；她可能从来没有对这样的物品有任何兴趣(Ding等人，2006年；岩田，2008年；Lee等人，2008年)。(Ding et al.，2006；Iwata，2008；Lee et al.，2008)。</li>
+</ul>
+<p>上述限制可能会对RS的性能产生负面影响，从而限制系统创建有意义和准确的推荐。</p>
+</li>
+<li><p><strong>基于内容的过滤器(Content-Based Filter，CBF)</strong>：该方法基于这样的概念，即用户对他们以前感兴趣的项目感兴趣。因此，这些系统根据项目和产品之间的相似性提供建议(Anderson和Hiralall，2009年；Elahi等人，2016年)。因此，这种方法取决于物品的规格和与这些规格相关的用户配置文件的可用性(Anderson and Hiralall，2009)。这是因为在互联网上存储大量不同种类电子产品的目录是一项非常困难的任务(Bobadilla等人，2012年)。因此，音乐或视频文件等一些产品的内容分析非常困难；这个问题使得CF比CBF要好得多(Anderson和Hiralall，2009；Kim等人，2011)。与CBF相比，CF在电子商务中具有更高的灵活性和与RS的兼容性，使其成为最常用和最有用的RS系统之一(Burke，2002；Iwata，2008；Wang and Wu，2012)。因此，在本研究中，使用CF的概念作为主要的推荐机制。</p>
+</li>
+<li><p>混合方法：一些RS使用上述系统的组合来减少它们的限制；更多细节将在下面的实验背景部分提供(Burke，2002；Keramati和Khaleghi，2014)。</p>
+</li>
+</ol>
+<h2 id="客户细分"><a href="#客户细分" class="headerlink" title="客户细分"></a>客户细分</h2><p>客户细分是一种非常有用的数据挖掘方法，用于在电子商务的RS中找到“邻居”，在电子商务中，使用特定的方法，如聚类，来选择一些用户作为邻居，以改进偏好的预测(Khodabandehlou和Niknafs，2016；Li等人，2011年)。</p>
+<p>在RS中，选择合适的属性进行分割是影响系统性能的重要因素之一。最近、频率和货币模型(RFM)的属性是基于分析客户购买行为的一种很好的客户细分方法，它已经成功地用于许多RS(Keramati和Khaleghi，2014；Khodabandehlou和Zivari Rahman，2017；Lee，2010)。各种研究表明，在RFM模型中加入L(客户关系长度)指标将导致对客户的更准确分析，并将提高细分的质量(Li等人，2011年)。因此，在本研究中，LRFM模型被用于客户细分和识别具有相似购买行为的客户类别。</p>
+<p>此外，分割算法对识别出的片段的质量起着重要的作用。在聚类算法中，K-Means算法被认为是最成功和最合适的分割方法(Khodabandehlou和Niknafs，2016)，在许多研究中证明了它与RSS的兼容性(Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Li等人，2011年)。K-Means是一种数据挖掘方法，它需要K的初始值，即聚类的数量，才能运行。确定最佳簇数的合适方法是自组织映射(SOM)算法。该算法是一种无监督神经网络，可以从数据中识别未知模式，并估计合适的聚类数量(Abidi和Ong，2000；Mosayebian等人，2012)。</p>
+<p>相关研究建议在RSS中结合K-Means和SOM算法使用两阶段分割方法，以获得更准确的结果(Keramati和Khaleghi，2014；Mosayebian等人，2012年)。因此，本研究将利用这一模式进行客户细分。</p>
+<h2 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h2><p>关联规则是数据挖掘的重要方法之一，用于分析RS大型数据库中各种商品之间的市场篮子。分析购物篮已经成为发现用户购物车之间关系的流行系统(Hsu等人，2004；Liu and Shih，2005a)。先验算法是最常见的关联规则之一(Hsu等人，2004；Liu和Shih，2005a，2005b)，用于在已经购买了另一件物品时找到购买特定物品的概率模式。在RS中，已经形成了许多关于不同用户的购买行为的规则(Keramati和Khaleghi，2014；Liu和Shih，2005a，2005b)。在这些规则吸引程度的衡量标准中，我们可以提到支持性规则和置信度规则，它们分别指发现的规则的传播度和可接受性(Hsu等人，2004；Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Liu和Shih，2005a，2005b)。</p>
+<h1 id="评估措施"><a href="#评估措施" class="headerlink" title="评估措施"></a>评估措施</h1><p>评价推荐系统的性能是保证推荐系统通用性的重要一步。有一些评价RSS准确性或性能的众所周知的度量；诸如精确度、覆盖率和F度量(为了在这两个度量之间创建平衡)，它们可以很好地显示推荐系统的性能(Bobadilla等人，2012年；Elahi等人，2016；Ghazarian和Nematbakhsh，2014；Shambour和Lu，2015；Son，2016)。因此，为了评估所提出的研究模型的性能，采用了这些测量方法。</p>
+<p>在公式(1)和(2)中，喜爱的项目是指必须推荐给用户的一组产品或项目，而推荐的项目是已经由系统推荐给用户的项目的集合。精确度表示推荐集合中正确推荐的百分比，并评估这些推荐的精确度和准确性。通过公式(1)计算：</p>
+<script type="math/tex; mode=display">
+{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \qquad (1)</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
+<script type="math/tex; mode=display">
+{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \qquad (2)</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
+<script type="math/tex; mode=display">
+{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \qquad (3)</script><h1 id="建议研究框架"><a href="#建议研究框架" class="headerlink" title="建议研究框架"></a>建议研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于产品类别-用户矩阵提取关联规则。在阶段4中，完成用户项目矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
+<p><img src="http://images.yingwai.top/picgo/derf1.png" alt=""></p>
+<center>
+    <i>图1 建议的研究系统的总体架构</i>
+</center>
+
+
+<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>数据准备(也称为数据预处理)是RSS开发过程中不可或缺的一步，占整个RSS开发所需时间的60%-70%。此步骤包括数据清理、数据集成和数据转换三个阶段。</p>
+<h3 id="数据清理"><a href="#数据清理" class="headerlink" title="数据清理"></a>数据清理</h3><p>数据清理过程包括完成缺失值、识别和消除离群值数据以及解决数据之间的冲突。此外，在此阶段，必须删除不相关或无用的字段或属性，如有必要，从初始数据集形成新的变量。在此阶段，将不完美的记录和信息不完整的客户从主数据集中剔除，数据集的记录从17,000条减少到15,386条，客户数量从2,542个减少到2,080个。为每个产品类别计算RFM变量。</p>
+<h3 id="数据集成"><a href="#数据集成" class="headerlink" title="数据集成"></a>数据集成</h3><p>为了更好地理解数据，并对每个数据集中的数据进行更好的科学管理，数据集成(将两个或多个数据集合并集成在一起)是必要的，这是数据准备的第二阶段。在这一阶段，客户交易数据与他们的个人资料数据(年龄、性别、教育程度、婚姻状况和职业)集成在一起。</p>
+<h3 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h3><p>在此阶段，必须将数据转换为适合数据挖掘和设计RS的不同形式。数据集中的字符串变量(如性别)将转换为数值变量和值。</p>
+<h2 id="基于LRFM模型的分割"><a href="#基于LRFM模型的分割" class="headerlink" title="基于LRFM模型的分割"></a>基于LRFM模型的分割</h2><p>本研究采用两阶段聚类法，结合SOM(确定最佳聚类数)和K-Means(创建聚类)方法进行分割。</p>
+<p>在此阶段，根据产品类别的RFM变量(每个产品类别的RFM变量的值分别计算)和L变量(客户关系的长度)进行客户细分。对于给定的客户，表1中给出了这些变量的样本，根据这些变量进行了细分。</p>
+<p>在本研究中，将LRFM模型用于产品类别层面的客户细分有三个原因，包括以下几个方面：</p>
+<ol>
+<li>通过减少user-item矩阵中的客户数量，提高了该方法的生产率和效率，从而降低了矩阵的可扩展性和稀疏性问题。</li>
+<li>这个模型不仅决定了顾客的价值，而且可以清楚地反映顾客的兴趣和偏好，例如，如果某一种产品的购买频率对于两个给定的顾客来说是相似的，可以推断这两个人对购买这两种商品的兴趣是一样的。M和R的变量也是以相同的方式推导出来的。</li>
+<li>模型中的产品类别变量R涉及客户最近的品味和偏好，由于最近的购买更能反映客户当前的兴趣和偏好，它将提供更准确的推荐，更符合客户当前的兴趣。</li>
+</ol>
+<p><img src="http://images.yingwai.top/picgo/dert1.png" alt=""></p>
+<center>
+    <i>表1 基于LRFM模型的客户细分属性</i>
+</center>
+
+
+
+<h2 id="基于product-category-user矩阵的关联规则提取"><a href="#基于product-category-user矩阵的关联规则提取" class="headerlink" title="基于product category-user矩阵的关联规则提取"></a>基于product category-user矩阵的关联规则提取</h2><p>为了提取关联规则，本研究使用了先验算法。在此阶段，使用product category-user矩阵(客户从单个产品类别购买的次数)的交易数据在前一阶段的每个聚类的级别提取关联规则。提取的规则用于确定每个目标客户的前N个推荐产品类别的列表。推荐的每个产品类别的优先级取决于其规则的可信度和支持措施。信任度和支持度值越大的产品类别，推荐优先级越高。此阶段中提取的规则的输出(即每个目标客户的预测产品类别)将作为下一阶段的输入。产品类别级规则提取的目的是减少用户-项目矩阵中的产品数量，有效缓解矩阵的可扩展性和稀疏性问题。</p>
+<h2 id="更改user-item矩阵"><a href="#更改user-item矩阵" class="headerlink" title="更改user-item矩阵"></a>更改user-item矩阵</h2><p>在CF系统中，user-item矩阵(包括购买/不购买项目的二进制数据或用户给予项目的分数)是关于购买偏好对客户进行聚类并确定目标客户的邻居的基础。然而，由于电子商务中商品种类繁多，该矩阵经常面临数据稀疏的问题。研究表明，推荐质量取决于用户-项目矩阵的密度。</p>
+<p>为了使该矩阵更加密集，以这样的方式使用分段和关联规则阶段的结果，即在用于确定目标客户的邻居的user-item矩阵中，他或她将仅与他或她的集群中的用户进行比较，并且项目将限于为目标客户预测的项目。由于减少了用户数和项目数，缓解了可伸缩性问题，提高了RS的速度和准确性。</p>
+<p>在他们的研究中，Lee等人。(2008)证明，最近进行的购买更能反映用户当前的偏好，最近添加到网站上出售的项目对用户更具吸引力。因此，基于表2，对于每个项目，考虑用户购买项目的时间(PT)和项目已经可供购买的时间(LT)(启动时间)的两个参数，并且改变user-item矩阵。</p>
+<p><img src="http://images.yingwai.top/picgo/dert2.png" alt=""></p>
+<center>
+    <i>表2 基于时间信息更改user-item矩阵</i>
+</center>
+
+
+
+
+
+<p>为了确定PT和LT变量的得分，在这个改变的矩阵中，首先根据这两个参数的潜伏期将这两个参数分为五类。因此，PT参数的分数包括过去购买(分数1)、过去购买(分数2)、最近购买(分数3)、最近购买(分数4)和最近购买(分数5)。对于LT参数，得分类似。根据表3，在用户-项目矩阵中，对于用户给出的分数，使用组合分数。例如，对于(2，5)的组合，分数将等于7(5+2)。在计算混合得分时，这两个参数的权重都是相同的。</p>
+<p><img src="http://images.yingwai.top/picgo/dert3.png" alt=""></p>
+<center>
+    <i>表3 对LT和PT参数进行评分</i>
+</center>
+
+
+<p>因此，创建了25(5×5)个双重组合，其中所有客户由55、54、53、…的组合表示。，11，其中，客户最好的类别是组合55(最近购买时间和最近上线时间的类别)和得分10，而客户最差的类别用11(最老的购买时间和最老的上线时间)表示，得分为2。根据这种评分方法，可以将客户划分为集群，并计算其相似度。创建这个新的用户-项目矩阵的目的是考虑用户随时间的喜好，从而提高推荐的准确性。</p>
+<h2 id="基于CF的相似度计算"><a href="#基于CF的相似度计算" class="headerlink" title="基于CF的相似度计算"></a>基于CF的相似度计算</h2><p>在CF系统中，计算每个目标客户与其他客户之间的相似度的方法有很多。最流行的方法之一是使用皮尔逊相关系数，与其他传统的统计方法相比，它提供了最好的预测和推荐结果(Bobadilla等人)。(2012年)。在皮尔逊的相关方法中，使用公式(4)测量两个给定客户$u$和$u’$之间的相似性：</p>
+<script type="math/tex; mode=display">
+Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \qquad (4)</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的user-item矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
+<h2 id="基于人口统计属性的细分"><a href="#基于人口统计属性的细分" class="headerlink" title="基于人口统计属性的细分"></a>基于人口统计属性的细分</h2><p>在这个阶段，使用两阶段聚类方法，根据年龄、性别、教育程度、婚姻状况和职业等人口统计变量对客户进行细分，然后计算他们的簇内相似度。因此，如果两个客户具有相似的人口统计属性，他们对某些项目的态度会相似，这在CF方法中没有反映出来。在本研究中，基于这些变量进行客户细分的目的是为了更好地选择新用户的邻居，通过克服冷启动问题有效改善推荐过程。</p>
+<h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于user-item矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
+<script type="math/tex; mode=display">
+Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \qquad (5)</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
+<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r_{u’,i})$，预测用户$u$对于项目$i$，$(r_{u,i})$的得分如下：</p>
+<script type="math/tex; mode=display">
+r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \qquad (6)</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r_{u’,i})$越相似，将以更高的加权比率用于预测$(r_{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
+<h1 id="评估提出的推荐方法"><a href="#评估提出的推荐方法" class="headerlink" title="评估提出的推荐方法"></a>评估提出的推荐方法</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
+<p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
+<center>
+    <i>表4 传统CF推荐系统与传统CF推荐系统的评价方法比较</i>
+</center>
+
+
+<p>在此阶段，将比较所提出的方法与传统CF推荐系统在不同N值(推荐项目数)下以及基于使用精确度、覆盖率和F度量的测试数据的结果的准确性。</p>
+<p>基于SOM算法，基于LRFM变量的最优聚类数为6个，基于人口统计变量的最优聚类数为5个。表4列出了基于不同N值的评估措施的传统方法和提出的方法的准确性。对于所有这些方法，参数K(邻居数目)的值都等于40。</p>
+<p>根据表4的结果，在每个准则下，所提出的系统都比传统系统具有更好的性能。事实上，传统系统(基于F-Measure)在5个推荐项目上的准确率为43.27%，而在所提出的系统中，该准确率为55.59%。在20个推荐项目中，传统方法的准确率为62.43%，其推荐系统的准确率为81.4%。在30个项目中，传统系统的准确率为68.54%，在提出的系统中，准确率为96.59%，表明该系统在30个项目上的准确率比传统系统提高了约28%。</p>
+<p><img src="http://images.yingwai.top/picgo/derf2.png" alt=""></p>
+<center>
+    <i>图2 比较传统方法和建议方法在不同N值下的性能(颜色请参见在线版本)</i>
+</center>
+
+
+<p><img src="http://images.yingwai.top/picgo/derf3.png" alt=""></p>
+<center>
+    <i>图3 评估不同K值对建议方法性能的影响(有关颜色，请参阅在线版本)</i>
+</center>
+
+
+<p>在此基础上，将推荐项数增加到N=30，两种方法的性能都有所提高。然而，增加数据数量并不会导致结果准确性的显著变化和提高。因此，将推荐项目的数量增加到某个阈值可以提高建议推荐的质量；该阈值等于N=30。为了更好地比较这两种方法的性能，图2描述了F-Measure准则的变化趋势。</p>
+<p>为了评估参数K的变化在所建议的研究方法的性能中的作用，图3中描述了三个不同N值的F测量值。基于图3，对于N参数的所有三个值，将邻居数增加到K=40将提高所提出的方法的性能。但是，进一步增加该参数会降低方法的精确度，从而对推荐质量产生负面影响。</p>
+<h1 id="结论及建议"><a href="#结论及建议" class="headerlink" title="结论及建议"></a>结论及建议</h1><p>本研究从冷启动、可扩展性、稀疏用户-项目矩阵以及用户兴趣的变化等方面考虑了电子商务中RS的基本和常见限制，以期解决或缓解这些限制。因此，为了克服这些局限性，人们利用一套数据挖掘方法，提出了一个综合性的电子商务推荐系统。综合研究结果，该系统的性能优于传统的CF系统。研究的总体结果表明，与传统系统相比，新的推荐系统的准确率有了显着的提高。因此，该系统对30个项目的推荐准确率比传统系统提高了约28%。此外，根据结果，系统在推荐30个项目时的准确率达到了最高水平；因此，当推荐项目数量超过30个时，传统系统和所提出的系统的准确率都没有明显的变化，因此，当推荐项目的数量超过30时，传统系统和本文提出的系统的准确率都没有明显的变化。例如，当推荐50个项目时，传统系统的准确率为68/84，新建议系统的准确率为94/45，这表明推荐项目的数量从30个增加到50个，准确率略有下降。因此，建议推荐项目的最大值为30个，因为这可能会导致计算和项目选择的复杂性。下面简要介绍一下研究成果和研究创新之处：</p>
+<ul>
+<li>在RS的开发过程中，在产品类别层面采用基于LRFM变量的细分方法，可以改进客户间相似度的确定方法，从而更准确、更恰当地选择目标客户的邻居。由于LRFM模型是识别客户购买行为和反映其偏好的合适方法之一，因此基于该模型在产品类别层次上进行细分，可以区分客户在购买产品类别时的偏好，并将具有相似品味和兴趣的客户归入同一聚类。例如，如果两个给定客户购买商品的频率相似，则可以得出结论，这两个客户对购买该产品类别中的商品表现出相同的兴趣水平。R和M的变量可以以相同的方式推断。另一方面，在产品类别水平上的变量R考虑了客户的利益，并且由于最近的购买更能反映客户的偏好，这将导致更准确的推荐。由于用户的喜好会随着时间的推移而改变，因此RS提供与客户当前兴趣相容的项目的能力会受到影响，这有时会导致推荐与客户当前喜好完全无关的项目。此外，在用户-项目矩阵中使用该分割的结果将降低矩阵的维数，将缓解KNN算法的稀疏矩阵和可伸缩性问题，这导致KNN算法的性能提高，因为在这种情况下，目标客户仅与用户-项目矩阵中他或她自己的集群内的客户相比较。因此，通过减少矩阵中的用户数，提高了KNN算法的速度和精度，改善了RS的整体性能。根据这一讨论和研究结果，可以安全地得出结论，使用LRFM模型可以加快提供建议的过程，并允许创建符合客户当前利益的准确建议。</li>
+<li>基于product category-user矩阵的关联规则提取提高了推荐方法的性能。这些规则通过评估产品类别之间的关系，预测他们购买的概率，并向目标客户推荐一套产品类别。将用户项矩阵限制为这些推荐产品类别中的项将降低矩阵的维数，有效地缓解了KNN算法的稀疏矩阵和可伸缩性问题。在该方法中，仅从从这些规则获得的产品类别中向目标客户提供推荐项目。结果表明，该方法通过减少矩阵中的项数，提高了KNN算法的速度和精度，有效地改善了RS的整体性能，研究结果表明该方法具有较好的性能。</li>
+<li>在RS的设计过程中考虑商品的购买时间以及它们在电子商务网站上的上线时间，将会提高推荐的质量。换言之，比起过去的购买，多留意顾客最近的购买，以及比起其他商品，多留意最近在网站上推出的商品，便可以更了解顾客现时的喜好，帮助他们找到更吸引人、更合意的商品。考虑到这些问题，RS才能更好地实现他们的最终目标，即向适当的个人提供适当的物品。在本研究中，这两个变量被用来创建一个新的用户-项目矩阵，并在表4和图2的基础上取得了很好的结果。</li>
+<li>为了更好地使推荐与用户的喜好相一致，人口特征的作用是无可否认的，因为大多数个人购买都取决于他们的年龄、性别、教育水平等。当它与其他变量如购买行为变量(包括LRFM和user-item矩阵)一起考虑时，这一作用更为显著，这是本研究通过定义一个新的相似性函数得出的。</li>
+</ul>
+<p>考虑到上述问题，本研究通过关注这些问题，利用各种数据挖掘方法，试图改进和完善以往关于CF系统的研究，以期提出一个准确率和性能最高的电子商务推荐系统。</p>
+<p>以下是对未来研究的一些建议：</p>
+<ol>
+<li>将CF方法和CBF方法相结合，开发了所提出的模型。</li>
+<li>研究基于个性特征的客户细分、其他人口统计变量(如地址和收入)以及其他行为变量(如购买商品的总数)对建议系统性能的影响。</li>
+<li>将所提出的方法应用于其他行业的数据集，以提供更强的通用性。</li>
+<li>使用大数据对提出的模型进行进一步评估，这些数据可以从大型网店获得。</li>
+</ol>
+<p>与过去的大多数研究一样，这项研究在实施和评估方面存在一些局限性，包括：</p>
+<ol>
+<li>使用的数据集的时间段限制为一年。</li>
+<li>研究数据仅限于一家网上服装店。</li>
+<li>正在研究的商店的有限顾客数量。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>数据挖掘</tag>
+        <tag>推荐系统</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文笔记 EaSTFLy: Efficient and secure ternary federated learning</title>
     <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-EaSTFLy-Efficient-and-secure-ternary-fe-derate-d-learning/</url>
     <content><![CDATA[<p><em>Ye Dong, Xiaojun Chen, Liyan Shen, Dakui Wang</em></p>
@@ -873,268 +1032,60 @@
       </tags>
   </entry>
   <entry>
-    <title>论文笔记 ASTRA: High Throughput 3PC over Rings with Application to Secure Prediction</title>
-    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/</url>
-    <content><![CDATA[<p><em>Harsh Chaudhari, Ashish Choudhury, Arpita Patra, Ajith Suresh</em></p>
-<p>ACM CCSW 2019</p>
-<p><a href="https://eprint.iacr.org/2019/429" target="_blank" rel="noopener">https://eprint.iacr.org/2019/429</a></p>
-<p><a href="https://dl.acm.org/doi/10.1145/3338466.3358922" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3338466.3358922</a></p>
+    <title>不经意传输（Oblivious Transfer）</title>
+    <url>/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/</url>
+    <content><![CDATA[<p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
 <a id="more"></a>
-<p><img src="http://images.yingwai.top/picgo/ASTRA.jpg" alt=""></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>安全计算的具体效率一直是近年来许多工作关注的焦点。在本论文中，作者提出了一种具体有效的协议，用于模 $2^l$ 整数环上的安全三方计算（3PC），该协议具有半诚实模型和恶意模型上的安全性。由于环上的计算模拟了现实系统体系结构上的计算，所以环上的安全计算近来获得了发展势头。</p>
-<p>​        在离线-在线模式中，本文的结构具体地呈现了最有效的在线阶段。在半诚实的设置下，本文的协议在在线阶段每个乘法门需要2个环元素的通信。在恶意设置下，本文的协议在在线阶段每个乘法门需要4个元素的通信，比最先进的协议需要的5个元素少。使用选择性中止和公平这两个安全概念来实现的公平恶意协议，与仅针对输出门的中止安全性的恶意协议相比，涉及的通信稍微多一些。</p>
-<p>​        作者将本文的技术从3PC应用到安全的服务器辅助机器学习（ML）推理机制中，用于一系列预测函数——线性回归、线性SVM回归、Logistic回归和线性SVM分类。本文的设置考虑了拥有训练好的模型参数的模型所有者和查询的客户，后者愿意根据前者的模型参数来学习他查询的预测。输入和计算外包给一组三个非合谋的服务器。本文的构造既迎合了半诚实的世界，也迎合了恶意的世界，比现有的构造表现得更好。</p>
-<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><ul>
-<li><p>作者遵循离线-在线模式，提出了在环 $\mathbb{Z}_{2^l}$（包括布尔环 $\mathbb{Z}_{2^1}$）上的3PC构造，具有最有效的在线阶段。</p>
-<p>虽然重点放在在现阶段，但离线阶段的的成本也有注意并保持在可控范围内。</p>
+<p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
+<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
+<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m_0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m_{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b_0$ 和 $b_1$，而R只能选择接受其中一个比特 $b_{\theta}$。协议要保证S和R的安全，即：</p>
+<ul>
+<li>S不能知道任何关于 $\theta$ 的信息；</li>
+<li>R不能知道任何关于 $b_{1-\theta}$ 的信息。</li>
+</ul>
+<p>为了达成上面两点要求，构造如下协议：</p>
+<ol>
+<li><p>S选择好两个比特信息 $b_0$ 和 $b_1$；</p>
 </li>
-<li><p>作者给出了一系列满足半诚实安全和恶意安全的构造。</p>
-<p>将技术应用于外包环境中的一系列预测函数的安全预测，并构建了一些容忍半诚实和恶意对手的结构。</p>
+<li><p>S运行密钥生成算法（例如RSA）生成公私钥对（$sk,pk$）；</p>
 </li>
-</ul>
-<p>本文所有的构建都流露出的一个共同特征：在线阶段不到三对参与者之间需要进行功能依赖的通信，从而产生更好的在线性能。</p>
-<h2 id="设定"><a href="#设定" class="headerlink" title="设定"></a>设定</h2><p>本文考虑一组三方 $\mathcal{P}=\left\{P_0,P_1,P_2\right\}$，它们在同步网络中通过成对的私有和可信信道连接。要计算的函数 $f$ 被表示为环 $\mathbb{Z}_{2^l}$ 上的电路 ckt，该环由2输入加法和乘法门组成。假设 ckt 的拓扑是公知的。术语 D​ 表示 ckt 的乘法深度，而 I、O、A、M 分别表示 ckt 中的输入线、输出线、加法门和乘法门的数目。本文使用符号 $w_x$ 来表示导线 $w$，其中值 $x$ 流经它。本文使用 $g=(w_x,w_y,w_z)$ 来表示 ckt 中具有左输入线 $w_x$、右输入线 $w_y$ 和输出线 $w_z$ 的门。在本文的协议中，将 $\mathcal{P}$ 划分为互不相交的集合 $\left\{P_0\right\}$ 和 $\left\{P_1,P_2\right\}$，其中 $P_0$ 在离线阶段充当“分配器”进行“预处理”，在线阶段“评估者” $P_1$、$P_2$ 用它来评估 ckt。本文使用上标“$s$”和“$m$”分别区分半诚实和恶意设置中的协议。布尔环 $\mathbb{Z}_{2^1}$ 上的协议可以通过将算术加法$(+)$和乘法$(\times)$分别替换为异或$(\oplus)$和与$(\cdot)$来获得。</p>
-<h3 id="共享密钥设置"><a href="#共享密钥设置" class="headerlink" title="共享密钥设置"></a>共享密钥设置</h3><p>为了保存双方之间的通信，使用为伪随机函数（PRF）$F$ 建立预共享随机密钥的一次性设置。在3PC设置[2，30，46]中的已知协议中已经使用了类似的设置。这里 $F:{\{0，1\}}^\kappa \times {\{0，1\}}^\kappa \to X$ 是安全的PRF，同域 $X$ 是 $\mathbb{Z}_{2^l}$。这组密钥是：</p>
-<ul>
-<li>每对参与方之间共享一个密钥— $k_{01}, k_{02}, k_{12}$，分别用于参与方$(P_0,P_1), (P_0,P_2), (P_1,P_2)$。</li>
-<li>所有各方之间的一个共享密钥— $k_{\mathcal{p}}$。</li>
-</ul>
-<p>本文通过可以使用任何标准安全MPC协议实现的功能 $\mathcal{F}_{\rm setup}$ 来建立密钥设置模型。</p>
-<h3 id="共享语义"><a href="#共享语义" class="headerlink" title="共享语义"></a>共享语义</h3><p>在本节中，将解释本工作中使用的秘密共享的两种变体。这两个变体都在算术（$\mathbb{Z}_{2^l}$）和布尔环（$\mathbb{Z}_{2^1}$）上运行。</p>
-<p>$[\cdot]$-共享：如果 $P_1$ 和 $P_2$ 分别持有份额 $v_1$ 和 $v_2$，使得 $v=v_1+v_2$，则称值 $v$ 在$P_1,P_2$之间是 $[\cdot]$-共享的。用 $[\cdot]_{P_i}$ 表示 $P_i, i∈\{1,2\}$的 $[\cdot]$-份额。</p>
-<p>$[\![\cdot]\!]$-共享：值 $v$ 在 $P_0, P_1, P_2$ 之间是$[\![\cdot]\!]$-共享的，如果</p>
-<ul>
-<li>存在值 $\lambda_v, m_v$ 使得 $v=m_v - \lambda_v$；</li>
-<li>$P_0$ 持有 $\lambda_{v,1}$ 和 $\lambda_{v,2}$ 使得 $\lambda_{v} = \lambda_{v,1} + \lambda_{v,2}$；</li>
-<li>$P_1$ 和 $P_2$ 分别持有 $(m_v, \lambda_{v,1})$ 和 $(m_v, \lambda_{v,1})$。</li>
-</ul>
-<p>本文将各方的$[\![\cdot]\!]$-共享表示为$[\![v]\!]_{P_0} = (\lambda_{v,1}, \lambda_{v,2}), [\![v]\!]_{P_1} = (m_v, \lambda_{v,1}) $和 $[\![v]\!]_{P_2} = (m_v, \lambda_{v,2})$。用$[\![v]\!] = (m_v, [\lambda_{v}])$表示 $v$ 的$[\![\cdot]\!]$-共享份额。</p>
-<h3 id="秘密共享方案的线性"><a href="#秘密共享方案的线性" class="headerlink" title="秘密共享方案的线性"></a>秘密共享方案的线性</h3><p>给定 $x,y \in \mathbb{Z}_{2^l}$ 和公共常数 $c_1, c_2 \in \mathbb{Z}_{2^l}$的$[\cdot]$-共享，各方可以局部计算 $[c_1x+c_2y]$：</p>
-<script type="math/tex; mode=display">[c_1x+c_2y]=(c_1x_1+c_2y_1, c_1x_2+c_2y_2)=c_1[x]+c_2[y]</script><p>很容易看出线性关系也扩展到$[\![\cdot]\!]$-共享。线性属性使各方能够<strong>本地</strong>执行与公共常量的加法和乘法等操作。</p>
-<h2 id="3PC协议"><a href="#3PC协议" class="headerlink" title="3PC协议"></a>3PC协议</h2><h3 id="半诚实下的3PC"><a href="#半诚实下的3PC" class="headerlink" title="半诚实下的3PC"></a>半诚实下的3PC</h3><p>协议 $\prod ^{\rm s}_{\rm 3pc}$ 由三个步骤组成—输入共享、电路评估以及输出重构。所有阶段（重构输出除外）都分为离线和在线阶段，其中独立于实际输入的步骤可以在脱机阶段执行。</p>
-<h4 id="输入共享"><a href="#输入共享" class="headerlink" title="输入共享"></a>输入共享</h4><p>在共享输入阶段，每一方都为自己的输入生成一个随机的$[\![\cdot]\!]$-共享。以下是初始共享协议 $\prod^{\rm s}_{\rm Sh}$：</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<ul>
-<li>If $P_i = P_0$, parties $P_0, P_j$ for $j \in \{1, 2\}$ locally sample a random $\lambda_{x,j} \in \mathbb{Z}_{2^l}$. Moreover, $P_i$ sets $[\![x]\!]_{P_i} = (\lambda_{x,1}, \lambda_{x,2})$.</li>
-<li>If $P_i = P_1$, parties $P_0, P_1$ sample a random $\lambda_{x,1} \in \mathbb{Z}_{2^l}$ while all the parties in $\mathcal{P}$ sample a random $\lambda_{x,2} \in \mathbb{Z}_{2^l}$.</li>
-<li>If $P_i = P_2$, parties $P_0, P_2$ sample a random $\lambda_{x,2} \in \mathbb{Z}_{2^l}$ while all the parties in $\mathcal{P}$ sample a random $\lambda_{x,1} \in \mathbb{Z}_{2^l}$.</li>
-</ul>
-<p><strong>Online:</strong></p>
-<p>​        $P_i$ computes $\lambda_x = \lambda_{x,1} + \lambda_{x,2}$ and sends $m_x = x + \lambda_x$ to every $P_j$ for $j \in \{1,2\}$ who then sets $[\![x]\!]_{P_j} = (m_x, \lambda_{x,j})$.</p>
-<hr>
-<p>在离线阶段根据输入方的序号，使用不同的初始化手段，生成了 $P_0$ 的份额 $[\![x]\!]_{P_0}=(\lambda_{x,1}, \lambda_{x,2})$，而不用任何交互（因为随机数都是使用服务器两两之间的公共随机源生成的，可以理解为编程语言中把同样的随机种子输入到random函数——只要随机种子一样生成的随机数序列就一样）。</p>
-<h4 id="电路评估"><a href="#电路评估" class="headerlink" title="电路评估"></a>电路评估</h4><p>在电路评估阶段，各方以$[\![\cdot]\!]$-共享的方式评估 ckt。以拓扑顺序评估 ckt 中的每个门 $g$：给定 $g$ 的输入，各方为 $g$ 的输出生成$[\![\cdot]\!]$-共享。</p>
-<h5 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h5><p>如果 $g$ 是加法门 $(w_x,w_y,w_z)$，可以利用$[\![\cdot]\!]$-共享的线性在本地完成。以下是加法协议 $\prod_{\rm Add} (w_x, w_y, w_z)$：</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<p>​        $P_0, P_1$ set $\lambda_{z,1} = \lambda_{x,1} + \lambda_{y,1}$, while $P_0, P_2$ set $\lambda_{z,2} = \lambda_{x,2} + \lambda_{y,2}$.</p>
-<p><strong>Online:</strong></p>
-<p>​        $P_1$ and $P_2$ set $m_z = m_x + m_y$.</p>
-<hr>
-<p>这里的加法协议感觉在线阶段完全可以在本地完成，可以不需要在线阶段。</p>
-<h5 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h5><p>如果 $g=(w_x,w_y,w_z)$ 是乘法门，则运行以下乘法协议 $\prod ^{\rm s}_{\rm Mul}$：</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<ul>
-<li>$P_0$ and $P_1$ locally sample random $\lambda_{z,1}, \gamma_{xy, 1} \in \mathbb{Z}_{2^l}$, while $P_0$ and $P_2$ locally sample random $\lambda_{z,2} \in \mathbb{Z}_{2^l}$.</li>
-<li>$P_0$ computes $\gamma_{xy} = \lambda_x \lambda_y$ and sends $\gamma_{xy,2} = \gamma_{xy} - \gamma_{xy,1}$ to $P_2$.</li>
-</ul>
-<p><strong>Online:</strong></p>
-<ul>
-<li>$P_i$ for $i \in \{1,2\}$ locally computes $[m_z]_{P_i} = (i-1)m_xm_y - m_x[\lambda_y]_{P_i} - m_y[\lambda_x]_{P_i} + [\lambda_z]_{P_i} + [\gamma_{xy}]_{P_i}$.</li>
-<li>$P_1, P_2$ mutually exchange their shares and reconstruct $m_z$.</li>
-</ul>
-<hr>
-<p>将上面的公式相加一下即可验证其正确性。</p>
-<h4 id="输出重构"><a href="#输出重构" class="headerlink" title="输出重构"></a>输出重构</h4><p>在输出重构阶段，各方重构$[\![\cdot]\!]$-共享电路输出。为了重构 $[\![y]\!]$，可以观察到每个 $P_i$ 缺失的份额都在另外两方手里。因此另外两方的其中一方将缺失的份额发送给 $P_i$ 后，通过计算 $y = m_y - \lambda_{y,1} - \lambda_{y,2}$ 即可重构输出 $y$，将其称为重构协议 $\prod ^{\rm s}_{\rm Rec}([\![y]\!], \mathcal{P})$。</p>
-<p>把上面三个阶段总结起来，有以下的协议 $\prod ^{\rm s}_{\rm 3pc}$：</p>
-<hr>
-<p><strong>Pre-processing (Offline Phase):</strong></p>
-<ul>
-<li><em>Input wires:</em> For $j = 1, …,l$, corresponding to the circuit-input $x_j$, parties execute the offline steps of the instance $\prod ^{\rm s}_{\rm Sh}(P_i, x_j)$.</li>
-<li>For each gate $g$ in the topological order, execute offline steps of the instance $\prod ^{\rm s}_{\rm Mul}(w_{xj}, w_{yj}, w_{zj})$ if $g$ is the $j$th multiplication gate where $j \in \{1,…,\rm M\}$ or respectively offline steps of the instance $\prod _{\rm Add}(w_{xj}, w_{yj}, w_{zj})$ if $g$ is the $j$th addition gate where $j \in \{1,…,\rm A\}$.</li>
-</ul>
-<p><strong>Circuit Evaluation (Online Phase):</strong></p>
-<ul>
-<li><em>Sharing Circuit-input Values:</em> For $j = 1, …,l$, corresponding to the circuit-input $x_j$, parties execute the online steps of the instance $\prod ^{\rm s}_{\rm Sh}(P_i, x_j)$, where $P_i$ is the party designated to provide $x_j$.</li>
-<li><em>Gate Evaluation:</em> For each gate in $g$ in ckt in the topological order, $P_1, P_2$ execute the online steps of the instance $\prod ^{\rm s}_{\rm Mul}(w_{xj},w_{yj},w_{zj})$ if $g$ is the $j$th multiplication gate where $j \in \{1,…,\rm M\}$ or respectively offline steps of the instance $\prod _{\rm Add}(w_{xj}, w_{yj}, w_{zj})$ if $g$ is the $j$th addition gate where $j \in \{1,…,\rm A\}$.</li>
-<li><em>Output Reconstruction:</em> Let $[\![y_1]\!],…,[\![y_\rm O]\!]$ be the shared function outputs. The parties in $\mathcal{P}$ reconstruct $y_j$ for $j = 1,…,\rm O$ by executing $\prod ^{\rm s}_{\rm Rec}([\![y_j]\!], \mathcal{P})$.</li>
-</ul>
-<hr>
-<h3 id="恶意下的3PC"><a href="#恶意下的3PC" class="headerlink" title="恶意下的3PC"></a>恶意下的3PC</h3><p>跟半诚实设置下的一样，恶意设置下的3PC协议 $\prod ^{\rm m}_{\rm 3pc}$ 也由输入共享、电路评估和输出重构三个部分组成。</p>
-<h4 id="输入共享和输出重构"><a href="#输入共享和输出重构" class="headerlink" title="输入共享和输出重构"></a>输入共享和输出重构</h4><p>在恶意的设置下，要保证服务器之间的共享份额是一致的。在 $\prod ^{\rm s}_{\rm Sh}$ 中，$\lambda$ 的共享是一致的，因为它不需要交互就可以生成。但如果一个腐败的 $P_0$ 拥有 $x$ 并且想制造一个不一致的 $[\![x]\!]$-共享，它可以分别发送两个不一样的 $m_x$ 给 $P_1$ 和 $P_2$。为了检查这种情况的发生，$P_1$ 和 $P_2$ 交换 $H(m_x)$ 并在不一致的时候中止。</p>
-<p>令 $[\![y]\!]$ 为一个待重构的一致的共享，$[\![y]\!]_{P_0} = (\lambda_{y,1}, \lambda_{y,2})$、$[\![y]\!]_{P_1} = (m’_{y}, \lambda_{y,1})$ 和 $[\![y]\!]_{P_2} = (m’’_{y}, \lambda_{y,2})$ 分别为三个服务器的份额。协议 $\prod ^{\rm m}_{\rm Rec}([\![y]\!], \mathcal{P})$ 允许每一个诚实方输出 $y$ 或 $\perp$：</p>
-<hr>
-<p><strong>Online:</strong></p>
-<ul>
-<li>$P_0$ and $P_2$ send $\lambda_{y,2}$ and $H(\lambda’_{y,2})$ respectively to $P_1$.</li>
-<li>$P_0$ and $P_1$ send $\lambda_{y,1}$ and $H(\lambda’_{y,1})$ respectively to $P_2$.</li>
-<li>$P_1$ and $P_1$ send $m’_{y}$ and $H(m’_{y})$ respectively to $P_0$.</li>
-</ul>
-<p>$P_i$ for $i \in \{0,1,2\}$ abort if the received values mismatch. Else $P_i$ sets $y = m_y - \lambda_{y,1} - \lambda_{y,2}$.</p>
-<hr>
-<p>检查的过程中，其中一方发送哈希值可以提高效率。</p>
-<h4 id="电路评估-1"><a href="#电路评估-1" class="headerlink" title="电路评估"></a>电路评估</h4><p>在恶意设置下加法协议 $\prod _{\rm Add}$ 同样是安全的，因为它只涉及本地操作。挑战在于构造乘法协议 $\prod ^{\rm m}_{\rm Mul}$，令其可以容忍其中一方腐败。可以观察到有两种情况：</p>
-<ul>
-<li>$P_0$ 是腐败的：在离线阶段会令 $\gamma_{xy} \neq \lambda_x \lambda_y$</li>
-<li>$P_1$ 或 $P_2$ 是腐败的：会在在线阶段扰乱，使诚实的另一方重构出一个错误的 $m_z$</li>
-</ul>
-<p>先看下面的情况，假如 $P_1$ 现在需要验证它重构的 $m_z$ 是否是正确的，可以向 $P_0$ 求助：$P_1$ 可以发送 $m_x, m_y$ 给 $P_0$，因为 $P_0$ 在离线阶段就已经知道 $\lambda_x, \lambda_y$ 和 $\lambda_z$，因此它可以计算出 $m_z$ 并发送给 $P_1$，以此得到验证。但发送 $m_x, m_y$ 给 $P_0$ 会导致打破了原有共享的私密性，所以 $P_1$ 可以对应的值盲化后发送给 $P_0$：$m^{\star}_x = m_x + \delta_x$ 和 $m^{\star}_y = m_y + \delta_y$，然后 $P_0$ 计算 $m^{\star}_z = -m^{\star}_x \lambda_y - m^{\star}_y \lambda_x +\lambda_z + 2\gamma_{xy}$。注意到：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-m^{\star}_z &= -m^{\star}_x \lambda_y - m^{\star}_y \lambda_x +\lambda_z + 2\gamma_{xy}\\
- &= -(m_x + \delta_x) \lambda_y - (m_y + \delta_y) \lambda_x +\lambda_z + 2\gamma_{xy}\\
- &= (m_z - m_x m_y) - \chi
-\end{align}</script><p>假设 $P_0$ 知道 $\chi = \delta_x \lambda_y + \delta_y \lambda_x - \gamma_{xy}$，它就可以计算出 $m^{\star}_z + \chi$ 然后发送给 $P_1$。因为 $P_1$ 知道 $m_x, m_y$ 的值，因此它可以验证它重构的 $m_z$ 的正确性，对于 $P_2$ 来说也可以这样验证。</p>
-<p>现在来描述如何使 $P_0$ 获得 $\chi$：首先直接让 $P_0$ 获得 $\chi$ 会导致共享的私密性被破坏，因为 $P_0$ 知道 $\lambda_x, \lambda_y$ 和 $\gamma_{xy}$ 的值，同时在在线阶段又得到 $m_x + \delta_x$ 和 $m_y + \delta_y$，导致 $P_0$ 可以推导出 $m_x, m_y$ 之间的关系。所以还要在 $\chi$ 中加入一个随机值 $\delta_z$ 进行盲化：$\delta_x \lambda_y + \delta_y \lambda_x + \delta_z - \gamma_{xy}$。</p>
-<p>生成 $\chi$ 的过程：$P_1, P_2$ 在本地生成随机数 $\delta_x, \delta_y, \delta_z \in \mathbb{Z}_{2^l}$，计算各自的 $\chi$ 的 $[\cdot]$-共享并发送给 $P_0$。对于 $i \in \{1,2 \}$，令 $[\chi]_{P_i} = \chi_i$。$P_0$ 在本地将共享的份额相加得到 $\chi$。在以上步骤中，腐败的一方可能会在执行过程中引入错误，使得 $P_0$ 获得的 $\chi$ 是错误的。</p>
-<p>总而言之在离线阶段有两个问题需要解决：</p>
-<ul>
-<li>腐败的 $P_0$ 可以不正确地共享 $\gamma_{xy}$</li>
-<li>腐败的 $P_1$ 或 $P_2$ 可以发送错误的 $\chi$ 的 $[\cdot]$-共享给 $P_0$</li>
-</ul>
-<p>为了解决这些问题，$P_0$ 一旦获得 $\chi$，就用下面的方式计算 $a = \delta_x - \lambda_x$、$b = \delta_y - \lambda_y$ 和 $c = (\delta_z + \delta_x \delta_y) - \chi$ 的 $[\![\cdot]\!]$-共享：</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-[\![a]\!]_{P_0} &= (\lambda_{x,1}, \lambda_{x,2}), & [\![b]\!]_{P_0} &= (\lambda_{y,1}, \lambda_{y,2}), & [\![c]\!]_{P_0} &= (\chi_{1}, \chi_{2})\\
- [\![a]\!]_{P_1} &= (\delta_x, \lambda_{x,1}), & [\![b]\!]_{P_1} &= (\delta_y, \lambda_{y,1}), & [\![c]\!]_{P_1} &= (\delta_z + \delta_x \delta_y, \chi_{1})\\
- [\![a]\!]_{P_2} &= (\delta_x, \lambda_{x,2}), & [\![b]\!]_{P_2} &= (\delta_y, \lambda_{y,2}), & [\![c]\!]_{P_2} &= (\delta_z + \delta_x \delta_y, \chi_{2})
-\end{align*}</script><p>现在 $([\![a]\!], [\![b]\!], [\![c]\!])$ 是一个乘法三元组 $(c=ab)$，当且仅当 $P_0$ 正确分享了 $\gamma_{xy}$（当它腐败时）以及重构的 $\chi$ 是正确的（当 $P_1,P_2$ 其中之一腐败时），因为：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda_x \lambda_y - \delta_x \lambda_y - \delta_y \lambda_x \\
- &= (\delta_x \delta_y + \delta_z) - (\delta_x \lambda_y + \delta_y \lambda_x + \delta_z - \gamma_{xy}) \\
-  &= (\delta_x \delta_y + \delta_z) - \chi = c
-\end{align}</script><p>然后作者给出了一个检查乘法三元组是否正确的协议，这里需要用到另一个有效的乘法三元组 $([\![d]\!], [\![e]\!], [\![f]\!])$，它们满足以下条件：</p>
-<ul>
-<li>$d, e, f$ 都是随机且私密的</li>
-<li>$f = d e$</li>
-</ul>
-<p>这里假设这个三元组是通过 $\mathcal{F}_{\rm trip}$ 生成的，在[2, 30]中有具体构造，下面是[30]中的构造：</p>
-<p><img src="http://images.yingwai.top/picgo/ASTRAf1.png" alt=""></p>
-<p>用  $\prod _{\rm trip}$ 表示该功能的实例化，下面是作者给出检查有效性的协议 $\prod _{\rm prc}$：</p>
-<hr>
-<ul>
-<li>Parties locally compute $[\![\rho]\!] = [\![a]\!] - [\![d]\!]$ and $[\![\sigma]\!] = [\![b]\!] - [\![e]\!]$.</li>
-<li>Parties reconstruct $\rho$ and $\sigma$ by executing $\prod ^{\rm m}_{\rm Rec}([\![\rho]\!], \mathcal{P})$ and $\prod ^{\rm m}_{\rm Rec}([\![\sigma]\!], \mathcal{P})$ respectively.</li>
-<li>Parties locally compute $[\![\tau]\!] = [\![c]\!] - [\![f]\!] - \sigma [\![d]\!] - \rho [\![e]\!] - \sigma \rho$.</li>
-<li>Parties reconstruct $\tau$ by executing $\prod ^{\rm m}_{\rm Rec}([\![\tau]\!], \mathcal{P})$ and output $\perp$, if $\tau \neq 0$.</li>
-</ul>
-<hr>
-<p>协议 $\prod _{\rm prc}$ 需要两对秘密共享三元组 $(a, b, c)$ 和 $(d, e, f)$，验证前一个三元组是否满足 $c = a b$：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\tau &= c - f - \sigma d - \rho e - \sigma \rho \\
- &= c - de - (b - e)d - (a - d)e - (b - e)(a - d) \\
- &= c - ab = \Delta
-\end{align}</script><p>所以 $\tau = 0$ 时 $(a,b,c)$ 有效，反之无效。而检验 $\tau$ 是否为0只需要一方跟另外两方各通信一次即可：(1) $P_0$ 跟 $P_1$ 检查 $m_\tau - \lambda_{\tau,1}$ 跟 $\lambda_{\tau, 2}$ 是否相等；(2) $P_1$ 跟 $P_2$ 检查 $m_\tau - \lambda_{\tau,2}$ 跟 $\lambda_{\tau, 1}$ 是否相等；(3) $P_0$ 跟 $P_1$ 检查 $m_\tau - \lambda_{\tau,2}$ 跟 $\lambda_{\tau, 1}$ 是否相等，而不是 $\prod ^{\rm m}_{\rm Rec}$ 的通信三次（两次发送一次接收）。下面给出恶意设置下的乘法协议 $\prod ^{\rm m}_{\rm Mul}(w_x, w_y, w_z)$：</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<ul>
-<li>Parties $P_0, P_1$ locally sample random $\lambda_{z,1}, \gamma_{xy,1} \in \mathbb{Z}_{2^l}$, while $P_0, P_2$<br>locally sample a random $\lambda_{z,2}$. $P_0$ locally computes $\gamma_{xy}= \lambda_x \lambda_y$ and<br>sends $\gamma_{xy,2} = \gamma_{xy} - \gamma_{xy,1}$ to $P_2$.</li>
-<li>Parties execute $\prod _{\rm trip}$ to generate a triple $([\![d]\!], [\![e]\!], [\![f]\!])$.</li>
-<li>Parties $P_1, P_2$ locally sample random $\delta_x, \delta_y, \delta_z \in \mathbb{Z}_{2^l}$ and compute<br>$[\delta_z]$ non-interactively.</li>
-<li>$P_i$ for $i \in \{1, 2\}$ computes $[\chi]_{P_i} = \delta_x[\lambda_y]_{P_i} + \delta_y[\lambda_x]_{P_i} + [\delta_z]_{P_i} − [\gamma_{xy}]_{P_i}$ and sends $[\chi]_{P_i}$ to $P_0$, who computes $\chi$.</li>
-<li>Parties locally compute the $[\![\cdot]\!]$-shares of the values $a = \delta_x - \lambda_x$, $b = \delta_y - \lambda_y$ and $b = (\delta_z + \delta_x \delta_y) - \chi$, as described in the text.</li>
-<li>Parties execute $\prod _{\rm prc}$ on $([\![a]\!], [\![b]\!], [\![c]\!])$ and $([\![d]\!], [\![e]\!], [\![f]\!])$.</li>
-</ul>
-<p><strong>Online:</strong></p>
-<ul>
-<li>$P_i$ for $i \in \{1, 2\}$ locally computes $[m_z]_{P_i} = (i-1)m_xm_y - m_x[\lambda_y]_{P_i} - m_y[\lambda_x]_{P_i} + [\lambda_z]_{P_i} + [\gamma_{xy}]_{P_i}$. $P_1, P_2$ mutually exchange their shares and reconstruct $m_z$.</li>
-<li>$P_1$ sends $m^{\star}_x = m_x + \delta_x$, $m^{\star}_y = m_y + \delta_y$ to $P_0$, while $P_2$ sends $H(m^{\star}_x || m^{\star}_{y})$ to $P_0$.$P_0$ outputs $\perp$, if the received values are inconsistent.</li>
-<li>$P_0$ computes $m^{\star}_z = -m^{\star}_x \lambda_y - m^{\star}_y \lambda_x +\lambda_z + 2\gamma_{xy} + \chi$ and sends $H(m^\star_z)$ to both $P_1$ and $P_2$.</li>
-<li>$P_i$ for $i \in \{1, 2\}$ abort if $H(m^\star_z) \neq H(m_z - m_x m_y + \delta_z)$.</li>
-</ul>
-<hr>
-<p>散列值的使用提高了效率，减少了通信的开销。</p>
-<p>对于正确性，首先考虑腐败的 $P_0$ 不正确地共享使得 $\gamma_{xy} = \lambda_x \lambda_y + \Delta$ 的情况，其中 $\Delta$ 是 $P_0$ 引入的不为零的干扰。这种情况在执行 $\prod _{\rm prc}$ 就会被检测到，因为最终计算出来并重构的 $\tau \neq 0$。同样的， $P_1$（或 $P_2$）在协议 $\prod ^{\rm m}_{\rm Mul}$ 离线阶段的第四步时发送 $\chi_1 + \Delta$（或 $\chi_2 + \Delta$） 给 $P_0$ 使其重构的 $\chi’ = \chi + \Delta$，也会导致 $\tau \neq 0$ 从而被诚实方发现并中止计算。</p>
-<p>然后是另一种情况，假如 $P_1$（或 $P_2$）在重构 $m_z$ 时发送了错误的 $[m_z]_{P_i}$ 给另一方，会在最后一步验证哈希值是否相等的时候被检测出来；而在在线阶段第二步中 $P_0$ 对 $m^{\star}_x,m^{\star}_y$ 的一致性检查也确保了它所计算出来的 $m^{\star}_z$ 是正确的。</p>
-<h4 id="公平的实现"><a href="#公平的实现" class="headerlink" title="公平的实现"></a>公平的实现</h4><p>作者通过一种公平重构协议 $\prod_{\rm fRec}$ 来重构电路输出，将 $\prod ^{\rm m}_{\rm 3pc}$ 的安全性提高到公平，保证交易的三方都不能通过损害别人的利益而得到自己不应得的利益。这里使用到了承诺方案，还是利用了服务器之间的公共随机源并使用PRF来为承诺方案引入随机性：</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<ul>
-<li>Parties $P_0, P_1$ locally sample a random $r_1 \in \mathbb{Z}_{2^l}$, prepare and send commitments of $\lambda_{y,1}$ and $r_1$ to $P_2$. Similarly, parties $P_0, P_2$ locally sample a random $r_2 \in \mathbb{Z}_{2^l}$, prepare and send commitments of $\lambda_{y,2}$ and $r_2$ to $P_1$. The randomness needed for both commitments are sampled from the PRF key-setup.</li>
-<li>$P_1$ (resp. $P_2$) aborts if the received commitments mismatch.</li>
-</ul>
-<p><strong>Online:</strong></p>
-<ul>
-<li>$P_1, P_2$ compute a commitment of $m_y$ using randomness sampled from their PRF key-setup and send it to $P_0$.</li>
-<li>If the commitments do not match, $P_0$ sends (<strong>abort</strong>, $o_1$) to $P_2$, while it sends (<strong>abort</strong>, $o_2$) to $P_1$ and aborts, where $o_i$ denotes the opening information for the commitment of $r_i$. Else $P_0$ sends <strong>continue</strong> to both $P_1$ and $P_2$.</li>
-<li>$P_1, P_2$ exchange the messages received from $P_0$.</li>
-<li>$P_1$ aborts if it receives either (i) (<strong>abort</strong>, $o_2$) from $P_0$ and $o_2$ opens the commitment of $r_2$ or (ii) (<strong>abort</strong>, $o_1$) from $P_2$ and $o_1$ is the correct opening information of $r_1$. The case for $P_2$ is similar to that of $P_1$.</li>
-<li>If no abort happens, parties obtain their missing share of $a$ as follows:<ul>
-<li>$P_0, P_1$ open $\lambda_{y,1}$ towards $P_2$.</li>
-<li>$P_0, P_2$ open $\lambda_{y,2}$ towards $P_1$.</li>
-<li>$P_1, P_2$ open $m_y$ towards $P_0$.</li>
-</ul>
+<li><p>S保密私钥，同时S要生成两个随机数 $x_0$ 和 $x_1$，并将这两个随机数和公钥一并传送给R；</p>
 </li>
-<li>Parties reconstruct the value $y$ using missing share that matches with the agreed upon commitment.</li>
-</ul>
-<hr>
-<p>当没有广播频道的时候，一个非常棘手的问题就会存在：一个腐败的 $P_0$ 可以发送不同的信号给 $P_1$ 和 $P_2$（一个为 abort 而另一个为 continue），以上的重构协议 $\prod_{\rm fRec}([\![y]\!], \mathcal{P})$ 解决了这个问题。在离线阶段 $P_0$ 和 $P_1$ 共同计算出一个关于 $r_1$ 的承诺发送给 $P_2$，同样地 $P_0$ 和 $P_2$ 共同计算出一个关于 $r_2$ 的承诺发送给 $P_1$。这两个承诺就可以确保 $P_1$ 跟 $P_2$ 可以验证它们收到的来自 $P_0$ 的信号是否一致：例如当 $P_1$ 收到 abort 而 $P_2$ 收到 continue，在它们交换信息时，$P_1$ 就可以利用收到的 $o_2$ 证明自己收到了 abort 信号，反过来也是一样的。同时还解决了一个问题，就是当一个腐败的 $P_1$ 收到了 $P_0$ 发送的 continue 信号，但它不能在与 $P_2$ 交换信息时宣称自己收到了 abort 信号，因为它没有 $o_2$，因此无法证明，对于 $P_2$ 腐败的情况也是一样的。</p>
-<p>这里的承诺方案可以通过一个哈希函数来实现，例如：$(c, o) = (\mathcal{H}(x||r),x||r) = Com(x;r)$</p>
-<h2 id="隐私保护机器学习"><a href="#隐私保护机器学习" class="headerlink" title="隐私保护机器学习"></a>隐私保护机器学习</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>对于每一个预测函数，模型拥有者 $\rm M$ 拥有一个训练好的参数向量，想为拥有一个查询向量的客户 $\rm C$ 提供预测服务。在服务器辅助设置中，$\rm M$ 和 $\rm C$ 以共享方式将各自的输入外包给三个不受信任但非合谋的服务器 $\{P_0, P_1, P_2\}$，这些服务器通过为本文的3PC协议开发的技术以共享方式执行计算，并将输出单独重构到客户端。客户只能知道输出，除此之外什么也不知道。</p>
-<h3 id="对于ML的协议"><a href="#对于ML的协议" class="headerlink" title="对于ML的协议"></a>对于ML的协议</h3><h4 id="安全向量点积"><a href="#安全向量点积" class="headerlink" title="安全向量点积"></a>安全向量点积</h4><p>对于向量的 $[\cdot]$-共享和 $[\![\cdot]\!]$-共享，就是对应每个维度的值进行$[\cdot]$-共享和 $[\![\cdot]\!]$-共享，容易知道对于向量来说两种共享仍然是线性的。对于两个 $d$ 维向量的点积，不考虑效率的情况下可以执行 $d$ 次 $\prod ^{\rm s}_{\rm Mul}$协议，再对这 $d$ 次执行的结果简单进行相加，各方就可以得到它们的份额。在这里作者给出一个更高效率的向量点积协议 $\prod ^{\rm s}_{\rm dp}$：</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<p>​        $P_0, P_1$ sample random $\lambda_{u,1}, \gamma_{pq,1} \in \mathbb{Z}_{2^l}$, while $P_0, P_2$ sample random $\lambda_{u,2} \in \mathbb{Z}_{2^l}$. $P_0$ locally computes $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$, sets $\gamma_{pq,2} = \gamma_{pq} - \gamma_{pq,1}$ and sends $\gamma_{pq,2}$ to $P_2$.</p>
-<p><strong>Online:</strong></p>
-<ul>
-<li>$P_i$ for $i \in \{1,2\}$ locally computes $[m_u]_{P_i} = \sum^d_{j=1}((i-1)m_{p_j}m_{q_j} - m_{p_j}[\lambda_{q_j}]_{P_i} - m_{q_j}[\lambda_{p_j}]_{P_i}) + [\gamma_{pq}]_{P_i} + [\lambda_u]_{P_i}$.</li>
-<li>$P_1$ and $P_2$ mutually exchange their share of $[m_u]$ to reconstruct $m_u$.</li>
-</ul>
-<hr>
-<p>上面的协议的离线阶段中，$P_0$ 仅仅共享了 $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$ 而不是每一个 $\lambda_{p_i} \lambda_{q_i}$；在在线阶段，$P_1, P_2$ 直接计算 $[m_u]$（其中 $u = \vec{p} \odot \vec{q}$）而不是每一个 $m_{p_i q_i}$。</p>
-<p>接下来作者还对恶意设置下的点积进行了讨论：由于在乘法协议中引入了对恶意对手的额外检查，所以上面针对半诚实协议所作的优化是不适用的。对两个 $d$ 维向量的点积，只能 $d$ 次调用协议 $\prod ^{\rm m}_{\rm Mul}$。不过作者还是对在线阶段的开销进行了改进：在在线阶段 $P_1$ 并行地发送 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 给 $P_0$，而 $P_2$ 则发送对应的哈希值给 $P_0$。$P_0$ 收到这些值后进行验证，若一致则将它们“结合”所有的 $m^{\star}_{p_i q_i}$ 然后发送一个单独的 $m^\star_u$ 的哈希值给 $P_1, P_2$，最后 $P_1, P_2$ 在本地验证是否与 $m_u - \sum^d_{j=1}(m_{p_j}m_{q_j} - \delta_{u_j})$。这样做的话就节省了在线阶段的开销，不用每个 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 都发送一次。</p>
-<h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[\![u]\!], [\![v]\!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 ${\rm msb}(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[\![a]\!]$ 的情况下生成 ${\rm msb}(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]_{P_1} = (p,0)$ and $[\![p]\!]_{P_2} = (p,0)$.</p>
-<p><strong>Online:</strong></p>
-<p>​        $P_1$ set $[a]_{P_1}=m_a - \lambda_{a,1}$, $P_2$ set $[a]_{P_2}=- \lambda_{a,2}$.</p>
-<ul>
-<li>$P_1$ sends $[ra]_{P_1} = r[a]_{P_1} + r’$ to $P_0$, while $P_2$ sends $[ra]_{P_2} = r[a]_{P_1} - r’$ to $P_0$, who adds them to obtain $ra$.</li>
-<li>$P_0$ executes $\prod^{\rm s}_{\rm Sh}(P_0, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$.</li>
-<li>Parties locally compute $[\![msb(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
-</ul>
-<hr>
-<p>上面的协议用 $\prod ^{\rm s}_{\rm BitExt}([\![a]\!], \mathcal{P})$ 表示。这里上面用到了一个随机数 $r$ 来对 $a$ 的值进行盲化，并且可以注意到 ${\rm sign}(a \cdot r) = {\rm sign}(a) \oplus {\rm sign}(r)$，所以 $r$ 不会对生成共享份额造成影响且使得三者都不能从这个过程中知道关于 $a$ 的信息。</p>
-<p>对于恶意的情况，就不能仅仅依靠 $P_0$ 来生成 $[\![{\rm msb}(ra)]\!]^{\rm B}$，下面给出了修改后的协议 $\prod ^{\rm m}_{\rm BitExt}([\![a]\!], \mathcal{P})$：</p>
-<hr>
-<p><strong>Offline:</strong></p>
-<p>​        $P_1, P_2$ sample a random $r_1 \in \mathbb{Z}_{2^l}$ and set $p_1 = {\rm msb}(r_1)$ while $P_0, P_2$ sample a random $r_2 \in \mathbb{Z}_{2^l}$ and set $p_2 = {\rm msb}(r_2)$.</p>
-<ul>
-<li>Parties non-interactively generate $[\![\cdot]\!]$-shares of $r_1$ as $[\![r_1]\!]_{P_0}=(0,0)$, $[\![r_1]\!]_{P_1}=(r_1,0)$ and $[\![r_1]\!]_{P_2}=(r_1,0)$.</li>
-<li>Parties non-interactively generate $[\![\cdot]\!]$-shares of $r_1$ as $[\![r_2]\!]_{P_0}=(0,-r_2)$, $[\![r_1]\!]_{P_1}=(0,0)$ and $[\![r_1]\!]_{P_2}=(0,-r_2)$.</li>
-<li>Parties execute $\prod^{\rm m}_{\rm Mul}$ on $r_1$ and $r_2$ to generate $[\![r]\!] = [\![r_1 r_2]\!]$.</li>
-<li>Parties non-interactively generate Boolean shares of $p_1$ as $[\![p_1]\!]^{\rm B}_{P_0}=(0,0)$, $[\![p_1]\!]^{\rm B}_{P_1}=(p_1,0)$ and $[\![p_1]\!]^{\rm B}_{P_2}=(p_1,0)$.</li>
-<li>Parties non-interactively generate Boolean shares of $p_2$ as $[\![p_2]\!]^{\rm B}_{P_0}=(0,p_2)$, $[\![p_2]\!]^{\rm B}_{P_1}=(0,0)$ and $[\![p_2]\!]^{\rm B}_{P_2}=(0,p_2)$.</li>
-<li>Parties locally compute $[\![p]\!]^{\rm B}=[\![p_1]\!]^{\rm B} \oplus [\![p_2]\!]^{\rm B}$.</li>
-</ul>
-<p><strong>Online:</strong></p>
-<ul>
-<li>Parties execute $\prod ^{\rm m}_{\rm Mul}$ on $[\![r]\!]$ and $[\![a]\!]$ to generate $[\![ra]\!]$ followed by enabling $P_0, P_1$ to reconstruct $ra$ (this is done by slightly modifying the protocol $\prod ^{\rm m}_{\rm Rec}$ ).</li>
-<li>$P_1$ executes $\prod ^{\rm m}_{\rm Sh}(P_1, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$. In parallel, $P_0$ locally computes $m_q$ and sends ${\rm H}(m_q)$ to $P_2$, who abort if the value mismatches with the hash of the value $m_q$ received from $P_1$ as part of $\prod ^{\rm m}_{\rm Sh}(P_1, q)$.</li>
-<li>Parties locally compute $[\![{\rm msb}(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
-</ul>
-<hr>
-<h4 id="ML预测函数"><a href="#ML预测函数" class="headerlink" title="ML预测函数"></a>ML预测函数</h4><ul>
-<li><strong>线性回归</strong>：$\rm M$ 有一个 $d$ 维的模型参数向量 $\vec{w}$ 和偏置项 $b$，$\rm C$ 有一个 $d$ 维的查询向量 $\vec{z}$。$\rm C$ 获得 $f_{\rm linr}((\vec{w}, b),\vec{z}) = \vec{w} \odot \vec{z} + b$，其中 $\vec{w} \odot \vec{z}$ 是向量 $\vec{w}$ 和向量 $\vec{z}$ 的点积；</li>
-<li><strong>SVM回归</strong>：$\rm M$ 有$\{\alpha_j, y_j \}^k_{j=1}$ 和 $d$ 维的支持向量 $\{\vec{x_j}\}^k_{j=1}$，$\rm C$ 有一个 $d$ 维的查询向量 $\vec{z}$。$\rm C$ 获得 $f_{\rm svmr}((\{\alpha_j, y_j, \vec{x_j} \}^k_{j=1}, b), \vec{z}) = \sum^k_{j=1} \alpha_j y_j (\vec{x_j} \odot \vec{z}) + b$；</li>
-<li><strong>逻辑回归</strong>：$\rm M$ 和 $\rm C$ 的输入和线性回归类似，$\rm M$ 还需要提供一个在 $[0,1]$ 范围内的额外输入 $t$。$\rm C$ 获得 $f_{\rm logr}((\vec{w}, b, t), \vec{z}) = {\rm sign}((\vec{w} \odot \vec{z} + b) - {\rm ln}(\frac{t}{1-t}))$，其中 ${\rm sign}(\cdot)$ 返回对象的符号位；</li>
-<li><strong>SVM分类</strong>：$\rm M$ 和 $\rm C$ 的输入和SVM回归一样，但对 $\rm C$ 的输出变为 $f_{\rm svmr}((\{\alpha_j, y_j, \vec{x_j} \}^k_{j=1}, b), \vec{z}) = {\rm sign}(\sum^k_{j=1} \alpha_j y_j (\vec{x_j} \odot \vec{z}) + b)$。</li>
-</ul>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] V. A. Abril, P. Maene, N. Mertens, and N. P. Smart. 2019. <em>Bristol Fashion MPC Circuits.</em> <a href="https://homes.esat.kuleuven.be/~nsmart/MPC/" target="_blank" rel="noopener">https://homes.esat.kuleuven.be/~nsmart/MPC/</a>.<br>[2] T. Araki, A. Barak, J. Furukawa, T. Lichter, Y. Lindell, A. Nof, K. Ohara, A. Watzman, and O. Weinstein. 2017. <em>Optimized Honest-Majority MPC for Malicious Adversaries - Breaking the 1 Billion-Gate Per Second Barrier.</em> In IEEE S&amp;P. 843–862.<br>[3] T. Araki, A. Barak, J. Furukawa, Y. Lindell, A. Nof, and K. Ohara. 2016. <em>DEMO: High-Throughput Secure Three-Party Computation of Kerberos Ticket Generation.</em> In ACM CCS. 1841–1843.<br>[4] T. Araki, J. Furukawa, Y. Lindell, A. Nof, and K. Ohara. 2016. <em>High-Throughput Semi-Honest Secure Three-Party Computation with an Honest Majority.</em> In ACM CCS. 805–817.<br>[5] C. Baum, I. Damgård, T. Toft, and R. W. Zakarias. 2016. <em>Better Preprocessing for Secure Multiparty Computation.</em> In ACNS. 327–345.<br>[6] D. Beaver. 1991. <em>Efficient Multiparty Protocols Using Circuit Randomization.</em> In CRYPTO. 420–432.<br>[7] D. Beaver. 1995. <em>Precomputing Oblivious Transfer.</em> In CRYPTO. 97–109.<br>[8] Z. Beerliová-Trubíniová and M. Hirt. 2006. <em>Efficient Multi-party Computation with Dispute Control.</em> In TCC. 305–328.<br>[9] Z. Beerliová-Trubíniová and M. Hirt. 2008. <em>Perfectly-Secure MPC with Linear Communication Complexity.</em> In TCC. 213–230.<br>[10] M. Ben-Or, S. Goldwasser, and A. Wigderson. 1988. <em>Completeness Theorems for Non-Cryptographic Fault-Tolerant Distributed Computation (Extended Abstract).</em> In ACM STOC. 1–10.<br>[11] Christopher Bishop. 2006. <em>Pattern Recognition and Machine Learning.</em><br>[12] D. Bogdanov, S. Laur, and J. Willemson. 2008. <em>Sharemind: A Framework for Fast Privacy-Preserving Computations.</em> In ESORICS. 192–206.<br>[13] D. Bogdanov, R. Talviste, and J. Willemson. 2012. <em>Deploying Secure Multi-Party Computation for Financial Data Analysis.</em> In FC. 57–64.<br>[14] M. Byali, A. Joseph, A. Patra, and D. Ravi. 2018. <em>Fast Secure Computation for Small Population over the Internet.</em> ACM CCS (2018), 677–694.<br>[15] O. Catrina and S. de Hoogh. 2010. <em>Secure Multiparty Linear Programming Using Fixed-Point Arithmetic.</em> In ESORICS. 134–150.<br>[16] N. Chandran, J. A. Garay, P. Mohassel, and S. Vusirikala. 2017. <em>Efficient, Constant-Round and Actively Secure MPC: Beyond the Three-Party Case.</em> In ACM CCS. 277–294.<br>[17] H. Chaudhari, A. Choudhury, A. Patra, and A. Suresh. 2019. <em>ASTRA: High-throughput 3PC over Rings with Application to Secure Prediction.</em> <a href="https://eprint.iacr.org/2019/429" target="_blank" rel="noopener">https://eprint.iacr.org/2019/429</a>. In IACR Cryptology ePrint Archive.<br>[18] K. Chida, D. Genkin, K. Hamada, D. Ikarashi, R. Kikuchi, Y. Lindell, and A. Nof. 2018. <em>Fast Large-Scale Honest-Majority MPC for Malicious Adversaries.</em> In CRYPTO. 34–64.<br>[19] A. Choudhury and A. Patra. 2017. <em>An Efficient Framework for Unconditionally Secure Multiparty Computation.</em> IEEE Trans. Information Theory (2017), 428–468.<br>[20] R. Cleve. 1986. <em>Limits on the Security of Coin Flips when Half the Processors Are Faulty (Extended Abstract).</em> In ACM STOC. 364–369.<br>[21] R. Cramer, I. Damgård, D. Escudero, P. Scholl, and C. Xing. 2018. <em>SPDZ2k: Efficient MPC mod 2ˆk for Dishonest Majority.</em> CRYPTO (2018), 769–798.<br>[22] R. Cramer, I. Damgård, and Y. Ishai. 2005. <em>Share Conversion, Pseudorandom Secret-Sharing and Applications to Secure Computation.</em> In TCC. 342–362.<br>[23] Cryptography and Privacy Engineering Group at TU Darmstadt. 2017. ENCRYPTO Utils. <a href="https://github.com/encryptogroup/ENCRYPTO_utils" target="_blank" rel="noopener">https://github.com/encryptogroup/ENCRYPTO_utils</a>.<br>[24] M. Dahl. 2018. <em>Private Image Analysis with MPC: Training CNNs on Sensitive Data using SPDZ.</em> (2018).<br>[25] I. Damgård, C. Orlandi, and M. Simkin. 2018. <em>Yet Another Compiler for Active Security or: Efficient MPC Over Arbitrary Rings.</em> CRYPTO (2018), 799–829.<br>[26] I. Damgård, V. Pastro, N. P. Smart, and S. Zakarias. 2012. <em>Multiparty Computation from Somewhat Homomorphic Encryption.</em> In CRYPTO. 643–662.<br>[27] S. de Hoogh, B. Schoenmakers, P.Chen, and H. Akker. 2014. <em>Practical Secure Decision Tree Learning in a Teletreatment Application.</em> In FC. 179–194.<br>[28] H. Eerikson, M. Keller, C. Orlandi, P. Pullonen, J. Puura, and M. Simkin. 2019. <em>Use your Brain! Arithmetic 3PC For Any Modulus with Active Security.</em> IACR<br>Cryptology ePrint Archive (2019).<br>[29] A. Esteva, B. Kuprel, R. A. Novoa, J. Ko, S. M. Swetter, H. M. Blau, and S. Thrun. 2017. <em>Dermatologist-level classification of skin cancer with deep neural networks.</em> Nature (2017), 115–118.<br>[30] J. Furukawa, Y. Lindell, A. Nof, and O. Weinstein. 2017. <em>High-Throughput Secure Three-Party Computation for Malicious Adversaries and an Honest Majority.</em> In EUROCRYPT. 225–255.<br>[31] A. Gascón, P. Schoppmann, B. Balle, M. Raykova, J. Doerner, S. Zahur, and D. Evans. 2016. <em>Secure Linear Regression on Vertically Partitioned Datasets.</em> IACR Cryptology ePrint Archive (2016).<br>[32] M. Geisler. 2007. <em>Viff: Virtual ideal functionality framework.</em><br>[33] O. Goldreich, S. Micali, and A. Wigderson. 1987. <em>How to Play any Mental Game or A Completeness Theorem for Protocols with Honest Majority.</em> In STOC. 218–229.<br>[34] S. D. Gordon, S. Ranellucci, and X. Wang. 2018. <em>Secure Computation with Low Communication from Cross-Checking.</em> In ASIACRYPT. 59–85.<br>[35] Y. Ishai, R. Kumaresan, E. Kushilevitz, and A. Paskin-Cherniavsky. 2015. <em>Secure Computation with Minimal Interaction, Revisited.</em> In CRYPTO. 359–378.<br>[36] S. Kamara, P. Mohassel, and M. Raykova. 2011. <em>Outsourcing Multi-Party Computation.</em> IACR Cryptology ePrint Archive (2011).<br>[37] J. Katz, V. Kolesnikov, and X. Wang. 2018. <em>Improved Non-Interactive Zero Knowledge with Applications to Post-Quantum Signatures.</em> In CCS. 525–537.<br>[38] M. Keller, E. Orsini, and P. Scholl. 2016. <em>MASCOT: Faster Malicious Arithmetic Secure Computation with Oblivious Transfer.</em> In ACM CCS. 830–842.<br>[39] M. Keller, V. Pastro, and D. Rotaru. 2018. <em>Overdrive: Making SPDZ Great Again.</em> In EUROCRYPT. 158–189.<br>[40] J. Launchbury, D. Archer, T. DuBuisson, and E. Mertens. 2014. <em>Application-Scale Secure Multiparty Computation.</em> In ESOP. 8–26.<br>[41] S. Laur, H. Lipmaa, and T. Mielikäinen. 2006. <em>Cryptographically private support vector machines.</em> In ACM SIGKDD. 618–624.<br>[42] Yann LeCun and Corinna Cortes. 2010. <em>MNIST handwritten digit database.</em> (2010). <a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">http://yann.lecun.com/exdb/mnist/</a><br>[43] Y. Lindell and A. Nof. 2017. <em>A Framework for Constructing Fast MPC over Arithmetic Circuits with Malicious Adversaries and an Honest-Majority.</em> In ACM CCS. 259–276.<br>[44] J. Liu, M. Juuti, Y. L., and N. Asokan. 2017. <em>Oblivious Neural Network Predictions via MiniONN Transformations.</em> In ACM CCS. 619–631.<br>[45] E. Makri, D. Rotaru, N. P. Smart, and F. Vercauteren. 2018. <em>EPIC: Efficient Private Image Classification (or: Learning from the Masters).</em> CT-RSA (2018), 473–492.<br>[46] P. Mohassel and P. Rindal. 2018. <em>ABY3: A Mixed Protocol Framework for Machine Learning.</em> In ACM CCS. 35–52.<br>[47] P. Mohassel, M. Rosulek, and Y. Zhang. 2015. <em>Fast and Secure Three-party Computation: Garbled Circuit Approach.</em> In CCS. 591–602.<br>[48] P. Mohassel and Y. Zhang. 2017. <em>SecureML: A System for Scalable Privacy-Preserving Machine Learning.</em> In IEEE S&amp;P. 19–38.<br>[49] V. Nikolaenko, S. Ioannidis, U. Weinsberg, M. Joye, N. Taft, and D. Boneh. 2013. <em>Privacy-preserving matrix factorization.</em> In ACM CCS. 801–812.<br>[50] V. Nikolaenko, U. Weinsberg, S. Ioannidis, M. Joye, D. Boneh, and N. Taft. 2013. <em>Privacy-Preserving Ridge Regression on Hundreds of Millions of Records.</em> In IEEE S&amp;P. 334–348.<br>[51] P. S. Nordholt and M. Veeningen. 2018. <em>Minimising Communication in Honest-Majority MPC by Batchwise Multiplication Verification.</em> In ACNS. 321–339.<br>[52] T. Orekondy, B. Schiele, and M. Fritz. 2018. <em>Knockoff Nets: Stealing Functionality of Black-Box Models.</em> CoRR (2018).<br>[53] N. Papernot, P. McDaniel, I. Goodfellow, S. Jha, Z. B. Celik, and A. Swami. 2017. <em>Practical Black-Box Attacks Against Machine Learning.</em> In ASIA CCS. 506–519.<br>[54] A. Patra and D. Ravi. 2018. <em>On the Exact Round Complexity of Secure Three-Party Computation.</em> CRYPTO (2018), 425–458.<br>[55] M. S. Riazi, C. Weinert, O. Tkachenko, E. M. Songhori, T. Schneider, and F. Koushanfar. 2018. <em>Chameleon: A Hybrid Secure Computation Framework for Machine Learning Applications.</em> In AsiaCCS. 707–721.<br>[56] F. Schroff, D. Kalenichenko, and J. Philbin. 2015. <em>FaceNet: A unified embedding for face recognition and clustering.</em> In IEEE CVPR. 815–823.<br>[57] N. P. Smart and T. Wood. 2019. <em>Error Detection in Monotone Span Programs with Application to Communication-Efficient Multi-party Computation.</em> In CT-RSA. 210–229.<br>[58] F. Tramèr, F. Zhang, A. Juels, M. K. Reiter, and T. Ristenpart. 2016. <em>Stealing Machine Learning Models via Prediction APIs.</em> In USENIX. 601–618.<br>[59] S. Wagh, D. Gupta, and N. Chandran. 2019. <em>SecureNN: 3-Party Secure Computation for Neural Network Training.</em> PoPETs (2019), 26–49.<br>[60] A. C. Yao. 1982. <em>Protocols for Secure Computations.</em> In FOCS. 160–164.</p>
+<li><p>R选择 $\theta$，并生成一个数 $r$，R用S的公钥加密 $r$，并生成信息</p>
+<p>​                                <script type="math/tex">v =x_{\theta}+E_{pk}(r)</script></p>
+</li>
+<li><p>S在接收到 $v$ 之后，进行如下计算：</p>
+<p>​                                $r_{0}=D_{s k}\left(v-x_{0}\right)$<br>​                                $r_{1}=D_{s k}\left(v-x_{1}\right)$</p>
+</li>
+<li><p>S进行如下计算：</p>
+<p>​                                $b_{0}^{\prime}=b_{0}+r_{0}$<br>​                                $b_{1}^{\prime}=b_{1}+r_{1}$</p>
+<p>并将 $b’_0$ 和 $b’_1$ 传送给R；</p>
+</li>
+<li><p>接收到 $b’_0$ 和 $b’_1$ 后，R进行如下计算：</p>
+<p>​                                $b_\theta = b’_\theta - r$</p>
+</li>
+</ol>
+<h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>进行如下推导：</p>
+<p>​                                $b_{\theta}^{\prime}-r=b_{\theta}+r_{\theta}-r=b_{\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
+<p>而</p>
+<p>​                        $D_{s k}(v-x_\theta)=D_{s k}\left(x_\theta+E_{p k}(r)-x_{\theta}\right)=D_{s k}\left(E_{p k}(r)\right)=r$</p>
+<p>因此可得</p>
+<p>​                                            $b’_\theta - r = b_\theta$</p>
+<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b_{1-\theta}$。R得到 $b’_\theta$ 和 $b’_{1-\theta}$ 之后，由协议可知R可以正确计算 $b’_\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
+<p>​                        $b_{1-\theta}^{\prime}-r=b_{1-\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
+<p>而</p>
+<p>​                    $D_{s k}\left(v-x_{\theta}\right)=D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right) \neq r$</p>
+<p>而且根据加密的特性，$D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
+<h3 id="对于R的安全性"><a href="#对于R的安全性" class="headerlink" title="对于R的安全性"></a>对于R的安全性</h3><p>R的安全性要求S不能获得关于 $\theta$ 任何有价值的信息。</p>
+<p>因为 $r$ 是随机数，所以 $E_{pk}(r)$ 与随机数是不可区分的。因此 $v$ 与随机数是不可区分的，所以S不能从 $v$ 获得关于 $\theta$ 有价值的信息。</p>
 ]]></content>
       <categories>
-        <category>Papers</category>
+        <category>Study</category>
       </categories>
       <tags>
         <tag>密码学</tag>
-        <tag>隐私保护机器学习</tag>
         <tag>MPC</tag>
-        <tag>神经网络</tag>
       </tags>
   </entry>
   <entry>
@@ -1490,60 +1441,268 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
       </tags>
   </entry>
   <entry>
-    <title>不经意传输（Oblivious Transfer）</title>
-    <url>/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/</url>
-    <content><![CDATA[<p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
+    <title>论文笔记 ASTRA: High Throughput 3PC over Rings with Application to Secure Prediction</title>
+    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/</url>
+    <content><![CDATA[<p><em>Harsh Chaudhari, Ashish Choudhury, Arpita Patra, Ajith Suresh</em></p>
+<p>ACM CCSW 2019</p>
+<p><a href="https://eprint.iacr.org/2019/429" target="_blank" rel="noopener">https://eprint.iacr.org/2019/429</a></p>
+<p><a href="https://dl.acm.org/doi/10.1145/3338466.3358922" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3338466.3358922</a></p>
 <a id="more"></a>
-<p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
-<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
-<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m_0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m_{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
-<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b_0$ 和 $b_1$，而R只能选择接受其中一个比特 $b_{\theta}$。协议要保证S和R的安全，即：</p>
-<ul>
-<li>S不能知道任何关于 $\theta$ 的信息；</li>
-<li>R不能知道任何关于 $b_{1-\theta}$ 的信息。</li>
+<p><img src="http://images.yingwai.top/picgo/ASTRA.jpg" alt=""></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>安全计算的具体效率一直是近年来许多工作关注的焦点。在本论文中，作者提出了一种具体有效的协议，用于模 $2^l$ 整数环上的安全三方计算（3PC），该协议具有半诚实模型和恶意模型上的安全性。由于环上的计算模拟了现实系统体系结构上的计算，所以环上的安全计算近来获得了发展势头。</p>
+<p>​        在离线-在线模式中，本文的结构具体地呈现了最有效的在线阶段。在半诚实的设置下，本文的协议在在线阶段每个乘法门需要2个环元素的通信。在恶意设置下，本文的协议在在线阶段每个乘法门需要4个元素的通信，比最先进的协议需要的5个元素少。使用选择性中止和公平这两个安全概念来实现的公平恶意协议，与仅针对输出门的中止安全性的恶意协议相比，涉及的通信稍微多一些。</p>
+<p>​        作者将本文的技术从3PC应用到安全的服务器辅助机器学习（ML）推理机制中，用于一系列预测函数——线性回归、线性SVM回归、Logistic回归和线性SVM分类。本文的设置考虑了拥有训练好的模型参数的模型所有者和查询的客户，后者愿意根据前者的模型参数来学习他查询的预测。输入和计算外包给一组三个非合谋的服务器。本文的构造既迎合了半诚实的世界，也迎合了恶意的世界，比现有的构造表现得更好。</p>
+<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><ul>
+<li><p>作者遵循离线-在线模式，提出了在环 $\mathbb{Z}_{2^l}$（包括布尔环 $\mathbb{Z}_{2^1}$）上的3PC构造，具有最有效的在线阶段。</p>
+<p>虽然重点放在在现阶段，但离线阶段的的成本也有注意并保持在可控范围内。</p>
+</li>
+<li><p>作者给出了一系列满足半诚实安全和恶意安全的构造。</p>
+<p>将技术应用于外包环境中的一系列预测函数的安全预测，并构建了一些容忍半诚实和恶意对手的结构。</p>
+</li>
 </ul>
-<p>为了达成上面两点要求，构造如下协议：</p>
-<ol>
-<li><p>S选择好两个比特信息 $b_0$ 和 $b_1$；</p>
+<p>本文所有的构建都流露出的一个共同特征：在线阶段不到三对参与者之间需要进行功能依赖的通信，从而产生更好的在线性能。</p>
+<h2 id="设定"><a href="#设定" class="headerlink" title="设定"></a>设定</h2><p>本文考虑一组三方 $\mathcal{P}=\left\{P_0,P_1,P_2\right\}$，它们在同步网络中通过成对的私有和可信信道连接。要计算的函数 $f$ 被表示为环 $\mathbb{Z}_{2^l}$ 上的电路 ckt，该环由2输入加法和乘法门组成。假设 ckt 的拓扑是公知的。术语 D​ 表示 ckt 的乘法深度，而 I、O、A、M 分别表示 ckt 中的输入线、输出线、加法门和乘法门的数目。本文使用符号 $w_x$ 来表示导线 $w$，其中值 $x$ 流经它。本文使用 $g=(w_x,w_y,w_z)$ 来表示 ckt 中具有左输入线 $w_x$、右输入线 $w_y$ 和输出线 $w_z$ 的门。在本文的协议中，将 $\mathcal{P}$ 划分为互不相交的集合 $\left\{P_0\right\}$ 和 $\left\{P_1,P_2\right\}$，其中 $P_0$ 在离线阶段充当“分配器”进行“预处理”，在线阶段“评估者” $P_1$、$P_2$ 用它来评估 ckt。本文使用上标“$s$”和“$m$”分别区分半诚实和恶意设置中的协议。布尔环 $\mathbb{Z}_{2^1}$ 上的协议可以通过将算术加法$(+)$和乘法$(\times)$分别替换为异或$(\oplus)$和与$(\cdot)$来获得。</p>
+<h3 id="共享密钥设置"><a href="#共享密钥设置" class="headerlink" title="共享密钥设置"></a>共享密钥设置</h3><p>为了保存双方之间的通信，使用为伪随机函数（PRF）$F$ 建立预共享随机密钥的一次性设置。在3PC设置[2，30，46]中的已知协议中已经使用了类似的设置。这里 $F:{\{0，1\}}^\kappa \times {\{0，1\}}^\kappa \to X$ 是安全的PRF，同域 $X$ 是 $\mathbb{Z}_{2^l}$。这组密钥是：</p>
+<ul>
+<li>每对参与方之间共享一个密钥— $k_{01}, k_{02}, k_{12}$，分别用于参与方$(P_0,P_1), (P_0,P_2), (P_1,P_2)$。</li>
+<li>所有各方之间的一个共享密钥— $k_{\mathcal{p}}$。</li>
+</ul>
+<p>本文通过可以使用任何标准安全MPC协议实现的功能 $\mathcal{F}_{\rm setup}$ 来建立密钥设置模型。</p>
+<h3 id="共享语义"><a href="#共享语义" class="headerlink" title="共享语义"></a>共享语义</h3><p>在本节中，将解释本工作中使用的秘密共享的两种变体。这两个变体都在算术（$\mathbb{Z}_{2^l}$）和布尔环（$\mathbb{Z}_{2^1}$）上运行。</p>
+<p>$[\cdot]$-共享：如果 $P_1$ 和 $P_2$ 分别持有份额 $v_1$ 和 $v_2$，使得 $v=v_1+v_2$，则称值 $v$ 在$P_1,P_2$之间是 $[\cdot]$-共享的。用 $[\cdot]_{P_i}$ 表示 $P_i, i∈\{1,2\}$的 $[\cdot]$-份额。</p>
+<p>$[\![\cdot]\!]$-共享：值 $v$ 在 $P_0, P_1, P_2$ 之间是$[\![\cdot]\!]$-共享的，如果</p>
+<ul>
+<li>存在值 $\lambda_v, m_v$ 使得 $v=m_v - \lambda_v$；</li>
+<li>$P_0$ 持有 $\lambda_{v,1}$ 和 $\lambda_{v,2}$ 使得 $\lambda_{v} = \lambda_{v,1} + \lambda_{v,2}$；</li>
+<li>$P_1$ 和 $P_2$ 分别持有 $(m_v, \lambda_{v,1})$ 和 $(m_v, \lambda_{v,1})$。</li>
+</ul>
+<p>本文将各方的$[\![\cdot]\!]$-共享表示为$[\![v]\!]_{P_0} = (\lambda_{v,1}, \lambda_{v,2}), [\![v]\!]_{P_1} = (m_v, \lambda_{v,1}) $和 $[\![v]\!]_{P_2} = (m_v, \lambda_{v,2})$。用$[\![v]\!] = (m_v, [\lambda_{v}])$表示 $v$ 的$[\![\cdot]\!]$-共享份额。</p>
+<h3 id="秘密共享方案的线性"><a href="#秘密共享方案的线性" class="headerlink" title="秘密共享方案的线性"></a>秘密共享方案的线性</h3><p>给定 $x,y \in \mathbb{Z}_{2^l}$ 和公共常数 $c_1, c_2 \in \mathbb{Z}_{2^l}$的$[\cdot]$-共享，各方可以局部计算 $[c_1x+c_2y]$：</p>
+<script type="math/tex; mode=display">[c_1x+c_2y]=(c_1x_1+c_2y_1, c_1x_2+c_2y_2)=c_1[x]+c_2[y]</script><p>很容易看出线性关系也扩展到$[\![\cdot]\!]$-共享。线性属性使各方能够<strong>本地</strong>执行与公共常量的加法和乘法等操作。</p>
+<h2 id="3PC协议"><a href="#3PC协议" class="headerlink" title="3PC协议"></a>3PC协议</h2><h3 id="半诚实下的3PC"><a href="#半诚实下的3PC" class="headerlink" title="半诚实下的3PC"></a>半诚实下的3PC</h3><p>协议 $\prod ^{\rm s}_{\rm 3pc}$ 由三个步骤组成—输入共享、电路评估以及输出重构。所有阶段（重构输出除外）都分为离线和在线阶段，其中独立于实际输入的步骤可以在脱机阶段执行。</p>
+<h4 id="输入共享"><a href="#输入共享" class="headerlink" title="输入共享"></a>输入共享</h4><p>在共享输入阶段，每一方都为自己的输入生成一个随机的$[\![\cdot]\!]$-共享。以下是初始共享协议 $\prod^{\rm s}_{\rm Sh}$：</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<ul>
+<li>If $P_i = P_0$, parties $P_0, P_j$ for $j \in \{1, 2\}$ locally sample a random $\lambda_{x,j} \in \mathbb{Z}_{2^l}$. Moreover, $P_i$ sets $[\![x]\!]_{P_i} = (\lambda_{x,1}, \lambda_{x,2})$.</li>
+<li>If $P_i = P_1$, parties $P_0, P_1$ sample a random $\lambda_{x,1} \in \mathbb{Z}_{2^l}$ while all the parties in $\mathcal{P}$ sample a random $\lambda_{x,2} \in \mathbb{Z}_{2^l}$.</li>
+<li>If $P_i = P_2$, parties $P_0, P_2$ sample a random $\lambda_{x,2} \in \mathbb{Z}_{2^l}$ while all the parties in $\mathcal{P}$ sample a random $\lambda_{x,1} \in \mathbb{Z}_{2^l}$.</li>
+</ul>
+<p><strong>Online:</strong></p>
+<p>​        $P_i$ computes $\lambda_x = \lambda_{x,1} + \lambda_{x,2}$ and sends $m_x = x + \lambda_x$ to every $P_j$ for $j \in \{1,2\}$ who then sets $[\![x]\!]_{P_j} = (m_x, \lambda_{x,j})$.</p>
+<hr>
+<p>在离线阶段根据输入方的序号，使用不同的初始化手段，生成了 $P_0$ 的份额 $[\![x]\!]_{P_0}=(\lambda_{x,1}, \lambda_{x,2})$，而不用任何交互（因为随机数都是使用服务器两两之间的公共随机源生成的，可以理解为编程语言中把同样的随机种子输入到random函数——只要随机种子一样生成的随机数序列就一样）。</p>
+<h4 id="电路评估"><a href="#电路评估" class="headerlink" title="电路评估"></a>电路评估</h4><p>在电路评估阶段，各方以$[\![\cdot]\!]$-共享的方式评估 ckt。以拓扑顺序评估 ckt 中的每个门 $g$：给定 $g$ 的输入，各方为 $g$ 的输出生成$[\![\cdot]\!]$-共享。</p>
+<h5 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h5><p>如果 $g$ 是加法门 $(w_x,w_y,w_z)$，可以利用$[\![\cdot]\!]$-共享的线性在本地完成。以下是加法协议 $\prod_{\rm Add} (w_x, w_y, w_z)$：</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<p>​        $P_0, P_1$ set $\lambda_{z,1} = \lambda_{x,1} + \lambda_{y,1}$, while $P_0, P_2$ set $\lambda_{z,2} = \lambda_{x,2} + \lambda_{y,2}$.</p>
+<p><strong>Online:</strong></p>
+<p>​        $P_1$ and $P_2$ set $m_z = m_x + m_y$.</p>
+<hr>
+<p>这里的加法协议感觉在线阶段完全可以在本地完成，可以不需要在线阶段。</p>
+<h5 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h5><p>如果 $g=(w_x,w_y,w_z)$ 是乘法门，则运行以下乘法协议 $\prod ^{\rm s}_{\rm Mul}$：</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<ul>
+<li>$P_0$ and $P_1$ locally sample random $\lambda_{z,1}, \gamma_{xy, 1} \in \mathbb{Z}_{2^l}$, while $P_0$ and $P_2$ locally sample random $\lambda_{z,2} \in \mathbb{Z}_{2^l}$.</li>
+<li>$P_0$ computes $\gamma_{xy} = \lambda_x \lambda_y$ and sends $\gamma_{xy,2} = \gamma_{xy} - \gamma_{xy,1}$ to $P_2$.</li>
+</ul>
+<p><strong>Online:</strong></p>
+<ul>
+<li>$P_i$ for $i \in \{1,2\}$ locally computes $[m_z]_{P_i} = (i-1)m_xm_y - m_x[\lambda_y]_{P_i} - m_y[\lambda_x]_{P_i} + [\lambda_z]_{P_i} + [\gamma_{xy}]_{P_i}$.</li>
+<li>$P_1, P_2$ mutually exchange their shares and reconstruct $m_z$.</li>
+</ul>
+<hr>
+<p>将上面的公式相加一下即可验证其正确性。</p>
+<h4 id="输出重构"><a href="#输出重构" class="headerlink" title="输出重构"></a>输出重构</h4><p>在输出重构阶段，各方重构$[\![\cdot]\!]$-共享电路输出。为了重构 $[\![y]\!]$，可以观察到每个 $P_i$ 缺失的份额都在另外两方手里。因此另外两方的其中一方将缺失的份额发送给 $P_i$ 后，通过计算 $y = m_y - \lambda_{y,1} - \lambda_{y,2}$ 即可重构输出 $y$，将其称为重构协议 $\prod ^{\rm s}_{\rm Rec}([\![y]\!], \mathcal{P})$。</p>
+<p>把上面三个阶段总结起来，有以下的协议 $\prod ^{\rm s}_{\rm 3pc}$：</p>
+<hr>
+<p><strong>Pre-processing (Offline Phase):</strong></p>
+<ul>
+<li><em>Input wires:</em> For $j = 1, …,l$, corresponding to the circuit-input $x_j$, parties execute the offline steps of the instance $\prod ^{\rm s}_{\rm Sh}(P_i, x_j)$.</li>
+<li>For each gate $g$ in the topological order, execute offline steps of the instance $\prod ^{\rm s}_{\rm Mul}(w_{xj}, w_{yj}, w_{zj})$ if $g$ is the $j$th multiplication gate where $j \in \{1,…,\rm M\}$ or respectively offline steps of the instance $\prod _{\rm Add}(w_{xj}, w_{yj}, w_{zj})$ if $g$ is the $j$th addition gate where $j \in \{1,…,\rm A\}$.</li>
+</ul>
+<p><strong>Circuit Evaluation (Online Phase):</strong></p>
+<ul>
+<li><em>Sharing Circuit-input Values:</em> For $j = 1, …,l$, corresponding to the circuit-input $x_j$, parties execute the online steps of the instance $\prod ^{\rm s}_{\rm Sh}(P_i, x_j)$, where $P_i$ is the party designated to provide $x_j$.</li>
+<li><em>Gate Evaluation:</em> For each gate in $g$ in ckt in the topological order, $P_1, P_2$ execute the online steps of the instance $\prod ^{\rm s}_{\rm Mul}(w_{xj},w_{yj},w_{zj})$ if $g$ is the $j$th multiplication gate where $j \in \{1,…,\rm M\}$ or respectively offline steps of the instance $\prod _{\rm Add}(w_{xj}, w_{yj}, w_{zj})$ if $g$ is the $j$th addition gate where $j \in \{1,…,\rm A\}$.</li>
+<li><em>Output Reconstruction:</em> Let $[\![y_1]\!],…,[\![y_\rm O]\!]$ be the shared function outputs. The parties in $\mathcal{P}$ reconstruct $y_j$ for $j = 1,…,\rm O$ by executing $\prod ^{\rm s}_{\rm Rec}([\![y_j]\!], \mathcal{P})$.</li>
+</ul>
+<hr>
+<h3 id="恶意下的3PC"><a href="#恶意下的3PC" class="headerlink" title="恶意下的3PC"></a>恶意下的3PC</h3><p>跟半诚实设置下的一样，恶意设置下的3PC协议 $\prod ^{\rm m}_{\rm 3pc}$ 也由输入共享、电路评估和输出重构三个部分组成。</p>
+<h4 id="输入共享和输出重构"><a href="#输入共享和输出重构" class="headerlink" title="输入共享和输出重构"></a>输入共享和输出重构</h4><p>在恶意的设置下，要保证服务器之间的共享份额是一致的。在 $\prod ^{\rm s}_{\rm Sh}$ 中，$\lambda$ 的共享是一致的，因为它不需要交互就可以生成。但如果一个腐败的 $P_0$ 拥有 $x$ 并且想制造一个不一致的 $[\![x]\!]$-共享，它可以分别发送两个不一样的 $m_x$ 给 $P_1$ 和 $P_2$。为了检查这种情况的发生，$P_1$ 和 $P_2$ 交换 $H(m_x)$ 并在不一致的时候中止。</p>
+<p>令 $[\![y]\!]$ 为一个待重构的一致的共享，$[\![y]\!]_{P_0} = (\lambda_{y,1}, \lambda_{y,2})$、$[\![y]\!]_{P_1} = (m’_{y}, \lambda_{y,1})$ 和 $[\![y]\!]_{P_2} = (m’’_{y}, \lambda_{y,2})$ 分别为三个服务器的份额。协议 $\prod ^{\rm m}_{\rm Rec}([\![y]\!], \mathcal{P})$ 允许每一个诚实方输出 $y$ 或 $\perp$：</p>
+<hr>
+<p><strong>Online:</strong></p>
+<ul>
+<li>$P_0$ and $P_2$ send $\lambda_{y,2}$ and $H(\lambda’_{y,2})$ respectively to $P_1$.</li>
+<li>$P_0$ and $P_1$ send $\lambda_{y,1}$ and $H(\lambda’_{y,1})$ respectively to $P_2$.</li>
+<li>$P_1$ and $P_1$ send $m’_{y}$ and $H(m’_{y})$ respectively to $P_0$.</li>
+</ul>
+<p>$P_i$ for $i \in \{0,1,2\}$ abort if the received values mismatch. Else $P_i$ sets $y = m_y - \lambda_{y,1} - \lambda_{y,2}$.</p>
+<hr>
+<p>检查的过程中，其中一方发送哈希值可以提高效率。</p>
+<h4 id="电路评估-1"><a href="#电路评估-1" class="headerlink" title="电路评估"></a>电路评估</h4><p>在恶意设置下加法协议 $\prod _{\rm Add}$ 同样是安全的，因为它只涉及本地操作。挑战在于构造乘法协议 $\prod ^{\rm m}_{\rm Mul}$，令其可以容忍其中一方腐败。可以观察到有两种情况：</p>
+<ul>
+<li>$P_0$ 是腐败的：在离线阶段会令 $\gamma_{xy} \neq \lambda_x \lambda_y$</li>
+<li>$P_1$ 或 $P_2$ 是腐败的：会在在线阶段扰乱，使诚实的另一方重构出一个错误的 $m_z$</li>
+</ul>
+<p>先看下面的情况，假如 $P_1$ 现在需要验证它重构的 $m_z$ 是否是正确的，可以向 $P_0$ 求助：$P_1$ 可以发送 $m_x, m_y$ 给 $P_0$，因为 $P_0$ 在离线阶段就已经知道 $\lambda_x, \lambda_y$ 和 $\lambda_z$，因此它可以计算出 $m_z$ 并发送给 $P_1$，以此得到验证。但发送 $m_x, m_y$ 给 $P_0$ 会导致打破了原有共享的私密性，所以 $P_1$ 可以对应的值盲化后发送给 $P_0$：$m^{\star}_x = m_x + \delta_x$ 和 $m^{\star}_y = m_y + \delta_y$，然后 $P_0$ 计算 $m^{\star}_z = -m^{\star}_x \lambda_y - m^{\star}_y \lambda_x +\lambda_z + 2\gamma_{xy}$。注意到：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+m^{\star}_z &= -m^{\star}_x \lambda_y - m^{\star}_y \lambda_x +\lambda_z + 2\gamma_{xy}\\
+ &= -(m_x + \delta_x) \lambda_y - (m_y + \delta_y) \lambda_x +\lambda_z + 2\gamma_{xy}\\
+ &= (m_z - m_x m_y) - \chi
+\end{align}</script><p>假设 $P_0$ 知道 $\chi = \delta_x \lambda_y + \delta_y \lambda_x - \gamma_{xy}$，它就可以计算出 $m^{\star}_z + \chi$ 然后发送给 $P_1$。因为 $P_1$ 知道 $m_x, m_y$ 的值，因此它可以验证它重构的 $m_z$ 的正确性，对于 $P_2$ 来说也可以这样验证。</p>
+<p>现在来描述如何使 $P_0$ 获得 $\chi$：首先直接让 $P_0$ 获得 $\chi$ 会导致共享的私密性被破坏，因为 $P_0$ 知道 $\lambda_x, \lambda_y$ 和 $\gamma_{xy}$ 的值，同时在在线阶段又得到 $m_x + \delta_x$ 和 $m_y + \delta_y$，导致 $P_0$ 可以推导出 $m_x, m_y$ 之间的关系。所以还要在 $\chi$ 中加入一个随机值 $\delta_z$ 进行盲化：$\delta_x \lambda_y + \delta_y \lambda_x + \delta_z - \gamma_{xy}$。</p>
+<p>生成 $\chi$ 的过程：$P_1, P_2$ 在本地生成随机数 $\delta_x, \delta_y, \delta_z \in \mathbb{Z}_{2^l}$，计算各自的 $\chi$ 的 $[\cdot]$-共享并发送给 $P_0$。对于 $i \in \{1,2 \}$，令 $[\chi]_{P_i} = \chi_i$。$P_0$ 在本地将共享的份额相加得到 $\chi$。在以上步骤中，腐败的一方可能会在执行过程中引入错误，使得 $P_0$ 获得的 $\chi$ 是错误的。</p>
+<p>总而言之在离线阶段有两个问题需要解决：</p>
+<ul>
+<li>腐败的 $P_0$ 可以不正确地共享 $\gamma_{xy}$</li>
+<li>腐败的 $P_1$ 或 $P_2$ 可以发送错误的 $\chi$ 的 $[\cdot]$-共享给 $P_0$</li>
+</ul>
+<p>为了解决这些问题，$P_0$ 一旦获得 $\chi$，就用下面的方式计算 $a = \delta_x - \lambda_x$、$b = \delta_y - \lambda_y$ 和 $c = (\delta_z + \delta_x \delta_y) - \chi$ 的 $[\![\cdot]\!]$-共享：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+[\![a]\!]_{P_0} &= (\lambda_{x,1}, \lambda_{x,2}), & [\![b]\!]_{P_0} &= (\lambda_{y,1}, \lambda_{y,2}), & [\![c]\!]_{P_0} &= (\chi_{1}, \chi_{2})\\
+ [\![a]\!]_{P_1} &= (\delta_x, \lambda_{x,1}), & [\![b]\!]_{P_1} &= (\delta_y, \lambda_{y,1}), & [\![c]\!]_{P_1} &= (\delta_z + \delta_x \delta_y, \chi_{1})\\
+ [\![a]\!]_{P_2} &= (\delta_x, \lambda_{x,2}), & [\![b]\!]_{P_2} &= (\delta_y, \lambda_{y,2}), & [\![c]\!]_{P_2} &= (\delta_z + \delta_x \delta_y, \chi_{2})
+\end{align*}</script><p>现在 $([\![a]\!], [\![b]\!], [\![c]\!])$ 是一个乘法三元组 $(c=ab)$，当且仅当 $P_0$ 正确分享了 $\gamma_{xy}$（当它腐败时）以及重构的 $\chi$ 是正确的（当 $P_1,P_2$ 其中之一腐败时），因为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda_x \lambda_y - \delta_x \lambda_y - \delta_y \lambda_x \\
+ &= (\delta_x \delta_y + \delta_z) - (\delta_x \lambda_y + \delta_y \lambda_x + \delta_z - \gamma_{xy}) \\
+  &= (\delta_x \delta_y + \delta_z) - \chi = c
+\end{align}</script><p>然后作者给出了一个检查乘法三元组是否正确的协议，这里需要用到另一个有效的乘法三元组 $([\![d]\!], [\![e]\!], [\![f]\!])$，它们满足以下条件：</p>
+<ul>
+<li>$d, e, f$ 都是随机且私密的</li>
+<li>$f = d e$</li>
+</ul>
+<p>这里假设这个三元组是通过 $\mathcal{F}_{\rm trip}$ 生成的，在[2, 30]中有具体构造，下面是[30]中的构造：</p>
+<p><img src="http://images.yingwai.top/picgo/ASTRAf1.png" alt=""></p>
+<p>用  $\prod _{\rm trip}$ 表示该功能的实例化，下面是作者给出检查有效性的协议 $\prod _{\rm prc}$：</p>
+<hr>
+<ul>
+<li>Parties locally compute $[\![\rho]\!] = [\![a]\!] - [\![d]\!]$ and $[\![\sigma]\!] = [\![b]\!] - [\![e]\!]$.</li>
+<li>Parties reconstruct $\rho$ and $\sigma$ by executing $\prod ^{\rm m}_{\rm Rec}([\![\rho]\!], \mathcal{P})$ and $\prod ^{\rm m}_{\rm Rec}([\![\sigma]\!], \mathcal{P})$ respectively.</li>
+<li>Parties locally compute $[\![\tau]\!] = [\![c]\!] - [\![f]\!] - \sigma [\![d]\!] - \rho [\![e]\!] - \sigma \rho$.</li>
+<li>Parties reconstruct $\tau$ by executing $\prod ^{\rm m}_{\rm Rec}([\![\tau]\!], \mathcal{P})$ and output $\perp$, if $\tau \neq 0$.</li>
+</ul>
+<hr>
+<p>协议 $\prod _{\rm prc}$ 需要两对秘密共享三元组 $(a, b, c)$ 和 $(d, e, f)$，验证前一个三元组是否满足 $c = a b$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\tau &= c - f - \sigma d - \rho e - \sigma \rho \\
+ &= c - de - (b - e)d - (a - d)e - (b - e)(a - d) \\
+ &= c - ab = \Delta
+\end{align}</script><p>所以 $\tau = 0$ 时 $(a,b,c)$ 有效，反之无效。而检验 $\tau$ 是否为0只需要一方跟另外两方各通信一次即可：(1) $P_0$ 跟 $P_1$ 检查 $m_\tau - \lambda_{\tau,1}$ 跟 $\lambda_{\tau, 2}$ 是否相等；(2) $P_1$ 跟 $P_2$ 检查 $m_\tau - \lambda_{\tau,2}$ 跟 $\lambda_{\tau, 1}$ 是否相等；(3) $P_0$ 跟 $P_1$ 检查 $m_\tau - \lambda_{\tau,2}$ 跟 $\lambda_{\tau, 1}$ 是否相等，而不是 $\prod ^{\rm m}_{\rm Rec}$ 的通信三次（两次发送一次接收）。下面给出恶意设置下的乘法协议 $\prod ^{\rm m}_{\rm Mul}(w_x, w_y, w_z)$：</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<ul>
+<li>Parties $P_0, P_1$ locally sample random $\lambda_{z,1}, \gamma_{xy,1} \in \mathbb{Z}_{2^l}$, while $P_0, P_2$<br>locally sample a random $\lambda_{z,2}$. $P_0$ locally computes $\gamma_{xy}= \lambda_x \lambda_y$ and<br>sends $\gamma_{xy,2} = \gamma_{xy} - \gamma_{xy,1}$ to $P_2$.</li>
+<li>Parties execute $\prod _{\rm trip}$ to generate a triple $([\![d]\!], [\![e]\!], [\![f]\!])$.</li>
+<li>Parties $P_1, P_2$ locally sample random $\delta_x, \delta_y, \delta_z \in \mathbb{Z}_{2^l}$ and compute<br>$[\delta_z]$ non-interactively.</li>
+<li>$P_i$ for $i \in \{1, 2\}$ computes $[\chi]_{P_i} = \delta_x[\lambda_y]_{P_i} + \delta_y[\lambda_x]_{P_i} + [\delta_z]_{P_i} − [\gamma_{xy}]_{P_i}$ and sends $[\chi]_{P_i}$ to $P_0$, who computes $\chi$.</li>
+<li>Parties locally compute the $[\![\cdot]\!]$-shares of the values $a = \delta_x - \lambda_x$, $b = \delta_y - \lambda_y$ and $b = (\delta_z + \delta_x \delta_y) - \chi$, as described in the text.</li>
+<li>Parties execute $\prod _{\rm prc}$ on $([\![a]\!], [\![b]\!], [\![c]\!])$ and $([\![d]\!], [\![e]\!], [\![f]\!])$.</li>
+</ul>
+<p><strong>Online:</strong></p>
+<ul>
+<li>$P_i$ for $i \in \{1, 2\}$ locally computes $[m_z]_{P_i} = (i-1)m_xm_y - m_x[\lambda_y]_{P_i} - m_y[\lambda_x]_{P_i} + [\lambda_z]_{P_i} + [\gamma_{xy}]_{P_i}$. $P_1, P_2$ mutually exchange their shares and reconstruct $m_z$.</li>
+<li>$P_1$ sends $m^{\star}_x = m_x + \delta_x$, $m^{\star}_y = m_y + \delta_y$ to $P_0$, while $P_2$ sends $H(m^{\star}_x || m^{\star}_{y})$ to $P_0$.$P_0$ outputs $\perp$, if the received values are inconsistent.</li>
+<li>$P_0$ computes $m^{\star}_z = -m^{\star}_x \lambda_y - m^{\star}_y \lambda_x +\lambda_z + 2\gamma_{xy} + \chi$ and sends $H(m^\star_z)$ to both $P_1$ and $P_2$.</li>
+<li>$P_i$ for $i \in \{1, 2\}$ abort if $H(m^\star_z) \neq H(m_z - m_x m_y + \delta_z)$.</li>
+</ul>
+<hr>
+<p>散列值的使用提高了效率，减少了通信的开销。</p>
+<p>对于正确性，首先考虑腐败的 $P_0$ 不正确地共享使得 $\gamma_{xy} = \lambda_x \lambda_y + \Delta$ 的情况，其中 $\Delta$ 是 $P_0$ 引入的不为零的干扰。这种情况在执行 $\prod _{\rm prc}$ 就会被检测到，因为最终计算出来并重构的 $\tau \neq 0$。同样的， $P_1$（或 $P_2$）在协议 $\prod ^{\rm m}_{\rm Mul}$ 离线阶段的第四步时发送 $\chi_1 + \Delta$（或 $\chi_2 + \Delta$） 给 $P_0$ 使其重构的 $\chi’ = \chi + \Delta$，也会导致 $\tau \neq 0$ 从而被诚实方发现并中止计算。</p>
+<p>然后是另一种情况，假如 $P_1$（或 $P_2$）在重构 $m_z$ 时发送了错误的 $[m_z]_{P_i}$ 给另一方，会在最后一步验证哈希值是否相等的时候被检测出来；而在在线阶段第二步中 $P_0$ 对 $m^{\star}_x,m^{\star}_y$ 的一致性检查也确保了它所计算出来的 $m^{\star}_z$ 是正确的。</p>
+<h4 id="公平的实现"><a href="#公平的实现" class="headerlink" title="公平的实现"></a>公平的实现</h4><p>作者通过一种公平重构协议 $\prod_{\rm fRec}$ 来重构电路输出，将 $\prod ^{\rm m}_{\rm 3pc}$ 的安全性提高到公平，保证交易的三方都不能通过损害别人的利益而得到自己不应得的利益。这里使用到了承诺方案，还是利用了服务器之间的公共随机源并使用PRF来为承诺方案引入随机性：</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<ul>
+<li>Parties $P_0, P_1$ locally sample a random $r_1 \in \mathbb{Z}_{2^l}$, prepare and send commitments of $\lambda_{y,1}$ and $r_1$ to $P_2$. Similarly, parties $P_0, P_2$ locally sample a random $r_2 \in \mathbb{Z}_{2^l}$, prepare and send commitments of $\lambda_{y,2}$ and $r_2$ to $P_1$. The randomness needed for both commitments are sampled from the PRF key-setup.</li>
+<li>$P_1$ (resp. $P_2$) aborts if the received commitments mismatch.</li>
+</ul>
+<p><strong>Online:</strong></p>
+<ul>
+<li>$P_1, P_2$ compute a commitment of $m_y$ using randomness sampled from their PRF key-setup and send it to $P_0$.</li>
+<li>If the commitments do not match, $P_0$ sends (<strong>abort</strong>, $o_1$) to $P_2$, while it sends (<strong>abort</strong>, $o_2$) to $P_1$ and aborts, where $o_i$ denotes the opening information for the commitment of $r_i$. Else $P_0$ sends <strong>continue</strong> to both $P_1$ and $P_2$.</li>
+<li>$P_1, P_2$ exchange the messages received from $P_0$.</li>
+<li>$P_1$ aborts if it receives either (i) (<strong>abort</strong>, $o_2$) from $P_0$ and $o_2$ opens the commitment of $r_2$ or (ii) (<strong>abort</strong>, $o_1$) from $P_2$ and $o_1$ is the correct opening information of $r_1$. The case for $P_2$ is similar to that of $P_1$.</li>
+<li>If no abort happens, parties obtain their missing share of $a$ as follows:<ul>
+<li>$P_0, P_1$ open $\lambda_{y,1}$ towards $P_2$.</li>
+<li>$P_0, P_2$ open $\lambda_{y,2}$ towards $P_1$.</li>
+<li>$P_1, P_2$ open $m_y$ towards $P_0$.</li>
+</ul>
 </li>
-<li><p>S运行密钥生成算法（例如RSA）生成公私钥对（$sk,pk$）；</p>
-</li>
-<li><p>S保密私钥，同时S要生成两个随机数 $x_0$ 和 $x_1$，并将这两个随机数和公钥一并传送给R；</p>
-</li>
-<li><p>R选择 $\theta$，并生成一个数 $r$，R用S的公钥加密 $r$，并生成信息</p>
-<p>​                                <script type="math/tex">v =x_{\theta}+E_{pk}(r)</script></p>
-</li>
-<li><p>S在接收到 $v$ 之后，进行如下计算：</p>
-<p>​                                $r_{0}=D_{s k}\left(v-x_{0}\right)$<br>​                                $r_{1}=D_{s k}\left(v-x_{1}\right)$</p>
-</li>
-<li><p>S进行如下计算：</p>
-<p>​                                $b_{0}^{\prime}=b_{0}+r_{0}$<br>​                                $b_{1}^{\prime}=b_{1}+r_{1}$</p>
-<p>并将 $b’_0$ 和 $b’_1$ 传送给R；</p>
-</li>
-<li><p>接收到 $b’_0$ 和 $b’_1$ 后，R进行如下计算：</p>
-<p>​                                $b_\theta = b’_\theta - r$</p>
-</li>
-</ol>
-<h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>进行如下推导：</p>
-<p>​                                $b_{\theta}^{\prime}-r=b_{\theta}+r_{\theta}-r=b_{\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
-<p>而</p>
-<p>​                        $D_{s k}(v-x_\theta)=D_{s k}\left(x_\theta+E_{p k}(r)-x_{\theta}\right)=D_{s k}\left(E_{p k}(r)\right)=r$</p>
-<p>因此可得</p>
-<p>​                                            $b’_\theta - r = b_\theta$</p>
-<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b_{1-\theta}$。R得到 $b’_\theta$ 和 $b’_{1-\theta}$ 之后，由协议可知R可以正确计算 $b’_\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
-<p>​                        $b_{1-\theta}^{\prime}-r=b_{1-\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
-<p>而</p>
-<p>​                    $D_{s k}\left(v-x_{\theta}\right)=D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right) \neq r$</p>
-<p>而且根据加密的特性，$D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
-<h3 id="对于R的安全性"><a href="#对于R的安全性" class="headerlink" title="对于R的安全性"></a>对于R的安全性</h3><p>R的安全性要求S不能获得关于 $\theta$ 任何有价值的信息。</p>
-<p>因为 $r$ 是随机数，所以 $E_{pk}(r)$ 与随机数是不可区分的。因此 $v$ 与随机数是不可区分的，所以S不能从 $v$ 获得关于 $\theta$ 有价值的信息。</p>
+<li>Parties reconstruct the value $y$ using missing share that matches with the agreed upon commitment.</li>
+</ul>
+<hr>
+<p>当没有广播频道的时候，一个非常棘手的问题就会存在：一个腐败的 $P_0$ 可以发送不同的信号给 $P_1$ 和 $P_2$（一个为 abort 而另一个为 continue），以上的重构协议 $\prod_{\rm fRec}([\![y]\!], \mathcal{P})$ 解决了这个问题。在离线阶段 $P_0$ 和 $P_1$ 共同计算出一个关于 $r_1$ 的承诺发送给 $P_2$，同样地 $P_0$ 和 $P_2$ 共同计算出一个关于 $r_2$ 的承诺发送给 $P_1$。这两个承诺就可以确保 $P_1$ 跟 $P_2$ 可以验证它们收到的来自 $P_0$ 的信号是否一致：例如当 $P_1$ 收到 abort 而 $P_2$ 收到 continue，在它们交换信息时，$P_1$ 就可以利用收到的 $o_2$ 证明自己收到了 abort 信号，反过来也是一样的。同时还解决了一个问题，就是当一个腐败的 $P_1$ 收到了 $P_0$ 发送的 continue 信号，但它不能在与 $P_2$ 交换信息时宣称自己收到了 abort 信号，因为它没有 $o_2$，因此无法证明，对于 $P_2$ 腐败的情况也是一样的。</p>
+<p>这里的承诺方案可以通过一个哈希函数来实现，例如：$(c, o) = (\mathcal{H}(x||r),x||r) = Com(x;r)$</p>
+<h2 id="隐私保护机器学习"><a href="#隐私保护机器学习" class="headerlink" title="隐私保护机器学习"></a>隐私保护机器学习</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>对于每一个预测函数，模型拥有者 $\rm M$ 拥有一个训练好的参数向量，想为拥有一个查询向量的客户 $\rm C$ 提供预测服务。在服务器辅助设置中，$\rm M$ 和 $\rm C$ 以共享方式将各自的输入外包给三个不受信任但非合谋的服务器 $\{P_0, P_1, P_2\}$，这些服务器通过为本文的3PC协议开发的技术以共享方式执行计算，并将输出单独重构到客户端。客户只能知道输出，除此之外什么也不知道。</p>
+<h3 id="对于ML的协议"><a href="#对于ML的协议" class="headerlink" title="对于ML的协议"></a>对于ML的协议</h3><h4 id="安全向量点积"><a href="#安全向量点积" class="headerlink" title="安全向量点积"></a>安全向量点积</h4><p>对于向量的 $[\cdot]$-共享和 $[\![\cdot]\!]$-共享，就是对应每个维度的值进行$[\cdot]$-共享和 $[\![\cdot]\!]$-共享，容易知道对于向量来说两种共享仍然是线性的。对于两个 $d$ 维向量的点积，不考虑效率的情况下可以执行 $d$ 次 $\prod ^{\rm s}_{\rm Mul}$协议，再对这 $d$ 次执行的结果简单进行相加，各方就可以得到它们的份额。在这里作者给出一个更高效率的向量点积协议 $\prod ^{\rm s}_{\rm dp}$：</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<p>​        $P_0, P_1$ sample random $\lambda_{u,1}, \gamma_{pq,1} \in \mathbb{Z}_{2^l}$, while $P_0, P_2$ sample random $\lambda_{u,2} \in \mathbb{Z}_{2^l}$. $P_0$ locally computes $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$, sets $\gamma_{pq,2} = \gamma_{pq} - \gamma_{pq,1}$ and sends $\gamma_{pq,2}$ to $P_2$.</p>
+<p><strong>Online:</strong></p>
+<ul>
+<li>$P_i$ for $i \in \{1,2\}$ locally computes $[m_u]_{P_i} = \sum^d_{j=1}((i-1)m_{p_j}m_{q_j} - m_{p_j}[\lambda_{q_j}]_{P_i} - m_{q_j}[\lambda_{p_j}]_{P_i}) + [\gamma_{pq}]_{P_i} + [\lambda_u]_{P_i}$.</li>
+<li>$P_1$ and $P_2$ mutually exchange their share of $[m_u]$ to reconstruct $m_u$.</li>
+</ul>
+<hr>
+<p>上面的协议的离线阶段中，$P_0$ 仅仅共享了 $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$ 而不是每一个 $\lambda_{p_i} \lambda_{q_i}$；在在线阶段，$P_1, P_2$ 直接计算 $[m_u]$（其中 $u = \vec{p} \odot \vec{q}$）而不是每一个 $m_{p_i q_i}$。</p>
+<p>接下来作者还对恶意设置下的点积进行了讨论：由于在乘法协议中引入了对恶意对手的额外检查，所以上面针对半诚实协议所作的优化是不适用的。对两个 $d$ 维向量的点积，只能 $d$ 次调用协议 $\prod ^{\rm m}_{\rm Mul}$。不过作者还是对在线阶段的开销进行了改进：在在线阶段 $P_1$ 并行地发送 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 给 $P_0$，而 $P_2$ 则发送对应的哈希值给 $P_0$。$P_0$ 收到这些值后进行验证，若一致则将它们“结合”所有的 $m^{\star}_{p_i q_i}$ 然后发送一个单独的 $m^\star_u$ 的哈希值给 $P_1, P_2$，最后 $P_1, P_2$ 在本地验证是否与 $m_u - \sum^d_{j=1}(m_{p_j}m_{q_j} - \delta_{u_j})$。这样做的话就节省了在线阶段的开销，不用每个 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 都发送一次。</p>
+<h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[\![u]\!], [\![v]\!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 ${\rm msb}(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[\![a]\!]$ 的情况下生成 ${\rm msb}(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]_{P_1} = (p,0)$ and $[\![p]\!]_{P_2} = (p,0)$.</p>
+<p><strong>Online:</strong></p>
+<p>​        $P_1$ set $[a]_{P_1}=m_a - \lambda_{a,1}$, $P_2$ set $[a]_{P_2}=- \lambda_{a,2}$.</p>
+<ul>
+<li>$P_1$ sends $[ra]_{P_1} = r[a]_{P_1} + r’$ to $P_0$, while $P_2$ sends $[ra]_{P_2} = r[a]_{P_1} - r’$ to $P_0$, who adds them to obtain $ra$.</li>
+<li>$P_0$ executes $\prod^{\rm s}_{\rm Sh}(P_0, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$.</li>
+<li>Parties locally compute $[\![msb(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
+</ul>
+<hr>
+<p>上面的协议用 $\prod ^{\rm s}_{\rm BitExt}([\![a]\!], \mathcal{P})$ 表示。这里上面用到了一个随机数 $r$ 来对 $a$ 的值进行盲化，并且可以注意到 ${\rm sign}(a \cdot r) = {\rm sign}(a) \oplus {\rm sign}(r)$，所以 $r$ 不会对生成共享份额造成影响且使得三者都不能从这个过程中知道关于 $a$ 的信息。</p>
+<p>对于恶意的情况，就不能仅仅依靠 $P_0$ 来生成 $[\![{\rm msb}(ra)]\!]^{\rm B}$，下面给出了修改后的协议 $\prod ^{\rm m}_{\rm BitExt}([\![a]\!], \mathcal{P})$：</p>
+<hr>
+<p><strong>Offline:</strong></p>
+<p>​        $P_1, P_2$ sample a random $r_1 \in \mathbb{Z}_{2^l}$ and set $p_1 = {\rm msb}(r_1)$ while $P_0, P_2$ sample a random $r_2 \in \mathbb{Z}_{2^l}$ and set $p_2 = {\rm msb}(r_2)$.</p>
+<ul>
+<li>Parties non-interactively generate $[\![\cdot]\!]$-shares of $r_1$ as $[\![r_1]\!]_{P_0}=(0,0)$, $[\![r_1]\!]_{P_1}=(r_1,0)$ and $[\![r_1]\!]_{P_2}=(r_1,0)$.</li>
+<li>Parties non-interactively generate $[\![\cdot]\!]$-shares of $r_1$ as $[\![r_2]\!]_{P_0}=(0,-r_2)$, $[\![r_1]\!]_{P_1}=(0,0)$ and $[\![r_1]\!]_{P_2}=(0,-r_2)$.</li>
+<li>Parties execute $\prod^{\rm m}_{\rm Mul}$ on $r_1$ and $r_2$ to generate $[\![r]\!] = [\![r_1 r_2]\!]$.</li>
+<li>Parties non-interactively generate Boolean shares of $p_1$ as $[\![p_1]\!]^{\rm B}_{P_0}=(0,0)$, $[\![p_1]\!]^{\rm B}_{P_1}=(p_1,0)$ and $[\![p_1]\!]^{\rm B}_{P_2}=(p_1,0)$.</li>
+<li>Parties non-interactively generate Boolean shares of $p_2$ as $[\![p_2]\!]^{\rm B}_{P_0}=(0,p_2)$, $[\![p_2]\!]^{\rm B}_{P_1}=(0,0)$ and $[\![p_2]\!]^{\rm B}_{P_2}=(0,p_2)$.</li>
+<li>Parties locally compute $[\![p]\!]^{\rm B}=[\![p_1]\!]^{\rm B} \oplus [\![p_2]\!]^{\rm B}$.</li>
+</ul>
+<p><strong>Online:</strong></p>
+<ul>
+<li>Parties execute $\prod ^{\rm m}_{\rm Mul}$ on $[\![r]\!]$ and $[\![a]\!]$ to generate $[\![ra]\!]$ followed by enabling $P_0, P_1$ to reconstruct $ra$ (this is done by slightly modifying the protocol $\prod ^{\rm m}_{\rm Rec}$ ).</li>
+<li>$P_1$ executes $\prod ^{\rm m}_{\rm Sh}(P_1, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$. In parallel, $P_0$ locally computes $m_q$ and sends ${\rm H}(m_q)$ to $P_2$, who abort if the value mismatches with the hash of the value $m_q$ received from $P_1$ as part of $\prod ^{\rm m}_{\rm Sh}(P_1, q)$.</li>
+<li>Parties locally compute $[\![{\rm msb}(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
+</ul>
+<hr>
+<h4 id="ML预测函数"><a href="#ML预测函数" class="headerlink" title="ML预测函数"></a>ML预测函数</h4><ul>
+<li><strong>线性回归</strong>：$\rm M$ 有一个 $d$ 维的模型参数向量 $\vec{w}$ 和偏置项 $b$，$\rm C$ 有一个 $d$ 维的查询向量 $\vec{z}$。$\rm C$ 获得 $f_{\rm linr}((\vec{w}, b),\vec{z}) = \vec{w} \odot \vec{z} + b$，其中 $\vec{w} \odot \vec{z}$ 是向量 $\vec{w}$ 和向量 $\vec{z}$ 的点积；</li>
+<li><strong>SVM回归</strong>：$\rm M$ 有$\{\alpha_j, y_j \}^k_{j=1}$ 和 $d$ 维的支持向量 $\{\vec{x_j}\}^k_{j=1}$，$\rm C$ 有一个 $d$ 维的查询向量 $\vec{z}$。$\rm C$ 获得 $f_{\rm svmr}((\{\alpha_j, y_j, \vec{x_j} \}^k_{j=1}, b), \vec{z}) = \sum^k_{j=1} \alpha_j y_j (\vec{x_j} \odot \vec{z}) + b$；</li>
+<li><strong>逻辑回归</strong>：$\rm M$ 和 $\rm C$ 的输入和线性回归类似，$\rm M$ 还需要提供一个在 $[0,1]$ 范围内的额外输入 $t$。$\rm C$ 获得 $f_{\rm logr}((\vec{w}, b, t), \vec{z}) = {\rm sign}((\vec{w} \odot \vec{z} + b) - {\rm ln}(\frac{t}{1-t}))$，其中 ${\rm sign}(\cdot)$ 返回对象的符号位；</li>
+<li><strong>SVM分类</strong>：$\rm M$ 和 $\rm C$ 的输入和SVM回归一样，但对 $\rm C$ 的输出变为 $f_{\rm svmr}((\{\alpha_j, y_j, \vec{x_j} \}^k_{j=1}, b), \vec{z}) = {\rm sign}(\sum^k_{j=1} \alpha_j y_j (\vec{x_j} \odot \vec{z}) + b)$。</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] V. A. Abril, P. Maene, N. Mertens, and N. P. Smart. 2019. <em>Bristol Fashion MPC Circuits.</em> <a href="https://homes.esat.kuleuven.be/~nsmart/MPC/" target="_blank" rel="noopener">https://homes.esat.kuleuven.be/~nsmart/MPC/</a>.<br>[2] T. Araki, A. Barak, J. Furukawa, T. Lichter, Y. Lindell, A. Nof, K. Ohara, A. Watzman, and O. Weinstein. 2017. <em>Optimized Honest-Majority MPC for Malicious Adversaries - Breaking the 1 Billion-Gate Per Second Barrier.</em> In IEEE S&amp;P. 843–862.<br>[3] T. Araki, A. Barak, J. Furukawa, Y. Lindell, A. Nof, and K. Ohara. 2016. <em>DEMO: High-Throughput Secure Three-Party Computation of Kerberos Ticket Generation.</em> In ACM CCS. 1841–1843.<br>[4] T. Araki, J. Furukawa, Y. Lindell, A. Nof, and K. Ohara. 2016. <em>High-Throughput Semi-Honest Secure Three-Party Computation with an Honest Majority.</em> In ACM CCS. 805–817.<br>[5] C. Baum, I. Damgård, T. Toft, and R. W. Zakarias. 2016. <em>Better Preprocessing for Secure Multiparty Computation.</em> In ACNS. 327–345.<br>[6] D. Beaver. 1991. <em>Efficient Multiparty Protocols Using Circuit Randomization.</em> In CRYPTO. 420–432.<br>[7] D. Beaver. 1995. <em>Precomputing Oblivious Transfer.</em> In CRYPTO. 97–109.<br>[8] Z. Beerliová-Trubíniová and M. Hirt. 2006. <em>Efficient Multi-party Computation with Dispute Control.</em> In TCC. 305–328.<br>[9] Z. Beerliová-Trubíniová and M. Hirt. 2008. <em>Perfectly-Secure MPC with Linear Communication Complexity.</em> In TCC. 213–230.<br>[10] M. Ben-Or, S. Goldwasser, and A. Wigderson. 1988. <em>Completeness Theorems for Non-Cryptographic Fault-Tolerant Distributed Computation (Extended Abstract).</em> In ACM STOC. 1–10.<br>[11] Christopher Bishop. 2006. <em>Pattern Recognition and Machine Learning.</em><br>[12] D. Bogdanov, S. Laur, and J. Willemson. 2008. <em>Sharemind: A Framework for Fast Privacy-Preserving Computations.</em> In ESORICS. 192–206.<br>[13] D. Bogdanov, R. Talviste, and J. Willemson. 2012. <em>Deploying Secure Multi-Party Computation for Financial Data Analysis.</em> In FC. 57–64.<br>[14] M. Byali, A. Joseph, A. Patra, and D. Ravi. 2018. <em>Fast Secure Computation for Small Population over the Internet.</em> ACM CCS (2018), 677–694.<br>[15] O. Catrina and S. de Hoogh. 2010. <em>Secure Multiparty Linear Programming Using Fixed-Point Arithmetic.</em> In ESORICS. 134–150.<br>[16] N. Chandran, J. A. Garay, P. Mohassel, and S. Vusirikala. 2017. <em>Efficient, Constant-Round and Actively Secure MPC: Beyond the Three-Party Case.</em> In ACM CCS. 277–294.<br>[17] H. Chaudhari, A. Choudhury, A. Patra, and A. Suresh. 2019. <em>ASTRA: High-throughput 3PC over Rings with Application to Secure Prediction.</em> <a href="https://eprint.iacr.org/2019/429" target="_blank" rel="noopener">https://eprint.iacr.org/2019/429</a>. In IACR Cryptology ePrint Archive.<br>[18] K. Chida, D. Genkin, K. Hamada, D. Ikarashi, R. Kikuchi, Y. Lindell, and A. Nof. 2018. <em>Fast Large-Scale Honest-Majority MPC for Malicious Adversaries.</em> In CRYPTO. 34–64.<br>[19] A. Choudhury and A. Patra. 2017. <em>An Efficient Framework for Unconditionally Secure Multiparty Computation.</em> IEEE Trans. Information Theory (2017), 428–468.<br>[20] R. Cleve. 1986. <em>Limits on the Security of Coin Flips when Half the Processors Are Faulty (Extended Abstract).</em> In ACM STOC. 364–369.<br>[21] R. Cramer, I. Damgård, D. Escudero, P. Scholl, and C. Xing. 2018. <em>SPDZ2k: Efficient MPC mod 2ˆk for Dishonest Majority.</em> CRYPTO (2018), 769–798.<br>[22] R. Cramer, I. Damgård, and Y. Ishai. 2005. <em>Share Conversion, Pseudorandom Secret-Sharing and Applications to Secure Computation.</em> In TCC. 342–362.<br>[23] Cryptography and Privacy Engineering Group at TU Darmstadt. 2017. ENCRYPTO Utils. <a href="https://github.com/encryptogroup/ENCRYPTO_utils" target="_blank" rel="noopener">https://github.com/encryptogroup/ENCRYPTO_utils</a>.<br>[24] M. Dahl. 2018. <em>Private Image Analysis with MPC: Training CNNs on Sensitive Data using SPDZ.</em> (2018).<br>[25] I. Damgård, C. Orlandi, and M. Simkin. 2018. <em>Yet Another Compiler for Active Security or: Efficient MPC Over Arbitrary Rings.</em> CRYPTO (2018), 799–829.<br>[26] I. Damgård, V. Pastro, N. P. Smart, and S. Zakarias. 2012. <em>Multiparty Computation from Somewhat Homomorphic Encryption.</em> In CRYPTO. 643–662.<br>[27] S. de Hoogh, B. Schoenmakers, P.Chen, and H. Akker. 2014. <em>Practical Secure Decision Tree Learning in a Teletreatment Application.</em> In FC. 179–194.<br>[28] H. Eerikson, M. Keller, C. Orlandi, P. Pullonen, J. Puura, and M. Simkin. 2019. <em>Use your Brain! Arithmetic 3PC For Any Modulus with Active Security.</em> IACR<br>Cryptology ePrint Archive (2019).<br>[29] A. Esteva, B. Kuprel, R. A. Novoa, J. Ko, S. M. Swetter, H. M. Blau, and S. Thrun. 2017. <em>Dermatologist-level classification of skin cancer with deep neural networks.</em> Nature (2017), 115–118.<br>[30] J. Furukawa, Y. Lindell, A. Nof, and O. Weinstein. 2017. <em>High-Throughput Secure Three-Party Computation for Malicious Adversaries and an Honest Majority.</em> In EUROCRYPT. 225–255.<br>[31] A. Gascón, P. Schoppmann, B. Balle, M. Raykova, J. Doerner, S. Zahur, and D. Evans. 2016. <em>Secure Linear Regression on Vertically Partitioned Datasets.</em> IACR Cryptology ePrint Archive (2016).<br>[32] M. Geisler. 2007. <em>Viff: Virtual ideal functionality framework.</em><br>[33] O. Goldreich, S. Micali, and A. Wigderson. 1987. <em>How to Play any Mental Game or A Completeness Theorem for Protocols with Honest Majority.</em> In STOC. 218–229.<br>[34] S. D. Gordon, S. Ranellucci, and X. Wang. 2018. <em>Secure Computation with Low Communication from Cross-Checking.</em> In ASIACRYPT. 59–85.<br>[35] Y. Ishai, R. Kumaresan, E. Kushilevitz, and A. Paskin-Cherniavsky. 2015. <em>Secure Computation with Minimal Interaction, Revisited.</em> In CRYPTO. 359–378.<br>[36] S. Kamara, P. Mohassel, and M. Raykova. 2011. <em>Outsourcing Multi-Party Computation.</em> IACR Cryptology ePrint Archive (2011).<br>[37] J. Katz, V. Kolesnikov, and X. Wang. 2018. <em>Improved Non-Interactive Zero Knowledge with Applications to Post-Quantum Signatures.</em> In CCS. 525–537.<br>[38] M. Keller, E. Orsini, and P. Scholl. 2016. <em>MASCOT: Faster Malicious Arithmetic Secure Computation with Oblivious Transfer.</em> In ACM CCS. 830–842.<br>[39] M. Keller, V. Pastro, and D. Rotaru. 2018. <em>Overdrive: Making SPDZ Great Again.</em> In EUROCRYPT. 158–189.<br>[40] J. Launchbury, D. Archer, T. DuBuisson, and E. Mertens. 2014. <em>Application-Scale Secure Multiparty Computation.</em> In ESOP. 8–26.<br>[41] S. Laur, H. Lipmaa, and T. Mielikäinen. 2006. <em>Cryptographically private support vector machines.</em> In ACM SIGKDD. 618–624.<br>[42] Yann LeCun and Corinna Cortes. 2010. <em>MNIST handwritten digit database.</em> (2010). <a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">http://yann.lecun.com/exdb/mnist/</a><br>[43] Y. Lindell and A. Nof. 2017. <em>A Framework for Constructing Fast MPC over Arithmetic Circuits with Malicious Adversaries and an Honest-Majority.</em> In ACM CCS. 259–276.<br>[44] J. Liu, M. Juuti, Y. L., and N. Asokan. 2017. <em>Oblivious Neural Network Predictions via MiniONN Transformations.</em> In ACM CCS. 619–631.<br>[45] E. Makri, D. Rotaru, N. P. Smart, and F. Vercauteren. 2018. <em>EPIC: Efficient Private Image Classification (or: Learning from the Masters).</em> CT-RSA (2018), 473–492.<br>[46] P. Mohassel and P. Rindal. 2018. <em>ABY3: A Mixed Protocol Framework for Machine Learning.</em> In ACM CCS. 35–52.<br>[47] P. Mohassel, M. Rosulek, and Y. Zhang. 2015. <em>Fast and Secure Three-party Computation: Garbled Circuit Approach.</em> In CCS. 591–602.<br>[48] P. Mohassel and Y. Zhang. 2017. <em>SecureML: A System for Scalable Privacy-Preserving Machine Learning.</em> In IEEE S&amp;P. 19–38.<br>[49] V. Nikolaenko, S. Ioannidis, U. Weinsberg, M. Joye, N. Taft, and D. Boneh. 2013. <em>Privacy-preserving matrix factorization.</em> In ACM CCS. 801–812.<br>[50] V. Nikolaenko, U. Weinsberg, S. Ioannidis, M. Joye, D. Boneh, and N. Taft. 2013. <em>Privacy-Preserving Ridge Regression on Hundreds of Millions of Records.</em> In IEEE S&amp;P. 334–348.<br>[51] P. S. Nordholt and M. Veeningen. 2018. <em>Minimising Communication in Honest-Majority MPC by Batchwise Multiplication Verification.</em> In ACNS. 321–339.<br>[52] T. Orekondy, B. Schiele, and M. Fritz. 2018. <em>Knockoff Nets: Stealing Functionality of Black-Box Models.</em> CoRR (2018).<br>[53] N. Papernot, P. McDaniel, I. Goodfellow, S. Jha, Z. B. Celik, and A. Swami. 2017. <em>Practical Black-Box Attacks Against Machine Learning.</em> In ASIA CCS. 506–519.<br>[54] A. Patra and D. Ravi. 2018. <em>On the Exact Round Complexity of Secure Three-Party Computation.</em> CRYPTO (2018), 425–458.<br>[55] M. S. Riazi, C. Weinert, O. Tkachenko, E. M. Songhori, T. Schneider, and F. Koushanfar. 2018. <em>Chameleon: A Hybrid Secure Computation Framework for Machine Learning Applications.</em> In AsiaCCS. 707–721.<br>[56] F. Schroff, D. Kalenichenko, and J. Philbin. 2015. <em>FaceNet: A unified embedding for face recognition and clustering.</em> In IEEE CVPR. 815–823.<br>[57] N. P. Smart and T. Wood. 2019. <em>Error Detection in Monotone Span Programs with Application to Communication-Efficient Multi-party Computation.</em> In CT-RSA. 210–229.<br>[58] F. Tramèr, F. Zhang, A. Juels, M. K. Reiter, and T. Ristenpart. 2016. <em>Stealing Machine Learning Models via Prediction APIs.</em> In USENIX. 601–618.<br>[59] S. Wagh, D. Gupta, and N. Chandran. 2019. <em>SecureNN: 3-Party Secure Computation for Neural Network Training.</em> PoPETs (2019), 26–49.<br>[60] A. C. Yao. 1982. <em>Protocols for Secure Computations.</em> In FOCS. 160–164.</p>
 ]]></content>
       <categories>
-        <category>Study</category>
+        <category>Papers</category>
       </categories>
       <tags>
         <tag>密码学</tag>
+        <tag>隐私保护机器学习</tag>
         <tag>MPC</tag>
+        <tag>神经网络</tag>
       </tags>
   </entry>
   <entry>
@@ -1582,209 +1741,6 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
         <tag>隐私保护机器学习</tag>
         <tag>神经网络</tag>
         <tag>同态加密</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</title>
-    <url>/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/</url>
-    <content><![CDATA[<p><em>Samira Khodabandehlou</em></p>
-<p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=</a></p>
-<a id="more"></a>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>电子商务推荐系统已经转变为客户非常重要的决策辅助工具，利用信息技术和客户信息提供在线个性化推荐。同时，协同过滤推荐系统是电子商务系统成功的关键组成部分之一。尽管有协同过滤现在的普及和成功，这些系统仍然面临着一系列严重的限制，包括冷启动、用户-项目矩阵稀疏、可扩展性和用户兴趣在这段时间内的变化，这些都阻碍了对客户的准确推荐。虽然已有很多研究提出了克服这些局限性的方法，但还没有提供一个全面的模型来降低这些局限性：1)在产品类别层面上基于LRFM变量进行客户细分，以评估与公司的客户关系的长度、最近程度、频率和购买产品类别的金额；2)在每个聚类级别上基于用户-类别矩阵提取关联规则；3)根据人口统计变量进行客户细分；4)改变用户-项目矩阵并降低其维数；5)通过将细分方法的结果与CF加权组合来开发新的相似度函数。根据所获得的结果，本研究提出的系统消除了传统的CF约束，为客户的偏好提供了更准确、更合适的建议。</p>
-<p><strong>关键词：</strong>协同过滤；数据挖掘；电子商务；推荐系统；时态信息。</p>
-<p>本研究的主要目标包括：找出传统协同过滤在向合适的用户推荐合适商品方面的局限性，提出一个全面的、全新的推荐系统来消除传统CF的局限性，用真实的数据对推荐系统进行评估，以提供更准确、更符合顾客口味的推荐。</p>
-<h1 id="理论背景"><a href="#理论背景" class="headerlink" title="理论背景"></a>理论背景</h1><h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><p><strong>推荐系统</strong>是提高电子商务环境中决策过程质量的有用工具，因为它们通过提供必要的信息和有用的建议来帮助在线决策者选择与他们的愿望和要求一致的项目(Shambour and Lu，2015；Son，2016)。事实上，识别用户偏好的能力是个性化RSS的核心(Kim等人，2011年)。Ricci等人。(2011)将RS定义为特定类型的信息系统，该信息系统：</p>
-<ol>
-<li>帮助客户选择他们没有亲身体验的项目；</li>
-<li>向顾客推荐商品；</li>
-<li>通过为客户提供信息来帮助他们决定购买哪种商品。</li>
-</ol>
-<p>创建推荐系统有五个阶段：收集数据、分析用户信息、计算相似度、选择邻居、预测并提出前N个项目的列表(Yahya和Al-Shamri，2016)。这些系统出现在20世纪90年代中期，通常分为三类(Lee，2010；Resnick，1994)：</p>
-<ol>
-<li><p><strong>协同过滤</strong>：这些系统根据一组被称为邻居的相似用户或相似项目的得分提供推荐(Kim等人，2005年)。CF是Netflix和Amazon等著名电子商务公司使用的最受欢迎的RS之一(Hernando等人，2016；Kim等人，2005年)。这些系统又根据它们用于预测用户偏好的算法类型分为两类(Ghazarian和Nematbakhsh，2014)：</p>
-<ul>
-<li><strong>基于记忆</strong>：这些系统使用用户项目评分矩阵和KNN算法来识别用户的邻居并预测他们的偏好(Ghazarian和Nematbakhsh，2014年；Hernando等人，2016年；Kim等人，2011年)，其中使用皮尔逊相关系数等方法计算用户之间的相似性(Bobadilla等人，2012年)。在本研究中，使用KNN算法和皮尔逊相关系数来提供建议。</li>
-<li><strong>基于模型</strong>：这些系统使用分段等方法处理用户的档案数据以提供建议，从而改进计算(Ghazarian和Nematbakhsh，2014；Hernando等人，2016)。</li>
-</ul>
-<p>尽管CF方法很受欢迎并取得了成功，但它们仍然面临着一些严重的限制。这些限制包括：</p>
-<ul>
-<li><strong>冷启动</strong>：在多个用户购买某个项目之前，系统不能向某人推荐该项目。这个问题被称为冷启动。用户的冷启动是指最近加入推荐系统并且没有关于他或她的足够信息的用户(Elahi等人，2016；Hu和Pu，2011；Kim等人，2011；Lee，2010；Son，2016；Sharma和Ray，2016)。</li>
-<li><strong>可伸缩性</strong>：由于客户数据和产品数据的绝对数量，系统必须花费大量的金钱和时间来提取所有客户之间的相似性，导致其生产率较低(Hu和Pu，2011；Hernando等人，2016；Keramati和Khaleghi，2014；Lee，2010)。</li>
-<li><strong>用户-项目矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致用户-项目矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
-<li><strong>用户偏好的改变</strong>：用户的品味和偏好可能会随着时间的推移而改变。例如，一位最近生了孩子的母亲可能对购买婴儿服装感兴趣，她最近的购买可能反映了这种新的关注。这是当；她可能从来没有对这样的物品有任何兴趣(Ding等人，2006年；岩田，2008年；Lee等人，2008年)。(Ding et al.，2006；Iwata，2008；Lee et al.，2008)。</li>
-</ul>
-<p>上述限制可能会对RS的性能产生负面影响，从而限制系统创建有意义和准确的推荐。</p>
-</li>
-<li><p><strong>基于内容的过滤器(Content-Based Filter，CBF)</strong>：该方法基于这样的概念，即用户对他们以前感兴趣的项目感兴趣。因此，这些系统根据项目和产品之间的相似性提供建议(Anderson和Hiralall，2009年；Elahi等人，2016年)。因此，这种方法取决于物品的规格和与这些规格相关的用户配置文件的可用性(Anderson and Hiralall，2009)。这是因为在互联网上存储大量不同种类电子产品的目录是一项非常困难的任务(Bobadilla等人，2012年)。因此，音乐或视频文件等一些产品的内容分析非常困难；这个问题使得CF比CBF要好得多(Anderson和Hiralall，2009；Kim等人，2011)。与CBF相比，CF在电子商务中具有更高的灵活性和与RS的兼容性，使其成为最常用和最有用的RS系统之一(Burke，2002；Iwata，2008；Wang and Wu，2012)。因此，在本研究中，使用CF的概念作为主要的推荐机制。</p>
-</li>
-<li><p>混合方法：一些RS使用上述系统的组合来减少它们的限制；更多细节将在下面的实验背景部分提供(Burke，2002；Keramati和Khaleghi，2014)。</p>
-</li>
-</ol>
-<h2 id="客户细分"><a href="#客户细分" class="headerlink" title="客户细分"></a>客户细分</h2><p>客户细分是一种非常有用的数据挖掘方法，用于在电子商务的RS中找到“邻居”，在电子商务中，使用特定的方法，如聚类，来选择一些用户作为邻居，以改进偏好的预测(Khodabandehlou和Niknafs，2016；Li等人，2011年)。</p>
-<p>在RS中，选择合适的属性进行分割是影响系统性能的重要因素之一。最近、频率和货币模型(RFM)的属性是基于分析客户购买行为的一种很好的客户细分方法，它已经成功地用于许多RS(Keramati和Khaleghi，2014；Khodabandehlou和Zivari Rahman，2017；Lee，2010)。各种研究表明，在RFM模型中加入L(客户关系长度)指标将导致对客户的更准确分析，并将提高细分的质量(Li等人，2011年)。因此，在本研究中，LRFM模型被用于客户细分和识别具有相似购买行为的客户类别。</p>
-<p>此外，分割算法对识别出的片段的质量起着重要的作用。在聚类算法中，K-Means算法被认为是最成功和最合适的分割方法(Khodabandehlou和Niknafs，2016)，在许多研究中证明了它与RSS的兼容性(Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Li等人，2011年)。K-Means是一种数据挖掘方法，它需要K的初始值，即聚类的数量，才能运行。确定最佳簇数的合适方法是自组织映射(SOM)算法。该算法是一种无监督神经网络，可以从数据中识别未知模式，并估计合适的聚类数量(Abidi和Ong，2000；Mosayebian等人，2012)。</p>
-<p>相关研究建议在RSS中结合K-Means和SOM算法使用两阶段分割方法，以获得更准确的结果(Keramati和Khaleghi，2014；Mosayebian等人，2012年)。因此，本研究将利用这一模式进行客户细分。</p>
-<h2 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h2><p>关联规则是数据挖掘的重要方法之一，用于分析RS大型数据库中各种商品之间的市场篮子。分析购物篮已经成为发现用户购物车之间关系的流行系统(Hsu等人，2004；Liu and Shih，2005a)。先验算法是最常见的关联规则之一(Hsu等人，2004；Liu和Shih，2005a，2005b)，用于在已经购买了另一件物品时找到购买特定物品的概率模式。在RS中，已经形成了许多关于不同用户的购买行为的规则(Keramati和Khaleghi，2014；Liu和Shih，2005a，2005b)。在这些规则吸引程度的衡量标准中，我们可以提到支持性规则和置信度规则，它们分别指发现的规则的传播度和可接受性(Hsu等人，2004；Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Liu和Shih，2005a，2005b)。</p>
-<h1 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h1><p>Wang等人。(2017)提出了一种混合模型来全面、客观地评估用户之间的相似度，试图为CF提供一个用户相似度的组合模型。在该模型中，设计了一种基于Kullback-Leibler(KL)散度的项目相似度准则，并将其作为邻近度-显著性-奇异性模型输出校正的权值。同时，在模型中考虑了用户优先级因子和非对称因子，以区分不同用户之间的评分优先级，提高输出模型的可靠性。研究结果表明，本文提出的分布式数据用户模型是合理的，有效地提高了预测精度和推荐质量。</p>
-<p>Yakut和Vaidya(2017)进行了一项研究，目的是在重叠分区数据时提出与维护个人隐私的项目相关的建议。研究人员表示，用户评级对于创建RSS至关重要，在得分较低的情况下，公司更愿意为分区的数据提供推荐。为此，有保护个人隐私的计划，但现有的解决方案没有全面分析划分的数据之间可能的重叠，而这种重叠使得划分的数据之间的协作更具挑战性。在这项研究中，RSS的问题已经在保护个人隐私的情况下进行了研究，在这一领域提出的新的倡议以可接受的成本提升了预测的质量。</p>
-<p>Yakut和Vaidya(2017)进行了一项研究，目的是在重叠分区数据时提出与维护个人隐私的项目相关的建议。研究人员表示，用户评级对于创建RSS至关重要，在得分较低的情况下，公司更愿意为分区的数据提供推荐。为此，有保护个人隐私的计划，但现有的解决方案没有全面分析划分的数据之间可能的重叠，而这种重叠使得划分的数据之间的协作更具挑战性。在这项研究中，RSS的问题已经在保护个人隐私的情况下进行了研究，在这一领域提出的新的倡议以可接受的成本提升了预测的质量。</p>
-<p>Maatallah和Seridi-Bouchelaghem(2015)提出了一种模糊混合方法，以增加顶级建议的多样性。在本研究中，提出了一种混合模糊粗糙集，它可以根据用户的个人信息生成各种不同的推荐。由于用户配置文件的模糊性和不确定性，该系统允许用户属于不同的聚类，并结合基于内容的过滤算法使用基于模糊的CF。提出了一种新的相似度准则来识别用户的邻域，增加推荐列表的多样性。根据成员的隶属度选择相似聚类中前N个推荐列表的子集。</p>
-<p>Salehi(2013)进行了一项调查，旨在根据用户的行为为准确选择产品提供有效的推荐。在这项研究中，认为用户对产品的某些特征隐含地表达了他们的想法。提出的偏好矩阵可以根据产品特征聚合用户偏好。此外，他还使用加权关联规则来发现产品购买的一致模式，以提高推荐质量。研究结果表明，该方法优于现有算法，减少了稀疏性问题。</p>
-<p>Ghazarian和Nematbakhsh(2014)试图通过解决稀疏用户项矩阵的问题来改进基于记忆的CF方法。他们根据不同项目的态度(音乐名称、出版数据、歌手、持续时间等)估计它们之间的相似性，并以这种方式填写矩阵。</p>
-<p>Motaharinejad等人。(2016)试图通过对用户偏好的历史进行分类并忽略用户偏好之间的相似性来改进银行RS。他们根据已建立的类别向每个用户提供推荐。</p>
-<p>Karimi Alavije等人。(2015)结合CF方法和基于人口统计变量的用户聚类进行电影推荐。为了预测新用户的偏好，在加权加法函数中将用户的聚类相似度与CF相似度相结合。</p>
-<p>Aghaee等人。(2014)提出了一种改进旅游遥感的模型，该模型通过将用户评分矩阵与从用户个人信息获得的矩阵相结合来改进旅游遥感。创建了一个新的相似度函数，该函数为用户定义了更好的邻域范围，从而提高了推荐的质量。</p>
-<p>Keramati和Khaleghi(2014)为数字计算机化商品的在线零售商设计了一个推荐系统。在该系统中，他们基于RFM模型和相似的相对偏好进行客户细分(在项目类别级别计算FM变量)。然后，通过应用关联规则和CF方法，他们提供了在两个不同级别的项目类上向用户提供推荐的可能性。</p>
-<p>AlbAdvi和Shahbazi(2010)提出了一种新的产品推荐方法，他们利用点击量数据的网络挖掘来提取购物车中的位置数量和每个客户的购买数量，并基于这些数据和RFM变量进行客户细分。最后，通过提取每个片段的关联规则，给出了最终的推荐结果。</p>
-<p>Mosayebian等人。(2012)在图书销售网站中提出了一种新的RSS模式。在该模型中，他们首先使用K-Means算法进行基于人口统计变量的客户细分。然后，基于为每个簇提取的关联规则，为该簇中的用户提供合适的推荐。</p>
-<p>Heidary，Nick和Talei(2012)使用CF和CBF相结合的方法来开发旅游遥感。在该系统中，首先将旅游景点划分为五类，并根据用户在CF系统的用户-项目矩阵中对这些景点的评分，识别出用户感兴趣的吸引力。然后，在CBF方法中，根据景点之间的相似度，推荐景点列表。基于各旅游景点参数的加权和，将CF和CBF两种方法得到的结果进行了比较，并向用户推荐了一份景点列表。</p>
-<p>Bobadilla等人。(2012)提出了一种新的电影推荐网站的CF模型，该模型从两个方面扩展了传统CF的功能：向一群用户提供推荐的能力，以及仅提供与参考产品相似的产品的推荐能力。</p>
-<p>郑谢(2011)利用用户的位置信息来改进旅游业的CF模式。利用这些信息，他们为用户提供了两种类型的推荐：第一种类型涉及基于该地区热门地点的一般性推荐，第二种类型涉及根据用户的兴趣和偏好为用户提供的独特推荐。</p>
-<p>Kim等人。(2011)提出了一种协作方法，通过对用户的兴趣进行建模，以改进对用户的个性化推荐。这项研究的阶段是：</p>
-<ol>
-<li>收集用户反馈</li>
-<li>对用户的兴趣建模（在电影业）</li>
-<li>通过KNN预测用户的兴趣</li>
-<li>为用户提供推荐</li>
-</ol>
-<p>在这种方法中，他们首先通过数据挖掘为用户发现有用和有意义的模式，然后与相似用户合作改进个性化模型。</p>
-<p>Shabib等人。(2009)提出了一个电影推荐系统，该系统使用聚类模型，识别出具有相似偏好的用户，然后根据每个用户的聚类和地理位置给出合适的推荐。</p>
-<p>Lee等人。(2008)建议在电子商务中建立现金流转系统，用于收集用户的分数和反馈是不可能或非常困难的，并且只有购买行为等隐含数据可用。基于用户购买时间和网站提供时间这两个时态信息，计算用户之间的相似度，并给出两个基于时态信息计算权重的评分函数。</p>
-<p>丁等人。(2006)考虑了用户兴趣随时间变化的概念，提出了一种基于新近度的CF算法。在本研究中，他们考虑了不同时间范围的不同权重，并相应地定义了一个新的相似度函数，使得得到的相似度更好地反映了用户的现实和当前兴趣。</p>
-<p>Liu和Shih(2005a)提出了一种向五金零售商客户推荐产品的新方法，该方法使用RFM变量进行客户细分，并使用关联规则来评估每个细分市场中产品之间的关系。基于从每个细分市场提取的规则，他们为该细分市场的客户提供了合适的推荐。</p>
-<p>为了改进以往为顾客提供推荐的工作，Liu和Shih(2005B)使用CF方法来评价顾客的偏好。为此，他们在RFM模型变量和用户-项目矩阵的基础上同时进行了客户细分。基于从细分市场中提取的规则，为每个细分市场的客户提供合适的推荐。</p>
-<p>基于这一背景，为了克服冷启动、稀疏矩阵、可扩展性以及客户利益变化等局限性，人们进行了各种研究，以期提高RS。这些可以从多个方面进行评估：</p>
-<ul>
-<li>这些研究改进和扩展了电影和电影(Bobadilla等人，2012年；Kim等人，2011年；Karimi Alavije等人，2015年；Shabib等人，2009年)、音乐(Ghazarian和Nematbakhsh等人，2014年)、旅游(Aghaee等人，2014年；Heidary Nick和Talei等人，2012年；郑谢，2011年)和图书(Mosayebian等人，2012年)等领域的RSS。</li>
-<li>一些研究根据人口统计特征(Karimi Alavije等人，2015；Mosayebian等人，2012)或寿命价值(AlbAdvi和Shahbazi，2010；Keramati和Khaleghi，2014；Liu和Shih，2005a，2005b)进行客户细分。</li>
-<li>在识别了集群后，一些研究分别提取了与每个集群相关的关联规则，并仅根据这些规则将产品推荐给该集群中的客户。然而，另一组研究使用细分得到的簇来改进客户之间的相似度计算，最终提高CF系统的性能。</li>
-<li>另一类研究使用产品分类方法，包括电影(Bobadilla等人，2012年；Karimi Alavije等人，2015年)、音乐(Ghazarian和Nematbakhsh，2014年)和旅游业(Heidary Nick和Talei，2012年)。这些研究填写用户-项目矩阵，减少项目数量，或者根据客户对这些类别的评分来确定客户的相似性。</li>
-<li>其他一些研究通过结合CF和CBF系统来利用混合RS(Heidary Nick和Talei，2012)。</li>
-<li>最后，有一些研究考虑了关于用户兴趣随时间变化的时间参数(Ding等人，2006年；Lee等人，2008年)。</li>
-</ul>
-<p>在这些评估的基础上，虽然已经开展了许多研究来改进CF建议，但每一项研究都在一两个方面做了工作。换句话说，目前还没有一个全面的模型来解决或减轻CF系统的基本限制。由于在伊朗国家，在线销售服装的历史并不长，为这类电子商务开发RS对于提高客户的满意度和忠诚度，进而增加销售数量是不可或缺的。因此，本研究试图克服冷启动、稀疏矩阵、可扩展性以及用户兴趣随时间的变化所引起的问题，以便通过以下方式改进KNN算法以显著提高CF系统的性能：</p>
-<ol>
-<li>在产品类别层面基于LRFM变量进行客户细分，以评估该产品类别采购的RFM，以及客户关系的长度</li>
-<li>基于每个聚类的用户-项目类别矩阵提取关联规则</li>
-<li>基于人口统计变量的客户细分</li>
-<li>基于时间参数改变用户项矩阵并对其进行降维</li>
-<li>通过对分割结果和CF方法的结果加权求和，构造一个新的相似度函数。</li>
-</ol>
-<h1 id="评估措施"><a href="#评估措施" class="headerlink" title="评估措施"></a>评估措施</h1><p>评价推荐系统的性能是保证推荐系统通用性的重要一步。有一些评价RSS准确性或性能的众所周知的度量；诸如精确度、覆盖率和F度量(为了在这两个度量之间创建平衡)，它们可以很好地显示推荐系统的性能(Bobadilla等人，2012年；Elahi等人，2016；Ghazarian和Nematbakhsh，2014；Shambour和Lu，2015；Son，2016)。因此，为了评估所提出的研究模型的性能，采用了这些测量方法。</p>
-<p>在公式(1)和(2)中，喜爱的项目是指必须推荐给用户的一组产品或项目，而推荐的项目是已经由系统推荐给用户的项目的集合。精确度表示推荐集合中正确推荐的百分比，并评估这些推荐的精确度和准确性。通过公式(1)计算：</p>
-<script type="math/tex; mode=display">
-{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \qquad (1)</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
-<script type="math/tex; mode=display">
-{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \qquad (2)</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
-<script type="math/tex; mode=display">
-{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \qquad (3)</script><h1 id="建议研究框架"><a href="#建议研究框架" class="headerlink" title="建议研究框架"></a>建议研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于产品类别-用户矩阵提取关联规则。在阶段4中，完成用户项目矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
-<p><img src="http://images.yingwai.top/picgo/derf1.png" alt=""></p>
-<center>
-    <i>图1 建议的研究系统的总体架构</i>
-</center>
-
-
-<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>数据准备(也称为数据预处理)是RSS开发过程中不可或缺的一步，占整个RSS开发所需时间的60%-70%。此步骤包括数据清理、数据集成和数据转换三个阶段。</p>
-<h3 id="数据清理"><a href="#数据清理" class="headerlink" title="数据清理"></a>数据清理</h3><p>数据清理过程包括完成缺失值、识别和消除离群值数据以及解决数据之间的冲突。此外，在此阶段，必须删除不相关或无用的字段或属性，如有必要，从初始数据集形成新的变量。在此阶段，将不完美的记录和信息不完整的客户从主数据集中剔除，数据集的记录从17,000条减少到15,386条，客户数量从2,542个减少到2,080个。为每个产品类别计算RFM变量。</p>
-<h3 id="数据集成"><a href="#数据集成" class="headerlink" title="数据集成"></a>数据集成</h3><p>为了更好地理解数据，并对每个数据集中的数据进行更好的科学管理，数据集成(将两个或多个数据集合并集成在一起)是必要的，这是数据准备的第二阶段。在这一阶段，客户交易数据与他们的个人资料数据(年龄、性别、教育程度、婚姻状况和职业)集成在一起。</p>
-<h3 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h3><p>在此阶段，必须将数据转换为适合数据挖掘和设计RSS的不同形式。数据集中的字符串变量(如性别)将转换为数值变量和值。</p>
-<h2 id="基于LRFM模型的分割"><a href="#基于LRFM模型的分割" class="headerlink" title="基于LRFM模型的分割"></a>基于LRFM模型的分割</h2><p>本研究采用两阶段聚类法，结合SOM(确定最佳聚类数)和K-Means(创建聚类)方法进行分割。</p>
-<p>在此阶段，根据产品类别的RFM变量(每个产品类别的RFM变量的值分别计算)和L变量(客户关系的长度)进行客户细分。对于给定的客户，表1中给出了这些变量的样本，根据这些变量进行了细分。</p>
-<p>在本研究中，将LRFM模型用于产品类别层面的客户细分有三个原因，包括以下几个方面：</p>
-<ol>
-<li>通过减少用户-项目矩阵中的客户数量，提高了该方法的生产率和效率，从而降低了矩阵的可扩展性和稀疏性问题。</li>
-<li>这个模型不仅决定了顾客的价值，而且可以清楚地反映顾客的兴趣和偏好，例如，如果某一种产品的购买频率对于两个给定的顾客来说是相似的，可以推断这两个人对购买这两种商品的兴趣是一样的。M和R的变量也是以相同的方式推导出来的。</li>
-<li>模型中的产品类别变量R涉及客户最近的品味和偏好，由于最近的购买更能反映客户当前的兴趣和偏好，它将提供更准确的推荐，更符合客户当前的兴趣。</li>
-</ol>
-<p><img src="http://images.yingwai.top/picgo/dert1.png" alt=""></p>
-<center>
-    <i>表1 基于LRFM模型的客户细分属性</i>
-</center>
-
-
-
-<h2 id="基于产品类别-用户矩阵的关联规则提取"><a href="#基于产品类别-用户矩阵的关联规则提取" class="headerlink" title="基于产品类别-用户矩阵的关联规则提取"></a>基于产品类别-用户矩阵的关联规则提取</h2><p>为了提取关联规则，本研究使用了先验算法。在此阶段，使用产品类别-用户矩阵(客户从单个产品类别购买的次数)的交易数据在前一阶段的每个聚类的级别提取关联规则。提取的规则用于确定每个目标客户的前N个推荐产品类别的列表。推荐的每个产品类别的优先级取决于其规则的可信度和支持措施。信任度和支持度值越大的产品类别，推荐优先级越高。此阶段中提取的规则的输出(即每个目标客户的预测产品类别)将作为下一阶段的输入。产品类别级规则提取的目的是减少用户-项目矩阵中的产品数量，有效缓解矩阵的可扩展性和稀疏性问题。</p>
-<h2 id="更改用户项矩阵"><a href="#更改用户项矩阵" class="headerlink" title="更改用户项矩阵"></a>更改用户项矩阵</h2><p>在CF系统中，用户-项目矩阵(包括购买/不购买项目的二进制数据或用户给予项目的分数)是关于购买偏好对客户进行聚类并确定目标客户的邻居的基础。然而，由于电子商务中商品种类繁多，该矩阵经常面临数据稀疏的问题。研究表明，推荐质量取决于用户-项目矩阵的密度。</p>
-<p>为了使该矩阵更加密集，以这样的方式使用分段和关联规则阶段的结果，即在用于确定目标客户的邻居的项目-用户矩阵中，他或她将仅与他或她的集群中的用户进行比较，并且项目将限于为目标客户预测的项目。由于减少了用户数和项目数，缓解了可伸缩性问题，提高了RS的速度和准确性。</p>
-<p>在他们的研究中，Lee等人。(2008)证明，最近进行的购买更能反映用户当前的偏好，最近添加到网站上出售的项目对用户更具吸引力。因此，基于表2，对于每个项目，考虑用户购买项目的时间(PT)和项目已经可供购买的时间(LT)(启动时间)的两个参数，并且改变用户-项目矩阵。</p>
-<p><img src="http://images.yingwai.top/picgo/dert2.png" alt=""></p>
-<center>
-    <i>表2 基于时间信息更改用户项目矩阵</i>
-</center>
-
-
-
-
-<p>为了确定PT和LT变量的得分，在这个改变的矩阵中，首先根据这两个参数的潜伏期将这两个参数分为五类。因此，PT参数的分数包括过去购买(分数1)、过去购买(分数2)、最近购买(分数3)、最近购买(分数4)和最近购买(分数5)。对于LT参数，得分类似。根据表3，在用户-项目矩阵中，对于用户给出的分数，使用组合分数。例如，对于(2，5)的组合，分数将等于7(5+2)。在计算混合得分时，这两个参数的权重都是相同的。</p>
-<p><img src="http://images.yingwai.top/picgo/dert3.png" alt=""></p>
-<center>
-    <i>表3 对LT和PT参数进行评分</i>
-</center>
-
-
-<p>因此，创建了25(5×5)个双重组合，其中所有客户由55、54、53、…的组合表示。，11，其中，客户最好的类别是组合55(最近购买时间和最近上线时间的类别)和得分10，而客户最差的类别用11(最老的购买时间和最老的上线时间)表示，得分为2。根据这种评分方法，可以将客户划分为集群，并计算其相似度。创建这个新的用户-项目矩阵的目的是考虑用户随时间的喜好，从而提高推荐的准确性。</p>
-<h2 id="基于CF的相似度计算"><a href="#基于CF的相似度计算" class="headerlink" title="基于CF的相似度计算"></a>基于CF的相似度计算</h2><p>在CF系统中，计算每个目标客户与其他客户之间的相似度的方法有很多。最流行的方法之一是使用皮尔逊相关系数，与其他传统的统计方法相比，它提供了最好的预测和推荐结果(Bobadilla等人)。(2012年)。在皮尔逊的相关方法中，使用公式(4)测量两个给定客户$u$和$u’$之间的相似性：</p>
-<script type="math/tex; mode=display">
-Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \qquad (4)</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的用户-项目矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
-<h2 id="基于人口统计属性的细分"><a href="#基于人口统计属性的细分" class="headerlink" title="基于人口统计属性的细分"></a>基于人口统计属性的细分</h2><p>在这个阶段，使用两阶段聚类方法，根据年龄、性别、教育程度、婚姻状况和职业等人口统计变量对客户进行细分，然后计算他们的簇内相似度。因此，如果两个客户具有相似的人口统计属性，他们对某些项目的态度会相似，这在CF方法中没有反映出来。在本研究中，基于这些变量进行客户细分的目的是为了更好地选择新用户的邻居，通过克服冷启动问题有效改善推荐过程。</p>
-<h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于用户-项目矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
-<script type="math/tex; mode=display">
-Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \qquad (5)</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
-<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r_{u’,i})$，预测用户$u$对于项目$i$，$(r_{u,i})$的得分如下：</p>
-<script type="math/tex; mode=display">
-r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \qquad (6)</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r_{u’,i})$越相似，将以更高的加权比率用于预测$(r_{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
-<h1 id="评估提出的工具"><a href="#评估提出的工具" class="headerlink" title="评估提出的工具"></a>评估提出的工具</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
-<p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
-<center>
-    <i>表4 传统CF推荐系统与传统CF推荐系统的评价方法比较</i>
-</center>
-
-
-<p>在此阶段，将比较所提出的方法与传统CF推荐系统在不同N值(推荐项目数)下以及基于使用精确度、覆盖率和F度量的测试数据的结果的准确性。</p>
-<p>基于SOM算法，基于LRFM变量的最优聚类数为6个，基于人口统计变量的最优聚类数为5个。表4列出了基于不同N值的评估措施的传统方法和提出的方法的准确性。对于所有这些方法，参数K(邻居数目)的值都等于40。</p>
-<p>根据表4的结果，在每个准则下，所提出的系统都比传统系统具有更好的性能。事实上，传统系统(基于F-Measure)在5个推荐项目上的准确率为43.27%，而在所提出的系统中，该准确率为55.59%。在20个推荐项目中，传统方法的准确率为62.43%，其推荐系统的准确率为81.4%。在30个项目中，传统系统的准确率为68.54%，在提出的系统中，准确率为96.59%，表明该系统在30个项目上的准确率比传统系统提高了约28%。</p>
-<p><img src="http://images.yingwai.top/picgo/derf2.png" alt=""></p>
-<center>
-    <i>图2 比较传统方法和建议方法在不同N值下的性能(颜色请参见在线版本)</i>
-</center>
-
-
-<p><img src="http://images.yingwai.top/picgo/derf3.png" alt=""></p>
-<center>
-    <i>图3 评估不同K值对建议方法性能的影响(有关颜色，请参阅在线版本)</i>
-</center>
-
-
-<p>在此基础上，将推荐项数增加到N=30，两种方法的性能都有所提高。然而，增加数据数量并不会导致结果准确性的显著变化和提高。因此，将推荐项目的数量增加到某个阈值可以提高建议推荐的质量；该阈值等于N=30。为了更好地比较这两种方法的性能，图2描述了F-Measure准则的变化趋势。</p>
-<p>为了评估参数K的变化在所建议的研究方法的性能中的作用，图3中描述了三个不同N值的F测量值。基于图3，对于N参数的所有三个值，将邻居数增加到K=40将提高所提出的方法的性能。但是，进一步增加该参数会降低方法的精确度，从而对推荐质量产生负面影响。</p>
-<h1 id="结论及建议"><a href="#结论及建议" class="headerlink" title="结论及建议"></a>结论及建议</h1><p>本研究从冷启动、可扩展性、稀疏用户-项目矩阵以及用户兴趣的变化等方面考虑了电子商务中RS的基本和常见限制，以期解决或缓解这些限制。因此，为了克服这些局限性，人们利用一套数据挖掘方法，提出了一个综合性的电子商务推荐系统。综合研究结果，该系统的性能优于传统的CF系统。研究的总体结果表明，与传统系统相比，新的推荐系统的准确率有了显着的提高。因此，该系统对30个项目的推荐准确率比传统系统提高了约28%。此外，根据结果，系统在推荐30个项目时的准确率达到了最高水平；因此，当推荐项目数量超过30个时，传统系统和所提出的系统的准确率都没有明显的变化，因此，当推荐项目的数量超过30时，传统系统和本文提出的系统的准确率都没有明显的变化。例如，当推荐50个项目时，传统系统的准确率为68/84，新建议系统的准确率为94/45，这表明推荐项目的数量从30个增加到50个，准确率略有下降。因此，建议推荐项目的最大值为30个，因为这可能会导致计算和项目选择的复杂性。下面简要介绍一下研究成果和研究创新之处：</p>
-<ul>
-<li>在RS的开发过程中，在产品类别层面采用基于LRFM变量的细分方法，可以改进客户间相似度的确定方法，从而更准确、更恰当地选择目标客户的邻居。由于LRFM模型是识别客户购买行为和反映其偏好的合适方法之一，因此基于该模型在产品类别层次上进行细分，可以区分客户在购买产品类别时的偏好，并将具有相似品味和兴趣的客户归入同一聚类。例如，如果两个给定客户购买商品的频率相似，则可以得出结论，这两个客户对购买该产品类别中的商品表现出相同的兴趣水平。R和M的变量可以以相同的方式推断。另一方面，在产品类别水平上的变量R考虑了客户的利益，并且由于最近的购买更能反映客户的偏好，这将导致更准确的推荐。由于用户的喜好会随着时间的推移而改变，因此RS提供与客户当前兴趣相容的项目的能力会受到影响，这有时会导致推荐与客户当前喜好完全无关的项目。此外，在用户-项目矩阵中使用该分割的结果将降低矩阵的维数，将缓解KNN算法的稀疏矩阵和可伸缩性问题，这导致KNN算法的性能提高，因为在这种情况下，目标客户仅与用户-项目矩阵中他或她自己的集群内的客户相比较。因此，通过减少矩阵中的用户数，提高了KNN算法的速度和精度，改善了RS的整体性能。根据这一讨论和研究结果，可以安全地得出结论，使用LRFM模型可以加快提供建议的过程，并允许创建符合客户当前利益的准确建议。</li>
-<li>在RS的开发过程中，在产品类别层面采用基于LRFM变量的细分方法，可以改进客户间相似度的确定方法，从而更准确、更恰当地选择目标客户的邻居。由于LRFM模型是识别客户购买行为和反映其偏好的合适方法之一，因此基于该模型在产品类别层次上进行细分，可以区分客户在购买产品类别时的偏好，并将具有相似品味和兴趣的客户归入同一聚类。例如，如果两个给定客户购买商品的频率相似，则可以得出结论，这两个客户对购买该产品类别中的商品表现出相同的兴趣水平。R和M的变量可以以相同的方式推断。另一方面，在产品类别水平上的变量R考虑了客户的利益，并且由于最近的购买更能反映客户的偏好，这将导致更准确的推荐。由于用户的喜好会随着时间的推移而改变，因此RS提供与客户当前兴趣相容的项目的能力会受到影响，这有时会导致推荐与客户当前喜好完全无关的项目。此外，在用户-项目矩阵中使用该分割的结果将降低矩阵的维数，将缓解KNN算法的稀疏矩阵和可伸缩性问题，这导致KNN算法的性能提高，因为在这种情况下，目标客户仅与用户-项目矩阵中他或她自己的集群内的客户相比较。因此，通过减少矩阵中的用户数，提高了KNN算法的速度和精度，改善了RS的整体性能。根据这一讨论和研究结果，可以安全地得出结论，使用LRFM模型可以加快提供建议的过程，并允许创建符合客户当前利益的准确建议。</li>
-<li>在RS的设计过程中考虑商品的购买时间以及它们在电子商务网站上的上线时间，将会提高推荐的质量。换言之，比起过去的购买，多留意顾客最近的购买，以及比起其他商品，多留意最近在网站上推出的商品，便可以更了解顾客现时的喜好，帮助他们找到更吸引人、更合意的商品。考虑到这些问题，RS才能更好地实现他们的最终目标，即向适当的个人提供适当的物品。在本研究中，这两个变量被用来创建一个新的用户-项目矩阵，并在表4和图2的基础上取得了很好的结果。</li>
-<li>为了更好地使推荐与用户的喜好相一致，人口特征的作用是无可否认的，因为大多数个人购买都取决于他们的年龄、性别、教育水平等。当它与其他变量如购买行为变量(包括LRFM和用户-项目矩阵)一起考虑时，这一作用更为显著，这是本研究通过定义一个新的相似性函数得出的。</li>
-</ul>
-<p>考虑到上述问题，本研究通过关注这些问题，利用各种数据挖掘方法，试图改进和完善以往关于CF系统的研究，以期提出一个准确率和性能最高的电子商务推荐系统。</p>
-<p>以下是对未来研究的一些建议：</p>
-<ol>
-<li>将CF方法和CBF方法相结合，开发了所提出的模型。</li>
-<li>研究基于个性特征的客户细分、其他人口统计变量(如地址和收入)以及其他行为变量(如购买商品的总数)对建议系统性能的影响。</li>
-<li>将所提出的方法应用于其他行业的数据集，以提供更强的通用性。</li>
-<li>使用大数据对提出的模型进行进一步评估，这些数据可以从大型网店获得。</li>
-</ol>
-<p>与过去的大多数研究一样，这项研究在实施和评估方面存在一些局限性，包括：</p>
-<ol>
-<li>使用的数据集的时间段限制为一年。</li>
-<li>研究数据仅限于一家网上服装店。</li>
-<li>正在研究的商店的有限顾客数量。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>数据挖掘</tag>
-        <tag>推荐系统</tag>
       </tags>
   </entry>
 </search>
