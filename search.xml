@@ -690,6 +690,116 @@
       </tags>
   </entry>
   <entry>
+    <title>PyTorch入门60题</title>
+    <url>/2020/05/20/PyTorch%E5%85%A5%E9%97%A860%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h2><p>导入pytorch包</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>创建一个空的5x3张量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.empty(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>创建一个随机初始化的5x3张量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.rand(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>创建一个5x3的0张量，类型为long</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.zeros(<span class="number">5</span>, <span class="number">3</span>, dtype=torch.long)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>直接从数组创建张量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">5.5</span>, <span class="number">3</span>])</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>创建一个5x3的单位张量，类型为double</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.ones(<span class="number">5</span>, <span class="number">3</span>, dtype=torch.double)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>从已有的张量创建相同维度的新张量，并且重新定义类型为float</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.randn_like(x, dtype=torch.float)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>打印一个张量的维度</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(x.size())</span><br></pre></td></tr></table></figure>
+<p>将两个张量相加</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y = torch.rand(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line">print(x + y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="comment"># print(torch.add(x, y))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法三</span></span><br><span class="line"><span class="comment"># result = torch.empty(5, 3)</span></span><br><span class="line"><span class="comment"># torch.add(x, y, out=result)</span></span><br><span class="line"><span class="comment"># print(result)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法四</span></span><br><span class="line"><span class="comment"># y.add_(x)</span></span><br><span class="line"><span class="comment"># print(y)</span></span><br></pre></td></tr></table></figure>
+<p>取张量的第一列</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(x[:, <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>将一个4x4的张量resize成一个一维张量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.randn(<span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line">y = x.view(<span class="number">16</span>)</span><br><span class="line">print(x.size(),y.size())</span><br></pre></td></tr></table></figure>
+<p>将一个4x4的张量，resize成一个2x8的张量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y = x.view(<span class="number">2</span>, <span class="number">8</span>)</span><br><span class="line">print(x.size(),y.size())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">z = x.view(<span class="number">-1</span>, <span class="number">8</span>) <span class="comment"># 确定一个维度，-1的维度会被自动计算</span></span><br><span class="line">print(x.size(),z.size())</span><br></pre></td></tr></table></figure>
+<p>从张量中取出数字</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.randn(<span class="number">1</span>)</span><br><span class="line">print(x)</span><br><span class="line">print(x.item())</span><br></pre></td></tr></table></figure>
+<h3 id="Numpy的操作"><a href="#Numpy的操作" class="headerlink" title="Numpy的操作"></a>Numpy的操作</h3><p>将张量装换成numpy数组</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = torch.ones(<span class="number">5</span>)</span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">b = a.numpy()</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
+<p>将张量+1，并观察上题中numpy数组的变化</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a.add_(<span class="number">1</span>)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
+<p>从numpy数组创建张量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.ones(<span class="number">5</span>)</span><br><span class="line">b = torch.from_numpy(a)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
+<p>将numpy数组+1并观察上题中张量的变化</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.add(a, <span class="number">1</span>, out=a)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
+<h2 id="自动微分"><a href="#自动微分" class="headerlink" title="自动微分"></a>自动微分</h2><h3 id="张量的自动微分"><a href="#张量的自动微分" class="headerlink" title="张量的自动微分"></a>张量的自动微分</h3><p>新建一个张量，并设置<code>requires_grad=True</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.ones(<span class="number">2</span>, <span class="number">2</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>对张量进行任意操作（y = x + 2）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y = x + <span class="number">2</span></span><br><span class="line">print(y)</span><br><span class="line">print(y.grad_fn) <span class="comment"># y就多了一个AddBackward</span></span><br></pre></td></tr></table></figure>
+<p>再对y进行任意操作</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">z = y * y * <span class="number">3</span></span><br><span class="line">out = z.mean()</span><br><span class="line"></span><br><span class="line">print(z) <span class="comment"># z多了MulBackward</span></span><br><span class="line">print(out) <span class="comment"># out多了MeanBackward</span></span><br></pre></td></tr></table></figure>
+<h3 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h3><p>对out进行反向传播</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">out.backward()</span><br></pre></td></tr></table></figure>
+<p>打印梯度d(out)/dx</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(x.grad) <span class="comment">#out=0.25*Σ3(x+2)^2</span></span><br></pre></td></tr></table></figure>
+<p>创建一个结果为矢量的计算过程（y=x*2^n）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = torch.randn(<span class="number">3</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">y = x * <span class="number">2</span></span><br><span class="line"><span class="keyword">while</span> y.data.norm() &lt; <span class="number">1000</span>:</span><br><span class="line">    y = y * <span class="number">2</span></span><br><span class="line"></span><br><span class="line">print(y)</span><br></pre></td></tr></table></figure>
+<p>计算<code>v = [0.``1, 1.0, 0.0001]</code>处的梯度</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">v = torch.tensor([<span class="number">0.1</span>, <span class="number">1.0</span>, <span class="number">0.0001</span>], dtype=torch.float)</span><br><span class="line">y.backward(v)</span><br><span class="line"></span><br><span class="line">print(x.grad)</span><br></pre></td></tr></table></figure>
+<p>关闭梯度的功能</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(x.requires_grad)</span><br><span class="line">print((x ** <span class="number">2</span>).requires_grad)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    print((x ** <span class="number">2</span>).requires_grad)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="comment"># print(x.requires_grad)</span></span><br><span class="line"><span class="comment"># y = x.detach()</span></span><br><span class="line"><span class="comment"># print(y.requires_grad)</span></span><br><span class="line"><span class="comment"># print(x.eq(y).all())</span></span><br></pre></td></tr></table></figure>
+<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><p>pytorch实现LeNet5，结构如下所示</p>
+<p><img src="https://img-blog.csdn.net/20171119174011391?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjg5NzM3NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line">        <span class="comment"># 26.定义①的卷积层，输入为32x32的图像，卷积核大小5x5卷积核种类6</span></span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">3</span>, <span class="number">6</span>, <span class="number">5</span>)</span><br><span class="line">        <span class="comment"># 27.定义③的卷积层，输入为前一层6个特征，卷积核大小5x5，卷积核种类16</span></span><br><span class="line">        self.conv2 = nn.Conv2d(<span class="number">6</span>, <span class="number">16</span>, <span class="number">5</span>)</span><br><span class="line">        <span class="comment"># 28.定义⑤的全链接层，输入为16*5*5，输出为120</span></span><br><span class="line">        self.fc1 = nn.Linear(<span class="number">16</span> * <span class="number">5</span> * <span class="number">5</span>, <span class="number">120</span>)  <span class="comment"># 6*6 from image dimension</span></span><br><span class="line">        <span class="comment"># 29.定义⑥的全连接层，输入为120，输出为84</span></span><br><span class="line">        self.fc2 = nn.Linear(<span class="number">120</span>, <span class="number">84</span>)</span><br><span class="line">        <span class="comment"># 30.定义⑥的全连接层，输入为84，输出为10</span></span><br><span class="line">        self.fc3 = nn.Linear(<span class="number">84</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># 31.完成input-S2，先卷积+relu，再2x2下采样</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv1(x)), (<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line">        <span class="comment"># 32.完成S2-S4，先卷积+relu，再2x2下采样</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv2(x)), <span class="number">2</span>) <span class="comment">#卷积核方形时，可以只写一个维度</span></span><br><span class="line">        <span class="comment"># 33.将特征向量扁平成列向量</span></span><br><span class="line">        x = x.view(<span class="number">-1</span>, <span class="number">16</span> * <span class="number">5</span> * <span class="number">5</span>)</span><br><span class="line">        <span class="comment"># 34.使用fc1+relu</span></span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        <span class="comment"># 35.使用fc2+relu</span></span><br><span class="line">        x = F.relu(self.fc2(x))</span><br><span class="line">        <span class="comment"># 36.使用fc3</span></span><br><span class="line">        x = self.fc3(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = Net()</span><br><span class="line">print(net)</span><br></pre></td></tr></table></figure>
+<p>打印网络的参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">params = list(net.parameters())</span><br><span class="line"><span class="comment"># print(params)</span></span><br><span class="line">print(len(params))</span><br></pre></td></tr></table></figure>
+<p>打印某一层参数的形状</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(params[<span class="number">0</span>].size())</span><br></pre></td></tr></table></figure>
+<p>随机输入一个向量，查看前向传播输出</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">input = torch.randn(<span class="number">1</span>, <span class="number">1</span>, <span class="number">32</span>, <span class="number">32</span>)</span><br><span class="line">out = net(input)</span><br><span class="line">print(out)</span><br></pre></td></tr></table></figure>
+<p>将梯度初始化</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">net.zero_grad()</span><br></pre></td></tr></table></figure>
+<p>随机一个梯度进行反向传播</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">out.backward(torch.randn(<span class="number">1</span>, <span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>用自带的MSELoss()定义损失函数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">criterion = nn.MSELoss()</span><br></pre></td></tr></table></figure>
+<p>随机一个真值，并用随机的输入计算损失</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">target = torch.randn(<span class="number">10</span>)  <span class="comment"># 随机真值</span></span><br><span class="line">target = target.view(<span class="number">1</span>, <span class="number">-1</span>)  <span class="comment"># 变成列向量</span></span><br><span class="line"></span><br><span class="line">output = net(input)  <span class="comment"># 用随机输入计算输出</span></span><br><span class="line"></span><br><span class="line">loss = criterion(output, target)  <span class="comment"># 计算损失</span></span><br><span class="line">print(loss)</span><br></pre></td></tr></table></figure>
+<p>将梯度初始化，计算上一步中loss的反向传播</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">net.zero_grad()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'conv1.bias.grad before backward'</span>)</span><br><span class="line">print(net.conv1.bias.grad)</span><br></pre></td></tr></table></figure>
+<p>计算43中loss的反向传播</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">loss.backward()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'conv1.bias.grad after backward'</span>)</span><br><span class="line">print(net.conv1.bias.grad)</span><br></pre></td></tr></table></figure>
+<h3 id="更新权重"><a href="#更新权重" class="headerlink" title="更新权重"></a>更新权重</h3><p>定义SGD优化器算法，学习率设置为0.01</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line">optimizer = optim.SGD(net.parameters(), lr=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+<p>使用优化器更新权重</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">optimizer.zero_grad()</span><br><span class="line">output = net(input)</span><br><span class="line">loss = criterion(output, target)</span><br><span class="line">loss.backward()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新权重</span></span><br><span class="line">optimizer.step()</span><br></pre></td></tr></table></figure>
+<h2 id="训练一个分类器"><a href="#训练一个分类器" class="headerlink" title="训练一个分类器"></a>训练一个分类器</h2><h3 id="读取CIFAR10数据，做标准化"><a href="#读取CIFAR10数据，做标准化" class="headerlink" title="读取CIFAR10数据，做标准化"></a>读取CIFAR10数据，做标准化</h3><p>构造一个transform，将三通道(0,1)区间的数据转换成(-1,1)的数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">import</span> torchvision.transforms <span class="keyword">as</span> transforms</span><br><span class="line"></span><br><span class="line">transform = transforms.Compose(</span><br><span class="line">    [transforms.ToTensor(),</span><br><span class="line">     transforms.Normalize((<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>), (<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))])</span><br></pre></td></tr></table></figure>
+<p>读取数据集</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">trainset = cifar(root = <span class="string">'./input/cifar10'</span>, segmentation=<span class="string">'train'</span>, transforms=transform)</span><br><span class="line">testset = cifar(root = <span class="string">'./input/cifar10'</span>, segmentation=<span class="string">'test'</span>, transforms=transform)</span><br><span class="line">trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,shuffle=<span class="literal">True</span>, num_workers=<span class="number">2</span>)</span><br><span class="line">testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,shuffle=<span class="literal">False</span>, num_workers=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">classes = (<span class="string">'plane'</span>, <span class="string">'car'</span>, <span class="string">'bird'</span>, <span class="string">'cat'</span>,</span><br><span class="line">           <span class="string">'deer'</span>, <span class="string">'dog'</span>, <span class="string">'frog'</span>, <span class="string">'horse'</span>, <span class="string">'ship'</span>, <span class="string">'truck'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="建立网络"><a href="#建立网络" class="headerlink" title="建立网络"></a>建立网络</h3><p>这部分沿用前面的网络</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">net2 = Net()</span><br></pre></td></tr></table></figure>
+<h3 id="定义损失函数和优化器"><a href="#定义损失函数和优化器" class="headerlink" title="定义损失函数和优化器"></a>定义损失函数和优化器</h3><p>定义交叉熵损失函数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">criterion2 = nn.CrossEntropyLoss()</span><br></pre></td></tr></table></figure>
+<p>定义SGD优化器算法，学习率设置为0.001，<code>momentum=0.9</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">optimizer2 = optim.SGD(net2.parameters(), lr=<span class="number">0.001</span>, momentum=<span class="number">0.9</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="训练网络"><a href="#训练网络" class="headerlink" title="训练网络"></a>训练网络</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line"></span><br><span class="line">    running_loss = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> i, data <span class="keyword">in</span> enumerate(trainloader, <span class="number">0</span>):</span><br><span class="line">        <span class="comment"># 获取X,y对</span></span><br><span class="line">        inputs, labels = data</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 51.初始化梯度</span></span><br><span class="line">        optimizer2.zero_grad()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 52.前馈</span></span><br><span class="line">        outputs = net2(inputs)</span><br><span class="line">        <span class="comment"># 53.计算损失</span></span><br><span class="line">        loss = criterion2(outputs, labels)</span><br><span class="line">        <span class="comment"># 54.计算梯度</span></span><br><span class="line">        loss.backward()</span><br><span class="line">        <span class="comment"># 55.更新权值</span></span><br><span class="line">        optimizer2.step()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 每2000个数据打印平均代价函数值</span></span><br><span class="line">        running_loss += loss.item()</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">2000</span> == <span class="number">1999</span>:    <span class="comment"># print every 2000 mini-batches</span></span><br><span class="line">            print(<span class="string">'[%d, %5d] loss: %.3f'</span> %</span><br><span class="line">                  (epoch + <span class="number">1</span>, i + <span class="number">1</span>, running_loss / <span class="number">2000</span>))</span><br><span class="line">            running_loss = <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">'Finished Training'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="使用模型预测"><a href="#使用模型预测" class="headerlink" title="使用模型预测"></a>使用模型预测</h3><p>取一些数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dataiter = iter(testloader)</span><br><span class="line">images, labels = dataiter.next()</span><br><span class="line"></span><br><span class="line"><span class="comment"># print images</span></span><br><span class="line">imshow(torchvision.utils.make_grid(images))</span><br><span class="line">print(<span class="string">'GroundTruth: '</span>, <span class="string">' '</span>.join(<span class="string">'%5s'</span> % classes[labels[j]] <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">4</span>)))</span><br></pre></td></tr></table></figure>
+<p>使用模型预测</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">outputs = net2(images)</span><br><span class="line"></span><br><span class="line">_, predicted = torch.max(outputs, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Predicted: '</span>, <span class="string">' '</span>.join(<span class="string">'%5s'</span> % classes[predicted[j]]</span><br><span class="line">                              <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">4</span>)))</span><br></pre></td></tr></table></figure>
+<p>在测试集上进行打分</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">correct = <span class="number">0</span></span><br><span class="line">total = <span class="number">0</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> testloader:</span><br><span class="line">        images, labels = data</span><br><span class="line">        outputs = net2(images)</span><br><span class="line">        _, predicted = torch.max(outputs.data, <span class="number">1</span>)</span><br><span class="line">        total += labels.size(<span class="number">0</span>)</span><br><span class="line">        correct += (predicted == labels).sum().item()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Accuracy of the network on the 10000 test images: %d %%'</span> % (</span><br><span class="line">    <span class="number">100</span> * correct / total))</span><br></pre></td></tr></table></figure>
+<h3 id="存取模型"><a href="#存取模型" class="headerlink" title="存取模型"></a>存取模型</h3><p>保存训练好的模型</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">PATH = <span class="string">'./cifar_net.pth'</span></span><br><span class="line">torch.save(net.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+<p>读取保存的模型</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pretrained_net = torch.load(PATH)</span><br></pre></td></tr></table></figure>
+<p>加载模型</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">net3 = Net()</span><br><span class="line">net3.load_state_dict(pretrained_net)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>不经意传输（Oblivious Transfer）</title>
     <url>/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/</url>
     <content><![CDATA[<p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
@@ -744,6 +854,41 @@
       <tags>
         <tag>密码学</tag>
         <tag>MPC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用you-get下载网址视频</title>
+    <url>/2020/05/20/%E4%BD%BF%E7%94%A8you-get%E4%B8%8B%E8%BD%BD%E7%BD%91%E5%9D%80%E8%A7%86%E9%A2%91/</url>
+    <content><![CDATA[<p>很多时候想随时随地在线看视频不是那么容易，尤其是YouTube上的视频，所以把视频下载到本地还是有必要的，这里就介绍一个下载视频的工具——you-get。</p>
+<a id="more"></a>
+<p>you-get是基于Python开发的，实际它不只支持视频下载，还支持图片、音乐等。而且，只要视频的地址，一行代码即可。</p>
+<h1 id="安装you-get"><a href="#安装you-get" class="headerlink" title="安装you-get"></a>安装you-get</h1><p>安装you-get的方式有很多，下面三种择其一即可。</p>
+<h2 id="使用pip安装"><a href="#使用pip安装" class="headerlink" title="使用pip安装"></a>使用pip安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip3 install you-get</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://images.yingwai.top/picgo/yougetf1.png" alt=""></p>
+<h2 id="Git克隆"><a href="#Git克隆" class="headerlink" title="Git克隆"></a>Git克隆</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/soimort/you-get.git</span></span><br></pre></td></tr></table></figure>
+<p>然后直接运行<code>./setup.py</code>即可</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python3 setup.py install</span></span><br></pre></td></tr></table></figure>
+<h2 id="通过HomeBrew安装（Mac）"><a href="#通过HomeBrew安装（Mac）" class="headerlink" title="通过HomeBrew安装（Mac）"></a>通过HomeBrew安装（Mac）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew install you-get</span></span><br></pre></td></tr></table></figure>
+<h1 id="下载视频"><a href="#下载视频" class="headerlink" title="下载视频"></a>下载视频</h1><p>命令行中输入以下代码下载视频：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<p>这里以B站某视频为例：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf2.png" alt=""></p>
+<p>下载好的视频存放在系统盘的用户目录下。</p>
+<h1 id="查看视频信息"><a href="#查看视频信息" class="headerlink" title="查看视频信息"></a>查看视频信息</h1><p>命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get -i <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<p>用刚刚下载的视频测试，结果如下：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf3.png" alt=""></p>
+<p>可以看到它的默认设置不是MP4格式的视频，如果想要换成这种格式，可以在命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> you-get --itag=18 <span class="string">'视频地址URL'</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="支持的网站"><a href="#支持的网站" class="headerlink" title="支持的网站"></a>支持的网站</h1><p>除了B站，还可以用you-get下载国内外很多主流网站的视频、图片和音乐。</p>
+<p>这里列出支持的国外网站：</p>
+<p><img src="http://images.yingwai.top/picgo/yougetf4.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1385,6 +1530,61 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
       </tags>
   </entry>
   <entry>
+    <title>论文笔记 EaSTFLy: Efficient and secure ternary federated learning</title>
+    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-EaSTFLy-Efficient-and-secure-ternary-fe-derate-d-learning/</url>
+    <content><![CDATA[<p><em>Ye Dong, Xiaojun Chen, Liyan Shen, Dakui Wang</em></p>
+<p><a href="https://www.sciencedirect.com/science/journal/01674048" target="_blank" rel="noopener">Computers &amp; Security</a>   <a href="https://www.sciencedirect.com/science/journal/01674048/94/supp/C" target="_blank" rel="noopener">Volume 94</a>, July 2020, 101824</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0167404820300985" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S0167404820300985</a></p>
+<a id="more"></a>
+<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3>]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+        <tag>隐私保护机器学习</tag>
+        <tag>联邦学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Eﬀicient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
+    <url>/2020/04/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-E%EF%AC%80icient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
+    <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
+<p>CCS 2019</p>
+<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
+<p><a href="https://eprint.iacr.org/2019/524" target="_blank" rel="noopener">https://eprint.iacr.org/2019/524</a></p>
+<a id="more"></a>
+<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​        <em>同态加密（Homomorphic Encryption）</em>是一种<strong>支持对加密数据进行计算的密码系统</strong>。López-Alt等人（STOC 2012）提出了一种广义的HE概念，称为多密钥同态加密(MKHE)，它能够对用不同密钥加密的密文进行算术运算。</p>
+<p>​        在这篇文章中，作者提出了<strong>两个打包密文的HE方案的多密钥变体</strong>。本文提出了新的<strong>重新线性化算法</strong>，这些算法比Chen等人（TCC 2017）的方法更简单、更快。然后，本文推广了HE的自举技术，以获得多密钥完全同态加密方案。本文使用Microsoft SEAL提供了这两个MKHE方案的概念验证实现。例如，当基环的维度为8192时，四方之间的多密钥BFV（resp. CKKS）密文做同态乘法，然后重新线性化所花的时间约为116（resp. 67）毫秒。</p>
+<p>​        本文的MKHE方案在多个数据提供者之间的安全计算中有广泛的应用。作为基准，本文使用预先训练好的神经网络模型对图像进行同态分类，其中输入数据和模型在不同的密钥下加密。我们的实现大约需要1.8秒来评估来自MNIST数据集的加密图像上的一个卷积层和两个全连接层。</p>
+<h4 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h4><p><em>多密钥同态加密；打包密文；LWE困难问题；神经网络</em></p>
+<h3 id="早期研究"><a href="#早期研究" class="headerlink" title="早期研究"></a>早期研究</h3><p>​        <strong>同态加密</strong>是一种密码系统，它允许在<strong>不解密的情况下对加密数据进行计算</strong>，从而能够在不受信任的云中安全地外包计算。在Gentry的第一次构造之后，HE已经有了重大的技术进步[24]。例如，可以将多个明文值加密成单个打包密文，并使用单指令多数据（SIMD）技术并行地对这些值执行操作[26，48]。因此，具有打包技术的HE方案[6，7，16，22]具有良好的明文值摊销复杂度，并已被应用于隐私保护的大数据分析[11，37，39]。然而，传统的HE方案只允许对可在相同密钥下解密的密文进行计算。因此，HE自然不支持涉及多个数据提供商、每个数据提供商都提供自己的密钥的安全计算应用程序。</p>
+<p>​        López-Alt等人[43]提出了一种多密钥同态加密（MKHE）方案，该方案是一种支持对密文进行算术运算的密码协议，密文不一定可以解密到同一密钥。除了解决上述HE问题外，MKHE还可以用来设计通信开销最小的高效MPC协议[45]。此外，MKHE的MPC协议满足即时MPC[43]属性，其中，在数据提供商上传其加密数据后，可以动态决定要评估的电路。</p>
+<p>​        尽管MKHE具有多功能性，但在实践中很少使用。早期研究[19，45，46]使用了GSW方案的多密钥变体[28]。使用这些方法构造的密文很大，并且它们的性能不能很好地随参与方的数量而变化。以前的工作[8，10]提出了具有短密文的MKHE方案，但一个密文只能加密一个比特。现有的唯一具有打包密文的MKHE方案[13，41]是BGV方案[7]的多密钥变体。请注意，所有上述研究都是纯粹抽象的，没有给出实现，支持SIMD操作的MKHE方案是否实用仍然是一个悬而未决的问题。</p>
+<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><ul>
+<li>设计了BFV[6, 22]和CKKS[16]方案的多密钥变体；</li>
+<li>提出了一种新的生成重线性化密钥的方法，与[13]中的技术相比更简单而且更快；</li>
+<li>将[9, 12, 14]的最新自举算法应用于多密钥场景；</li>
+<li>使用Microsoft SEAL[47]给出了方案的概念验证实现，是支持打包密文的MKHE方案的第一个实际实现</li>
+</ul>
+<p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络（CNN）模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，我们的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。我们注意到，我们的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
+<p><img src="http://images.yingwai.top/picgo/EMKHEf1.png" alt=""></p>
+<center>
+    <i>图1 不经意神经网络预测的概述</i>
+</center>
+
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+        <tag>神经网络</tag>
+        <tag>隐私保护机器学习</tag>
+        <tag>同态加密</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</title>
     <url>/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/</url>
     <content><![CDATA[<p><em>Samira Khodabandehlou</em></p>
@@ -1543,61 +1743,6 @@ r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \qquad (6)</scr
       <tags>
         <tag>数据挖掘</tag>
         <tag>推荐系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 EaSTFLy: Efficient and secure ternary federated learning</title>
-    <url>/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-EaSTFLy-Efficient-and-secure-ternary-fe-derate-d-learning/</url>
-    <content><![CDATA[<p><em>Ye Dong, Xiaojun Chen, Liyan Shen, Dakui Wang</em></p>
-<p><a href="https://www.sciencedirect.com/science/journal/01674048" target="_blank" rel="noopener">Computers &amp; Security</a>   <a href="https://www.sciencedirect.com/science/journal/01674048/94/supp/C" target="_blank" rel="noopener">Volume 94</a>, July 2020, 101824</p>
-<p><a href="https://www.sciencedirect.com/science/article/pii/S0167404820300985" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S0167404820300985</a></p>
-<a id="more"></a>
-<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3>]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>密码学</tag>
-        <tag>隐私保护机器学习</tag>
-        <tag>联邦学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 Eﬀicient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
-    <url>/2020/04/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-E%EF%AC%80icient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
-    <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
-<p>CCS 2019</p>
-<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
-<p><a href="https://eprint.iacr.org/2019/524" target="_blank" rel="noopener">https://eprint.iacr.org/2019/524</a></p>
-<a id="more"></a>
-<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​        <em>同态加密（Homomorphic Encryption）</em>是一种<strong>支持对加密数据进行计算的密码系统</strong>。López-Alt等人（STOC 2012）提出了一种广义的HE概念，称为多密钥同态加密(MKHE)，它能够对用不同密钥加密的密文进行算术运算。</p>
-<p>​        在这篇文章中，作者提出了<strong>两个打包密文的HE方案的多密钥变体</strong>。本文提出了新的<strong>重新线性化算法</strong>，这些算法比Chen等人（TCC 2017）的方法更简单、更快。然后，本文推广了HE的自举技术，以获得多密钥完全同态加密方案。本文使用Microsoft SEAL提供了这两个MKHE方案的概念验证实现。例如，当基环的维度为8192时，四方之间的多密钥BFV（resp. CKKS）密文做同态乘法，然后重新线性化所花的时间约为116（resp. 67）毫秒。</p>
-<p>​        本文的MKHE方案在多个数据提供者之间的安全计算中有广泛的应用。作为基准，本文使用预先训练好的神经网络模型对图像进行同态分类，其中输入数据和模型在不同的密钥下加密。我们的实现大约需要1.8秒来评估来自MNIST数据集的加密图像上的一个卷积层和两个全连接层。</p>
-<h4 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h4><p><em>多密钥同态加密；打包密文；LWE困难问题；神经网络</em></p>
-<h3 id="早期研究"><a href="#早期研究" class="headerlink" title="早期研究"></a>早期研究</h3><p>​        <strong>同态加密</strong>是一种密码系统，它允许在<strong>不解密的情况下对加密数据进行计算</strong>，从而能够在不受信任的云中安全地外包计算。在Gentry的第一次构造之后，HE已经有了重大的技术进步[24]。例如，可以将多个明文值加密成单个打包密文，并使用单指令多数据（SIMD）技术并行地对这些值执行操作[26，48]。因此，具有打包技术的HE方案[6，7，16，22]具有良好的明文值摊销复杂度，并已被应用于隐私保护的大数据分析[11，37，39]。然而，传统的HE方案只允许对可在相同密钥下解密的密文进行计算。因此，HE自然不支持涉及多个数据提供商、每个数据提供商都提供自己的密钥的安全计算应用程序。</p>
-<p>​        López-Alt等人[43]提出了一种多密钥同态加密（MKHE）方案，该方案是一种支持对密文进行算术运算的密码协议，密文不一定可以解密到同一密钥。除了解决上述HE问题外，MKHE还可以用来设计通信开销最小的高效MPC协议[45]。此外，MKHE的MPC协议满足即时MPC[43]属性，其中，在数据提供商上传其加密数据后，可以动态决定要评估的电路。</p>
-<p>​        尽管MKHE具有多功能性，但在实践中很少使用。早期研究[19，45，46]使用了GSW方案的多密钥变体[28]。使用这些方法构造的密文很大，并且它们的性能不能很好地随参与方的数量而变化。以前的工作[8，10]提出了具有短密文的MKHE方案，但一个密文只能加密一个比特。现有的唯一具有打包密文的MKHE方案[13，41]是BGV方案[7]的多密钥变体。请注意，所有上述研究都是纯粹抽象的，没有给出实现，支持SIMD操作的MKHE方案是否实用仍然是一个悬而未决的问题。</p>
-<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><ul>
-<li>设计了BFV[6, 22]和CKKS[16]方案的多密钥变体；</li>
-<li>提出了一种新的生成重线性化密钥的方法，与[13]中的技术相比更简单而且更快；</li>
-<li>将[9, 12, 14]的最新自举算法应用于多密钥场景；</li>
-<li>使用Microsoft SEAL[47]给出了方案的概念验证实现，是支持打包密文的MKHE方案的第一个实际实现</li>
-</ul>
-<p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络（CNN）模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，我们的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。我们注意到，我们的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
-<p><img src="http://images.yingwai.top/picgo/EMKHEf1.png" alt=""></p>
-<center>
-    <i>图1 不经意神经网络预测的概述</i>
-</center>
-
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>密码学</tag>
-        <tag>神经网络</tag>
-        <tag>隐私保护机器学习</tag>
-        <tag>同态加密</tag>
       </tags>
   </entry>
 </search>
