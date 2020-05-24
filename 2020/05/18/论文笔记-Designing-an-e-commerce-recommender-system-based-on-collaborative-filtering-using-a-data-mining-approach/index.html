@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/derf2.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/derf3.png">
 <meta property="article:published_time" content="2020-05-18T13:10:49.000Z">
-<meta property="article:modified_time" content="2020-05-20T08:06:17.201Z">
+<meta property="article:modified_time" content="2020-05-21T03:42:28.032Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="数据挖掘">
 <meta property="article:tag" content="推荐系统">
@@ -361,16 +361,6 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -455,7 +445,7 @@
 <ul>
 <li><strong>冷启动</strong>：在多个用户购买某个项目之前，系统不能向某人推荐该项目。这个问题被称为冷启动。用户的冷启动是指最近加入推荐系统并且没有关于他或她的足够信息的用户(Elahi等人，2016；Hu和Pu，2011；Kim等人，2011；Lee，2010；Son，2016；Sharma和Ray，2016)。</li>
 <li><strong>可伸缩性</strong>：由于客户数据和产品数据的绝对数量，系统必须花费大量的金钱和时间来提取所有客户之间的相似性，导致其生产率较低(Hu和Pu，2011；Hernando等人，2016；Keramati和Khaleghi，2014；Lee，2010)。</li>
-<li><strong>用户-项目矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致用户-项目矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
+<li><strong>user-item矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致user-item矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
 <li><strong>用户偏好的改变</strong>：用户的品味和偏好可能会随着时间的推移而改变。例如，一位最近生了孩子的母亲可能对购买婴儿服装感兴趣，她最近的购买可能反映了这种新的关注。这是当；她可能从来没有对这样的物品有任何兴趣(Ding等人，2006年；岩田，2008年；Lee等人，2008年)。(Ding et al.，2006；Iwata，2008；Lee et al.，2008)。</li>
 </ul>
 <p>上述限制可能会对RS的性能产生负面影响，从而限制系统创建有意义和准确的推荐。</p>
@@ -986,28 +976,6 @@ r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \qquad (6)</scr
 
 
 
-
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-  
-  <script type="text/javascript">
-    var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item=>{
-      return GUEST.indexOf(item)>-1;
-    });
-    new Valine({
-        el: '#comments' ,
-        verify: false,
-        notify: false,
-        appId: 'RcahzI7T72d3tInBb4DYpXnX-gzGzoHsz',
-        appKey: '2xECk7XrFVzL88rsxkOs2W5a',
-        placeholder: 'Just go go',
-        avatar:'mm',
-        guest_info:guest,
-        pageSize:'10' || 10,
-    });
-  </script>
 
 
 
