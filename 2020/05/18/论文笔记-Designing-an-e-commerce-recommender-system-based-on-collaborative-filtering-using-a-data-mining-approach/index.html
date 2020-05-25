@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/derf2.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/derf3.png">
 <meta property="article:published_time" content="2020-05-18T13:10:49.000Z">
-<meta property="article:modified_time" content="2020-05-21T03:42:28.032Z">
+<meta property="article:modified_time" content="2020-05-25T08:13:41.091Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="数据挖掘">
 <meta property="article:tag" content="推荐系统">
@@ -463,11 +463,11 @@
 <h1 id="评估措施"><a href="#评估措施" class="headerlink" title="评估措施"></a>评估措施</h1><p>评价推荐系统的性能是保证推荐系统通用性的重要一步。有一些评价RSS准确性或性能的众所周知的度量；诸如精确度、覆盖率和F度量(为了在这两个度量之间创建平衡)，它们可以很好地显示推荐系统的性能(Bobadilla等人，2012年；Elahi等人，2016；Ghazarian和Nematbakhsh，2014；Shambour和Lu，2015；Son，2016)。因此，为了评估所提出的研究模型的性能，采用了这些测量方法。</p>
 <p>在公式(1)和(2)中，喜爱的项目是指必须推荐给用户的一组产品或项目，而推荐的项目是已经由系统推荐给用户的项目的集合。精确度表示推荐集合中正确推荐的百分比，并评估这些推荐的精确度和准确性。通过公式(1)计算：</p>
 <script type="math/tex; mode=display">
-{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \qquad (1)</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
+{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \tag{1}</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
 <script type="math/tex; mode=display">
-{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \qquad (2)</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
+{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \tag{2}</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
 <script type="math/tex; mode=display">
-{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \qquad (3)</script><h1 id="研究框架"><a href="#研究框架" class="headerlink" title="研究框架"></a>研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于product category-user矩阵提取关联规则。在阶段4中，完成user-item矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
+{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \tag{3}</script><h1 id="研究框架"><a href="#研究框架" class="headerlink" title="研究框架"></a>研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于product category-user矩阵提取关联规则。在阶段4中，完成user-item矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
 <p><img src="http://images.yingwai.top/picgo/derf1.png" alt=""></p>
 <center>
     <i>图1 建议的研究系统的总体架构</i>
@@ -516,14 +516,14 @@
 <p>因此，创建了25(5×5)个双重组合，其中所有客户由55、54、53、…的组合表示。，11，其中，客户最好的类别是组合55(最近购买时间和最近上线时间的类别)和得分10，而客户最差的类别用11(最老的购买时间和最老的上线时间)表示，得分为2。根据这种评分方法，可以将客户划分为集群，并计算其相似度。创建这个新的user-item矩阵的目的是考虑用户随时间的喜好，从而提高推荐的准确性。</p>
 <h2 id="基于CF的相似度计算"><a href="#基于CF的相似度计算" class="headerlink" title="基于CF的相似度计算"></a>基于CF的相似度计算</h2><p>在CF系统中，计算每个目标客户与其他客户之间的相似度的方法有很多。最流行的方法之一是使用皮尔逊相关系数，与其他传统的统计方法相比，它提供了最好的预测和推荐结果(Bobadilla等人)。(2012年)。在皮尔逊的相关方法中，使用公式(4)测量两个给定客户$u$和$u’$之间的相似性：</p>
 <script type="math/tex; mode=display">
-Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \qquad (4)</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的user-item矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
+Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \tag{4}</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的user-item矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
 <h2 id="基于人口统计属性的细分"><a href="#基于人口统计属性的细分" class="headerlink" title="基于人口统计属性的细分"></a>基于人口统计属性的细分</h2><p>在这个阶段，使用两阶段聚类方法，根据年龄、性别、教育程度、婚姻状况和职业等人口统计变量对客户进行细分，然后计算他们的簇内相似度。因此，如果两个客户具有相似的人口统计属性，他们对某些项目的态度会相似，这在CF方法中没有反映出来。在本研究中，基于这些变量进行客户细分的目的是为了更好地选择新用户的邻居，通过克服冷启动问题有效改善推荐过程。</p>
 <h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于user-item矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
 <script type="math/tex; mode=display">
-Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \qquad (5)</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
+Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \tag{5}</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
 <h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r_{u’,i})$，预测用户$u$对于项目$i$，$(r_{u,i})$的得分如下：</p>
 <script type="math/tex; mode=display">
-r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \qquad (6)</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r_{u’,i})$越相似，将以更高的加权比率用于预测$(r_{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
+r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r_{u’,i})$越相似，将以更高的加权比率用于预测$(r_{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
 <h1 id="评估提出的推荐方法"><a href="#评估提出的推荐方法" class="headerlink" title="评估提出的推荐方法"></a>评估提出的推荐方法</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
 <p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
 <center>
