@@ -533,27 +533,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
-    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
-<a id="more"></a>
-<p><strong>解决方法：</strong></p>
-<p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
-<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
-<p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
-<p>这时候点击日志就会自动跳转到归档页。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo博客NexT主题翻页按钮显示不正常的解决方法</title>
     <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E6%8C%89%E9%92%AE%E6%98%BE%E7%A4%BA%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p>搭好博客后，上去发现底下的翻页按钮显示有问题，显示为<code>&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;</code>，原因不明：</p>
@@ -612,6 +591,27 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
+    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
+<a id="more"></a>
+<p><strong>解决方法：</strong></p>
+<p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
+<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
+<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
+<p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
+<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
+<p>这时候点击日志就会自动跳转到归档页。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
       </tags>
   </entry>
   <entry>
@@ -692,7 +692,7 @@
   <entry>
     <title>LeetCode刷题</title>
     <url>/2020/05/25/LeetCode%E5%88%B7%E9%A2%98/</url>
-    <content><![CDATA[<p>记录一下每天刷题。</p>
+    <content><![CDATA[<p>记录一下每日刷题 $\surd$</p>
 <a id="more"></a>
 <h1 id="121-买卖股票的最佳时机"><a href="#121-买卖股票的最佳时机" class="headerlink" title="121. 买卖股票的最佳时机"></a>121. 买卖股票的最佳时机</h1><p><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/</a></p>
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p>
