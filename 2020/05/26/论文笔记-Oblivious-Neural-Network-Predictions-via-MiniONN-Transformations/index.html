@@ -86,8 +86,10 @@
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="og:description" content="Jian Liu, Mika Juuti, Yao Lu, N. Asokan CCS 2017 https:&#x2F;&#x2F;dl.acm.org&#x2F;doi&#x2F;10.1145&#x2F;3133956.3134056">
 <meta property="og:image" content="http://images.yingwai.top/picgo/minionnt1.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/minionnf1.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/minionnf2.png">
 <meta property="article:published_time" content="2020-05-26T08:09:23.000Z">
-<meta property="article:modified_time" content="2020-05-26T08:11:04.804Z">
+<meta property="article:modified_time" content="2020-05-26T11:31:50.912Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="MPC">
@@ -379,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k 字
+                  1.6k 字
                 </span>
               
 
@@ -395,7 +397,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -435,31 +437,66 @@
 </center>
 
 
-<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><p>神经网络由一系列层组成。每一层都接收输入并对其进行处理，以产生作为下一层输入的输出。传统上，层被组织成使得最底层接收输入数据(例如，图像或单词)，而最顶层输出最终预测。典型的神经网络1通过首先应用线性变换，然后应用非线性激活函数，以层组的方式处理输入数据。有时还包括池操作来聚合输入组。</p>
-<p>下面将从将神经网络转换为ONN的角度简要描述这些操作。</p>
-<h3 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h3><p>神经网络中最常见的线性变换是矩阵乘法和加法：</p>
-<script type="math/tex; mode=display">
-\mathbf{y} := \mathbf{W} \cdot \mathbf{x} + \mathbf{b}, \qquad \tag{1}</script><p>其中 $\mathbf{x} \in \mathbb{R}^{l \times 1}$ 是输入变量，$\mathbf{y} \in \mathbb{R}^{n \times 1}$ 是输出，${\rm \mathbf{W}} \in \mathbb{R}^{n \times l}$ 是权重矩阵，$\mathbf{b} \in \mathbb{R}^{n \times 1}$ 是偏置向量。</p>
-<p><em>卷积</em>是一种线性变换，它计算小的“权重张量”(滤波器)和输入元素的邻域的点积。通过在每个步骤中将每个过滤器滑动一定的量来重复该过程。邻域的大小称为窗口大小。步幅的大小称为步幅。在实践中，出于效率原因，卷积也转换为矩阵乘法和加法[18]，类似于公式1，不同之处在于输入和偏置向量是矩阵：$\mathbf{Y}:= \mathbf{W} \cdot \mathbf{X} + \mathbf{B}$。</p>
-<p><em>dropout</em>和<em>dropconnect</em>是线性变换的类型，其中乘法使用0-1随机掩码以元素方式完成[30]。</p>
-<p><em>batch normalization</em>是将输出 $\mathbf{y}$ 移至可服从范围的自适应归一化方法[30]。在预测过程中，batch normalization表现为矩阵乘法和加法。</p>
-<h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p>神经网络使用数据的非线性变换-激活函数-来建模输入数据和输出预测之间的非线性关系。作者确定了三个常见的类别：</p>
-<ul>
-<li><p><em>分段线性激活函数。</em>这类函数可以表示为特定范围内的 $n$ 个线性函数的集合，每个类型 $f_i(y) = a_iy + b_i, y \in [y_i, y_{i+1}]$，其中 $y_i$ 和 $y_{i+1}$ 是该范围的下界和上界。此类别包括激活函数：</p>
-<p><em>恒等函数 (linear)：</em>$f(\mathbf{y}) = [y_i]$</p>
-<p><em>线性整流函数 (ReLU)：</em>$f(\mathbf{y}) = [{\rm max}(0, y_i)]$</p>
-<p><em>带泄露线性整流函数：</em>$f(\mathbf{y}) = [{\rm max}(0, y_i) + a {\rm min}(0, y_i)]$</p>
-<p><em>Maxout ($n$ pieces)：</em>$f(\mathbf{y}) = [{\rm max}(y_1, …, y_n)]$</p>
-</li>
-<li><p><em>连续激活函数。</em>连续函数在某一区域上具有高达所需阶数的连续导数。一些常用的平滑激活函数包括：</p>
-<p><em>Sigmoid (logistic)：</em>$f(\mathbf{y}) = [\frac{1}{1 + e^{-y_i}}]$</p>
-<p><em>双曲正切 (tanh)：</em>$f(\mathbf{y}) = [\frac{e^{2y_i}-1}{e^{2y_i}+1}]$</p>
-<p><em>Softplus：</em>$f(\mathbf{y}) = [\log(e^{y_i}+1)]$</p>
-</li>
-</ul>
+
 <h1 id="MiniONN概述"><a href="#MiniONN概述" class="headerlink" title="MiniONN概述"></a>MiniONN概述</h1><p>在本节中，通过转换以下形式的神经网络来解释MiniONN的基本思想：</p>
 <script type="math/tex; mode=display">
-\mathbf{z} := \mathbf{W'} \cdot f(\mathbf{W} \cdot \mathbf{x} + \mathbf{b}) + \mathbf{b'} \tag{4}</script><p>其中$\mathbf{x} = \left[ \begin{matrix} x_1\\ x_2 \end{matrix} \right]$</p>
+\mathbf{z} := \mathbf{W'} \cdot f(\mathbf{W} \cdot \mathbf{x} + \mathbf{b}) + \mathbf{b'} \tag{4}</script><p>其中$\mathbf{x} = \left[ \begin{matrix} x_1\\ x_2 \end{matrix} \right]$，$\mathbf{W} = \left[ \begin{matrix} w_{1,1} &amp; w_{1,2}\\ w_{2,1} &amp; w_{2,2} \end{matrix} \right]$，$\mathbf{b} = \left[ \begin{matrix} b_1\\ b_2 \end{matrix} \right]$，$\mathbf{W’} = \left[ \begin{matrix} w’_{1,1} &amp; w’_{1,2}\\ w’_{2,1} &amp; w’_{2,2} \end{matrix} \right]$ 以及 $\mathbf{b’} = \left[ \begin{matrix} b’_1\\ b’_2 \end{matrix} \right]$。</p>
+<p>MiniONN的核心思想是让 $\mathcal{S}$ 和 $\mathcal{C}$ 加法共享神经网络每一层的输入和输出值。也就是说，在每一层的开始，$\mathcal{S}$ 和 $\mathcal{C}$ 将各自持有一份“份额”，使得份额的模加等于该神经网络的非不经意版本中对该层的输入。输出值将用作下一层的输入。</p>
+<p>为此，让 $\mathcal{S}$ 和 $\mathcal{C}$ 首先进入预计算阶段(该阶段独立于 $\mathcal{C}$ 的输入$\mathbf{x}$)，在该阶段中，它们为权重矩阵的每一行(在本例中为 $\mathbf{W}$ 和 $\mathbf{W’}$)联合生成一组点积三元组 $\left \langle u,v,\mathbf{w} \cdot \mathbf{r} \right \rangle$。具体地说，对于 $\mathbf{w}$的每一行，$\mathcal{S}$ 和 $\mathcal{C}$，运行一个协议，该协议安全地实现理想功能 $\mathcal{F}$ 三元组(在图1中)，以生成点积三元组，从而：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+u_1 + v_1 (\bmod N) &= w_{1,1} r_1 + w_{1,2} r_2,\\
+u_2 + v_2 (\bmod N) &= w_{2,1} r_1 + w_{2,2} r_2,\\
+u'_1 + v'_1 (\bmod N) &= w'_{1,1} r'_1 + w'_{1,2} r'_2,\\
+u'_2 + v'_2 (\bmod N) &= w'_{2,1} r'_1 + w'_{2,2} r'_2.
+\end{align}</script><p><img src="http://images.yingwai.top/picgo/minionnf1.png" alt=""></p>
+<center>
+    <i>图1 理想的生成点积三元组的功能</i>
+</center>
+
+<p>当 $\mathcal{C}$ 想要请求 $\mathcal{S}$ 计算向量 $\mathbf{x}=[x_1,x_2]$ 的预测时，对于每个 $x_i$，$\mathcal{C}$ 选择在预计算阶段中生成的三元组，并使用它的 $r_i$ 来盲化 $x_i$。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+x_1^{\mathcal{C}} &:= r_1, x_1^{\mathcal{S}} := x_1 - r_1 (\bmod N),\\
+x_2^{\mathcal{C}} &:= r_2, x_2^{\mathcal{S}} := x_2 - r_2 (\bmod N).
+\end{align}</script><p>然后 $\mathcal{C}$ 然后发送 $\mathbf{x}^{\mathcal{S}}$ 给 $\mathcal{S}$，$\mathcal{S}$ 计算</p>
+<script type="math/tex; mode=display">
+\begin{align}
+y_1^{\mathcal{S}} &:= w_{1,1} x_1^{\mathcal{S}} + w_{1,2} x_2^{\mathcal{S}} + b_1 + u_1 (\bmod N),\\
+y_2^{\mathcal{S}} &:= w_{2,1} x_1^{\mathcal{S}} + w_{2,2} x_2^{\mathcal{S}} + b_2 + u_2 (\bmod N).
+\end{align}</script><p>同时，$\mathcal{C}$ 设：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+y_1^{\mathcal{C}} &:= v_1 (\bmod N),\\
+y_2^{\mathcal{C}} &:= v_2 (\bmod N).
+\end{align}</script><p>显然</p>
+<script type="math/tex; mode=display">
+\begin{align}
+y_1^{\mathcal{C}} + y_1^{\mathcal{S}} &= w_{1,1} x_1 + w_{1,2} x_2 + b_1 (\bmod N),\\
+y_2^{\mathcal{C}} + y_2^{\mathcal{S}} &= w_{2,1} x_1 + w_{2,2} x_2 + b_2 (\bmod N).
+\end{align}</script><p>因此，在此交互结束时，$\mathcal{S}$ 和 $\mathcal{C}$ 相加地共享由层1中的线性变换产生的输出值 $\mathbf{y}$，而不需要 $\mathcal{S}$ 学习输入 $\mathbf{x}$，任何一方都不学习 $\mathbf{y}$。</p>
+<p>对于激活/池化操作 $f()$，$\mathcal{S}$ 和 $\mathcal{C}$ 运行安全地实现图2中的理想功能的协议，该协议隐式地重构每个 $y_i := y^{\mathcal{C}}_i + y^{\mathcal{S}}_i (\bmod N)$ 并返回 $x^{\mathcal{S}}_i := f(y_i) - x^{\mathcal{C}}_i$ 给 $\mathcal{S}$，其中 $x^{\mathcal{C}}_i$ 是来自预计算阶段的先前共享的三元组的 $\mathcal{C}$ 分量，即 $x_1^{\mathcal{C}} := r’_1$ 和 $x_2^{\mathcal{C}} := r’_2$。</p>
+<p><img src="http://images.yingwai.top/picgo/minionnf2.png" alt=""></p>
+<center>
+    <i>图2 理想的不经意激活/池化f()的功能</i>
+</center>
+
+<p>最后一层的变换与第一层相同。也就是说，$\mathcal{S}$ 计算：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+y_1^{\mathcal{S}} &:= w'_{1,1} x_1^{\mathcal{S}} + w'_{1,2} x_2^{\mathcal{S}} + b'_1 + u'_1 (\bmod N),\\
+y_2^{\mathcal{S}} &:= w'_{2,1} x_1^{\mathcal{S}} + w'_{2,2} x_2^{\mathcal{S}} + b'_2 + u'_2 (\bmod N);
+\end{align}</script><p>$\mathcal{C}$ 设：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+y_1^{\mathcal{C}} &:= v'_1 (\bmod N),\\
+y_2^{\mathcal{C}} &:= v'_2 (\bmod N),
+\end{align}</script><p>最后，$\mathcal{S}$ 将 $[y_1^{\mathcal{S}}, y_2^{\mathcal{S}}]$ 返回给 $\mathcal{C}$，$\mathcal{C}$ 输出最终预测：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+z_1 &:= y_1^{\mathcal{C}} + y_1^{\mathcal{S}},\\
+z_2 &:= y_2^{\mathcal{C}} + y_2^{\mathcal{S}}.
+\end{align}</script><p>注意到MiniONN在 $\mathbb{Z}_N$ 中工作，而神经网络需要浮点计算。一种简单地解决办法是把神经网络中的值与一个固定的常数相乘，将小数部分放大到整数。一种类似的技术被用来减少神经网络预测中的存储器需求，而精确度损失可以忽略不计[42]。必须确保任何(中间)结果的绝对值不会超过 $\lfloor N/2 \rfloor$。</p>
 
       
     </div>
@@ -643,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#贡献"><span class="nav-number">1.1.</span> <span class="nav-text">贡献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BACKGROUND-AND-PRELIMINARIES"><span class="nav-number">2.</span> <span class="nav-text">BACKGROUND AND PRELIMINARIES</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">2.1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性变换"><span class="nav-number">2.1.1.</span> <span class="nav-text">线性变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数"><span class="nav-number">2.2.</span> <span class="nav-text">激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MiniONN概述"><span class="nav-number">3.</span> <span class="nav-text">MiniONN概述</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#贡献"><span class="nav-number">1.1.</span> <span class="nav-text">贡献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BACKGROUND-AND-PRELIMINARIES"><span class="nav-number">2.</span> <span class="nav-text">BACKGROUND AND PRELIMINARIES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MiniONN概述"><span class="nav-number">3.</span> <span class="nav-text">MiniONN概述</span></a></li></ol></div>
             
 
           </div>
@@ -687,7 +724,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.6k</span>
+    <span title="Site words total count">31.9k</span>
   
 
 <!--
