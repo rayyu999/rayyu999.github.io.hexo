@@ -1989,6 +1989,7 @@ z_2 &:= y_2^{\mathcal{C}} + y_2^{\mathcal{S}}.
     <content><![CDATA[<p><em>Toshinori Araki, Jun Furukawa, Yehuda Lindell, Ariel Nof, Kazuma Ohara</em></p>
 <p>CCS 2016</p>
 <p><a href="https://dl.acm.org/doi/10.1145/2976749.2978331" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/2976749.2978331</a></p>
+<a id="more"></a>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在这篇文章中，作者描述了一个新的信息论协议(和一个计算安全的变体)，用于诚实多数的安全三方计算。该协议的计算量和通信量非常小；对于布尔电路，每一方只为每个与门发送一位(对于异或门则不发送任何内容)。本文的协议在半诚实的攻击者面前是(基于模拟的)安全的，在恶意攻击者面前实现了客户机/服务器模型下的隐私。</p>
 <p>在具有10Gbps连接的三个20核服务器的集群上，本文的协议的实现每秒执行超过130万次AES计算，涉及每秒处理超过70亿个门。此外，作者还开发了一个Kerberos扩展，它使用服务器之间共享的密钥/密码，用本文的协议取代了MIT-Kerberos中密钥分发中心(KDC)上的票证授予-票证加密。这样可以在保护密码的同时使用Kerberos。本文的实现能够支持每秒超过35,000个登录的登录风暴，即使对于非常大的组织也足够了。本文的工作证明了在标准硬件上实现高通量安全计算是可能的。</p>
 <h1 id="THE-NEW-PROTOCOL"><a href="#THE-NEW-PROTOCOL" class="headerlink" title="THE NEW PROTOCOL"></a>THE NEW PROTOCOL</h1><h2 id="Securely-Computing-Boolean-Circuits"><a href="#Securely-Computing-Boolean-Circuits" class="headerlink" title="Securely Computing Boolean Circuits"></a>Securely Computing Boolean Circuits</h2><p>为了简化说明，首先描述具有与和异或门的布尔电路的特殊情况的协议。假设各方 $P_1,P_2,P_3$ 能够获得随机的 $x_1, x_2, x_3 \in \{0,1 \}$，使得 $x_1 \oplus x_2 \oplus x_3 = 0$。</p>
