@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/jm.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/jm32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/jm16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/jm.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="密码学,MPC,隐私保护机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Daniel Demmler, Thomas Schneider, Michael Zohner NDSS 2015 https:&#x2F;&#x2F;www.ndss-symposium.org&#x2F;ndss2015&#x2F;ndss-2015-programme&#x2F;aby-framework-efficient-mixed-protocol-secure-two-party-computation&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记 ABY - A Framework for Efficient Mixed-Protocol Secure Two-Party Computation">
+<meta property="og:url" content="http://yoursite.com/2020/06/11/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="Daniel Demmler, Thomas Schneider, Michael Zohner NDSS 2015 https:&#x2F;&#x2F;www.ndss-symposium.org&#x2F;ndss2015&#x2F;ndss-2015-programme&#x2F;aby-framework-efficient-mixed-protocol-secure-two-party-computation&#x2F;">
+<meta property="og:image" content="http://images.yingwai.top/picgo/aby2f1.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/aby2p1.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/aby2t1.png">
+<meta property="article:published_time" content="2020-06-11T14:09:08.000Z">
+<meta property="article:modified_time" content="2020-06-11T14:16:17.533Z">
+<meta property="article:author" content="yyw">
+<meta property="article:tag" content="密码学">
+<meta property="article:tag" content="MPC">
+<meta property="article:tag" content="隐私保护机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/aby2f1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/"/>
+
+
+
+
+
+  <title>论文笔记 ABY - A Framework for Efficient Mixed-Protocol Secure Two-Party Computation | Ray's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ray's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/11/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">论文笔记 ABY - A Framework for Efficient Mixed-Protocol Secure Two-Party Computation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-11T22:09:08+08:00">
+                2020-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  8k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  31 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>Daniel Demmler, Thomas Schneider, Michael Zohner</em></p>
+<p><a href="https://dblp.uni-trier.de/db/conf/ndss/ndss2015.html#Demmler0Z15" target="_blank" rel="noopener">NDSS 2015</a></p>
+<p><a href="https://www.ndss-symposium.org/ndss2015/ndss-2015-programme/aby-framework-efficient-mixed-protocol-secure-two-party-computation/" target="_blank" rel="noopener">https://www.ndss-symposium.org/ndss2015/ndss-2015-programme/aby-framework-efficient-mixed-protocol-secure-two-party-computation/</a></p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>安全计算使相互不信任的各方能够在其私有输入上联合计算函数，而不会泄露函数的输出以外的任何信息。半诚实模型中的通用安全计算协议已经被广泛研究，并形成了几个最佳实践。在这项工作中，我们设计并实现了一个混合协议框架，称为Aby，它有效地结合了基于算术共享、布尔共享和姚的乱码电路的安全计算方案，并为安全两方计算提供了最佳实践方案。我们的框架允许预计算几乎所有的密码运算，并基于预计算的不经意传输扩展在安全计算方案之间提供新颖、高效的转换。ABY支持多种标准操作，我们在本地网络和公共洲际云上执行基准测试。从我们的基准测试中，我们对安全计算协议的高效设计有了新的见解，最突出的是，基于不经意传输的乘法比基于同态加密的乘法要高效得多。我们使用ABY为三个示例应用(私有集合交集、生物特征匹配和模幂运算)构建混合协议，并表明它们比使用单一协议更有效。</p>
+<p><strong>关键词</strong>：安全的两方计算；混合协议；高效的协议设计</p>
+<h1 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h1><p>在这项工作中，作者提出了Aby(用于算术、布尔和Yao共享)，这是一个新的框架，用于开发高效的混合协议，允许灵活的设计过程。作者在安全计算中使用了几种最先进的技术，并以一种新颖的方式应用了现有的协议，从而设计了一个安全协议。我们优化子例程，并对基元操作执行详细的基准测试。从这些结果中，得到了设计高效安全计算协议的新见解。应用这些见解，并通过实现三个隐私保护应用程序来展示ABY的设计灵活性：模幂运算、私有集交集和生物特征匹配。ABY旨在作为隐私保护应用程序性能的基准，因为它结合了安全计算中的几种最先进的技术和最佳实践。可以从 <a href="http://encrypto.de/code/ABY" target="_blank" rel="noopener">http://encrypto.de/code/ABY</a> 获得ABY的源代码。</p>
+<p><strong>Aby框架</strong>。在非常高的级别上，本文的框架的工作方式类似于从底层安全计算协议中抽象出来的虚拟机(类似于从底层系统体系结构中抽象出来的Java虚拟机)。本文的虚拟机操作给定位长的数据类型(类似于C编程语言中的16位短或32位长数据类型)。变量要么是明文的(意味着一方知道变量的值，这是计算的输入和输出所需的)，要么是双方共享的秘密(意味着每一方都持有一份份额，不能从中推导出有关该值的信息)。本文的框架目前支持三种不同类型的共享(算术、布尔和姚)，并允许在它们之间进行有效的转换。图1.共享支持与CPU指令集类似的不同类型的标准操作，如加法、乘法、比较或按位操作。对共享的操作使用高效的安全计算协议来执行：对于算术共享的操作，我们使用基于Beaver乘法三元组的协议[4]，对于布尔共享的操作，本文使用Goldreich-Micali-Wigderson(GMW)协议[34]，对于姚共享的操作，本文使用姚的乱码电路协议[74]。</p>
+<p><img src="http://images.yingwai.top/picgo/aby2f1.png" alt=""></p>
+<center>
+    <i>图1 Aby框架概览，该框架允许在明文和三种类型的共享之间进行高效转换：算术、布尔和姚。</i>
+</center>
+
+
+
+
+<p><strong>灵活的设计流程</strong>。本文框架的一个主要目标是允许安全计算协议的灵活设计。</p>
+<ol>
+<li>作者从协议特定的功能表示中抽象出来，取而代之的是使用标准操作。这允许混合几个协议，甚至具有不同的表示，并允许设计者以标准操作的形式来表达功能，如C或Java等高级编程语言中已知的那样。以前，设计者必须手动编写(或自动生成)特定协议的紧凑表示，例如，姚的协议的小布尔电路。当我们专注于标准操作时，高级语言可以编译到本文的框架中，它可以用作现有的几个安全计算工具的后端，例如L1[44]、[71]、[72]、Secrec[11]、[12]或Picco[75]。</li>
+<li>通过混合安全计算协议，本文的框架能够根据给定部署场景中可用的资源定制结果协议。例如，GMW协议允许预计算所有密码操作，但在线阶段需要几轮交互(这不利于延迟较高的网络)，而姚的协议轮数不变，但在线阶段需要对称密码操作。</li>
+</ol>
+<p><strong>高效实例化和改进</strong>。每种安全计算技术都是使用最新的优化和最佳实践(例如昂贵的密码操作的批量预计算[19]、[27]、[69])来实现的。对于算术共享(§III-A4)，本文使用填充[62]、[66]的Paillier生成乘法三元组，或者使用完全解密的DGK生成乘法三元组[22]、[32]，对于布尔共享(§III-B)，本文使用[54]和OT扩展[1]、[41]的多路复用器，而对于Yao共享(§III-C)，本文使用固定密钥AES乱码[7]。作为对高效协议设计的最先进技术的新贡献和进步，作者以一种新颖的方式结合了现有的方法。对于算术共享，作者展示了如何使用对称密钥加密来乘值，它允许更快地乘以一到三个数量级(§III-A5)。本文概述了如何分别从布尔共享高效地转换为算术共享(§IV-E和§IV-F)，并展示了如何结合布尔共享和Yao共享以获得比纯布尔或Yao实例化更好的运行时间(§VI-B)。最后，本文概述了如何修改[7]中的固定密钥AES乱码，以获得更好的OT扩展性能(§V-A)。</p>
+<p><strong>关于高效协议设计的反馈</strong>。作者对他们的框架进行了基准测试，从中得出了高效安全计算协议的新的最佳实践。证明了对于乘法，使用OT扩展来预计算乘法三元组比使用同态加密(§V-C)更有效。使用本文的基于OT的转换协议，不同共享表示之间的转换比以前工作中使用的方法(例如[35]、[44])要便宜得多，并且随着安全参数的增加而很好地扩展。事实上，在低等待时间网络上，不同共享表示之间的转换成本非常便宜，以至于对于单个乘法来说，将其转换成更合适的表示、执行乘法并将其转换回源表示已经是值得的。</p>
+<p><strong>应用</strong>。作者展示了他们的Aby框架和技术可以用来实现和提高几个隐私保护应用程序的性能。更具体地说，本文提出了模幂运算的混合协议，其中作者组合了所有三个共享并显示了相应的功能描述(§VI-A)，用于私有集交集(§VI-B)(首次将YOO与布尔共享相结合)，以及用于生物特征匹配(分别将算术与布尔和姚共享相结合)，其总运行时间比使用单一协议快13倍(§VI-C)。</p>
+<h1 id="PRELIMINARIES"><a href="#PRELIMINARIES" class="headerlink" title="PRELIMINARIES"></a>PRELIMINARIES</h1><h2 id="设定"><a href="#设定" class="headerlink" title="设定"></a>设定</h2><p>在这项工作中，作者考虑可用于各种隐私保护应用的安全两方计算协议，如下所述。</p>
+<p>自然，这样的协议可以用于客户端-服务器应用，其中双方都提供他们的私人输入(例如，用于因特网上的服务)。</p>
+<p>然而，协议也可以用于多方应用，其中任意数量的输入玩家提供他们的机密输入，并且任意数量的输出玩家接收安全计算的输出(例如，用于拍卖、调查等)，参见[30]。为此，每个输入播放器在两个计算服务器(假设不串通)之间秘密共享其输入。然后，两个计算服务器在输入共享上运行安全计算协议，在此期间它们不学习任何中间信息。最后，他们将输出份额发送给可以重构输出的输出播放器。</p>
+<p>由于本文的Aby框架中的所有协议都在共享上操作，这也允许反应式计算，其中两个计算服务器在多次执行中保存安全的状态信息(例如，对于安全的数据库系统)。</p>
+<h2 id="抵御半诚实的对手的安全"><a href="#抵御半诚实的对手的安全" class="headerlink" title="抵御半诚实的对手的安全"></a>抵御半诚实的对手的安全</h2><p>本文使用半诚实(被动)对手模型，在该模型中，作者假设有一个计算受限的对手，他试图从协议执行期间看到的消息中学习额外的信息。与更强的恶意(主动)对手相比，半诚实的对手不允许偏离协议。尽管比恶意模型有更多的限制，半诚实模型具有许多应用，例如，保护免受管理员或政府机构的被动内部攻击，或者在可以信任各方不会主动行为不当的情况下。半诚实模型使得开发高效的安全计算协议成为可能，因此被广泛用于实现隐私保护应用。本文的工作集中在半诚实对手模型下高效混合协议安全两方计算的设计与实现。</p>
+<h2 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h2><p>本文将运行安全计算协议的双方分别表示为 $P_0$ 和 $P_1$。</p>
+<p>本文用 $x \oplus y$ 表示按位异或，$x \wedge y$ 表示按位与。我们使用列表运算符 $x[i]$ 来引用列表 $x$ 的第 $i$ 个元素。特别地，如果 $x$ 是位序列，则 $x[i]$ 是 $x$ 的第 $i$ 位，$x[0]$ 是 $x$ 的最低有效位。</p>
+<p>$\kappa$ 表示对称安全参数，$\phi$ 表示公钥安全参数，根据NIST[61]的建议，$\kappa \in \{80,112,128\}$ 和$ \phi \in \{1024,2048,3072\}$ 用于传统(直到2010年)、中等(2011年-2030年)和长期(2030年之后)安全。本文将统计安全参数 $\sigma$ 设置为 $40$。本文将使用 $P_i$ 的公钥的公钥加密表示为 $c= {\rm Enc}_i(m)$，并且相应的解密运算表示为 $m= {\rm Dec}_i(c)$，其中$m= {\rm Dec}_i({\rm Enc}_i(c))$。</p>
+<p>本文将共享变量 $x$ 表示为 $\langle x \rangle ^t$。上标 $t \in \{A,B,Y\}$ 表示共享的类型，其中 $A$ 表示算术共享，$B$ 表示布尔共享，$Y$ 表示Yao共享。不同共享类型和操作的语义在§III中定义。本文将由 $P_i$ 方持有的 $\langle x \rangle ^t$ 的单独份额称为 $\langle x \rangle ^t_i$。以类似的方式，我们定义了共享运算符 $\langle x \rangle ^t = {\rm Shr}^t_i(x)$，表示 $P_i$ 将其输入值 $x$ 与 $P_{1−i}$ 共享，以及重构运算符 $x={\rm Rec}^t_i(\langle x \rangle ^t)$，表示 $P_i$ 获得 $x$ 的值作为输出。当双方都获得 $x$ 的值时，本文写作 ${\rm Rec}^t(\langle x \rangle ^t)$。本文用 $s,d \in \{A,B,Y\}$ 和$s  \neq d$ 表示 $\langle x \rangle ^s$ 的共享到另一表示 $\langle x \rangle ^c$ 的转换为 $\langle x \rangle ^d = s2d(\langle x \rangle ^s)$，例如，$\rm A2B$ 将算术共享转换为布尔共享。请注意，我们要求在此转换过程中，任何一方都不能了解有关 $x$ 的任何附加信息。在份额上执行操作 $\odot$ 时，本文记作 $\langle z \rangle ^t = \langle x \rangle ^t$，其中$\odot: \langle x \rangle ^t \times \langle y \rangle ^t \mapsto \langle z \rangle ^t$ 和 $t \in {A,B,Y}$，例如 $\langle z \rangle ^ A = \langle x \rangle ^ A + \langle y \rangle ^ A$ 把两个算术份额相加并返回算术份额。</p>
+<h2 id="不经意传输"><a href="#不经意传输" class="headerlink" title="不经意传输"></a>不经意传输</h2><p>本文在工作中使用的主要构件是不经意传输(OT)。我们使用2取1 OT，其中发送者输入两个 $l$ 位比特串$(s_0,s_1)$，接收者输入比特 $c \in \{0, 1 \}$，并且不经意地获得输出 $s_c$，使得接收者不学习关于 $s_{1-c}$ 的信息，并且发送者不学习关于 $c$ 的信息。</p>
+<p>为了最大化在线阶段的性能，我们的实现使用OT预计算[5]。虽然OT协议需要昂贵的公钥密码术，但OT扩展[1]、[6]、[41]允许仅使用对称密码原语和恒定轮数来扩展几个基本OT(我们在实验中使用[56])。为了进一步提高效率，引入了特殊的OT形式，如相关OT(C-OT)[1]和随机OT(R-OT)[1]、[58]。在C-OT中，发送方输入相关函数 $f_{\Delta}(\cdot)$，并获得随机 $s_0$ 和相关的 $s_1=f_{\Delta}(s_0)$。在R-OT中，发送方没有输入并获得随机 $(s_0,s_1)$。C-OT中的随机 $s_0$ 和 $(s_0,s_1)$ 由相关稳健单向函数 $H$ 输出[41]，该函数可以使用散列函数实例化。在整篇论文中，我们使用缩写 ${\rm OT}^n_l$ (分别为 $\rm C$-${\rm OT}^n_l$，$\rm R$-${\rm OT}^n_l$)来引用 $l$ 位字符串上的 $n$ 个并行$(\rm C$-$\backslash \rm R$-$){\rm OT}^n_l$。对于OT扩展，${\rm OT}^n_l$、$\rm C$-${\rm OT}^n_l$ 和 $\rm R$-${\rm OT}^n_l$ 的通信分别为 $n(\kappa + 2l)$、$n(\kappa + l)$ 和 $n \kappa$ 比特，这在文献[1]中被认为是主要的性能瓶颈。对于 ${\rm OT}^n_l$、$\rm C$-${\rm OT}^n_l$ 和 $\rm R$-${\rm OT}^n_l$ 的计算是对每一方的对称密码原语的 $3n$ 次评估。</p>
+<h1 id="共享类型"><a href="#共享类型" class="headerlink" title="共享类型"></a>共享类型</h1><p>在本节中，详细介绍作者的Aby框架使用的共享类型：算术共享(§III-A)、布尔共享(§III-B)和姚共享(§III-C)。对于每种共享类型，本文将在各自的小节中描述共享的语义、标准操作和最新技术。</p>
+<h2 id="算术共享"><a href="#算术共享" class="headerlink" title="算术共享"></a>算术共享</h2><p>对于算术共享，在环 $\mathbb{Z}_{2^l}$(整数模 $2^l$)中相加地共享 $l$ 位值 $x$ 作为两个值的和。以下描述的协议基于[2]、[44]、[67]。首先，作者定义了共享语义(§III-A1)和操作(§III-A2)，并概述了基于算术共享的安全计算的相关工作(§III-A3)。然后，作者详细介绍了如何使用同态加密(§III-A4)或OT(§III-A5)生成算术乘法三元组；作者在§V-C后面的部分对这两种方法的性能进行了实验比较。在下面，作者假设要在环Z2‘中执行的所有算术运算，即所有运算都是($\bmod 2^l$)。</p>
+<h3 id="共享语义"><a href="#共享语义" class="headerlink" title="共享语义"></a>共享语义</h3><p>算术共享基于在各方之间附加共享私有值，如下所示：</p>
+<ul>
+<li><strong>被共享的值。</strong>对于一个 $l$ 位的 $x$ 的算术共享 $\langle x \rangle ^ A$，有 $\langle x \rangle ^A_0 + \langle x \rangle ^A_1 \equiv x (\bmod 2^l)$，其中 $\langle x \rangle ^ A_0, \langle x \rangle ^A_1 \in \mathbb{Z}_{2^l}$。</li>
+<li><strong>共享。</strong>$\mathsf{Shr}^A_i(x)$：$P_i$ 选择 $r \in_R \mathbb{Z}_{2^l}$，设 $\langle x \rangle^A_i = x - r$，然后发送 $r$ 给 $P_{1-i}$，后者设 $\langle x \rangle^A_{1-i} = r$。</li>
+<li><strong>重构。</strong>$\mathsf{Rec}^A_i(x)$：$P_{1-i}$ 发送它的份额 $\langle x \rangle^A_{1-i}$ 给 $P_i$，后者计算 $x = \langle x \rangle ^A_0 + \langle x \rangle ^A_1$。</li>
+</ul>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>每个算术电路都是一系列加法和乘法门，评估如下：</p>
+<ul>
+<li><strong>加法。</strong>$\langle z \rangle ^ A = \langle x \rangle ^ A + \langle y \rangle ^ A$：$P_i$ 在本地计算 $\langle z \rangle ^ A_i = \langle x \rangle ^ A_i + \langle y \rangle ^ A_i$。</li>
+<li><strong>乘法。</strong>$\langle z \rangle ^ A = \langle x \rangle ^ A \cdot \langle y \rangle ^ A$：乘法使用形式为 $\langle c \rangle ^ A = \langle a \rangle ^ A \cdot \langle b \rangle ^ A$ 的预计算算术乘法三元组[4]：$P_i$ 设 $\langle e \rangle ^A_i = \langle x \rangle ^A_i - \langle a \rangle ^A_i$ 和 $\langle f \rangle ^A_i = \langle y \rangle ^A_i - \langle b \rangle ^A_i$，双方执行 $\mathsf{Rec}^A(e)$ 和 <script type="math/tex">\mathsf{Rec}^A(f)</script>，然后 $P_i$ 设 $\langle z \rangle ^ A_i = i \cdot e \cdot f + f \cdot \langle a \rangle ^ A_i + e \cdot \langle b \rangle ^ A_i + \langle c \rangle ^ A_i$。本文给出了预计算算术乘法的协议。</li>
+</ul>
+<h3 id="最先进的技术"><a href="#最先进的技术" class="headerlink" title="最先进的技术"></a>最先进的技术</h3><p>本文在算术共享中采用的协议在环 $\mathbb{Z}_{2^l}$ 中使用加性共享。它们在[2]、[44]、[67]中进行了描述，并在半诚实的设置中提供了安全性。BGW协议[9]是用于算术电路的安全多方计算的第一个协议，该协议对于多达 $t&lt;n/2$ 个腐败方是针对半诚实方的安全的，并且对于多达 $t&lt;n/3$ 个腐败方的针对恶意攻击者是安全的。虚拟理想函数框架(VIFF)[24]是用于异步网络中的安全计算方案的通用软件框架，并且使用预计算的算术乘法三元组来实现安全计算。SPDZ协议[27]、[28]允许在恶意模型中存在 $t=n−1$ 被破坏方的情况下进行安全计算；在[42]中给出了SPDZ协议的运行时环境。在[17]、[18]中已经提出了用于计算各种基元的算术电路。</p>
+<h3 id="利用加性同态加密生成算术乘法三元组"><a href="#利用加性同态加密生成算术乘法三元组" class="headerlink" title="利用加性同态加密生成算术乘法三元组"></a>利用加性同态加密生成算术乘法三元组</h3><p>通常，$\langle a \rangle ^ A \cdot \langle b \rangle ^ A = \langle c \rangle ^ A$ 形式的算术乘法三元组在设置阶段使用如协议1所示的加法同态加密方案来生成。该用于生成乘法三元组的协议在[2，附录A]中被提到为“众所周知的民间传说”。对于同态加密，我们使用Paillier[25]、[26]、[62]的密码系统，或者使用Damgard-Geisler-Krøigaard(DGK)[22]、[23]的密码系统，并使用如[10]、[32]、[52]中描述的Pohlig-Hellman算法[65]进行完全解密。在Paillier加密中，明文空间为 $Z_N$，使用参数为 $r$ 的统计盲化；在DGK加密中，将明文空间设置为 $\mathbb{Z}_{2^{2l+1}}$，使用参数为 $r$ 的完全盲化。关于安全性和正确性的证明，请参阅[67]和[66]。</p>
+<p><strong>复杂度。</strong>为了生成 $l$ 位乘法三元组，$P_0$ 和 $P_1$ 交换 $3$ 个密文，对于Paillier每个密文长度为 $2\varphi$ 比特(而DGK为 $\varphi$ 比特)，导致总共6个 $\varphi$ 比特的通信(对应的3个 $\varphi$ 比特)。对于Paillier加密，我们还使用了[67]中描述的打包优化，该优化将从 $P_1$ 到 $P_0$ 的多个消息打包成单个密文，从而减少解密次数，并将每个乘法三倍的通信量减少到 $4 \varphi + 2 \varphi / \lfloor \varphi / (2l+1+ \sigma) \rfloor$ 比特。</p>
+<p><img src="http://images.yingwai.top/picgo/aby2p1.png" alt=""></p>
+<h3 id="通过不经意转移生成算术乘法三元组"><a href="#通过不经意转移生成算术乘法三元组" class="headerlink" title="通过不经意转移生成算术乘法三元组"></a>通过不经意转移生成算术乘法三元组</h3><p>可以基于OT扩展生成算术乘法三元组，而不是使用同态加密。该议定书是在[33，Sect. 4.1]中提出的，并在[15]中使用。它允许使用OT有效地计算两个秘密共享值的乘积。在下面，本文将描述使用更有效的相关OT扩展的协议的一个微小变体。总体而言，可以在 $l$ 位串上使用 $2l$ 个相关的OT，即 C-OT$^{2l}_l$ (或者甚至在更短的串上，如下所述)来生成 $l$ 位乘法三元组。</p>
+<h2 id="布尔共享"><a href="#布尔共享" class="headerlink" title="布尔共享"></a>布尔共享</h2><p>布尔共享使用基于异或的秘密共享方案。为了简化表示，假定使用单个比特值；对于 $l$ 比特的值，每个操作都并行执行多次。</p>
+<h3 id="共享语义-1"><a href="#共享语义-1" class="headerlink" title="共享语义"></a>共享语义</h3><ul>
+<li><strong>被共享的值。</strong>如果有 $\langle x \rangle ^B_0 \oplus \langle x \rangle ^B_1 = x$，其中 $\langle x \rangle ^B_0, \langle x \rangle ^B_1 \in \mathbb{Z}_2$，那么就说比特 $x$ 的布尔共享 $\langle x \rangle ^B$ 是在两方之间共享的。</li>
+<li><strong>共享。</strong>$\mathsf{Shr}_i^B(x)$：$P_i$ 选择 $r \in_R \{0,1\}$，计算 $\langle x \rangle ^B_i = x \oplus r$，然后发送 $r$ 给 $P_{1-i}$，后者设 $\langle x \rangle ^B_{1-i} = r$。</li>
+<li><strong>重构。</strong>$\mathsf{Rec}_i^B(x)$：$P_{1-i}$ 发送它的份额 $\langle x \rangle ^B_{1-i}$ 给 $P_i$，后者计算 $x = \langle x \rangle ^B_0 \oplus \langle x \rangle ^B_1$。</li>
+</ul>
+<h3 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h3><p>每个有效计算的函数都可以表示为一个由异或门和与门组成的布尔电路，本文将在下面详细说明对它的求值。</p>
+<ul>
+<li><strong>异或。</strong>$\langle z \rangle ^B = \langle x \rangle ^B \oplus \langle y \rangle ^B$：$P_i$ 本地计算 $\langle z \rangle ^B_i = \langle x \rangle ^B_i \oplus \langle y \rangle ^B_i$。</li>
+<li><strong>与。</strong>$\langle z \rangle ^B = \langle x \rangle ^B \wedge \langle y \rangle ^B$：与使用预计算布尔乘法三元组 $\langle c \rangle ^B = \langle a \rangle ^B \wedge \langle b \rangle ^B$ 进行评估，如下所示：$P_i$ 计算 $\langle e \rangle ^B_i = \langle a \rangle ^B_i \oplus \langle x \rangle ^B_i$ 和 $\langle f \rangle ^B_i = \langle b \rangle ^B_i \oplus \langle y \rangle ^B_i$，双方执行 $\mathsf{Rec}^B(e)$ 和 $\mathsf{Rec}^B(f)$，然后 $P_i$ 设 $\langle z \rangle ^B_i = i \cdot e \cdot f \oplus f \cdot \langle a \rangle ^B_i \oplus e \cdot \langle b \rangle ^B_i \oplus \langle c \rangle ^B_i$。如文献[1]所述，使用 R-OT$^2_1$ 可以有效地预计算布尔乘法三元组。</li>
+<li><strong>多路复用。</strong>对于多路复用器操作，本文使用[54]中提出的协议，该协议只需要 R-OT$^2_l$，而评估具有 $l$ 个与门的多路复用电路需要 R-OT$^{2l}_1$(参见[64]中的向量乘法三元组)。</li>
+<li><strong>其它。</strong>对于标准功能，本文使用[69]中总结的深度优化电路结构。</li>
+</ul>
+<h3 id="最先进的技术-1"><a href="#最先进的技术-1" class="headerlink" title="最先进的技术"></a>最先进的技术</h3><p>在[19]中给出了GMW协议的第一个实现，该协议用于多方并且在半诚实模型中具有安全性。在[69]中提出了针对两方设置的该框架的优化，并且在[1]中给出了使用R-OT扩展来有效地预计算乘法三元组的进一步改进。这些工作表明，GMW协议在低延迟网络中取得了良好的性能。TinyOT[50]，[58]将GMW协议扩展到隐蔽的恶意模型。</p>
+<h2 id="姚氏共享"><a href="#姚氏共享" class="headerlink" title="姚氏共享"></a>姚氏共享</h2><p>在Yao用于安全两方计算的乱码电路协议[74]中，一方(称为Garbler)将布尔函数加密为乱码电路，由另一方(称为赋值器)进行评估。更详细地，加布勒将要计算的函数表示为布尔电路，并将满足 $k_0^w, k_0^w \in \{0,1\}^{\kappa}$ 的两个线密钥 $(k_0^w, k_0^w)$ 分配给每条线 $w$。然后，Garbler使用加密函数 $\mathsf{Gb}$ 对两个输入线密钥的所有可能组合上的每个门的输出线密钥进行加密(详情见§III-C2中的共享)。然后，他将损坏的电路(由所有损坏的门组成)连同电路的相应输入键一起发送给评估器(参见§III-C1的共享)。评估者使用门的输入线路密钥迭代地解密每个乱码的门，以获得输出线路密钥(参见§III-C2中的与)，并最终重构电路的明文输出(参见§III-C1中的重构)。</p>
+<p>在下面，我们假设 $P_0$ 充当Garbler，$P_1$ 充当评估者，并详细说明Yao共享，假设使用free-XOR[47]和点置换[53]优化的乱码方案。使用这些技术，Garbler随机选择 $R[0]=1$ 的全局 $\kappa$ 位串 $R$。对于每根导线 $w$，线密钥分别为 $k^w_0 \in_R \{0,1\}^{\kappa}$ 和 $k^w_1 = k^w_0 \oplus R$。最低有效位 $k^w_0[0]$、$k^w_1[0]=1 − k^w_0[0]$ 称为置换位。作者指出，YAO共享也可以与其他改进方案一起实例化。</p>
+<h3 id="共享语义-2"><a href="#共享语义-2" class="headerlink" title="共享语义"></a>共享语义</h3><p>直观地，对于每根导线 $w$，$P_0$ 持有两个键 $k_0^w$ 和 $k_1^w$，以及 $P_1$ 持有这些键中的一个，而不知道它对应于两个明文值中的哪一个。为了简化表示，我们假定使用单个比特值；对于 $l$ 比特的值，每个操作都并行执行多次。</p>
+<ul>
+<li><strong>被共享的值。</strong>值 $x$ 的乱码电路共享 $\langle x \rangle ^Y$ 被共享为 $\langle x \rangle ^Y_0 = k_0$ 和 $\langle x \rangle ^Y_1 = k_x = k_0 \oplus xR$。</li>
+<li><strong>共享。</strong>$\mathsf{Shr}^Y_0(x)$：$P_0$ 取随机值 $\langle x \rangle ^Y_0 = k_0 \in_R \{0,1\}^{\kappa}$ 然后发送 $k_x = k_0 \oplus xR$ 给 $P_1$。</li>
+<li><strong>重构。</strong>$\mathsf{Rec}^Y_i (x)$：$P_{1-i}$ 发送它的置换位 $\pi = \langle x \rangle ^Y_{1-i}[0]$ 给 $P_i$，后者计算 $x = \pi \oplus \langle x \rangle ^Y_i[0]$。</li>
+</ul>
+<h3 id="操作-2"><a href="#操作-2" class="headerlink" title="操作"></a>操作</h3><p>使用姚氏共享，由XOR和AND门组成的布尔电路评估如下：</p>
+<ul>
+<li><strong>异或。</strong>$\langle z \rangle ^Y = \langle x \rangle ^Y \oplus \langle y \rangle ^Y$ 使用 free-XOR 技术[47]进行评估：$P_i$ 本地计算 $\langle z \rangle ^Y_i = \langle x \rangle ^Y_i \oplus \langle y \rangle ^Y_i$。</li>
+<li><strong>与。</strong>$\langle z \rangle ^Y = \langle x \rangle ^Y \wedge \langle y \rangle ^Y$ 评估如下：$P_0$ 使用 $\mathsf{Gb}_{\langle z \rangle ^Y_0}(\langle x \rangle ^Y_0, \langle y \rangle ^Y_0)$ 生成乱码表，其中 $\mathsf{Gb}$ 是[7]中定义的乱码函数。$P_0$ 发送该表给 $P_1$，后者使用它的密钥 $\langle x \rangle ^Y_1$ 和 $\langle y \rangle ^Y_1$ 进行解密。</li>
+<li><strong>其它。</strong>对于标准功能，本文使用[45]中总结的尺寸优化的电路结构。</li>
+</ul>
+<h3 id="最先进的技术-2"><a href="#最先进的技术-2" class="headerlink" title="最先进的技术"></a>最先进的技术</h3><p>除了上面提到的优化之外，对姚的乱码电路协议还有几个进一步的改进：乱码行减少[57]、[63]和流水线[38]，其中乱码表格在在线阶段被发送。文献[38]中给出了半诚实模型中Yao的乱码电路协议的一种流行实现。在[7]中给出了乱码方案的形式化定义，以及使用固定密钥AES的GB的有效实例化。在本文的实现中，除了流水线之外，作者使用了姚的乱码电路协议的这些最先进的优化(想要最小化在线阶段的复杂性，从而在设置阶段生成和传输乱码电路)。为了实现针对隐蔽和恶意攻击者的安全，一些实现使用剪切选择技术，例如[16]、[49]、[73]。</p>
+<h1 id="共享转换"><a href="#共享转换" class="headerlink" title="共享转换"></a>共享转换</h1><p>在本节中，将详细介绍在不同共享之间进行转换的方法。首先解释已经存在的或直接的转换：Y2B(§IV-A)、B2Y(§IV-B)、A2Y(§IV-C)和A2B(§IV-D)。然后，我们详细说明了B2A(§IV-E)和Y 2A(§IV-F)的改进结构。作者将共享、重构和转换操作的复杂性总结在表1。</p>
+<p><img src="http://images.yingwai.top/picgo/aby2t1.png" alt=""></p>
+<center>
+    <i>表1 用于l比特的值的共享、重构和转换操作的在线阶段的总计算(对称密码操作数)、通信和消息数。κ是对称安全参数。</i>
+</center>
+
+
+
+
+<h2 id="姚氏到布尔共享-Y2B"><a href="#姚氏到布尔共享-Y2B" class="headerlink" title="姚氏到布尔共享(Y2B)"></a>姚氏到布尔共享(Y2B)</h2><p>将姚共享 $\langle x \rangle ^Y$ 转换为布尔共享 $\langle x \rangle ^B$ 是最简单的转换，基本上是免费的。关键的发现是 $\langle x \rangle ^Y_0$ 和 $\langle x \rangle ^Y_1$ 的排列位已经形成了 $x$ 的有效布尔共享。因此，$P_i$ 在本地设置 $\langle x \rangle ^B_i = Y2B(\langle x \rangle ^Y_i) = \langle x \rangle ^Y_i[0]$。</p>
+<h2 id="布尔到姚氏共享-B2Y"><a href="#布尔到姚氏共享-B2Y" class="headerlink" title="布尔到姚氏共享(B2Y)"></a>布尔到姚氏共享(B2Y)</h2><p>将布尔共享 $\langle x \rangle ^B$ 转换为姚共享 $\langle x \rangle ^Y$ 非常类似于 $\mathsf{Shr}^Y_1$ 操作(参见§III-C1)：在下文中，我们假设 $x$ 是1比特；对于 $l$ 比特的值，每个运算都并行完成 $l$ 次。设 $x_0 = \langle x \rangle ^B_0$ 和 $x_1 = \langle x \rangle ^B_1$。$P_0$ 选取 $\langle x \rangle ^Y_0 = k_0 \in_R \{0,1\}^{\kappa}$。双方执行 OT$^1_{\kappa}$，其中 $P_0$ 作为具有输入的发送方 $(k_0 \oplus x_0 \cdot R;k_0 \oplus (1−x_0) \cdot R)$，而 $P_1$ 作为具有选择位 $x_1$ 的接收方，并且不经意地获得 $\langle x \rangle ^Y_1 = k_0 \oplus (x_0 \oplus x_1) \cdot R = k_x$。</p>
+<h2 id="算术到姚氏共享-A2Y"><a href="#算术到姚氏共享-A2Y" class="headerlink" title="算术到姚氏共享(A2Y)"></a>算术到姚氏共享(A2Y)</h2><p>算术共享 $\langle x \rangle ^A$ 到Yao共享 $\langle x \rangle ^Y$ 的转换在[35]、[44]、[46]中概述，并且可以通过安全地评估加法电路来完成。更准确地说，各方秘密地将他们的算术份额 $x_0 = \langle x \rangle ^A_0$ 和 $x_1 = \langle x \rangle ^A_1$ 共享为 $\langle x_0 \rangle ^Y = \mathsf{Shr}^Y_0(x_0)$ 和 $\langle x_1 \rangle ^Y = \mathsf{Shr}^Y_1(x_1)$，并计算 $\langle x \rangle ^Y = \langle x_0 \rangle ^Y + \langle x_1 \rangle ^Y$。</p>
+<h2 id="算术到布尔共享-A2B"><a href="#算术到布尔共享-A2B" class="headerlink" title="算术到布尔共享(A2B)"></a>算术到布尔共享(A2B)</h2><p>可以使用布尔加法电路(类似于§IV-C中描述的A2Y转换)或通过使用算术位提取电路[17]、[18]、[21]、[70]来完成将算术共享 $\langle x \rangle ^A$ 转换为布尔共享 $\langle x \rangle ^B$。如在[69]中总结的，布尔加法电路可以被实例化为大小优化的随 $O(l)$ 大小和深度变化的变量，或者实例化为随 $O(l\log_2l)$ 大小和 $O(\log_2l)$ 深度变化的深度优化的变量。在本文的框架中，$Y2B$ 转换是免费的，我们简单地计算 $\langle x \rangle ^B = A2B(\langle x \rangle ^A) = Y2B(A2Y(\langle x \rangle ^A))$，因为我们在§V-D中的评估表明，Yao共享中的加法比布尔共享中的加法更有效。</p>
+<h2 id="布尔到算术共享-B2A"><a href="#布尔到算术共享-B2A" class="headerlink" title="布尔到算术共享(B2A)"></a>布尔到算术共享(B2A)</h2><p>将 $l$ 比特布尔共享 $\langle x \rangle ^B$ 转换为算术共享 $\langle x \rangle ^A$ 的简单解决方案是评估布尔减法电路，其中 $P_0$ 输入 $\langle x \rangle ^B_0$ 和随机数 $r \in_R \{0,1\}^l$，并且设置 $\langle x \rangle ^A_0 = r$，然后 $P_1$ 输入 $\langle x \rangle ^B_1$ 并获得 $\langle x \rangle ^A_1 = x - r$。然而，评估这样的布尔减法电路将具有 $O(l)$ 大小和深度或者 $O(l \log_2 l)$ 大小和 $O(\log_2 l)$ 深度[69]。</p>
+<p>为了提高转换的性能，可以使用与§III-A5中描述的算术乘法三次生成类似的技术。一般的想法是对每个比特执行OT，其中我们不经意地转移了两个值，这两个值被2的幂相加相关。接收方可以获得这些值中的一个，并且通过将它们相加，各方获得有效的算术份额。</p>
+<p>更详细地说，在OT协议中，$P_0$ 充当发送者，$P_1$ 充当接收者。在第 $i$ 个OT中，$P_0$ 随机选择 $r_i \in_R \{0, 1\}^l$ 以及输入 $(s_{i,0}, s_{i_1})$，其中 $s_{i,0} = (1 - \langle x \rangle^B_0[i]) \cdot 2^i - r_i$ 以及 $s_{i,1} = \langle x \rangle^B_0[i] \cdot 2^i - r_i$，而 $P_1$ 输入 $\langle x \rangle^B_1[i]$ 作为选择位，收到输出 $s_{\langle x \rangle ^B_1[i]} = (\langle x \rangle^B_0[i] \oplus \langle x \rangle^B_1[i]) \cdot 2^i - r_i$。最后，$P_0$ 计算 $\langle x \rangle^A_0 = \sum^l_{i=1}r_i$，$P_1$ 计算 $\langle x \rangle^A_1$ $=\sum^l_{i=1}s_{\langle x \rangle^B_1[i]}$ $=\sum^l_{i=1}(\langle x \rangle^B_0[i] \oplus \langle x \rangle^B_1[i]) \cdot$ $2^i-\sum^l_{i=1}r_i$ $=\sum^l_{i=1}x[i] \cdot 2^i -$ $\sum^l_{i=1}r_i$ $=x - \langle x \rangle^A_0$。安全性和正确性类似于§III-A5的协议。</p>
+<p><strong>复杂度。</strong>观察到，由于我们传输一个随机元素和另一个作为相关性，并且只需要第 $i$ 个OT中的 $l-i$ 个最低有效位，所以我们可以使用C-OT和§III-A5中概述的相同技巧，导致(平均)C-OT$^l_{(l+1)/2}$ 和恒定轮数。相比之下，当使用布尔共享评估减法电路时，对于深度为 $O(\log_2l)$ 的电路各方将需要评估 $O(l \log_2 l)$次R-OT或对于深度为 $l$ 的电路评估 $2l$ 次ROT。本文的转换方法也比转换成姚共享(这已经需要 $2l$ OT)并在乱码电路中进行减法运算。</p>
+<h2 id="姚氏到算术共享-Y2A"><a href="#姚氏到算术共享-Y2A" class="headerlink" title="姚氏到算术共享(Y2A)"></a>姚氏到算术共享(Y2A)</h2><p>在[35]，[44]，[46]中描述了从姚共享 $\langle x \rangle ^Y$ 到算术共享 $\langle x \rangle ^A$ 的转换：$P_0$ 随机选择 $r \in_R \mathbb{Z}_{2^l}$，执行 $\mathsf{Shr}^Y_0$，然后双方评估布尔减法电路 $\langle d \rangle ^Y = \langle x \rangle ^Y - \langle r \rangle ^Y$，以获得它们的算术份额为 $\langle x \rangle ^A_0 = r$ 和 $\langle x \rangle ^A_1 = \mathsf{Rec}^Y_1(\langle d \rangle ^Y)$。</p>
+<p>然而，由于我们免费执行 $Y2B$，而 $B2A$ 在计算和通信方面更便宜，我们建议计算 $\langle x \rangle ^A = Y2A(\langle x \rangle ^Y) = B2A(Y2B(\langle x \rangle ^Y))$。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 密码学</a>
+          
+            <a href="/tags/MPC/" rel="tag"><i class="fa fa-tag"></i> MPC</a>
+          
+            <a href="/tags/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 隐私保护机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-High-Throughput-Semi-Honest-Secure-Three-Party-Computation-with-an-Honest-Majority/" rel="next" title="论文笔记 High-Throughput Semi-Honest Secure Three-Party Computation with an Honest Majority">
+                <i class="fa fa-chevron-left"></i> 论文笔记 High-Throughput Semi-Honest Secure Three-Party Computation with an Honest Majority
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/20200417221334.jpg"
+                alt="yyw" />
+            
+              <p class="site-author-name" itemprop="name">yyw</p>
+              <p class="site-description motion-element" itemprop="description">Do not go gentle into that good night.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">2.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PRELIMINARIES"><span class="nav-number">3.</span> <span class="nav-text">PRELIMINARIES</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设定"><span class="nav-number">3.1.</span> <span class="nav-text">设定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抵御半诚实的对手的安全"><span class="nav-number">3.2.</span> <span class="nav-text">抵御半诚实的对手的安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记号法"><span class="nav-number">3.3.</span> <span class="nav-text">记号法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不经意传输"><span class="nav-number">3.4.</span> <span class="nav-text">不经意传输</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#共享类型"><span class="nav-number">4.</span> <span class="nav-text">共享类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算术共享"><span class="nav-number">4.1.</span> <span class="nav-text">算术共享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共享语义"><span class="nav-number">4.1.1.</span> <span class="nav-text">共享语义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">4.1.2.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最先进的技术"><span class="nav-number">4.1.3.</span> <span class="nav-text">最先进的技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用加性同态加密生成算术乘法三元组"><span class="nav-number">4.1.4.</span> <span class="nav-text">利用加性同态加密生成算术乘法三元组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过不经意转移生成算术乘法三元组"><span class="nav-number">4.1.5.</span> <span class="nav-text">通过不经意转移生成算术乘法三元组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔共享"><span class="nav-number">4.2.</span> <span class="nav-text">布尔共享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共享语义-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">共享语义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最先进的技术-1"><span class="nav-number">4.2.3.</span> <span class="nav-text">最先进的技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#姚氏共享"><span class="nav-number">4.3.</span> <span class="nav-text">姚氏共享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共享语义-2"><span class="nav-number">4.3.1.</span> <span class="nav-text">共享语义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-2"><span class="nav-number">4.3.2.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最先进的技术-2"><span class="nav-number">4.3.3.</span> <span class="nav-text">最先进的技术</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#共享转换"><span class="nav-number">5.</span> <span class="nav-text">共享转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#姚氏到布尔共享-Y2B"><span class="nav-number">5.1.</span> <span class="nav-text">姚氏到布尔共享(Y2B)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔到姚氏共享-B2Y"><span class="nav-number">5.2.</span> <span class="nav-text">布尔到姚氏共享(B2Y)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算术到姚氏共享-A2Y"><span class="nav-number">5.3.</span> <span class="nav-text">算术到姚氏共享(A2Y)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算术到布尔共享-A2B"><span class="nav-number">5.4.</span> <span class="nav-text">算术到布尔共享(A2B)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔到算术共享-B2A"><span class="nav-number">5.5.</span> <span class="nav-text">布尔到算术共享(B2A)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#姚氏到算术共享-Y2A"><span class="nav-number">5.6.</span> <span class="nav-text">姚氏到算术共享(Y2A)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-tree" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yyw</span>
+
+  
+</div>
+
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">45.9k</span>
+  
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
