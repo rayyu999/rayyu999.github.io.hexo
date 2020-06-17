@@ -2333,7 +2333,7 @@ x + \frac{1}{2}, & \mbox{if} & - \frac{1}{2} \leq x \leq \frac{1}{2} \\
 1, & \mbox{if} & x > \frac{1}{2}
 \end{array}\right.</script><p>该函数的图像与Sigmoid函数类似：</p>
 <p><img src="http://images.yingwai.top/picgo/smlf5.png" alt=""></p>
-<p>于是计算完矩阵-向量乘法后还需要计算上面的分段函数，因为要判断 $u+\frac{1}{2}$ 和 $u- \frac{1}{2}$ 的符号，这里算术共享就不是很适合，而Yao共享很适合，因此需要先把共享转换成Yao共享，在<a href="[https://yuyingwai.cn/2020/06/11/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/](https://yuyingwai.cn/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/">ABY</a>)框架中有介绍。</p>
+<p>于是计算完矩阵-向量乘法后还需要计算上面的分段函数，因为要判断 $u+\frac{1}{2}$ 和 $u- \frac{1}{2}$ 的符号，这里算术共享就不是很适合，而Yao共享很适合，因此需要先把共享转换成Yao共享，在<a href="https://yuyingwai.cn/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/" target="_blank" rel="noopener">ABY</a>框架中有介绍。</p>
 <p>这里作者将函数 $f(u)$ 改写成了如下形式，方便乱码电路的计算：</p>
 <script type="math/tex; mode=display">
 f(u) = (\neg b_2) + (b_2 \wedge (\neg b_1))u</script><p>其中 $b_1, b_2$ 分别为：</p>
