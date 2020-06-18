@@ -2353,4 +2353,49 @@ b_2 = \left\{ \begin{array}{ll}
         <tag>线性回归</tag>
       </tags>
   </entry>
+  <entry>
+    <title>论文笔记 ABY3: A Mixed Protocol Framework for Machine Learning</title>
+    <url>/2020/06/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ABY3-A-Mixed-Protocol-Framework-for-Machine-Learning/</url>
+    <content><![CDATA[<p><em>Payman Mohassel, Peter Rindal</em></p>
+<p>CCS 2018</p>
+<p><a href="https://dl.acm.org/doi/10.1145/3243734.3243760" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3243734.3243760</a></p>
+<a id="more"></a>
+<h1 id="本文贡献"><a href="#本文贡献" class="headerlink" title="本文贡献"></a>本文贡献</h1><ul>
+<li>新的共享十进制数近似定点乘法协议；</li>
+<li>提出了三方的ABY框架，其中许多转换都是基于新技术，并在本文中首次进行了设计和优化；</li>
+<li>提高了矩阵乘法的效率；</li>
+<li>有效的分段多项式函数评估。</li>
+</ul>
+<h1 id="计算模型"><a href="#计算模型" class="headerlink" title="计算模型"></a>计算模型</h1><p>本文采用三方的重复共享，即把一个数 $x$ 拆成三份，各方都拥有三份中的两份，下面是ABY三种共享形式：</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt1.png" alt=""></p>
+<p>在这种设置下，三方交互式地计算函数 $f(x)$，本篇文章主要针对机器学习中的算法。</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt2.png" alt=""></p>
+<h2 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h2><p>在秘密共享的情况下，计算两个数 $[\![x]\!], [\![y]\!]$ 的和 $[\![z]\!] = [\![x]\!] + [\![y]\!]$ 比较简单，各方直接将其对应的份额在本地相加即可，不需要交互：</p>
+<script type="math/tex; mode=display">
+z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h2><p>计算两个数 $[\![x]\!], [\![y]\!]$ 的积 $[\![z]\!] = [\![x]\!] * [\![y]\!]$ 则复杂一点。在两方共享的情况下，需要借助额外的乘法三元组来计算，开销非常大。而三方下的复制共享这时候就起作用了，将 $xy$ 展开可以观察到有九项，每一项是两个份额的乘积，因此每一方只需要计算其可以计算的九项中的其中三项即可保持结果 $z$ 继续在三方中是加法共享的。计算完成后再把对应的结果发送给另一方，即可保持 $z$ 是重复共享的。</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt3.png" alt=""></p>
+<p>可以看到乘法操作只包含了本地操作和各方各一次发送，开销比两方的情况下小很多。</p>
+<h1 id="本文的框架"><a href="#本文的框架" class="headerlink" title="本文的框架"></a>本文的框架</h1><h2 id="定点运算"><a href="#定点运算" class="headerlink" title="定点运算"></a>定点运算</h2><p>定点值定义为使用二进制补码表示的一个 $k$ 位整数，其中底部 $d$ 位表示小数，即对于正值，位 $i$ 表示 $2$ 的 $(i−d)$ 次方。由于预计结果将保持在 $2^k$ 以下，因此可以使用相应的整数运算来执行加法和减法。乘法也可以以相同的方式执行，但是十进制位的数量加倍，因此必须除以 $2^d$ 以保持 $d$ 个十进制位不变。</p>
+<p>在得到乘法结果后，各方可以直接把本地的份额后 $d$ 位截断，但这样会<strong>把原本份额相加的进位也截断了</strong>，导致截断后重构出来的 $\tilde{x} \neq x$。作者参考了<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中的两方协议，给出了他们自己的在三方下的实现：</p>
+<p><img src="http://images.yingwai.top/picgo/aby3f1.png" alt=""></p>
+<p>一开始作者的想法是把 $x’$ 的截断 $x = x’/2^d$ 拆成 $[\![x]\!] := (x_1, x_2, x_3) = (x’_1/2^d, (x’_2 + x’_3)/2^d-r, r)$，其中 $r$ 是 $\Z^k_2$ 中的随机数，但发现这样做有两轮通信的限制，于是进一步优化得到上面的协议。</p>
+<h2 id="矢量化乘法"><a href="#矢量化乘法" class="headerlink" title="矢量化乘法"></a>矢量化乘法</h2><p>两个向量作内积定义为 $\vec{x} \cdot \vec{y} := \sum^n_{i=1} x_i y_i$。在本文的背景下计算内积，朴素的做法是对两个向量的每一个元素都执行一次乘法+截断协议，但这样需要通信 $O(n)$ 次通信。</p>
+<p>于是作者进行了优化：各方只需要在本地将两个向量 $\vec{x},\vec{y}$ 的 $n$ 个分量计算相乘的份额，然后把这 $n$ 个积相加就得到了 $z’$ 的3/3共享，最后执行上一小节中的截断协议将 $[\![z’]\!]$ 截断为 $[\![z]\!]:= (z’+r’)/2^d - [\![r]\!]$。</p>
+<p>这样做不仅可以减少通信开销，而且误差也比执行 $n$ 次乘法+截断协议低（总共只进行了一次截断，相对于整体内积的误差为 $2^{-d}$）。</p>
+<h2 id="共享转换"><a href="#共享转换" class="headerlink" title="共享转换"></a>共享转换</h2><p>机器学习中有很多不同的函数，而不同的函数有适合其计算的不同共享方式：算术共享适合计算乘法和加法，而二进制共享适合计算非线性函数、最大池化以及平均值等。两方的情况可以参考<a href="https://yuyingwai.cn/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/" target="_blank" rel="noopener">ABY</a>，本文给出了三方下的共享转换。</p>
+<h3 id="位分解"><a href="#位分解" class="headerlink" title="位分解"></a>位分解</h3><p>$[\![x]\!]^A \rightarrow [\![\vec{x}]\!]^B$</p>
+<p>最基础的想法是各方将其份额 $[\![x]\!]^A = (x_1, x_2, x_3)$ 输入到布尔电路中计算它们的和，但可以进行优化。观察到 $[\![x]\!]^A = (x_1, x_2, x_3)$ 可以转换为 $[\![x_1]\!]^B := (x_1,0,0), [\![x_2]\!]^B := (0,x_2,0), [\![x_3]\!]^B := (0,0,x_3)$ 而不需要交互。</p>
+<p>这里没太看懂，用到了各种加法器。</p>
+<h3 id="位提取"><a href="#位提取" class="headerlink" title="位提取"></a>位提取</h3><p>$[\![x]\!]^A \rightarrow [\![x[i]]\!]^B$</p>
+<p>跟上面的情况类似，只是这次是提取比特串中的单一比特。</p>
+<p>后面的大概看了一下，感觉协议效率应该比不上之前看的<a href="https://yuyingwai.cn/2020/04/20/论文笔记-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/" target="_blank" rel="noopener">ASTRA</a>，后者的安全比较协议应该由于此论文，所以后面的等以后有时间再来细看吧。</p>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>MPC</tag>
+        <tag>隐私保护机器学习</tag>
+      </tags>
+  </entry>
 </search>
