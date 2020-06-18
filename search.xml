@@ -2367,7 +2367,7 @@ b_2 = \left\{ \begin{array}{ll}
 <li>有效的分段多项式函数评估。</li>
 </ul>
 <h1 id="计算模型"><a href="#计算模型" class="headerlink" title="计算模型"></a>计算模型</h1><p>本文采用三方的重复共享，即把一个数 $x$ 拆成三份，各方都拥有三份中的两份，下面是ABY三种共享形式：</p>
-<p><img src="http://images.yingwai.top/picgo/aby3ppt1.png" alt=""></p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt4.png" alt=""></p>
 <p>在这种设置下，三方交互式地计算函数 $f(x)$，本篇文章主要针对机器学习中的算法。</p>
 <p><img src="http://images.yingwai.top/picgo/aby3ppt2.png" alt=""></p>
 <h2 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h2><p>在秘密共享的情况下，计算两个数 $[\![x]\!], [\![y]\!]$ 的和 $[\![z]\!] = [\![x]\!] + [\![y]\!]$ 比较简单，各方直接将其对应的份额在本地相加即可，不需要交互：</p>
