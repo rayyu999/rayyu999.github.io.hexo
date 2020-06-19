@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/aby3ppt3.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/aby3f1.png">
 <meta property="article:published_time" content="2020-06-18T12:06:46.000Z">
-<meta property="article:modified_time" content="2020-06-18T14:10:30.521Z">
+<meta property="article:modified_time" content="2020-06-19T01:53:02.811Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="MPC">
 <meta property="article:tag" content="隐私保护机器学习">
@@ -439,7 +439,7 @@ z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" tit
 <h1 id="本文的框架"><a href="#本文的框架" class="headerlink" title="本文的框架"></a>本文的框架</h1><h2 id="定点运算"><a href="#定点运算" class="headerlink" title="定点运算"></a>定点运算</h2><p>定点值定义为使用二进制补码表示的一个 $k$ 位整数，其中底部 $d$ 位表示小数，即对于正值，位 $i$ 表示 $2$ 的 $(i−d)$ 次方。由于预计结果将保持在 $2^k$ 以下，因此可以使用相应的整数运算来执行加法和减法。乘法也可以以相同的方式执行，但是十进制位的数量加倍，因此必须除以 $2^d$ 以保持 $d$ 个十进制位不变。</p>
 <p>在得到乘法结果后，各方可以直接把本地的份额后 $d$ 位截断，但这样会<strong>把原本份额相加的进位也截断了</strong>，导致截断后重构出来的 $\tilde{x} \neq x$。作者参考了<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中的两方协议，给出了他们自己的在三方下的实现：</p>
 <p><img src="http://images.yingwai.top/picgo/aby3f1.png" alt=""></p>
-<p>一开始作者的想法是把 $x’$ 的截断 $x = x’/2^d$ 拆成 $[\![x]\!] := (x_1, x_2, x_3) = (x’_1/2^d, (x’_2 + x’_3)/2^d-r, r)$，其中 $r$ 是 $\Z^k_2$ 中的随机数，但发现这样做有两轮通信的限制，于是进一步优化得到上面的协议。</p>
+<p>一开始作者的想法是把 $x’$ 的截断 $x = x’/2^d$ 拆成 $[\![x]\!] := (x_1, x_2, x_3) = (x’_1/2^d, (x’_2 + x’_3)/2^d-r, r)$，其中 $r$ 是 $\mathbb{Z}^k_2$ 中的随机数，但发现这样做有两轮通信的限制，于是进一步优化得到上面的协议。</p>
 <h2 id="矢量化乘法"><a href="#矢量化乘法" class="headerlink" title="矢量化乘法"></a>矢量化乘法</h2><p>两个向量作内积定义为 $\vec{x} \cdot \vec{y} := \sum^n_{i=1} x_i y_i$。在本文的背景下计算内积，朴素的做法是对两个向量的每一个元素都执行一次乘法+截断协议，但这样需要通信 $O(n)$ 次通信。</p>
 <p>于是作者进行了优化：各方只需要在本地将两个向量 $\vec{x},\vec{y}$ 的 $n$ 个分量计算相乘的份额，然后把这 $n$ 个积相加就得到了 $z’$ 的3/3共享，最后执行上一小节中的截断协议将 $[\![z’]\!]$ 截断为 $[\![z]\!]:= (z’+r’)/2^d - [\![r]\!]$。</p>
 <p>这样做不仅可以减少通信开销，而且误差也比执行 $n$ 次乘法+截断协议低（总共只进行了一次截断，相对于整体内积的误差为 $2^{-d}$）。</p>
@@ -491,6 +491,10 @@ z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" tit
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/19/PPML%E4%B8%AD%E7%9A%842PC%E5%AF%B9%E6%AF%943PC/" rel="prev" title="PPML中的2PC对比3PC">
+                PPML中的2PC对比3PC <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -574,7 +578,7 @@ z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" tit
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -673,7 +677,7 @@ z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" tit
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">50.6k</span>
+    <span title="Site words total count">51.6k</span>
   
 
 <!--

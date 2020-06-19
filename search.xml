@@ -1286,13 +1286,13 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[\![u]\!], [\![v]\!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 ${\rm msb}(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[\![a]\!]$ 的情况下生成 ${\rm msb}(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
 <hr>
 <p><strong>Offline:</strong></p>
-<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]_{P_1} = (p,0)$ and $[\![p]\!]_{P_2} = (p,0)$.</p>
+<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]^{\rm B}_{P_1} = (p,0)$ and $[\![p]\!]^{\rm B}_{P_2} = (p,0)$.</p>
 <p><strong>Online:</strong></p>
 <p>​        $P_1$ set $[a]_{P_1}=m_a - \lambda_{a,1}$, $P_2$ set $[a]_{P_2}=- \lambda_{a,2}$.</p>
 <ul>
 <li>$P_1$ sends $[ra]_{P_1} = r[a]_{P_1} + r’$ to $P_0$, while $P_2$ sends $[ra]_{P_2} = r[a]_{P_1} - r’$ to $P_0$, who adds them to obtain $ra$.</li>
 <li>$P_0$ executes $\prod^{\rm s}_{\rm Sh}(P_0, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$.</li>
-<li>Parties locally compute $[\![msb(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
+<li>Parties locally compute $[\![\mbox{msb}(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
 </ul>
 <hr>
 <p>上面的协议用 $\prod ^{\rm s}_{\rm BitExt}([\![a]\!], \mathcal{P})$ 表示。这里上面用到了一个随机数 $r$ 来对 $a$ 的值进行盲化，并且可以注意到 ${\rm sign}(a \cdot r) = {\rm sign}(a) \oplus {\rm sign}(r)$，所以 $r$ 不会对生成共享份额造成影响且使得三者都不能从这个过程中知道关于 $a$ 的信息。</p>
@@ -2378,7 +2378,7 @@ z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" tit
 <h1 id="本文的框架"><a href="#本文的框架" class="headerlink" title="本文的框架"></a>本文的框架</h1><h2 id="定点运算"><a href="#定点运算" class="headerlink" title="定点运算"></a>定点运算</h2><p>定点值定义为使用二进制补码表示的一个 $k$ 位整数，其中底部 $d$ 位表示小数，即对于正值，位 $i$ 表示 $2$ 的 $(i−d)$ 次方。由于预计结果将保持在 $2^k$ 以下，因此可以使用相应的整数运算来执行加法和减法。乘法也可以以相同的方式执行，但是十进制位的数量加倍，因此必须除以 $2^d$ 以保持 $d$ 个十进制位不变。</p>
 <p>在得到乘法结果后，各方可以直接把本地的份额后 $d$ 位截断，但这样会<strong>把原本份额相加的进位也截断了</strong>，导致截断后重构出来的 $\tilde{x} \neq x$。作者参考了<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中的两方协议，给出了他们自己的在三方下的实现：</p>
 <p><img src="http://images.yingwai.top/picgo/aby3f1.png" alt=""></p>
-<p>一开始作者的想法是把 $x’$ 的截断 $x = x’/2^d$ 拆成 $[\![x]\!] := (x_1, x_2, x_3) = (x’_1/2^d, (x’_2 + x’_3)/2^d-r, r)$，其中 $r$ 是 $\Z^k_2$ 中的随机数，但发现这样做有两轮通信的限制，于是进一步优化得到上面的协议。</p>
+<p>一开始作者的想法是把 $x’$ 的截断 $x = x’/2^d$ 拆成 $[\![x]\!] := (x_1, x_2, x_3) = (x’_1/2^d, (x’_2 + x’_3)/2^d-r, r)$，其中 $r$ 是 $\mathbb{Z}^k_2$ 中的随机数，但发现这样做有两轮通信的限制，于是进一步优化得到上面的协议。</p>
 <h2 id="矢量化乘法"><a href="#矢量化乘法" class="headerlink" title="矢量化乘法"></a>矢量化乘法</h2><p>两个向量作内积定义为 $\vec{x} \cdot \vec{y} := \sum^n_{i=1} x_i y_i$。在本文的背景下计算内积，朴素的做法是对两个向量的每一个元素都执行一次乘法+截断协议，但这样需要通信 $O(n)$ 次通信。</p>
 <p>于是作者进行了优化：各方只需要在本地将两个向量 $\vec{x},\vec{y}$ 的 $n$ 个分量计算相乘的份额，然后把这 $n$ 个积相加就得到了 $z’$ 的3/3共享，最后执行上一小节中的截断协议将 $[\![z’]\!]$ 截断为 $[\![z]\!]:= (z’+r’)/2^d - [\![r]\!]$。</p>
 <p>这样做不仅可以减少通信开销，而且误差也比执行 $n$ 次乘法+截断协议低（总共只进行了一次截断，相对于整体内积的误差为 $2^{-d}$）。</p>
@@ -2394,6 +2394,47 @@ z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" tit
         <category>Papers</category>
       </categories>
       <tags>
+        <tag>MPC</tag>
+        <tag>隐私保护机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PPML中的2PC对比3PC</title>
+    <url>/2020/06/19/PPML%E4%B8%AD%E7%9A%842PC%E5%AF%B9%E6%AF%943PC/</url>
+    <content><![CDATA[<p>老板要求下次组会讲一下PPML中两服务器模型和三服务器模型的区别，最近看了下相关的论文，在这里总结一下。</p>
+<a id="more"></a>
+<h1 id="共享语义"><a href="#共享语义" class="headerlink" title="共享语义"></a>共享语义</h1><p>不同的论文可能设置不太一样，这里2PC我参考的是<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中的设置，3PC参考的是<a href="https://yuyingwai.cn/2020/06/18/论文笔记-ABY3-A-Mixed-Protocol-Framework-for-Machine-Learning/" target="_blank" rel="noopener">ABY3</a>和<a href="https://yuyingwai.cn/2020/04/20/论文笔记-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/" target="_blank" rel="noopener">ASTRA</a>中的设置。即对于一个数 $x$ 的算术共享，2PC的情况是将其拆成两份 $x_0$ 和 $x_1$，它们的和为 $x$，两方各拥有一份；3PC的情况是将其拆成三份 $x_0, x_1, x_2$，三方各拥有其中的两份，例如 $P_0$ 有 $(x_0, x_2)$，任意两方即可重构出 $x$。</p>
+<p>布尔共享是各份额二进制表示的每一位异或等于原秘密 $x$ 的对应位。</p>
+<p><img src="http://images.yingwai.top/picgo/2vs3ppt2.png" alt=""></p>
+<h1 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h1><p>2PC和3PC下算术共享的加法是一样的，都只需要在本地将对应数的份额相加，不需要交互。</p>
+<h1 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h1><h2 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h2><p>乘法则有比较大的区别，首先是2PC，计算乘法 $ab = c$ 需要生成额外的乘法三元组 $(u,v,z)$ 满足 $z = uv$，这个三元组中的每个数也是在两方间加法共享的。</p>
+<p>首先两方交互计算 $e = a-u$ 和 $f = b - v$，然后 $P_i$ 将结果 $c = ab$ 的份额设为 $c_i = -ief+a_if+eb_i+z_i$，其中 $i \in \{0,1\}$。</p>
+<p><img src="http://images.yingwai.top/picgo/2vs3ppt1.png" alt=""></p>
+<h2 id="3PC"><a href="#3PC" class="headerlink" title="3PC"></a>3PC</h2><p>接下来是3PC，由于重复共享的设置（各方拥有三个份额中的两个），计算乘法时几乎不需要交互。计算 $x,y$ 两个数的积 $xy = z$ 时，观察到</p>
+<script type="math/tex; mode=display">
+\begin{align}
+xy &= (x_0 + x_1 + x_2)(y_0 + y_1 + y_2) \\
+&= x_0y_0 + x_0y_1 + x_0y_2 \\
+&+ x_1y_0 + x_1y_1 + x_1y_2 \\
+&+ x_2y_0 + x_2y_1 + x_2y_2
+\end{align}</script><p>可以看到拆开的式子一共有九项，我们可以直接让 $P_i$ 各计算其中三项，令</p>
+<script type="math/tex; mode=display">
+z_0 = x_0y_0 + x_0y_2 + x_2y_0 \\
+z_1 = x_0y_1 + x_1y_0 + x_1y_1 \\
+z_2 = x_1y_2 + x_2y_1 + x_2y_2</script><p>这时结果 $z$ 就以加法共享的方式在三方中共享，最后 $P_i$ 将自己的 $z_i$ 发送给 $P_{i+1}$（$i=2$ 时 $i+1 = 0$），$z$ 就重新在三方中重复共享了。</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt3.png" alt=""></p>
+<p>可以看到计算过程中只涉及本地操作，只有在生成重复共享时才需要三方各一次发送，效率比2PC要高。</p>
+<h1 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h1><p>比较两个数 $u,v$ 的大小，等同于提取 $a = u-v$ 的 $\mbox{msb}$，$u&gt;v \rightarrow u-v&gt;0$ 时 $\mbox{msb}(a) = 0$，反之 $\mbox{msb}(a) = 1$。两方下没有给出具体的细节，<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中只提到使用乱码电路，这是一个比较昂贵的协议（将算术共享转换为布尔或姚共享也需要开销），而三方下的<a href="https://yuyingwai.cn/2020/04/20/论文笔记-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/" target="_blank" rel="noopener">ASTRA</a>中则利用了秘密共享方案的不对称性，下面的协议是基于 $\mbox{sign}(r \cdot a) = \mbox{sign}(r) \oplus \mbox{sign}(a)$ 的事实：</p>
+<p>首先在离线阶段，$P_1,P_2$ 共同选取两个随机数 $r, r’ \in \mathbb{Z}_{2^l}$ 并设 $p = \mbox{msb}(r)$，然后各方可以非交互式地设置 $p$ 的布尔共享 $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]^{\rm B}_{P_1} = (p,0)$ 以及 $[\![p]\!]^{\rm B}_{P_2} = (p,0)$。</p>
+<p><img src="http://images.yingwai.top/picgo/2vs3ppt3.png" alt=""></p>
+<p>到了在线阶段，$P_1$ 和 $P_2$ 设置它们对 $a$ 的份额，使得它们两方各自的份额之和为 $a$ ：$P_1$ 设 $[a]_{P_1} = x_0+x_1$，$P_2$ 设 $[a]_{P_2}=x_2$。然后 $P_1$ 和 $P_2$ 利用离线阶段生成的随机数 $r’$ 对 $[ra]_{P_i}$ 进行盲化并发送给 $P_0$（由于 $P_0$ 知道 $x_2$，若不进行盲化则会暴露 $r$ 给 $P_0$），$P_0$ 重构 $ra$ 并设 $q = \mbox{msb}(ra)$，然后生成 $q$ 在三方中的布尔共享。最后各方在本地计算 $[\![\mbox{msb}(a)]\!]^B = [\![p]\!]^B \oplus [\![q]\!]^B$，此时 $a$ 的符号位在三方中是布尔共享的。</p>
+<p><img src="http://images.yingwai.top/picgo/2vs3ppt4.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>Study</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
         <tag>MPC</tag>
         <tag>隐私保护机器学习</tag>
       </tags>

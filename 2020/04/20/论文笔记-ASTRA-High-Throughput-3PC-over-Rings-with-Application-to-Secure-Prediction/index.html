@@ -88,7 +88,7 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/ASTRA.jpg">
 <meta property="og:image" content="http://images.yingwai.top/picgo/ASTRAf1.png">
 <meta property="article:published_time" content="2020-04-20T13:37:26.000Z">
-<meta property="article:modified_time" content="2020-05-11T10:15:03.821Z">
+<meta property="article:modified_time" content="2020-06-19T03:01:02.640Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="MPC">
@@ -632,13 +632,13 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[\![u]\!], [\![v]\!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 ${\rm msb}(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[\![a]\!]$ 的情况下生成 ${\rm msb}(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
 <hr>
 <p><strong>Offline:</strong></p>
-<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]_{P_1} = (p,0)$ and $[\![p]\!]_{P_2} = (p,0)$.</p>
+<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]^{\rm B}_{P_1} = (p,0)$ and $[\![p]\!]^{\rm B}_{P_2} = (p,0)$.</p>
 <p><strong>Online:</strong></p>
 <p>​        $P_1$ set $[a]_{P_1}=m_a - \lambda_{a,1}$, $P_2$ set $[a]_{P_2}=- \lambda_{a,2}$.</p>
 <ul>
 <li>$P_1$ sends $[ra]_{P_1} = r[a]_{P_1} + r’$ to $P_0$, while $P_2$ sends $[ra]_{P_2} = r[a]_{P_1} - r’$ to $P_0$, who adds them to obtain $ra$.</li>
 <li>$P_0$ executes $\prod^{\rm s}_{\rm Sh}(P_0, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$.</li>
-<li>Parties locally compute $[\![msb(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
+<li>Parties locally compute $[\![\mbox{msb}(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
 </ul>
 <hr>
 <p>上面的协议用 $\prod ^{\rm s}_{\rm BitExt}([\![a]\!], \mathcal{P})$ 表示。这里上面用到了一个随机数 $r$ 来对 $a$ 的值进行盲化，并且可以注意到 ${\rm sign}(a \cdot r) = {\rm sign}(a) \oplus {\rm sign}(r)$，所以 $r$ 不会对生成共享份额造成影响且使得三者都不能从这个过程中知道关于 $a$ 的信息。</p>
@@ -800,7 +800,7 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -899,7 +899,7 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">50.6k</span>
+    <span title="Site words total count">51.6k</span>
   
 
 <!--
