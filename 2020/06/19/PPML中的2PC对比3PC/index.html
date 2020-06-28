@@ -79,19 +79,17 @@
 
 
 
-<meta name="description" content="老板要求下次组会讲一下PPML中两服务器模型和三服务器模型的区别，最近看了下相关的论文，在这里总结一下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PPML中的2PC对比3PC">
 <meta property="og:url" content="http://yoursite.com/2020/06/19/PPML%E4%B8%AD%E7%9A%842PC%E5%AF%B9%E6%AF%943PC/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="og:description" content="老板要求下次组会讲一下PPML中两服务器模型和三服务器模型的区别，最近看了下相关的论文，在这里总结一下。">
 <meta property="og:image" content="http://images.yingwai.top/picgo/2vs3ppt2.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/2vs3ppt1.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/aby3ppt3.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/2vs3ppt3.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/2vs3ppt4.png">
 <meta property="article:published_time" content="2020-06-19T03:03:28.000Z">
-<meta property="article:modified_time" content="2020-06-19T03:04:33.995Z">
+<meta property="article:modified_time" content="2020-06-28T13:55:50.626Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="MPC">
@@ -382,7 +380,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  911 字
+                  865 字
                 </span>
               
 
@@ -419,7 +417,7 @@
       
 
       
-        <p>老板要求下次组会讲一下PPML中两服务器模型和三服务器模型的区别，最近看了下相关的论文，在这里总结一下。</p>
+        <hr>
 <a id="more"></a>
 <h1 id="共享语义"><a href="#共享语义" class="headerlink" title="共享语义"></a>共享语义</h1><p>不同的论文可能设置不太一样，这里2PC我参考的是<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中的设置，3PC参考的是<a href="https://yuyingwai.cn/2020/06/18/论文笔记-ABY3-A-Mixed-Protocol-Framework-for-Machine-Learning/" target="_blank" rel="noopener">ABY3</a>和<a href="https://yuyingwai.cn/2020/04/20/论文笔记-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/" target="_blank" rel="noopener">ASTRA</a>中的设置。即对于一个数 $x$ 的算术共享，2PC的情况是将其拆成两份 $x_0$ 和 $x_1$，它们的和为 $x$，两方各拥有一份；3PC的情况是将其拆成三份 $x_0, x_1, x_2$，三方各拥有其中的两份，例如 $P_0$ 有 $(x_0, x_2)$，任意两方即可重构出 $x$。</p>
 <p>布尔共享是各份额二进制表示的每一位异或等于原秘密 $x$ 的对应位。</p>
@@ -676,7 +674,7 @@ z_2 = x_1y_2 + x_2y_1 + x_2y_2</script><p>这时结果 $z$ 就以加法共享的
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">51.4k</span>
+    <span title="Site words total count">51.3k</span>
   
 
 <!--
