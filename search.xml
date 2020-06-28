@@ -2449,7 +2449,9 @@ z_2 = x_1y_2 + x_2y_1 + x_2y_2</script><p>这时结果 $z$ 就以加法共享的
   <entry>
     <title>C++环境设置</title>
     <url>/2020/06/28/C-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p>-</p>
+<p>-</p>
+<a id="more"></a>
 <h1 id="安装GNU的C-C-编译器"><a href="#安装GNU的C-C-编译器" class="headerlink" title="安装GNU的C/C++编译器"></a>安装GNU的C/C++编译器</h1><h2 id="UNIX-Linux上的安装"><a href="#UNIX-Linux上的安装" class="headerlink" title="UNIX/Linux上的安装"></a>UNIX/Linux上的安装</h2><p>首先在命令行使用以下命令确认系统是否安装了GCC：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> g++ -v</span></span><br></pre></td></tr></table></figure>
 <p>如果系统已经安装了GNU编译器，会显示如下的消息：</p>
