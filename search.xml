@@ -558,8 +558,9 @@
   <entry>
     <title>Hexo博客搭建</title>
     <url>/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+    <content><![CDATA[<hr>
 <a id="more"></a>
+<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 <h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
 <h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
 <h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
@@ -1051,8 +1052,9 @@ DP[i+1] &= \max(DP[i],\ maxDP[i+1])
   <entry>
     <title>解决Ubuntu deepin-wine微信字体乱码</title>
     <url>/2020/04/24/%E8%A7%A3%E5%86%B3Ubuntu-deepin-wine%E5%BE%AE%E4%BF%A1%E5%AD%97%E4%BD%93%E4%B9%B1%E7%A0%81/</url>
-    <content><![CDATA[<h1 id="解决乱码-修改字体-微软雅黑"><a href="#解决乱码-修改字体-微软雅黑" class="headerlink" title="解决乱码+修改字体(微软雅黑)"></a>解决乱码+修改字体(微软雅黑)</h1><p>下载微软雅黑字体,msyh.ttc</p>
+    <content><![CDATA[<hr>
 <a id="more"></a>
+<h1 id="解决乱码-修改字体-微软雅黑"><a href="#解决乱码-修改字体-微软雅黑" class="headerlink" title="解决乱码+修改字体(微软雅黑)"></a>解决乱码+修改字体(微软雅黑)</h1><p>下载微软雅黑字体,msyh.ttc</p>
 <h2 id="添加字体"><a href="#添加字体" class="headerlink" title="添加字体"></a>添加字体</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts</span></span><br></pre></td></tr></table></figure>
 <h2 id="修改系统注册表"><a href="#修改系统注册表" class="headerlink" title="修改系统注册表"></a>修改系统注册表</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gedit ~/.deepinwine/Deepin-WeChat/system.reg</span></span><br></pre></td></tr></table></figure>
 <p>修改以下两行</p>
