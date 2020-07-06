@@ -84,7 +84,7 @@
 <meta property="og:url" content="http://yoursite.com/2020/07/06/%E7%BE%A4%E4%B8%8E%E7%8E%AF%E7%9A%84%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="article:published_time" content="2020-07-06T11:46:54.000Z">
-<meta property="article:modified_time" content="2020-07-06T13:06:38.158Z">
+<meta property="article:modified_time" content="2020-07-06T14:08:27.859Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="群">
 <meta property="article:tag" content="环">
@@ -374,7 +374,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  418 字
+                  1k 字
                 </span>
               
 
@@ -390,7 +390,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -430,6 +430,48 @@
 <h2 id="循环群"><a href="#循环群" class="headerlink" title="循环群"></a>循环群</h2><p>循环群 $G$ 中的每一个元素都是某一固定元素 $a$ 的方幂，即 $G = \{a^n | n \in \mathbb{Z}\}$。我们也称 $G$ 是由元素 $a$ 生成的，记为 $G=(a)$，$a$ 称为 $G$ 的一个生成元素。</p>
 <p>例子1：$G = (\mathbb{Z}, +)$ 是一个循环群，因为 $G = (1)$。</p>
 <p>例子2：设 $p$ 是一个素数，则模 $p$ 的简化剩余系 $(\mathbb{Z}^*_p, \times)$ 构成一个循环群。模 $p$ 的原根 $g$ 为这个群的一个生成元素。</p>
+<h2 id="群同态与群同构"><a href="#群同态与群同构" class="headerlink" title="群同态与群同构"></a>群同态与群同构</h2><p>设 $(G,\cdot), (H,\times)$ 是两个群，如果存在 $G$ 到 $H$ 的一个映射 $f : G \mapsto H$，使得</p>
+<script type="math/tex; mode=display">
+f(a \cdot b) = f(a) \times f(b)</script><p>对一切 $a,b \in G$ 均成立，那么就说 $f$ 是 $G$ 到 $H$ 的一个<strong>同态映射</strong>。如果 $f$ 是 $G$ 到 $H$ 的满射，那么就说 $f$ 是满同态，用符号 $G \sim H$ 表示，称 $H$ 为 $f$ 下的同态象。如果 $G$ 到 $H$ 的同态映射 $f$ 是单射，那么就说 $f$ 是 $G$ 到 $H$ 的单一同态。如果这个 $f$ 是 $G$ 到 $H$ 的一一映射，那么就说 $f$ 是 $G$ 到 $H$ 的一个同构映射，此时称这两个<strong>群同构</strong>，记为 $G \cong H$。</p>
+<p>假定 $G$ 是一个由元 $a$ 所生成的循环群。当 $a$ 的阶无限时，那么 $G$ 与整数加群同构；若 $a$ 的阶是一个有限整数 $n$，那么 $G$ 与模 $n$ 的剩余类加群同构。</p>
+<h1 id="环-Ring"><a href="#环-Ring" class="headerlink" title="环(Ring)"></a>环(Ring)</h1><h2 id="环的定义"><a href="#环的定义" class="headerlink" title="环的定义"></a>环的定义</h2><p>设 $R$ 是一个非空集合，其上定义两个运算：加法 $(+)$ 和乘法 $(\cdot)$，$(R,+,\cdot)$ 构成一个环，如果这些运算满足</p>
+<ol>
+<li>$(R, +)$ 是一个交换群，其单位元称为零元，记为 $0$。即：<ul>
+<li>$(R,+)$ 是封闭的；</li>
+<li>$(a+b) = (b+a)$；</li>
+<li>$(a+b)+c=a+(b+c)$</li>
+<li>$0+a = a+0 = a$；</li>
+<li>$\forall a \ \exists(-a)$ 满足 $a+-a = -a + a=0$。</li>
+</ul>
+</li>
+<li>$(R, \cdot)$ 形成一个半群，即：<ul>
+<li>$(a \cdot b) \cdot c = a \cdot (b \cdot c)$；</li>
+<li>$(R, \cdot)$ 是封闭的。</li>
+</ul>
+</li>
+<li>乘法关于加法满足分配律：<ul>
+<li>$a \cdot (b + c) = (a \cdot b) + (a \cdot c)$；</li>
+<li>$(a+b) \cdot c =  (a \cdot c) + (b \cdot c)$。</li>
+</ul>
+</li>
+</ol>
+<p>其中，乘法运算符 $\cdot$ 常被忽略，所以 $a \cdot b$ 可简写为 $ab$。此外，乘法是比加法优先的运算，所以 $a+bc$ 其实是 $a + (b \cdot c)$。</p>
+<h2 id="基本性质"><a href="#基本性质" class="headerlink" title="基本性质"></a>基本性质</h2><p>考虑一个环 $R$，</p>
+<ol>
+<li>如果 $a + b = a + c$，那么 $b = c$；</li>
+<li>对于任意的 $a \in R$，都有 $0a = a0 = 0$，这里的 $0$ 为加群中的零元；</li>
+<li>对于任意的 $a,b \in R$，都有 $(-a)b = -ab = a(-b)$。</li>
+</ol>
+<p>最后定义 $a$ 的 $n$ 次方。环 $R$ 中，$a^n$ 表示</p>
+<script type="math/tex; mode=display">
+\begin{matrix} 
+& n个 \\ a^n = & \overbrace{ a \cdot \cdot \cdot a }
+\end{matrix}</script><p>显然对于正整数 $n,m$ 有</p>
+<script type="math/tex; mode=display">
+a^n \cdot a^m = a^{m+n}, \ \ (a^n)^m = a^{mn}</script><h2 id="环例子"><a href="#环例子" class="headerlink" title="环例子"></a>环例子</h2><ul>
+<li>全体整数所成集合 $\mathbb{Z}$ 对于数的加法和乘法作成一个环，称为整数环。</li>
+<li>模 $n$ 剩余系对于模 $n$ 加法和模 $n$ 乘法成为一个环。</li>
+</ul>
 
       
     </div>
@@ -611,7 +653,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#群-Group"><span class="nav-number">1.</span> <span class="nav-text">群(Group)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#群的定义"><span class="nav-number">1.1.</span> <span class="nav-text">群的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它一些概念"><span class="nav-number">1.2.</span> <span class="nav-text">其它一些概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环群"><span class="nav-number">1.3.</span> <span class="nav-text">循环群</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#群-Group"><span class="nav-number">1.</span> <span class="nav-text">群(Group)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#群的定义"><span class="nav-number">1.1.</span> <span class="nav-text">群的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它一些概念"><span class="nav-number">1.2.</span> <span class="nav-text">其它一些概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环群"><span class="nav-number">1.3.</span> <span class="nav-text">循环群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#群同态与群同构"><span class="nav-number">1.4.</span> <span class="nav-text">群同态与群同构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环-Ring"><span class="nav-number">2.</span> <span class="nav-text">环(Ring)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环的定义"><span class="nav-number">2.1.</span> <span class="nav-text">环的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本性质"><span class="nav-number">2.2.</span> <span class="nav-text">基本性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环例子"><span class="nav-number">2.3.</span> <span class="nav-text">环例子</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -655,7 +697,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">63.6k</span>
+    <span title="Site words total count">64.2k</span>
   
 
 <!--
