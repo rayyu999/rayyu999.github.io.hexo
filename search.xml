@@ -3215,7 +3215,10 @@ a^n \cdot a^m = a^{m+n}, \ \ (a^n)^m = a^{mn}</script><h2 id="环例子"><a href
   <entry>
     <title>论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
     <url>/2020/07/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
+<p>CCS 2019</p>
+<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
+<a id="more"></a>
 <h1 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h1><p>本文设计了BFV[6，22]和CKKS[16]方案的多密钥变体。本文提出了一种新的生成重线性化密钥的方法，与文献[13]中的以前技术相比，该方法更简单、更快。此外，本文将这些方案[9，12，14]的最新自举算法应用于多密钥场景，以构建具有压缩密文的多密钥完全同态加密。最后，作者使用Microsoft SEAL[47]给出了本文的多密钥方案的概念验证实现，并给出了实验结果。据作者所知，这是支持打包密文的MKHE方案的第一个实际实现。</p>
 <p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络(CNN)模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，本文的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。作者注意到，本文的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
 <p><img src="http://images.yingwai.top/picgo/emkhef1.png" alt=""></p>
