@@ -3275,7 +3275,7 @@ a_{15}x^{15} &+ a_{14}x^{14} + a_{13}x^{13} + a_{12}x^{12} + a_{11}x^{11} + a_{1
 \end{align}</script><p>其中这16系数(即 $a_i$)中的每一个的范围都是从 $0$ 到 $t-1$。我们可以用系数的环面来说明，如下所示：</p>
 <p><img src="http://images.yingwai.top/picgo/HEdif3.jpg" alt=""></p>
 <p>在这个图中，每个循环表示多项式中 $x$ 的幂次方前的系数的取值范围（包含24个可能值）。绿点代表系数取$0$时所处的位置。这为我们提供了一种很好的方法来可视化多项式，这在我们考虑加密和解密步骤如何工作时将会有所帮助。</p>
-<p>FV加密方案涉及大量的多项式乘法。当我们把<em>x</em>的两个幂次方相乘，比如 $2x^{14}$ 和 $x^4$ 时，我们把它们的指数相加，得到 $2x^{18}$。有人可能会假设，求这个多项式关于多项式模的余数可能需要在 $x^{16}$ 处将指数旋转回$0$，得到 $2x^2$，就像上面所示的整数系数那样。如果多项式模是 $x^{16}$，情况就是这样。然而，我们的多项式模是 $x^{16}+1$ - 如上所述，额外的$+1$因子引入了一个符号变化，这有助于进一步干扰乘法的结果。</p>
+<p>FV加密方案涉及大量的多项式乘法。当我们把 $x$ 的两个幂次方相乘，比如 $2x^{14}$ 和 $x^4$ 时，我们把它们的指数相加，得到 $2x^{18}$。有人可能会假设，求这个多项式关于多项式模的余数可能需要在 $x^{16}$ 处将指数旋转回$0$，得到 $2x^2$，就像上面所示的整数系数那样。如果多项式模是 $x^{16}$，情况就是这样。然而，我们的多项式模是 $x^{16}+1$ - 如上所述，额外的$+1$因子引入了一个符号变化，这有助于进一步干扰乘法的结果。</p>
 <p><img src="http://images.yingwai.top/picgo/HEdif4.jpg" alt=""></p>
 <p>如上图所示，当 $2x^{14}$ 乘以 $x^4$ 后模 <script type="math/tex">x^{16}+1</script> 时，取这个项(由上面的红点表示)，向前旋转环面$4$个幂，然后从$0$处调整系数的值，得到 $22x^2$(或 $−2x^2$，如果我们认为数字是从$-12$到$11$而不是从$0$到$23$时)。</p>
 <p><strong>这种形式的多项式具有非常丰富的结构和许多不错的特性。它们是分圆多项式的子集</strong>。使用其中一个作为多项式模并不是严格必需的，但是这样做会更加方便快速。</p>
@@ -3619,109 +3619,107 @@ a^n \cdot a^m = a^{m+n}, \ \ (a^n)^m = a^{mn}</script><h2 id="环例子"><a href
       </tags>
   </entry>
   <entry>
-    <title>2. 两数相加</title>
-    <url>/2020/07/22/2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</url>
-    <content><![CDATA[<hr>
+    <title>论文笔记 Linear-Regression on Packed Encrypted Data in the Two-Server Model</title>
+    <url>/2020/08/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/</url>
+    <content><![CDATA[<p><em>Adi Akavia, Hayim Shaul, Mor Weiss, Zohar Yakhini</em></p>
+<p><a href="https://dl.acm.org/doi/proceedings/10.1145/3338469" target="_blank" rel="noopener">WAHC’19: Proceedings of the 7th ACM Workshop on Encrypted Computing &amp; Applied Homomorphic Cryptography</a></p>
+<p><a href="https://dl.acm.org/doi/abs/10.1145/3338469.3358942" target="_blank" rel="noopener">https://dl.acm.org/doi/abs/10.1145/3338469.3358942</a></p>
 <a id="more"></a>
-<p><a href="https://leetcode-cn.com/problems/add-two-numbers/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/add-two-numbers/</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。</p>
-<p>如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。</p>
-<p>您可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
-<p>示例：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入：(<span class="number">2</span> -&gt; <span class="number">4</span> -&gt; <span class="number">3</span>) + (<span class="number">5</span> -&gt; <span class="number">6</span> -&gt; <span class="number">4</span>)</span><br><span class="line">输出：<span class="number">7</span> -&gt; <span class="number">0</span> -&gt; <span class="number">8</span></span><br><span class="line">原因：<span class="number">342</span> + <span class="number">465</span> = <span class="number">807</span></span><br></pre></td></tr></table></figure>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>用两个指针 <code>p, q</code> 遍历两个列表，用变量 <code>carry</code> 保存来自上一位的进位。每扫描到一位则将当前两个链表的对应值的和与 <code>carry</code> 相加得到新链表的对应位的值（若和大于10则要计算和模10）。若和大于10，则进位为1，否则为0。直到两个链表都遍历完毕，若最后进位为1，则还要生成一个新的结点赋值为 <code>carry</code>。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        ListNode dummyHead = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        ListNode p = l1, q =l2, pre = dummyHead;</span><br><span class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (p != <span class="keyword">null</span> || q != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = (p != <span class="keyword">null</span>) ? p.val : <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> y = (q != <span class="keyword">null</span>) ? q.val : <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> z = x + y + carry;</span><br><span class="line">            pre.next = <span class="keyword">new</span> ListNode(z % <span class="number">10</span>);</span><br><span class="line">            pre = pre.next;</span><br><span class="line">            carry = z / <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">if</span> (p != <span class="keyword">null</span>) p = p.next;</span><br><span class="line">            <span class="keyword">if</span> (q != <span class="keyword">null</span>) q = q.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (carry != <span class="number">0</span>) &#123;</span><br><span class="line">            pre.next = <span class="keyword">new</span> ListNode(carry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>链表</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1. 两数之和</title>
-    <url>/2020/07/22/1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<p><a href="https://leetcode-cn.com/problems/two-sum/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/two-sum/</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code> 和一个目标值 <code>target</code>，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
-<p>示例:</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">给定 nums = [<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>], target = <span class="number">9</span></span><br><span class="line"></span><br><span class="line">因为 nums[<span class="number">0</span>] + nums[<span class="number">1</span>] = <span class="number">2</span> + <span class="number">7</span> = <span class="number">9</span></span><br><span class="line">所以返回 [<span class="number">0</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>用一个哈希表 <code>map</code> 存储已访问的元素值的索引，</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>从包含大量独立样本的联合训练数据中开发机器学习模型是一项重要的任务，可以显著提高学习模型的潜在适用性和预测能力。由于单个用户(如医院或单个实验室)通常以高置信度收集不支持准确学习的数据集，因此希望在不损害数据隐私的情况下组合来自多个用户的数据。在这篇文章中，我们开发了一种隐私保护解决方案，用于从多方(“数据所有者”)共同贡献的数据中学习线性回归模型。我们的协议是基于Giacomelli等人的协议。(ACNS 2018)，利用两个非合谋服务器和线性同态加密(LHE)学习正则化线性回归模型。我们的方法使用不同的LHE方案，使我们能够显著减少同态操作的数量和运行时间，以及总的运行时间复杂度。我们协议的另一个优点是潜在的LHE方案基于与Giacomelli等人不同的(和后量子安全的)安全假设。我们的方法利用中国剩余定理和单指令多数据表示法来获得改进的性能。对于1000x40线性回归任务，对于同态操作，我们可以在总共3秒内学习到一个模型，而文献中报道的时间超过了100秒。我们的方法还可以扩展到更大的功能空间：我们实现了一个可以处理1000x100线性回归任务的系统，在数据所有者进行更重要的离线预处理之后，投入了数分钟的服务器计算时间。我们打算将我们的协议和实现整合到一个全面的系统中，该系统可以在更大范围内处理安全的联合学习。</p>
+<h2 id="本文贡献"><a href="#本文贡献" class="headerlink" title="本文贡献"></a>本文贡献</h2><ul>
+<li>线性-压缩加密数据的回归(LoPED)。提出了一种新的PPRR协议，称为“分组加密数据线性回归协议(LoPED)。</li>
+<li>同态计算时间加速：分析结果。与[6]相比，LoPED在同态运算的数量上提供了高达 $\Theta(d^2)$ 的加速比，其中 $d$ 是特征的数量。更准确地说，加速比是 $\Theta(\mathsf{sl})$，其中 $\mathsf{sl} \leq d^2$ 是每个SIMD密文中封装的时隙数目。</li>
+<li>同态计算时间加速：实验结果。我们实现了我们的协议并进行了大量的实验，证明了同态运算(又名LHE-COMP)运行时的大幅加速；参见表1。</li>
+<li>安全性。LoPED基于后量子安全假设，与[6]中使用的基于Paillier的实现形成对比；这是我们系统的一个额外优势。</li>
+</ul>
+<h1 id="PRELIMINARIES"><a href="#PRELIMINARIES" class="headerlink" title="PRELIMINARIES"></a>PRELIMINARIES</h1><h2 id="岭回归"><a href="#岭回归" class="headerlink" title="岭回归"></a>岭回归</h2><p>线性回归的损失函数：</p>
+<script type="math/tex; mode=display">
+f(w) = \sum^m_{i = 1} \left(y_i - x^T_i w \right)^2</script><p>于是 $\boldsymbol{w}$ 的最优解为</p>
+<script type="math/tex; mode=display">
+\hat{\boldsymbol{w}}^{*}=\underset{\hat{\boldsymbol{w}}}{\arg \min }(\boldsymbol{y}-\mathbf{X} \hat{\boldsymbol{w}})^{\mathrm{T}}(\boldsymbol{y}-\mathbf{X} \hat{\boldsymbol{w}})</script><p>对 $\hat{\boldsymbol{w}}$ 求导并令导数为零，当 $\mathbf{X}^{\mathrm{T}} \mathbf{X}$ 为满秩或正定矩阵时可得</p>
+<script type="math/tex; mode=display">
+\hat{\boldsymbol{w}}^{*}=\left(\mathbf{X}^{\mathrm{T}} \mathbf{X}\right)^{-1} \mathbf{X}^{\mathrm{T}} \boldsymbol{y}</script><p>然而现实中 $\mathbf{X}^{\mathrm{T}} \mathbf{X}$ 往往不是满秩矩阵。例如在许多任务中会遇到大量的变量，其数目甚至超过样例数，导致 $\mathbf{X}$ 的列数多于行数，$\mathbf{X}^{\mathrm{T}} \mathbf{X}$ 显然不满秩。从上式可以看出在计算回归系数的时候，我们需要计算矩阵 $\mathbf{X}^{\mathrm{T}} \mathbf{X}$ 的逆，但是如果该矩阵是个奇异矩阵，则无法对其进行求解。</p>
+<p>因此如果出现上面的情况，我们需要对最初的标准线性回归做一定的变化使原先无法求逆的矩阵变得非奇异，使得问题可以稳定求解。我们可以通过缩减的方式来处理这些问题，例如岭回归。</p>
+<p>岭回归是在标准线性回归的损失函数基础上添加了一个惩罚项 $\lambda \sum^n_{i=1} w^2_i$，称为L2正则化。</p>
+<p>这个时候损失函数的形式为</p>
+<script type="math/tex; mode=display">
+f(w) = \sum^m_{i = 1} \left(y_i - x^T_i w \right)^2 + \lambda \sum^n_{i=1} w^2_i</script><p>将岭回归系数用矩阵的形式表示：</p>
+<script type="math/tex; mode=display">
+\hat{w}=\left(X^{T} X+\lambda I\right)^{-1} X^{T} y</script><p>可以看到，就是通过将 $\mathbf{X}^{\mathrm{T}} \mathbf{X}$ 加上一个单位矩阵似的矩阵变成非奇异矩阵并可以进行求逆运算。</p>
+<h2 id="线性同态加密-LHE"><a href="#线性同态加密-LHE" class="headerlink" title="线性同态加密(LHE)"></a>线性同态加密(LHE)</h2><p>LHE是一种公钥加密方案，它允许人们在不知道秘密解密密钥的情况下，在加密的“幕后”执行线性运算。我们假设在密钥生成过程中，可以通过指定 $N \in \mathbb{N}$ 来选择明文空间，从而执行模 $N$ 的同态运算。这是通过将明文模 $N$ 显式地合并到方案的排列中来实现的。</p>
+<p>线性同态加密(LHE)方案 $\mathcal{E}=(\mathsf{KG}, \mathsf{Enc},\mathsf{Dec},\mathsf{Eval}) $ 由四个算法组成，其中 $\mathsf{KG}, \mathsf{Enc}$ 和 $\mathsf{Eval}$ 是PPT算法，$\mathsf{Dec}$ 是(确定性)多项式时间。算法具有以下语法：</p>
 <ul>
-<li>遍历数组，查看 <code>map</code> 中是否存在当前元素与 <code>target</code> 的差值；</li>
-<li>若有，则直接得到答案；</li>
-<li>若无，则将当前元素的索引存入 <code>map</code>。</li>
+<li>$\mathsf{KG}(1^\sigma, N)$ 将安全参数 $σ$ 和 $N \in \mathbb{N}$ 作为输入。它输出一对公开和秘密加密密钥 $(\mathsf{pk}, \mathsf{sk})$。我们假设  $\mathsf{pk}$ 在其描述中包含 $N$，而不失一般性。</li>
+<li>$\mathsf{Enc}(\mathsf{pk}, \mathsf{msg})$ 将公钥 $\mathsf{pk}$ 和消息 $\mathsf{msg} \in \mathbb{Z}_N$ 作为输入，输出密文 $\mathsf{c}$。</li>
+<li>$\mathsf{Dec}(\mathsf{sk},\mathsf{c})$ 将秘密解密密钥 $\mathsf{sk}$ 和密文 $\mathsf{c}$ 作为输入，并输出明文消息 $\mathsf{msg’}$。</li>
+<li>$\mathsf{Eval}(\mathsf{pk}, C, \mathsf{c}_1,…, \mathsf{c}_k)$ 将公钥 $\mathsf{pk}$、电路 $C: \mathbb{Z}^k_N \rightarrow \mathbb{Z}^l_N$，其中 $l, k \in \mathbb{N}$ 和 $k$ 个密文 $\mathsf{c}_1,…,\mathsf{c}_k$ 作为输入，并输出 $l$ 个密文 $(\mathsf{c}’_1,…,\mathsf{c}’_l)$。</li>
 </ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> tmp = target - nums[i];</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(tmp)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;map.get(tmp), i&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(nums[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>哈希表</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>26. 删除排序数组中的重复项</title>
-    <url>/2020/07/22/26-%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<p><a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个排序数组，你需要在 原地 删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。</p>
-<p>不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。</p>
-<p>示例 1:</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">给定数组 nums = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>], </span><br><span class="line"></span><br><span class="line">函数应该返回新的长度 <span class="number">2</span>, 并且原数组 nums 的前两个元素被修改为 <span class="number">1</span>, <span class="number">2</span>。 </span><br><span class="line"></span><br><span class="line">你不需要考虑数组中超出新长度后面的元素。</span><br></pre></td></tr></table></figure>
-<p>示例 2:</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">给定 nums = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>],</span><br><span class="line"></span><br><span class="line">函数应该返回新的长度 <span class="number">5</span>, 并且原数组 nums 的前五个元素被修改为 <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>。</span><br><span class="line"></span><br><span class="line">你不需要考虑数组中超出新长度后面的元素。</span><br></pre></td></tr></table></figure>
-<p>说明:</p>
-<p>为什么返回数值是整数，但输出的答案是数组呢?</p>
-<p>请注意，输入数组是以「引用」方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。</p>
-<p>你可以想象内部操作如下:</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// nums 是以“引用”方式传递的。也就是说，不对实参做任何拷贝</span></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">len</span> = removeDuplicates(nums);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在函数里修改输入数组对于调用者是可见的。</span></span><br><span class="line"><span class="comment">// 根据你的函数返回的长度, 它会打印出数组中该长度范围内的所有元素。</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">print</span>(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>双指针，利用排序数组的性质，用 <code>ans</code> 指向任意时刻新数组中的最后一个元素。遍历数组，当遇到与新数组中最后一个元素不同的元素时（因为是排序数组，所以不会与之前的重复），将当前元素加入新数组中，然后 <code>ans</code> 指向该元素。重复以上过程，直到遍历完整个数组。</p>
-<p>时间复杂度 $O(N)$，遍历了一次数组；空间复杂度 $O(1)$。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] != nums[ans]) &#123;</span><br><span class="line">                nums[++ans] = nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>剑指 Offer 11. 旋转数组的最小数字</title>
-    <url>/2020/07/22/%E5%89%91%E6%8C%87-Offer-11-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<p><a href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 <code>[3,4,5,1,2]</code> 为 <code>[1,2,3,4,5]</code> 的一个旋转，该数组的最小值为1。  </p>
-<p>示例 1：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入：[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>示例 2：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入：[<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">输出：<span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>注意：本题与主站 154 题相同：<a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/</a></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>最简单的思路是遍历数组，用一个变量 <code>min</code> 存储已扫描元素的最小值。每扫描到一个元素就与 <code>min</code> 比较，若小于 <code>min</code>，则更新 <code>min</code> 为当前元素，时间复杂度为 $O(N)$。</p>
-<p>可以利用旋转的有序数组的性质，使用二分查找将时间复杂度降为 $O(\log N)$。</p>
+<h1 id="问题陈述"><a href="#问题陈述" class="headerlink" title="问题陈述"></a>问题陈述</h1><h2 id="在联合数据上的岭回归"><a href="#在联合数据上的岭回归" class="headerlink" title="在联合数据上的岭回归"></a>在联合数据上的岭回归</h2><p>由于每个用户所拥有的数据样本是有限的，往往训练不出来比较好的模型。于是很自然地可以想到与其他用户一起来训练一个模型，每个用户都将自己的数据提供出来，此时样本的数量就足以训练出一个好的模型。这里不同用户的数据样本都是具有同样特征的。</p>
+<p>但这样就会有隐私泄露的问题，用户都不想别人知道自己的数据，于是就需要引入隐私保护。这里假设协议的参与者都是城市且好奇的。</p>
+<h2 id="Privacy-Preserving-Ridge-Regression-with-only-Linearly-Homomorphic-Encryption-中的方案"><a href="#Privacy-Preserving-Ridge-Regression-with-only-Linearly-Homomorphic-Encryption-中的方案" class="headerlink" title="Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption 中的方案"></a>Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption 中的方案</h2><p>在这篇文章之前最好的双服务器模型PPRR方案是 <em>Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption</em> 中的方案，如图1所示，</p>
+<p><img src="http://images.yingwai.top/picgo/LoPEDf1.png" alt=""></p>
+<p>该协议对参数 $n, d, \ell, \lambda$ 进行操作，并选择明文环 $\mathbb{Z}_N$ 满足：</p>
+<script type="math/tex; mode=display">
+N > 2d(d - 1)^{\frac{d-1}{2}}10^{4\ell d}(n^2 + \lambda)^{2d} \tag{1}</script><p>在初始化阶段，$\mathcal{S}_2$ 生成LHE密钥 $(\mathsf{pk}, \mathsf{sk})$，然后发布公钥 $\mathsf{pk}$。然后该协议对在多个数据所有者之间水平划分的输入 $(X|\vec{y}) \in \mathbb{R}^{n \times (d+1)}$ 训练岭回归模型，如下所示。</p>
+<ol>
+<li>首先每个数据拥有者计算其对于 $d \times d$ 矩阵 $A = X^T X + \lambda I$ 的份额，将其缩放为嵌入 $\mathbb{Z}_N$ 的整数值，用LHE方案加密该份额，并将密文发送给 $\mathcal{S}_1$。用类似的方式计算 $\vec{b} = X^T \cdot \vec{y}$。</li>
+<li>其次 $\mathcal{S}_1$ 将所有的份额结合起来获得 $A$ 的逐项输入加密 $\mathbf{A}$，假设其在 $\mathbb{Z}^{d \times d}_N$ 中是可逆的。然后 $\mathcal{S}_1$ 使用同态性质对 $A$ 进行盲化，具体为 $\mathcal{S}_1$ 使用LHE计算 $A \cdot R$ 的加密 $\mathbf{C}$，其中 $R \in \mathsf{GL}(d, \mathbb{Z}_N)$ 是一个随机的可逆矩阵。用类似的方法盲化 $\vec{b}$，得到 $\vec{\mathbf{v}}$ 为加密后的 $\vec{v} = \vec{b} + A \cdot \vec{r}$，其中 $r \in \mathbb{Z}^d_N$ 是一致随机的。然后 $\mathcal{S}_1$ 将 $\mathbf{C}$ 和 $\vec{\mathbf{v}}$ 发送给 $\mathcal{S}_2$。</li>
+<li>$\mathcal{S}_2$ 使用密钥解密，求解线性系统 $C \cdot \vec{w}^<em> = \vec{v} \bmod N$ 来获得盲化后的模型 $\vec{w}^</em>$，然后发送给 $\mathcal{S}_1$。</li>
+<li>最后 $\mathcal{S}_1$ 去除盲化获得模型 $\vec{w}’ = R \cdot \vec{w}^* - \vec{r} \in \mathbb{Z}^d_N$。对 $\vec{w}’$ 使用有理数重构获得输出模型 $\vec{w} \in \mathbb{Q}^d$，然后 $\mathcal{S}_1$ 对各方进行广播。</li>
+</ol>
+<h1 id="本文的隐私保护岭回归协议"><a href="#本文的隐私保护岭回归协议" class="headerlink" title="本文的隐私保护岭回归协议"></a>本文的隐私保护岭回归协议</h1><p>本文的模型与 <em>Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption</em> 中的模型一样，主要包括两个主体：数据拥有者 $DO$ 和服务器 $\mathcal{S}$。其中数据拥有者的数量是已知的；服务器有两个，$\mathcal{S}_1$ 负责将 $DO$ 的数据聚合，$\mathcal{S}_2$ 负责更新权重。分为了三个阶段：初始化、上传输入和训练阶段。</p>
+<p><img src="http://images.yingwai.top/picgo/LoPEDf2.png" alt=""></p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始化（图2）包括 $\mathcal{S}_2$ 生成LHE方案密钥，和发布公钥。</p>
+<p>由于 <em>Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption</em> 中的明文模数太大，而HElib和SEAL分别只支持62位和60位的明文模数，因此本文使用了中国剩余定理(CRT)来将明文空间缩小，使用 $\mathbb{Z}_{p_1},…,\mathbb{Z}_{p_t}$ 中的消息列表来表示 $\mathbb{Z}_N$ 中的消息，使得 $N = \prod^t_{i=1} p_i$，每个模 $p_i$ 需要独立的加密密钥也由 $\mathcal{S}_2$ 来生成。（前面提到的另一个方案中的操作是直接在 $\mathbb{Z}_N$ 中进行的，因此 $\mathcal{S}_2$ 仅生成一对密钥 $(\mathsf{pk}, \mathsf{sk})$。）</p>
+<h2 id="上传输入"><a href="#上传输入" class="headerlink" title="上传输入"></a>上传输入</h2><p>在图一中我们假设输入在数据拥有者之间水平分割，类似横向联邦学习（样本的联合）。</p>
+<p>令 $X \in \mathbb{R}^{n \times d}, \vec{y} \in \mathbb{R}^{n \times 1}$ 分别表示数据矩阵和响应向量，于是存在 $[n]$ 的分割 $I_1,…,I_m$ 使得 $DO_j$ 拥有 $X^j = X_{I_j} = (X_k : k \in I_j)$（$X_k$ 表示 $X$ 的第 $k$ 行）和 $\vec{y}^j = \vec{y}_{I_j} = (y_k)_{k \in I_j}$。这些输入按比例缩放并嵌入到足够大的 $N$ 的 $\mathbb{Z}_N$ 中（有关 $N$ 的要求请参见公式1）。对每个 $1 \leq j \leq m$，令 $A^j = \sum_{k \in I_j} \left(X^j_k \right)^T \cdot X^j_k \in \mathbb{Z}^{d \times d}_N$，和 $\vec{b}_j = \sum_{k \in I_j} X^j_k \cdot \vec{y}^j_k \in \mathbb{Z}^d_N$。每个 $DO_j$ 在本地从他的输入计算 $A^j, \vec{b}^j$，计算</p>
+<script type="math/tex; mode=display">
+A^{j,p_i} = \left(A^j \bmod p_i \right) \quad \mathrm{and} \quad \vec{b}^{j, p_i} = \left(\vec{b}^j \bmod p_i \right)</script><p>然后发送加密后的 $A^{j, p_i}, \vec{b}^{j, p_i}, i \in [t]$ 给 $\mathcal{S}_1$。</p>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p><img src="http://images.yingwai.top/picgo/LoPEDf3.png" alt=""></p>
+<p>在这个阶段，$\mathcal{S}_1$ 结合以及盲化来自所有数据拥有者的数据，$\mathcal{S}_2$ 对盲化后的数据执行学习。</p>
+<p>在使用下面的方式将来自所有数据拥有者的数据组合后可以获得 $A = X^T X + \lambda I$（其中 $\lambda$ 是图1中的正则化参数，$I$ 是单位矩阵）和 $\vec{b} = X^T \vec{y}$：在前一个阶段 $\mathcal{S}_1$ 获得了 $A^1,…,A^m$ 和 $\vec{b}^1,…,\vec{b}^m$，于是有</p>
+<script type="math/tex; mode=display">
+A = \sum^{m}_{j=1} A_j + \lambda I \quad \mathrm{and} \quad b = \sum^m_{j=1} b_j</script><p>因为本文使用CRT表示，需要计算 $A^{p_i} = A \bmod p_i$ 和 $\vec{b}^{p_i} = \vec{b} \bmod p_i$ 对每个 $i \in [t]$，而不是 $A, \vec{b}$。为此，$\mathcal{S}_1$ 使用LHE方案的线性同态从 $A^{j, p_i}, \vec{b}^{j, p_i}$ 计算 $A^{p_i}, \vec{b}^{p_i}$（参见图3中的步骤1）。</p>
+<p>本文的盲化方法类似3.2小节中的描述，但需要进行一些修改去兼容CRT表示。具体地说，$\mathcal{S}_1$ 选择一个随机的可逆矩阵 $R \in \mathbb{Z}^{d \times d}_{N}$ 和随机的 $\vec{r} \in \mathbb{Z}^d_N$，然后计算 $C = A \cdot R$ 和 $\vec{v} = \vec{b} + A \cdot \vec{r}$。另外，由于对每个 $i \in [t]$，对 $A^{p_i}, \vec{b}^{p_i}$ 的操作是在 $\mathbb{Z}_{p_i}$ 内的，所以使用 $R^{p_i} = R \bmod p_i$ 和 $\vec{r}^{p_i} = \vec{r} \bmod p_i$ 来执行盲化，于是盲化后的数据矩阵和响应向量分别为 $C^{p_i} = A^{p_i} \cdot R^{p_i} \bmod p_i$ 和 $\vec{v}^{p_i} = \vec{b}^{p_i} + A^{p_i} \cdot \vec{r}^{p_i} \bmod p_i$（见图3中的步骤3a）。$C^{p_i}, \vec{v}^{p_i}$ 是由 $\mathcal{S}_1$ 使用LHE方案的线性同态来计算的，然后发送给 $\mathcal{S}_2$。$\mathcal{S}_2$ 解密这些密文来获取 $C^{p_i}, \vec{v}^{p_i}, i \in [t]$，然后使用CRT重构来恢复 $C, \vec{v}$。</p>
+<p>然后 $\mathcal{S}_2$ 计算 $C^{-1} = \mathsf{adj}(C) / \mathsf{det}(C)$（其中 $\mathsf{adj}(C), \mathsf{det}(c)$ 分别表示 $C$ 的伴随矩阵和行列式）来求解线性系统 $C \cdot \vec{w} = \vec{v}$，获得盲化后的模型 $\vec{w}^<em>$ 并发送给 $\mathcal{S}_1$。于是 $\mathcal{S}_1$ 可以计算 $\vec{w} = R \cdot \vec{w}^</em> - \vec{r}$ 来去盲化。这给出了 $\mathbb{Z}^d_N$ 中的一个模型，$\mathbb{Q}^d$ 中的相应模型可以使用有理重构从该模型中重构出来(参见第3.2节中的讨论)。</p>
+<h1 id="将SIMD集成到LoPED"><a href="#将SIMD集成到LoPED" class="headerlink" title="将SIMD集成到LoPED"></a>将SIMD集成到LoPED</h1><h2 id="SIMD背景知识"><a href="#SIMD背景知识" class="headerlink" title="SIMD背景知识"></a>SIMD背景知识</h2><p>支持单指令多数据(SIMD)的加密方案和实现包括：Brakerski-Gentry-Vaikuntanathan和Fan-Vercauteren的基于RLWE的方案(通常称为BGV/FV)及其在HElib和SEAL库中的实现。这些方案允许在单个密文中将多个消息“打包”在不同的“槽”中。本文将打包参数，即打包在一个密文中的消息数目记为 $\mathsf{sl}$，并且密文中的不同时隙记为 $\mathbf{c} = (\mathbf{c}(1),…,\mathbf{c}(\mathsf{sl}))$。对打包密文的操作以SIMD（单指令多数据）方式完成。例如，由 $c=a \odot b$ 表示的SIMD乘法定义为 $\mathbf{c}(i) = \mathbf{a}(i) \odot \mathbf{b}(i)$，其中 $i = 1,…,\mathsf{sl}$。</p>
+<p>重要的是要注意，在整个计算过程中幼稚地使用SIMD可能不会提高效率，因为涉及不同时隙上的计算的操作(例如，矩阵乘法，见下文)会招致高开销，这实际上可能会损害效率。</p>
+<h2 id="将SIMD集成到LoPED-1"><a href="#将SIMD集成到LoPED-1" class="headerlink" title="将SIMD集成到LoPED"></a>将SIMD集成到LoPED</h2><p>首先看看LoPED中同态计算的操作：</p>
+<ol>
+<li>向量相加（图3步骤1）</li>
+<li>矩阵相加（图3步骤1）</li>
+<li>矩阵相乘（图3步骤3a）</li>
+<li>矩阵向量乘法（图3步骤3a）</li>
+</ol>
+<p>在这些操作中最昂贵的是第三个，因此本文将其与作者引入的矢量的新表示法以及作者为有效执行上述其他操作而设计的新协议相结合。</p>
+<h3 id="矩阵编码和逐个矩阵乘法"><a href="#矩阵编码和逐个矩阵乘法" class="headerlink" title="矩阵编码和逐个矩阵乘法"></a>矩阵编码和逐个矩阵乘法</h3><p>如上所述，本文使用 <em>Secure Out-sourced Matrix Computation and Application to Neural Networks</em> 的方案来使用SIMD进行高效的矩阵乘法，因此使用它们的矩阵编码。上面的方案区分从左侧相乘的矩阵和从右侧相乘的矩阵，并对每个矩阵使用不同的编码。设 $L$ 和 $R$ 是两个 $d\times d$ 矩阵，我们希望计算 $A=L \cdot R$，现在描述 $L$ 和 $R$ 的编码。</p>
+<h4 id="Type-L-和-Type-R-编码以及-Type-N-表示"><a href="#Type-L-和-Type-R-编码以及-Type-N-表示" class="headerlink" title="Type-L 和 Type-R 编码以及 Type-N 表示"></a>Type-L 和 Type-R 编码以及 Type-N 表示</h4><p>本文将矩阵 $L$（乘积中的左矩阵）的编码表示为 Type-L 编码，其由 $L$ 的 $d$ 个旋转 $L_1,…,L_d$ 组成，其中 $L_i$ 为一个 $L$ 旋转其行后计算得到的 $d \times d$ 矩阵；类似地，将矩阵 $R$（乘积中的右矩阵）的编码表示为 Type-R 编码，也由 $d$ 个旋转组成，每个 $R_i$ 是 $R$ 旋转其列后得到的 $d \times d$ 矩阵（例子见图4）。然后用 Type-N 表示不作任何处理的原始矩阵的排列。</p>
+<p>对于以上两种编码，个人的理解是（拿 $L$ 来说）：</p>
 <ul>
-<li>根据数组的定义，可以观察到：数组中最小的元素的左边的元素全部大于等于数组最后的元素 <code>numbers[n-1]</code>，右边的元素全部小于等于 <code>numbers[n-1]</code>；</li>
-<li>于是可以定义两个指针 <code>left</code> 和 <code>right</code> 分别指向搜索区间的起始元素和终止元素，每次把区间中间的元素 <code>numbers[mid]</code> 与终止元素 <code>numbers[right]</code> 比较：<ul>
-<li>若 <code>numbers[mid] &gt; numbers[right]</code>，则可以排除左边一半的区间；</li>
-<li>若 <code>numbers[mid] &lt; numbers[right]</code>，则可以排除右边一半的区间；</li>
-<li>若 <code>numbers[mid] = numbers[right]</code>，可以排除终止元素，将右指针向前移动一个元素。</li>
+<li>$L_1$：第 $i$ 行的元素往前移动 $i-1$ 个位置（前 $i-1$ 个移动到后面）；</li>
+<li>$L_2$：第 $i$ 行的元素往前移动 $i$ 个位置；</li>
+<li>以此类推：$L_j$：第 $i$ 行的元素往前移动 $i+j-2$ 个位置。</li>
 </ul>
-</li>
-</ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minArray</span><span class="params">(<span class="keyword">int</span>[] numbers)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> right = numbers.length - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line">                <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">if</span>(numbers[mid] &gt; numbers[right]) &#123;</span><br><span class="line">                    left = mid + <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span>(numbers[mid] == numbers[right]) &#123;</span><br><span class="line">                    right--;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    right = mid;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> numbers[left];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No min array solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$R$ 也是类似的。</p>
+<p>作者还说到可以将这 $d$ 个矩阵打包到较少数量的密文中，从而减少开销。具体地说，原来的矩阵表示需要 $d^2$ 密文，而本文的表示需要 $d \cdot \lceil \frac{d^2}{\mathsf{sl}} \rceil$ 密文(当 $\mathsf{sl} &gt; d$ 时，其优于 $d^2$)。</p>
+<h4 id="逐个矩阵乘法"><a href="#逐个矩阵乘法" class="headerlink" title="逐个矩阵乘法"></a>逐个矩阵乘法</h4><p><img src="http://images.yingwai.top/picgo/LoPEDf4.png" alt=""></p>
+<p>矩阵乘法的例子见上图，计算 $A = L \cdot R$ 可以分解成计算 $A = \sum^d_{i=1} A_i$，其中 $A_i = L_i \odot R_i$ 为两个矩阵的对应元素相乘。</p>
+<p>在我们的协议中，我们将加密矩阵与公共矩阵相乘(参见图3中的步骤3a)。这是使用基础LHE方案的 $\mathsf{Eval}$ 算法完成的，用 $\mathsf{Eval}(\mathsf{pk},\mathsf{MatMult}, \mathbf{L}, R)$ 表示在输入电路 $C_{\mathsf{MatMult}, R}$ 和密文 $\mathbf{L}$ 上运行 $\mathsf{Eval}$，其中 $C_{\mathsf{MatMult}, R}$ 输入一个矩阵 $L$ 的Type-L编码，计算输出得到其与一个公共矩阵 $R$ 的乘积 $A = L \cdot R$。</p>
+<h4 id="通过序列化提高效率"><a href="#通过序列化提高效率" class="headerlink" title="通过序列化提高效率"></a>通过序列化提高效率</h4><p>本文通过将多个矩阵条目打包到单个密文中来提高效率（并克服了保存每个矩阵的多个旋转副本所带来的开销）。这是通过首先将 $d \times d$ 矩阵表示(“序列化”)为长度为 $d^2$ 的向量来实现的。</p>
+<p><img src="http://images.yingwai.top/picgo/LoPEDf5.png" alt=""></p>
+<p>就是将矩阵从左到右、从上到下，按列的顺序打包到密文中。也就是说，$A$ 的元素 $A_{c,l}$ 出现在串行化后的 $A$ 的第 $((c−1)d+l)$ 个位置。然后，可以将串行化矩阵（如果需要则用零填充）加密成密文（打包到时隙中）。</p>
+<h3 id="向量表示"><a href="#向量表示" class="headerlink" title="向量表示"></a>向量表示</h3><p>本文描述了两种不同的矢量编码，每种编码都用于优化不同操作的复杂度。第一个编码称之为Type-M，允许高效的矩阵-向量乘法。第二种编码称之为Type-A，允许高效的向量相加。</p>
+<p><img src="http://images.yingwai.top/picgo/LoPEDf6.png" alt=""></p>
+<p>在计算矩阵-向量乘法时，首先将向量映射为一个 $d \times d$ 矩阵（Type-M编码：其中第一列为向量，其余列用0填充），然后再将该矩阵编码为Type-R矩阵，进行矩阵乘法。而Type-A编码则是对Type-M矩阵的序列化。</p>
+<p>我们注意到，虽然可以对类型M编码执行加法，但它的效率低于将两个类型A编码相加。例如当 $\mathsf{sl}=d$ 时，将两个Type-M向量相加需要 $d$ 次运算，但是添加两个Type-A编码只需要一次操作。</p>
 ]]></content>
       <categories>
-        <category>LeetCode</category>
+        <category>Papers</category>
       </categories>
       <tags>
-        <tag>二分查找</tag>
+        <tag>PPML</tag>
+        <tag>Linear Regression</tag>
+        <tag>HE</tag>
       </tags>
   </entry>
 </search>

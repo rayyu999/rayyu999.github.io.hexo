@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/HEdif14.jpg">
 <meta property="og:image" content="http://images.yingwai.top/picgo/HEdif15.jpg">
 <meta property="article:published_time" content="2020-07-03T03:14:03.000Z">
-<meta property="article:modified_time" content="2020-07-03T09:13:25.727Z">
+<meta property="article:modified_time" content="2020-07-29T13:23:36.579Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="HE">
@@ -521,7 +521,7 @@ a_{15}x^{15} &+ a_{14}x^{14} + a_{13}x^{13} + a_{12}x^{12} + a_{11}x^{11} + a_{1
 \end{align}</script><p>其中这16系数(即 $a_i$)中的每一个的范围都是从 $0$ 到 $t-1$。我们可以用系数的环面来说明，如下所示：</p>
 <p><img src="http://images.yingwai.top/picgo/HEdif3.jpg" alt=""></p>
 <p>在这个图中，每个循环表示多项式中 $x$ 的幂次方前的系数的取值范围（包含24个可能值）。绿点代表系数取$0$时所处的位置。这为我们提供了一种很好的方法来可视化多项式，这在我们考虑加密和解密步骤如何工作时将会有所帮助。</p>
-<p>FV加密方案涉及大量的多项式乘法。当我们把<em>x</em>的两个幂次方相乘，比如 $2x^{14}$ 和 $x^4$ 时，我们把它们的指数相加，得到 $2x^{18}$。有人可能会假设，求这个多项式关于多项式模的余数可能需要在 $x^{16}$ 处将指数旋转回$0$，得到 $2x^2$，就像上面所示的整数系数那样。如果多项式模是 $x^{16}$，情况就是这样。然而，我们的多项式模是 $x^{16}+1$ - 如上所述，额外的$+1$因子引入了一个符号变化，这有助于进一步干扰乘法的结果。</p>
+<p>FV加密方案涉及大量的多项式乘法。当我们把 $x$ 的两个幂次方相乘，比如 $2x^{14}$ 和 $x^4$ 时，我们把它们的指数相加，得到 $2x^{18}$。有人可能会假设，求这个多项式关于多项式模的余数可能需要在 $x^{16}$ 处将指数旋转回$0$，得到 $2x^2$，就像上面所示的整数系数那样。如果多项式模是 $x^{16}$，情况就是这样。然而，我们的多项式模是 $x^{16}+1$ - 如上所述，额外的$+1$因子引入了一个符号变化，这有助于进一步干扰乘法的结果。</p>
 <p><img src="http://images.yingwai.top/picgo/HEdif4.jpg" alt=""></p>
 <p>如上图所示，当 $2x^{14}$ 乘以 $x^4$ 后模 <script type="math/tex">x^{16}+1</script> 时，取这个项(由上面的红点表示)，向前旋转环面$4$个幂，然后从$0$处调整系数的值，得到 $22x^2$(或 $−2x^2$，如果我们认为数字是从$-12$到$11$而不是从$0$到$23$时)。</p>
 <p><strong>这种形式的多项式具有非常丰富的结构和许多不错的特性。它们是分圆多项式的子集</strong>。使用其中一个作为多项式模并不是严格必需的，但是这样做会更加方便快速。</p>
@@ -805,7 +805,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -816,7 +816,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -827,7 +827,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -904,7 +904,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">78.7k</span>
+    <span title="Site words total count">81.7k</span>
   
 
 <!--
