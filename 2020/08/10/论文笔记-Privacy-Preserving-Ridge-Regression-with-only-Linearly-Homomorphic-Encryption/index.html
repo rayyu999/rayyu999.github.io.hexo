@@ -89,7 +89,7 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/PPRRwoLHEp2.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/PPRRwoLHEp3.png">
 <meta property="article:published_time" content="2020-08-10T11:49:57.000Z">
-<meta property="article:modified_time" content="2020-08-10T11:53:14.951Z">
+<meta property="article:modified_time" content="2020-08-11T08:48:56.053Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="PPML">
 <meta property="article:tag" content="Linear Regression">
@@ -380,7 +380,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.8k 字
+                  2.9k 字
                 </span>
               
 
@@ -443,13 +443,13 @@
 </li>
 <li><p>$\mathsf{labEnc}_{pk}(\sigma_i, m, \tau)$：对来自用户 $i$ 的一个带有标签 $\tau \in \mathcal{L}$ 的消息 $m \in \mathcal{M}$，它计算 $b = F(\sigma_i, \tau)$ 然后输出标记的密文 $\boldsymbol{c} = (a, c) \in \mathcal{M \times C}$，其中 $a = m - b$ 在 $\mathcal{M}$ 中而 $c = \mathsf{Enc}_{pk}(b)$。</p>
 </li>
-<li><p>$\mathsf{labMult}(\boldsymbol{c, c’})$：输入两个标记的密文 $\boldsymbol{c} = (a, c)$ 和 $\boldsymbol{c’} = (a’, c’)$，它计算一个密文下的“乘积” $d = \mathsf{labMult}(\boldsymbol{c, c’})$ 为 $d = \mathsf{Enc}_{pk}(a \cdot a’) \odot \mathsf{cMult}(a, c’) \odot \mathsf{cMult}(a’, c)$。容易证明正确性：</p>
+<li><p>$\mathsf{labMult}(\boldsymbol{c, c’})$：输入两个标记的密文 $\boldsymbol{c} = (a, c)$ 和 $\boldsymbol{c’} = (a’, c’)$，它计算一个密文下的“乘积” $d = \mathsf{labMult}(\boldsymbol{c, c’})$ 为 $d = \mathsf{Enc}_{pk}(a \cdot a’) \odot \mathsf{cMult}(a, c’) \odot \mathsf{cMult}(a’, c)$。容易验证 $\mathsf{Dec}_{sk}(d) = m \cdot m’ - b \cdot b’$：</p>
 <script type="math/tex; mode=display">
 \begin{align}
 m \cdot m' &= (a+b)(a'+b')\\
-&= a \cdot a' + a \cdot c' + a' \cdot c
+&= a \cdot a' + a \cdot c' + a' \cdot c + b \cdot b'
 \end{align}</script></li>
-<li><p>$\mathsf{labDec}_{sk}(pk_i, pk_j, \tilde{c})$：输入 $\tilde{c}$，它首先从 $\mathsf{Dec}_{sk}(pk_i)$ 恢复 $\sigma_i$ 和 $\sigma_j$。然后，它对所有 $t = 1,…,n$ 计算 $b_t = F(\sigma_i, \tau_t)$ 和 $b’_t = F(\sigma_j, \tau_t’)$。最后，它计算 $\tilde{b} = \sum^n_{t=1} b_t \cdot b_t’$ 和 $\tilde{m} = \mathsf{Dec}_{sk}(\tilde{c}) - b$。容易验证 $\tilde{m} = \sum^n_{t=1} m_t \cdot m_t’$。</p>
+<li><p>$\mathsf{labDec}_{sk}(pk_i, pk_j, \tilde{c})$：输入 $\tilde{c}$，它首先从 $\mathsf{Dec}_{sk}(pk_i)$ 恢复 $\sigma_i$ 和 $\sigma_j$。然后，它对所有 $t = 1,…,n$ 计算 $b_t = F(\sigma_i, \tau_t)$ 和 $b’_t = F(\sigma_j, \tau_t’)$。最后，它计算 $\tilde{b} = \sum^n_{t=1} b_t \cdot b_t’$ 和 $\tilde{m} = \mathsf{Dec}_{sk}(\tilde{c}) + \tilde{b}$。容易验证 $\tilde{m} = \sum^n_{t=1} m_t \cdot m_t’$。</p>
 </li>
 </ul>
 <h1 id="系统概览"><a href="#系统概览" class="headerlink" title="系统概览"></a>系统概览</h1><p><a href="https://yuyingwai.cn/2020/08/09/论文笔记-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" target="_blank" rel="noopener">LoPED</a>是基于本篇文章的，因此设定差不多。本文考虑这样的设置，其中训练数据集对于想要训练岭回归模型的实体不是明文可用的。相反，后者可以访问数据的加密副本，因此需要处理密钥的一方的帮助才能了解所需的模型。更准确地说，本文中的协议是为以下各方设计的：</p>
@@ -473,7 +473,7 @@ m \cdot m' &= (a+b)(a'+b')\\
 <p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp1.png" alt=""></p>
 <p>第二种情况为每个 $DO$ 拥有 $X$ 和 $\boldsymbol{y}$ 中的某些元素：</p>
 <script type="math/tex; mode=display">
-\mathcal{D}_{k}=\left\{X[i, j]=\boldsymbol{x}_{i}[j] \mid(i, j) \in D_{k}\right\} \cup\left\{\boldsymbol{y}[i]=y_{i} \mid(i, 0) \in D_{k}\right\} \tag{3}</script><p>其中 $D_{k} \subseteq\{1, \ldots, n\} \times\{0,1, \ldots, d\}$。</p>
+\mathcal{D}_{k}=\left\{X[i, j]=\boldsymbol{x}_{i}[j] \mid(i, j) \in D_{k}\right\} \cup\left\{\boldsymbol{y}[i]=y_{i} \mid(i, 0) \in D_{k}\right\} \tag{3}</script><p>其中 $D_{k} \subseteq\{1, \ldots, n\} \times\{0,1, \ldots, d\}$。这种情况下，要计算矩阵 $A$ 和向量 $\boldsymbol{b}$ 就要把来自两个用户的数据乘在一起（例如一方拥有 $X$ 而另一方拥有 $\boldsymbol{y}$），此时可以用到前面的 $\mathsf{labMult}$：</p>
 <p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp2.png" alt=""></p>
 <h2 id="阶段2：计算模型"><a href="#阶段2：计算模型" class="headerlink" title="阶段2：计算模型"></a>阶段2：计算模型</h2><p>在阶段1的最后，MLE知道了 $A$ 和 $\boldsymbol{b}$ 的密文。第3节中已经描述过大致的过程，即MLE先发送盲化后的数据给CSP，后者求解得到盲化后的模型后发送回给MLE，最后MLE去盲化得到模型 $\boldsymbol{w}^*$：</p>
 <p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp3.png" alt=""></p>
@@ -707,7 +707,7 @@ m \cdot m' &= (a+b)(a'+b')\\
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">84.6k</span>
+    <span title="Site words total count">84.7k</span>
   
 
 <!--
