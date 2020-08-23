@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -80,13 +80,13 @@
 
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo博客搭建">
-<meta property="og:url" content="http://yoursite.com/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:title" content="Java构造方法总结">
+<meta property="og:url" content="http://yoursite.com/2020/08/24/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="article:published_time" content="2020-04-11T10:05:12.000Z">
-<meta property="article:modified_time" content="2020-08-23T14:33:37.429Z">
+<meta property="article:published_time" content="2020-08-23T16:09:49.000Z">
+<meta property="article:modified_time" content="2020-08-23T16:10:36.191Z">
 <meta property="article:author" content="yyw">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
 
 
@@ -117,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/11/Hexo博客搭建/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/08/24/Java构造方法总结/"/>
 
 
 
 
 
-  <title>Hexo博客搭建 | Ray's Blog</title>
+  <title>Java构造方法总结 | Ray's Blog</title>
   
 
 
@@ -284,7 +284,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/24/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yyw">
@@ -301,7 +301,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hexo博客搭建</h1>
+          <h1 class="post-title" itemprop="name headline">Java构造方法总结</h1>
         
 
         <div class="post-meta">
@@ -313,8 +313,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T18:05:12+08:00">
-                2020-04-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-24T00:09:49+08:00">
+                2020-08-24
               </time>
             
 
@@ -336,8 +336,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Env/" itemprop="url" rel="index">
-                    <span itemprop="name">Env</span>
+                  <a href="/categories/Coding/" itemprop="url" rel="index">
+                    <span itemprop="name">Coding</span>
                   </a>
                 </span>
 
@@ -372,7 +372,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  639 字
+                  487 字
                 </span>
               
 
@@ -388,7 +388,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  1 分钟
                 </span>
               
             </div>
@@ -411,32 +411,62 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
-<h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
-<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g cnpm --registry=https://registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
-<p>安装完后就可以使用cnpm安装hexo：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
-<p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
-<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>建立一个名为 <em>Blog</em> 的文件夹，在命令行中进入这个文件夹，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
-<p>初始化完成后，在命令行中输入<code>hexo s</code>，此时在浏览器中输入<code>localhost:4000</code>就可以看到博客已经创建好了，并且默认创建了一篇文章。</p>
-<p>确认过后，键盘按 <em>Ctrl + C</em> 即可停止服务。</p>
-<h4 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h4><p>首先登陆到<a href="https://github.com/" target="_blank" rel="noopener">Github</a>，新建一个仓库，命名为 “<strong>你的Github昵称.github.io</strong>“。</p>
-<p>然后需要安装一个git部署插件，在命令行中打开 <em>Blog</em> 目录，输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install --save hexo-deployer-git</span></span><br></pre></td></tr></table></figure>
-<p>打开 <em>Blog</em> 目录下的站点配置文件，在文件最后的 <strong><em>repo</em></strong> 处输入刚刚创建的仓库的地址并在下方添加一行：</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> https:<span class="comment">//github.com/xxx/xxx.github.io.git</span></span><br><span class="line"><span class="symbol">  branch:</span> master	<span class="meta"># 指定分支，不填默认为master</span></span><br></pre></td></tr></table></figure>
-<p>保存退出后，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d</span></span><br></pre></td></tr></table></figure>
-<p>部署到远端，此时刷新一下自己的Github仓库页面，会发现多了很多文件。在浏览器中访问 <strong>xxx.github.io</strong>，就可以看到博客已经成功部署。</p>
-<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo n <span class="string">"文章标题"</span></span></span><br></pre></td></tr></table></figure>
-<p>会在博客目录的<code>/source/_posts</code>目录下生成一个markdown文件，使用编辑器打开即可编辑这篇文章。</p>
-<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>在命令行中依次输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo clean	<span class="comment"># 清理缓存文件和已生成的静态文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hexo g	<span class="comment"># 生成静态文件</span></span></span><br></pre></td></tr></table></figure>
-<p>再使用<code>hexo s</code>命令就可以在<code>localhost:4000</code>页面看到新生成的文章已经发布到了博客上面。</p>
+<h1 id="构造方法总结"><a href="#构造方法总结" class="headerlink" title="构造方法总结"></a>构造方法总结</h1><h2 id="this-关键字"><a href="#this-关键字" class="headerlink" title="this 关键字"></a><code>this</code> 关键字</h2><p><code>this</code> 关键字，本类对象的引用</p>
+<ul>
+<li><p><code>this</code> 是在方法中使用的，哪个对象调用了该方法，那么 <code>this</code> 就代表调用该方法的对象引用</p>
+</li>
+<li><p><code>this</code> 什么时候存在的？当创建对象的时候，<code>this</code> 存在的</p>
+</li>
+<li><p><code>this</code> 的作用：用来区别同名的成员变量与局部变量（<code>this.成员变量</code>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>用来给类的成员进行初始化操作</p>
+<ul>
+<li><p>格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修饰符 类名 (参数列表) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造方法的特点：</p>
+<ol>
+<li>方法名与类名想同</li>
+<li>没有返回值，也没有返回值类型，连 <code>void</code> 也没有</li>
+</ol>
+</li>
+<li><p>构造方法什么时候会被调用执行？</p>
+<p>只有在创建对象的时候才可以被调用</p>
+</li>
+</ul>
+<h2 id="super-关键字"><a href="#super-关键字" class="headerlink" title="super 关键字"></a><code>super</code> 关键字</h2><p>指的是父类的存储空间（理解为父类的引用）</p>
+<ul>
+<li><p>调用父类的成员变量：</p>
+<p><code>super.成员变量;</code></p>
+</li>
+<li><p>调用父类的构造方法：</p>
+<p><code>super(参数);</code></p>
+</li>
+<li><p>调用方法的成员方法：</p>
+<p><code>super.成员方法();</code></p>
+</li>
+</ul>
+<h2 id="继承中的构造方法注意事项"><a href="#继承中的构造方法注意事项" class="headerlink" title="继承中的构造方法注意事项"></a>继承中的构造方法注意事项</h2><ol>
+<li><p>如果我们手动给出了构造方法，编译器不会再给我们提供默认的空参数构造方法；</p>
+<p>如果我们没有写任何的构造方法，编译器提供给我们一个空参数构造方法</p>
+</li>
+<li><p>在构造方法中，默认的第一条语句为 <code>super();</code></p>
+<p>它是用来访问父类中的空参数构造方法，进行父类成员的初始化操作</p>
+</li>
+<li><p>当父类中没有空参数构造方法的时候，怎么办？</p>
+<ul>
+<li><p>通过 <code>super(参数);</code> 访问父类有参数的构造方法</p>
+</li>
+<li><p>通过 <code>this(参数);</code> 访问本类中其他构造方法</p>
+<p>注意：<em>本类中的其他构造方法已经能够正常访问父类构造方法</em></p>
+</li>
+</ul>
+</li>
+<li><p><code>super(参数);</code> 与 <code>this(参数);</code> 不能同时在构造方法中存在</p>
+</li>
+</ol>
 
       
     </div>
@@ -454,7 +484,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
         </div>
       
@@ -467,15 +497,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/08/24/Java%E6%8E%A5%E5%8F%A3%E3%80%81%E5%A4%9A%E6%80%81%E6%80%BB%E7%BB%93/" rel="next" title="Java接口、多态总结">
+                <i class="fa fa-chevron-left"></i> Java接口、多态总结
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Automatic-Unit-Test-Generation-and-Execution-for-JavaScript-Program-through-Symbolic-Execution/" rel="prev" title="论文笔记 Automatic Unit Test Generation and Execution for JavaScript Program through Symbolic Execution">
-                论文笔记 Automatic Unit Test Generation and Execution for JavaScript Program through Symbolic Execution <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -614,7 +644,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo简介"><span class="nav-number">1.</span> <span class="nav-text">Hexo简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建流程（Windows）"><span class="nav-number">2.</span> <span class="nav-text">搭建流程（Windows）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Git"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Node-js"><span class="nav-number">2.1.2.</span> <span class="nav-text">安装Node.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo"><span class="nav-number">2.2.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式搭建"><span class="nav-number">2.3.</span> <span class="nav-text">正式搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">2.3.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署到Github"><span class="nav-number">2.3.2.</span> <span class="nav-text">部署到Github</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Hexo"><span class="nav-number">3.</span> <span class="nav-text">使用Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建文章"><span class="nav-number">3.1.</span> <span class="nav-text">新建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布文章"><span class="nav-number">3.2.</span> <span class="nav-text">发布文章</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#构造方法总结"><span class="nav-number">1.</span> <span class="nav-text">构造方法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#this-关键字"><span class="nav-number">1.1.</span> <span class="nav-text">this 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造方法"><span class="nav-number">1.2.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#super-关键字"><span class="nav-number">1.3.</span> <span class="nav-text">super 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承中的构造方法注意事项"><span class="nav-number">1.4.</span> <span class="nav-text">继承中的构造方法注意事项</span></a></li></ol></li></ol></div>
             
 
           </div>

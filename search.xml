@@ -3848,4 +3848,271 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
         <tag>LeetCode</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java接口、多态总结</title>
+    <url>/2020/08/24/Java%E6%8E%A5%E5%8F%A3%E3%80%81%E5%A4%9A%E6%80%81%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h1 id="接口、多态总结"><a href="#接口、多态总结" class="headerlink" title="接口、多态总结"></a>接口、多态总结</h1><h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口是功能的集合，同样可看做是一种数据类型，是比抽象类更为抽象的”类”。<br>接口只描述所应该具备的方法，并没有具体实现，具体的实现由接口的实现类(相当于接口的子类)来完成。这样将功能的定义与实现分离，优化了程序设计。<br>请记住：一切事物均有功能，即一切事物均有接口。</p>
+<p>接口的出现避免了单继承的局限性。父类中定义的事物的基本功能。接口中定义的事物的扩展功能。</p>
+<h3 id="接口的特点"><a href="#接口的特点" class="headerlink" title="接口的特点"></a>接口的特点</h3><ol>
+<li><p>定义一个接口用 <code>interface</code> 关键字：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> 接口名 </span>&#123;</span><br><span class="line">    抽象方法<span class="number">1</span>;</span><br><span class="line">    抽象方法<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个类实现一个接口，实现 <code>implements</code> 关键字：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 类名 <span class="keyword">implements</span> 接口名 </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口不能直接创建对象</p>
+<p>通过多态的方式，由子类来创建对象，接口多态。</p>
+</li>
+</ol>
+<h3 id="接口中的成员特点"><a href="#接口中的成员特点" class="headerlink" title="接口中的成员特点"></a>接口中的成员特点</h3><ul>
+<li><p>成员变量：</p>
+<p>只能是 <code>final</code> 修饰的常量</p>
+<p>默认修饰符：<code>public static final</code></p>
+</li>
+<li><p>构造方法：</p>
+<p>无</p>
+</li>
+<li><p>成员方法：</p>
+<p>只能是抽象方法</p>
+<p>默认修饰符：<code>public abstract</code></p>
+</li>
+</ul>
+<h3 id="类与类、类与接口、接口与接口之间的关系"><a href="#类与类、类与接口、接口与接口之间的关系" class="headerlink" title="类与类、类与接口、接口与接口之间的关系"></a>类与类、类与接口、接口与接口之间的关系</h3><ul>
+<li><p>类与类：</p>
+<p>继承关系，单继承，可以是多层继承</p>
+</li>
+<li><p>类与接口：</p>
+<p>实现关系，单实现，也可以多实现（因为没有方法冲突的问题）</p>
+</li>
+<li><p>接口与接口：</p>
+<p>继承关系，单继承，也可以是多继承</p>
+</li>
+</ul>
+<p>Java中的类可以继承一个父类的同时，实现多个接口</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态是继封装、继承之后，面向对象的第三大特性。</p>
+<p>现实事物经常会体现出多种形态，如学生，学生是人的一种，则一个具体的同学张三既是学生也是人，即出现两种形态。</p>
+<p>Java作为面向对象的语言，同样可以描述一个事物的多种形态。如Student类继承了Person类，一个Student的对象便既是Student，又是Person。</p>
+<p>Java中多态的代码体现在一个子类对象(实现类对象)既可以给这个子类(实现类对象)引用变量赋值，又可以给这个子类(实现类对象)的父类(接口)变量赋值。</p>
+<p>如Student类可以为Person类的子类。那么一个Student对象既可以赋值给一个Student类型的引用，也可以赋值给一个Person类型的引用。</p>
+<p>最终多态体现为父类引用变量可以指向子类对象。</p>
+<p>多态的前提是必须有子父类关系或者类实现接口关系，否则无法完成多态。</p>
+<p>在使用多态后的父类引用变量调用方法时，会调用子类重写后的方法。</p>
+<h3 id="多态使用的前提"><a href="#多态使用的前提" class="headerlink" title="多态使用的前提"></a>多态使用的前提</h3><ol>
+<li>有继承或者实现关系</li>
+<li>要方法重写</li>
+<li>父类引用指向子类对象</li>
+</ol>
+<h3 id="多态的成员访问特点"><a href="#多态的成员访问特点" class="headerlink" title="多态的成员访问特点"></a>多态的成员访问特点</h3><p>方法的运行看右边（子类），其它都看左边（父类）。</p>
+<h3 id="多态的利弊"><a href="#多态的利弊" class="headerlink" title="多态的利弊"></a>多态的利弊</h3><p>好处：提高了程序的扩展性</p>
+<p>弊端：不能访问子类特有的功能</p>
+<h3 id="多态的分类"><a href="#多态的分类" class="headerlink" title="多态的分类"></a>多态的分类</h3><ul>
+<li><p>类的多态</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(“重写父类抽象方法”);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//类的多态使用</span></span><br><span class="line">Fu fu= <span class="keyword">new</span> Zi();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口的多态</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">implements</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(“重写接口抽象方法”);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接口的多态使用</span></span><br><span class="line">Fu fu = <span class="keyword">new</span> Zi();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="instanceof-关键字"><a href="#instanceof-关键字" class="headerlink" title="instanceof 关键字"></a><code>instanceof</code> 关键字</h2><p>格式：<code>对象名 instanceof 类名</code></p>
+<p>返回值：<code>true, false</code></p>
+<p>作用：判断指定的对象是否为给定类创建的对象</p>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java构造方法总结</title>
+    <url>/2020/08/24/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h1 id="构造方法总结"><a href="#构造方法总结" class="headerlink" title="构造方法总结"></a>构造方法总结</h1><h2 id="this-关键字"><a href="#this-关键字" class="headerlink" title="this 关键字"></a><code>this</code> 关键字</h2><p><code>this</code> 关键字，本类对象的引用</p>
+<ul>
+<li><p><code>this</code> 是在方法中使用的，哪个对象调用了该方法，那么 <code>this</code> 就代表调用该方法的对象引用</p>
+</li>
+<li><p><code>this</code> 什么时候存在的？当创建对象的时候，<code>this</code> 存在的</p>
+</li>
+<li><p><code>this</code> 的作用：用来区别同名的成员变量与局部变量（<code>this.成员变量</code>）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>用来给类的成员进行初始化操作</p>
+<ul>
+<li><p>格式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修饰符 类名 (参数列表) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造方法的特点：</p>
+<ol>
+<li>方法名与类名想同</li>
+<li>没有返回值，也没有返回值类型，连 <code>void</code> 也没有</li>
+</ol>
+</li>
+<li><p>构造方法什么时候会被调用执行？</p>
+<p>只有在创建对象的时候才可以被调用</p>
+</li>
+</ul>
+<h2 id="super-关键字"><a href="#super-关键字" class="headerlink" title="super 关键字"></a><code>super</code> 关键字</h2><p>指的是父类的存储空间（理解为父类的引用）</p>
+<ul>
+<li><p>调用父类的成员变量：</p>
+<p><code>super.成员变量;</code></p>
+</li>
+<li><p>调用父类的构造方法：</p>
+<p><code>super(参数);</code></p>
+</li>
+<li><p>调用方法的成员方法：</p>
+<p><code>super.成员方法();</code></p>
+</li>
+</ul>
+<h2 id="继承中的构造方法注意事项"><a href="#继承中的构造方法注意事项" class="headerlink" title="继承中的构造方法注意事项"></a>继承中的构造方法注意事项</h2><ol>
+<li><p>如果我们手动给出了构造方法，编译器不会再给我们提供默认的空参数构造方法；</p>
+<p>如果我们没有写任何的构造方法，编译器提供给我们一个空参数构造方法</p>
+</li>
+<li><p>在构造方法中，默认的第一条语句为 <code>super();</code></p>
+<p>它是用来访问父类中的空参数构造方法，进行父类成员的初始化操作</p>
+</li>
+<li><p>当父类中没有空参数构造方法的时候，怎么办？</p>
+<ul>
+<li><p>通过 <code>super(参数);</code> 访问父类有参数的构造方法</p>
+</li>
+<li><p>通过 <code>this(参数);</code> 访问本类中其他构造方法</p>
+<p>注意：<em>本类中的其他构造方法已经能够正常访问父类构造方法</em></p>
+</li>
+</ul>
+</li>
+<li><p><code>super(参数);</code> 与 <code>this(参数);</code> 不能同时在构造方法中存在</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java继承、抽象总结</title>
+    <url>/2020/08/24/Java%E7%BB%A7%E6%89%BF%E3%80%81%E6%8A%BD%E8%B1%A1%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><ul>
+<li><p>继承：是指在一个现有类的基础上去构建一个新的类，构建出来的新类被称作子类，现有类被称作父类，子类会自动拥有父类所有。</p>
+</li>
+<li><p>继承的好处：可继承的属性和方法。</p>
+<ul>
+<li>提高了代表的可维护性</li>
+<li>提高了代码的复用性</li>
+<li>让类与类之间产生了继承关系</li>
+</ul>
+</li>
+<li><p>继承的弊端：</p>
+<ul>
+<li>类与类之间的耦合度过高</li>
+</ul>
+</li>
+<li><p>继承特点：</p>
+<ul>
+<li><p>java中类只能够单继承，不能多继承，可以多层继承</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Yy</span> <span class="keyword">extends</span> <span class="title">Object</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fu</span> <span class="keyword">extends</span> <span class="title">Yy</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>所有的类都直接或者间接的继承了 Object类，Object类称为祖宗类</p>
+</li>
+</ul>
+</li>
+<li><p>继承的注意事项：</p>
+<ol>
+<li><p>使用关键字 <code>extends</code> 让类与类之间 产生继承关系</p>
+</li>
+<li><p>父类私有的成员，子类不能继承，因为根本看不到</p>
+</li>
+<li><p>不能为了继承某个功能而随意进行继承操作， 必须要符合 is a 的关系</p>
+<p>苹果 is a 水果</p>
+<p>男人 is a 人</p>
+<p>狗  is a 人 ， 这种情况就不能继承了</p>
+</li>
+</ol>
+</li>
+<li><p>继承中的成员变量关系：</p>
+<ul>
+<li><p>不同名的变量：</p>
+<p>子类直接继承使用</p>
+</li>
+<li><p>同名的变量：</p>
+<p>默认访问的是子类自己的成员变量, 想访问父类中的同名变量，请使用 <code>super.成员变量;</code></p>
+</li>
+</ul>
+</li>
+<li><p>继承中的成员方法关系：</p>
+<ul>
+<li><p>不同名的方法：</p>
+<p>子类直接继承使用</p>
+</li>
+<li><p>同名的方法：</p>
+<p>默认访问的是子类自己的成员方法，想访问父类中的同名方法，请使用 super.成员方法();</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>super:用来表示当前对象中包含的父类对象空间的引用</p>
+<ul>
+<li><p>调用父类的成员变量：</p>
+<p><code>super.成员变量;</code></p>
+</li>
+<li><p>调用方法的成员方法:</p>
+<p><code>super.成员方法();</code></p>
+</li>
+</ul>
+</li>
+<li><p>方法重写(override)：指在子父类中，出现了方法声明相同的情况，也叫做方法覆盖，方法复写</p>
+<ul>
+<li>方法重写的注意事项：<ol>
+<li>子类的方法声明要与父类相同</li>
+<li>子类要重写方法的方法，方法的权限修饰符不能比父类的更低</li>
+<li>父类私有的方法，子类不能够进行方法重写</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>方法重载(overload)：指 在同一个类中，多个方法名称相同，它们的参数列表不同(个数不同，数据类型不同)</p>
+</li>
+</ul>
+<h1 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h1><ul>
+<li><p>抽象方法： 方法只有声明部分，没有方法体</p>
+</li>
+<li><p>抽象类： 包含抽象方法的类，一定是抽象类</p>
+<p>使用 <code>abstract</code> 修饰的类，是抽象类</p>
+</li>
+<li><p>抽象类的特点：</p>
+<ol>
+<li>抽象类与抽象方法都必须使用 <code>abstract</code> 来修饰</li>
+<li>抽象类不能直接创建对象</li>
+<li>抽象类中可以有抽象方法，也可以没有抽象方法</li>
+<li>抽象类的子类<ul>
+<li>实现了抽象方法的具体类</li>
+<li>抽象类</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>抽象类面试题：</p>
+<ol>
+<li>抽象类中是否可以没有抽象方法？如果可以，那么，该类还定义成抽象类有意义吗？为什么？</li>
+<li>可以没有抽象方法，有意义，不会让其他人直接创建该类对象</li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
 </search>
