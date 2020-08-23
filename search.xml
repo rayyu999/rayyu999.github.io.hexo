@@ -624,6 +624,27 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
+    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
+<a id="more"></a>
+<p><strong>解决方法：</strong></p>
+<p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
+<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
+<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
+<p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
+<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
+<p>这时候点击日志就会自动跳转到归档页。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo博客NexT主题使用不蒜子统计访客数</title>
     <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E4%B8%8D%E8%92%9C%E5%AD%90%E7%BB%9F%E8%AE%A1%E8%AE%BF%E5%AE%A2%E6%95%B0/</url>
     <content><![CDATA[<p>想为自己的博客添加访问统计，经过一番查阅，找到了好用又方便的不蒜子统计，不蒜子是一个极简的网页计数器。</p>
@@ -681,6 +702,45 @@
       <tags>
         <tag>Hexo</tag>
         <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客搭建</title>
+    <url>/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
+<h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g cnpm --registry=https://registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
+<p>安装完后就可以使用cnpm安装hexo：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
+<p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
+<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>建立一个名为 <em>Blog</em> 的文件夹，在命令行中进入这个文件夹，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
+<p>初始化完成后，在命令行中输入<code>hexo s</code>，此时在浏览器中输入<code>localhost:4000</code>就可以看到博客已经创建好了，并且默认创建了一篇文章。</p>
+<p>确认过后，键盘按 <em>Ctrl + C</em> 即可停止服务。</p>
+<h4 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h4><p>首先登陆到<a href="https://github.com/" target="_blank" rel="noopener">Github</a>，新建一个仓库，命名为 “<strong>你的Github昵称.github.io</strong>“。</p>
+<p>然后需要安装一个git部署插件，在命令行中打开 <em>Blog</em> 目录，输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install --save hexo-deployer-git</span></span><br></pre></td></tr></table></figure>
+<p>打开 <em>Blog</em> 目录下的站点配置文件，在文件最后的 <strong><em>repo</em></strong> 处输入刚刚创建的仓库的地址并在下方添加一行：</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> https:<span class="comment">//github.com/xxx/xxx.github.io.git</span></span><br><span class="line"><span class="symbol">  branch:</span> master	<span class="meta"># 指定分支，不填默认为master</span></span><br></pre></td></tr></table></figure>
+<p>保存退出后，在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d</span></span><br></pre></td></tr></table></figure>
+<p>部署到远端，此时刷新一下自己的Github仓库页面，会发现多了很多文件。在浏览器中访问 <strong>xxx.github.io</strong>，就可以看到博客已经成功部署。</p>
+<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo n <span class="string">"文章标题"</span></span></span><br></pre></td></tr></table></figure>
+<p>会在博客目录的<code>/source/_posts</code>目录下生成一个markdown文件，使用编辑器打开即可编辑这篇文章。</p>
+<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>在命令行中依次输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo clean	<span class="comment"># 清理缓存文件和已生成的静态文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hexo g	<span class="comment"># 生成静态文件</span></span></span><br></pre></td></tr></table></figure>
+<p>再使用<code>hexo s</code>命令就可以在<code>localhost:4000</code>页面看到新生成的文章已经发布到了博客上面。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -742,66 +802,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</title>
-    <url>/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>部署好博客并安装了NexT主题后，发现一个问题：侧边栏头像下面的日志点击是404的页面。于是到网上搜索，发现是符号转码的问题。</p>
-<a id="more"></a>
-<p><strong>解决方法：</strong></p>
-<p>到<code>\themes\next\layout\_macro</code>目录下找到<code>sidebar.swig</code>文件，打开找到这一行：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif1.png" alt=""></p>
-<p>原因是<code>url_for</code>函数将<code>||</code>转码了，</p>
-<p>将<code>theme.menu.archives</code>后面的括号更换一下位置即可：</p>
-<p><img src="http://images.yingwai.top/picgo/nextsidebarrizhif2.png" alt=""></p>
-<p>这时候点击日志就会自动跳转到归档页。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>NexT</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客搭建</title>
-    <url>/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<h2 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h2><p>​    Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<h2 id="搭建流程（Windows）"><a href="#搭建流程（Windows）" class="headerlink" title="搭建流程（Windows）"></a>搭建流程（Windows）</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>到 <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a> 选择对应的平台进行下载安装即可。</p>
-<h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p>到 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> 下载安装即可。（Node.js 版本需不低于 8.10，建议使用 Node.js 10.0 及以上版本）</p>
-<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>安装需要借助npm包管理器，由于在国内这个镜像源很慢，因此可以利用npm安装cnpm淘宝镜像源，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g cnpm --registry=https://registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
-<p>安装完后就可以使用cnpm安装hexo：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
-<p>可以用<code>hexo -v</code>来验证是否安装成功。</p>
-<h3 id="正式搭建"><a href="#正式搭建" class="headerlink" title="正式搭建"></a>正式搭建</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>建立一个名为 <em>Blog</em> 的文件夹，在命令行中进入这个文件夹，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
-<p>初始化完成后，在命令行中输入<code>hexo s</code>，此时在浏览器中输入<code>localhost:4000</code>就可以看到博客已经创建好了，并且默认创建了一篇文章。</p>
-<p>确认过后，键盘按 <em>Ctrl + C</em> 即可停止服务。</p>
-<h4 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h4><p>首先登陆到<a href="https://github.com/" target="_blank" rel="noopener">Github</a>，新建一个仓库，命名为 “<strong>你的Github昵称.github.io</strong>“。</p>
-<p>然后需要安装一个git部署插件，在命令行中打开 <em>Blog</em> 目录，输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install --save hexo-deployer-git</span></span><br></pre></td></tr></table></figure>
-<p>打开 <em>Blog</em> 目录下的站点配置文件，在文件最后的 <strong><em>repo</em></strong> 处输入刚刚创建的仓库的地址并在下方添加一行：</p>
-<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> https:<span class="comment">//github.com/xxx/xxx.github.io.git</span></span><br><span class="line"><span class="symbol">  branch:</span> master	<span class="meta"># 指定分支，不填默认为master</span></span><br></pre></td></tr></table></figure>
-<p>保存退出后，在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d</span></span><br></pre></td></tr></table></figure>
-<p>部署到远端，此时刷新一下自己的Github仓库页面，会发现多了很多文件。在浏览器中访问 <strong>xxx.github.io</strong>，就可以看到博客已经成功部署。</p>
-<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>在命令行中输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo n <span class="string">"文章标题"</span></span></span><br></pre></td></tr></table></figure>
-<p>会在博客目录的<code>/source/_posts</code>目录下生成一个markdown文件，使用编辑器打开即可编辑这篇文章。</p>
-<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>在命令行中依次输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo clean	<span class="comment"># 清理缓存文件和已生成的静态文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hexo g	<span class="comment"># 生成静态文件</span></span></span><br></pre></td></tr></table></figure>
-<p>再使用<code>hexo s</code>命令就可以在<code>localhost:4000</code>页面看到新生成的文章已经发布到了博客上面。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LaTeX常用符号表示方法</title>
     <url>/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p>图片来源：<a href="https://blog.csdn.net/caiandyong/article/details/53351737" target="_blank" rel="noopener">https://blog.csdn.net/caiandyong/article/details/53351737</a></p>
@@ -858,104 +858,6 @@ z_2 = x_1y_2 + x_2y_1 + x_2y_2</script><p>这时结果 $z$ 就以加法共享的
         <tag>MPC</tag>
         <tag>PPML</tag>
         <tag>Secret Sharing</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>不经意传输（Oblivious Transfer）</title>
-    <url>/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/</url>
-    <content><![CDATA[<p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
-<a id="more"></a>
-<p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
-<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
-<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m<em>0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m</em>{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
-<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b<em>0$ 和 $b_1$，而R只能选择接受其中一个比特 $b</em>{\theta}$。协议要保证S和R的安全，即：</p>
-<ul>
-<li>S不能知道任何关于 $\theta$ 的信息；</li>
-<li>R不能知道任何关于 $b_{1-\theta}$ 的信息。</li>
-</ul>
-<p>为了达成上面两点要求，构造如下协议：</p>
-<ol>
-<li><p>S选择好两个比特信息 $b_0$ 和 $b_1$；</p>
-</li>
-<li><p>S运行密钥生成算法（例如RSA）生成公私钥对（$sk,pk$）；</p>
-</li>
-<li><p>S保密私钥，同时S要生成两个随机数 $x_0$ 和 $x_1$，并将这两个随机数和公钥一并传送给R；</p>
-</li>
-<li><p>R选择 $\theta$，并生成一个数 $r$，R用S的公钥加密 $r$，并生成信息</p>
-<p>​                                <script type="math/tex">v =x_{\theta}+E_{pk}(r)</script></p>
-</li>
-<li><p>S在接收到 $v$ 之后，进行如下计算：</p>
-<p>​                                $r<em>{0}=D</em>{s k}\left(v-x<em>{0}\right)$<br>​                                $r</em>{1}=D<em>{s k}\left(v-x</em>{1}\right)$</p>
-</li>
-<li><p>S进行如下计算：</p>
-<p>​                                $b<em>{0}^{\prime}=b</em>{0}+r<em>{0}$<br>​                                $b</em>{1}^{\prime}=b<em>{1}+r</em>{1}$</p>
-<p>并将 $b’_0$ 和 $b’_1$ 传送给R；</p>
-</li>
-<li><p>接收到 $b’_0$ 和 $b’_1$ 后，R进行如下计算：</p>
-<p>​                                $b<em>\theta = b’</em>\theta - r$</p>
-</li>
-</ol>
-<h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>进行如下推导：</p>
-<p>​                                $b<em>{\theta}^{\prime}-r=b</em>{\theta}+r<em>{\theta}-r=b</em>{\theta}+D<em>{s k}\left(v-x</em>{\theta}\right)-r$</p>
-<p>而</p>
-<p>​                        $D<em>{s k}(v-x</em>\theta)=D<em>{s k}\left(x</em>\theta+E<em>{p k}(r)-x</em>{\theta}\right)=D<em>{s k}\left(E</em>{p k}(r)\right)=r$</p>
-<p>因此可得</p>
-<p>​                                            $b’<em>\theta - r = b</em>\theta$</p>
-<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b<em>{1-\theta}$。R得到 $b’</em>\theta$ 和 $b’<em>{1-\theta}$ 之后，由协议可知R可以正确计算 $b’</em>\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
-<p>​                        $b<em>{1-\theta}^{\prime}-r=b</em>{1-\theta}+D<em>{s k}\left(v-x</em>{\theta}\right)-r$</p>
-<p>而</p>
-<p>​                    $D<em>{s k}\left(v-x</em>{\theta}\right)=D<em>{s k}\left(x</em>{1-\theta}+E<em>{p k}(r)-x</em>{\theta}\right) \neq r$</p>
-<p>而且根据加密的特性，$D<em>{s k}\left(x</em>{1-\theta}+E<em>{p k}(r)-x</em>{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
-<h3 id="对于R的安全性"><a href="#对于R的安全性" class="headerlink" title="对于R的安全性"></a>对于R的安全性</h3><p>R的安全性要求S不能获得关于 $\theta$ 任何有价值的信息。</p>
-<p>因为 $r$ 是随机数，所以 $E_{pk}(r)$ 与随机数是不可区分的。因此 $v$ 与随机数是不可区分的，所以S不能从 $v$ 获得关于 $\theta$ 有价值的信息。</p>
-]]></content>
-      <categories>
-        <category>Study</category>
-      </categories>
-      <tags>
-        <tag>密码学</tag>
-        <tag>MPC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Zotero的附件同步</title>
-    <url>/2020/07/10/Zotero%E7%9A%84%E9%99%84%E4%BB%B6%E5%90%8C%E6%AD%A5/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<p>Zotero的存储空间只有100M，不付费的话使用起来肯定不够。因此可以使用坚果云来同步附件，这样做的好处是ios上的PaperShip也可以通过WebDAV读取资料。</p>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>注册一个坚果云账号，然后开启第三方应用管理：</p>
-<ol>
-<li><p>登陆坚果云网页端，点击右上角的账号名称——账户信息——安全选项</p>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf1.png" alt=""></p>
-<p>然后点击添加应用，应用名称填Zotero(也可以填其它，只要你记得对应的软件)，会自动生成一个应用密码。</p>
-</li>
-<li><p>打开Zotero，点击菜单栏的编辑——首选项——同步，在文件同步中选择WebDav，复制坚果云内第三方应用管理的服务器地址、账户和密码，复制完成后点击 <em>验证服务器</em>。</p>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf2.png" alt=""></p>
-<p>这一步出现问题的话可以尝试在坚果云网页端手动建立一个zotero根目录，与zotero填的地址对应。</p>
-</li>
-</ol>
-<h1 id="ZotFile的安装与设置"><a href="#ZotFile的安装与设置" class="headerlink" title="ZotFile的安装与设置"></a>ZotFile的安装与设置</h1><p>进入<a href="http://zotfile.com/" target="_blank" rel="noopener">zotfile官网 </a>下载。<br>然后打开Zotero，点击菜单栏工具——插件，有以下界面：</p>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf3.png" alt=""></p>
-<p>点击右上角的齿轮，选择 <em>Install Add-on From File…</em>，在弹出的插件安装中选择刚才下载的xpi文件进行安装。</p>
-<p>安装完成后点击菜单栏工具——ZotFile Preferences——General Settings：</p>
-<ol>
-<li>将Source Folder for Attaching new Files中的目录设置为浏览器默认的下载文件目录；</li>
-<li>将Location of Files中的目录设置为第一个Attach stored copy of files，要选择这个才能与前面的WebDAV设置配合使用。</li>
-</ol>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf4.png" alt=""></p>
-<p>下面的 /%w/%y 是命名格式，也可以设置成别的。</p>
-<p>完成以上操作后，当我们在浏览器中点击Zotero插件时，软件就会自动将下载下来的pdf文件拷贝到云盘的目录中，并将它的目录链接保存到对应的文献条目下。</p>
-<h1 id="PaperShip使用"><a href="#PaperShip使用" class="headerlink" title="PaperShip使用"></a>PaperShip使用</h1><p>方法类似上面，只要在坚果云网页端添加应用，在PaperShip登陆时选择WebDAV，把账号密码输入即可。这样在PC端管理的文献就可以方便地在移动端进行访问。</p>
-<p>效果：</p>
-<p><img src="http://images.yingwai.top/picgo/zoterojgyf5.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Zotero</tag>
-        <tag>坚果云</tag>
-        <tag>PaperShip</tag>
       </tags>
   </entry>
   <entry>
@@ -1067,6 +969,104 @@ z_2 = x_1y_2 + x_2y_1 + x_2y_2</script><p>这时结果 $z$ 就以加法共享的
       <tags>
         <tag>Python</tag>
         <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>不经意传输（Oblivious Transfer）</title>
+    <url>/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/</url>
+    <content><![CDATA[<p><em>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</em></p>
+<a id="more"></a>
+<p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
+<h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
+<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m<em>0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m</em>{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b<em>0$ 和 $b_1$，而R只能选择接受其中一个比特 $b</em>{\theta}$。协议要保证S和R的安全，即：</p>
+<ul>
+<li>S不能知道任何关于 $\theta$ 的信息；</li>
+<li>R不能知道任何关于 $b_{1-\theta}$ 的信息。</li>
+</ul>
+<p>为了达成上面两点要求，构造如下协议：</p>
+<ol>
+<li><p>S选择好两个比特信息 $b_0$ 和 $b_1$；</p>
+</li>
+<li><p>S运行密钥生成算法（例如RSA）生成公私钥对（$sk,pk$）；</p>
+</li>
+<li><p>S保密私钥，同时S要生成两个随机数 $x_0$ 和 $x_1$，并将这两个随机数和公钥一并传送给R；</p>
+</li>
+<li><p>R选择 $\theta$，并生成一个数 $r$，R用S的公钥加密 $r$，并生成信息</p>
+<p>​                                <script type="math/tex">v =x_{\theta}+E_{pk}(r)</script></p>
+</li>
+<li><p>S在接收到 $v$ 之后，进行如下计算：</p>
+<p>​                                $r<em>{0}=D</em>{s k}\left(v-x<em>{0}\right)$<br>​                                $r</em>{1}=D<em>{s k}\left(v-x</em>{1}\right)$</p>
+</li>
+<li><p>S进行如下计算：</p>
+<p>​                                $b<em>{0}^{\prime}=b</em>{0}+r<em>{0}$<br>​                                $b</em>{1}^{\prime}=b<em>{1}+r</em>{1}$</p>
+<p>并将 $b’_0$ 和 $b’_1$ 传送给R；</p>
+</li>
+<li><p>接收到 $b’_0$ 和 $b’_1$ 后，R进行如下计算：</p>
+<p>​                                $b<em>\theta = b’</em>\theta - r$</p>
+</li>
+</ol>
+<h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>进行如下推导：</p>
+<p>​                                $b<em>{\theta}^{\prime}-r=b</em>{\theta}+r<em>{\theta}-r=b</em>{\theta}+D<em>{s k}\left(v-x</em>{\theta}\right)-r$</p>
+<p>而</p>
+<p>​                        $D<em>{s k}(v-x</em>\theta)=D<em>{s k}\left(x</em>\theta+E<em>{p k}(r)-x</em>{\theta}\right)=D<em>{s k}\left(E</em>{p k}(r)\right)=r$</p>
+<p>因此可得</p>
+<p>​                                            $b’<em>\theta - r = b</em>\theta$</p>
+<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b<em>{1-\theta}$。R得到 $b’</em>\theta$ 和 $b’<em>{1-\theta}$ 之后，由协议可知R可以正确计算 $b’</em>\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
+<p>​                        $b<em>{1-\theta}^{\prime}-r=b</em>{1-\theta}+D<em>{s k}\left(v-x</em>{\theta}\right)-r$</p>
+<p>而</p>
+<p>​                    $D<em>{s k}\left(v-x</em>{\theta}\right)=D<em>{s k}\left(x</em>{1-\theta}+E<em>{p k}(r)-x</em>{\theta}\right) \neq r$</p>
+<p>而且根据加密的特性，$D<em>{s k}\left(x</em>{1-\theta}+E<em>{p k}(r)-x</em>{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
+<h3 id="对于R的安全性"><a href="#对于R的安全性" class="headerlink" title="对于R的安全性"></a>对于R的安全性</h3><p>R的安全性要求S不能获得关于 $\theta$ 任何有价值的信息。</p>
+<p>因为 $r$ 是随机数，所以 $E_{pk}(r)$ 与随机数是不可区分的。因此 $v$ 与随机数是不可区分的，所以S不能从 $v$ 获得关于 $\theta$ 有价值的信息。</p>
+]]></content>
+      <categories>
+        <category>Study</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+        <tag>MPC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Zotero的附件同步</title>
+    <url>/2020/07/10/Zotero%E7%9A%84%E9%99%84%E4%BB%B6%E5%90%8C%E6%AD%A5/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<p>Zotero的存储空间只有100M，不付费的话使用起来肯定不够。因此可以使用坚果云来同步附件，这样做的好处是ios上的PaperShip也可以通过WebDAV读取资料。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>注册一个坚果云账号，然后开启第三方应用管理：</p>
+<ol>
+<li><p>登陆坚果云网页端，点击右上角的账号名称——账户信息——安全选项</p>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf1.png" alt=""></p>
+<p>然后点击添加应用，应用名称填Zotero(也可以填其它，只要你记得对应的软件)，会自动生成一个应用密码。</p>
+</li>
+<li><p>打开Zotero，点击菜单栏的编辑——首选项——同步，在文件同步中选择WebDav，复制坚果云内第三方应用管理的服务器地址、账户和密码，复制完成后点击 <em>验证服务器</em>。</p>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf2.png" alt=""></p>
+<p>这一步出现问题的话可以尝试在坚果云网页端手动建立一个zotero根目录，与zotero填的地址对应。</p>
+</li>
+</ol>
+<h1 id="ZotFile的安装与设置"><a href="#ZotFile的安装与设置" class="headerlink" title="ZotFile的安装与设置"></a>ZotFile的安装与设置</h1><p>进入<a href="http://zotfile.com/" target="_blank" rel="noopener">zotfile官网 </a>下载。<br>然后打开Zotero，点击菜单栏工具——插件，有以下界面：</p>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf3.png" alt=""></p>
+<p>点击右上角的齿轮，选择 <em>Install Add-on From File…</em>，在弹出的插件安装中选择刚才下载的xpi文件进行安装。</p>
+<p>安装完成后点击菜单栏工具——ZotFile Preferences——General Settings：</p>
+<ol>
+<li>将Source Folder for Attaching new Files中的目录设置为浏览器默认的下载文件目录；</li>
+<li>将Location of Files中的目录设置为第一个Attach stored copy of files，要选择这个才能与前面的WebDAV设置配合使用。</li>
+</ol>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf4.png" alt=""></p>
+<p>下面的 /%w/%y 是命名格式，也可以设置成别的。</p>
+<p>完成以上操作后，当我们在浏览器中点击Zotero插件时，软件就会自动将下载下来的pdf文件拷贝到云盘的目录中，并将它的目录链接保存到对应的文献条目下。</p>
+<h1 id="PaperShip使用"><a href="#PaperShip使用" class="headerlink" title="PaperShip使用"></a>PaperShip使用</h1><p>方法类似上面，只要在坚果云网页端添加应用，在PaperShip登陆时选择WebDAV，把账号密码输入即可。这样在PC端管理的文献就可以方便地在移动端进行访问。</p>
+<p>效果：</p>
+<p><img src="http://images.yingwai.top/picgo/zoterojgyf5.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Zotero</tag>
+        <tag>坚果云</tag>
+        <tag>PaperShip</tag>
       </tags>
   </entry>
   <entry>
@@ -1368,6 +1368,51 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
       </tags>
   </entry>
   <entry>
+    <title>在不同的电脑上更新Hexo博客</title>
+    <url>/2020/08/23/%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%94%B5%E8%84%91%E4%B8%8A%E6%9B%B4%E6%96%B0Hexo%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<p>参考了<a href="https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。" target="_blank" rel="noopener">https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。</a></p>
+<p>思路是使用git的分支来管理。</p>
+<h1 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h1><p>原本编辑博客的电脑：</p>
+<ol>
+<li><p>首先在github上新建一个hexo分支，并设置它为默认分支。</p>
+</li>
+<li><p>在电脑上的其它目录中，克隆hexo仓库到本地，获得隐藏的.git文件夹。</p>
+</li>
+<li><p>复制这个文件夹到原来的博客目录下，删除博客主题目录下的.git文件夹，然后前面克隆的文件夹就可以删除了。</p>
+</li>
+<li><p>上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="本机编辑博客"><a href="#本机编辑博客" class="headerlink" title="本机编辑博客"></a>本机编辑博客</h1><p>编辑完文章后，</p>
+<ol>
+<li><p>上传到hexo分支</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d -g</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="在别的电脑上编辑博客"><a href="#在别的电脑上编辑博客" class="headerlink" title="在别的电脑上编辑博客"></a>在别的电脑上编辑博客</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<li>安装git</li>
+<li>克隆github上的hexo分支到本地</li>
+<li>安装node.js</li>
+<li>安装hexo（不需要初始化）</li>
+</ol>
+<p>后面两步可以参考<a href="https://yuyingwai.cn/2020/04/11/Hexo博客搭建/" target="_blank" rel="noopener">Hexo博客搭建</a>。</p>
+<h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><p><strong>每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先执行<code>git pull origin hexo</code> 命令</strong>，即将远端最新的hexo分支拉到本地，使本地与远端达到同步。</p>
+<p>然后与本机编辑一样，先用 <code>git add .</code>、<code>git commit -m &quot;备注&quot;</code> 和 <code>git push origin hexo</code> 上传，再进行部署。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>群与环的概念</title>
     <url>/2020/07/06/%E7%BE%A4%E4%B8%8E%E7%8E%AF%E7%9A%84%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<hr>
@@ -1461,51 +1506,6 @@ a^n \cdot a^m = a^{m+n}, \ \ (a^n)^m = a^{mn}</script><h2 id="环例子"><a href
       <tags>
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在不同的电脑上更新Hexo博客</title>
-    <url>/2020/08/23/%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%94%B5%E8%84%91%E4%B8%8A%E6%9B%B4%E6%96%B0Hexo%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<p>参考了<a href="https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。" target="_blank" rel="noopener">https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。</a></p>
-<p>思路是使用git的分支来管理。</p>
-<h1 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h1><p>原本编辑博客的电脑：</p>
-<ol>
-<li><p>首先在github上新建一个hexo分支，并设置它为默认分支。</p>
-</li>
-<li><p>在电脑上的其它目录中，克隆hexo仓库到本地，获得隐藏的.git文件夹。</p>
-</li>
-<li><p>复制这个文件夹到原来的博客目录下，删除博客主题目录下的.git文件夹，然后前面克隆的文件夹就可以删除了。</p>
-</li>
-<li><p>上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="本机编辑博客"><a href="#本机编辑博客" class="headerlink" title="本机编辑博客"></a>本机编辑博客</h1><p>编辑完文章后，</p>
-<ol>
-<li><p>上传到hexo分支</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d -g</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="在别的电脑上编辑博客"><a href="#在别的电脑上编辑博客" class="headerlink" title="在别的电脑上编辑博客"></a>在别的电脑上编辑博客</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li>安装git</li>
-<li>克隆github上的hexo分支到本地</li>
-<li>安装node.js</li>
-<li>安装hexo（不需要初始化）</li>
-</ol>
-<p>后面两步可以参考<a href="https://yuyingwai.cn/2020/04/11/Hexo博客搭建/" target="_blank" rel="noopener">Hexo博客搭建</a>。</p>
-<h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><p><strong>每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先执行<code>git pull hexo</code> 命令</strong>，即将远端最新的hexo分支拉到本地，使本地与远端达到同步。</p>
-<p>然后与本机编辑一样，先用 <code>git add .</code>、<code>git commit -m &quot;备注&quot;</code> 和 <code>git push origin hexo</code> 上传，再进行部署。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1858,6 +1858,167 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
         <tag>SVM</tag>
         <tag>Linear Regression</tag>
         <tag>Logistic Regression</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</title>
+    <url>/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/</url>
+    <content><![CDATA[<p><em>Samira Khodabandehlou</em></p>
+<p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=</a></p>
+<a id="more"></a>
+<p><img src="http://images.yingwai.top/picgo/Designing an e-commerce recommender system based on collaborative filtering using a data mining approach.jpg" alt=""></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>电子商务推荐系统已经转变为客户非常重要的决策辅助工具，利用信息技术和客户信息提供在线个性化推荐。同时，协同过滤推荐系统是电子商务系统成功的关键组成部分之一。尽管有协同过滤现在的普及和成功，这些系统仍然面临着一系列严重的限制，包括冷启动、user-item矩阵稀疏、可扩展性和用户兴趣在这段时间内的变化，这些都阻碍了对客户的准确推荐。虽然已有很多研究提出了克服这些局限性的方法，但还没有提供一个全面的模型来降低这些局限性：1)在产品类别层面上基于LRFM变量进行客户细分，以评估与公司的客户关系的长度、最近程度、频率和购买产品类别的金额；2)在每个聚类级别上基于用户-类别矩阵提取关联规则；3)根据人口统计变量进行客户细分；4)改变用户-项目矩阵并降低其维数；5)通过将细分方法的结果与CF加权组合来开发新的相似度函数。根据所获得的结果，本研究提出的系统消除了传统的CF约束，为客户的偏好提供了更准确、更合适的建议。</p>
+<p><strong>关键词：</strong>协同过滤；数据挖掘；电子商务；推荐系统；时态信息。</p>
+<p>本研究的主要目标包括：找出传统协同过滤在向合适的用户推荐合适商品方面的局限性，提出一个全面的、全新的推荐系统来消除传统CF的局限性，用真实的数据对推荐系统进行评估，以提供更准确、更符合顾客口味的推荐。</p>
+<h1 id="理论背景"><a href="#理论背景" class="headerlink" title="理论背景"></a>理论背景</h1><h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><p><strong>推荐系统</strong>是提高电子商务环境中决策过程质量的有用工具，因为它们通过提供必要的信息和有用的建议来帮助在线决策者选择与他们的愿望和要求一致的项目(Shambour and Lu，2015；Son，2016)。事实上，识别用户偏好的能力是个性化RS的核心(Kim等人，2011年)。Ricci等人。(2011)将RS定义为特定类型的信息系统，该信息系统：</p>
+<ol>
+<li>帮助客户选择他们没有亲身体验的项目；</li>
+<li>向顾客推荐商品；</li>
+<li>通过为客户提供信息来帮助他们决定购买哪种商品。</li>
+</ol>
+<p>创建推荐系统有五个阶段：收集数据、分析用户信息、计算相似度、选择邻居、预测并提出前N个项目的列表(Yahya和Al-Shamri，2016)。这些系统出现在20世纪90年代中期，通常分为三类(Lee，2010；Resnick，1994)：</p>
+<ol>
+<li><p><strong>协同过滤</strong>：这些系统根据一组被称为邻居的相似用户或相似项目的得分提供推荐(Kim等人，2005年)。CF是Netflix和Amazon等著名电子商务公司使用的最受欢迎的RS之一(Hernando等人，2016；Kim等人，2005年)。这些系统又根据它们用于预测用户偏好的算法类型分为两类(Ghazarian和Nematbakhsh，2014)：</p>
+<ul>
+<li><strong>Memory-based</strong>：这些系统使用用户项目评分矩阵和KNN算法来识别用户的邻居并预测他们的偏好(Ghazarian和Nematbakhsh，2014年；Hernando等人，2016年；Kim等人，2011年)，其中使用皮尔逊相关系数等方法计算用户之间的相似性(Bobadilla等人，2012年)。在本研究中，使用KNN算法和皮尔逊相关系数来提供建议。</li>
+<li><strong>Model-based</strong>：这些系统使用分段等方法处理用户的档案数据以提供建议，从而改进计算(Ghazarian和Nematbakhsh，2014；Hernando等人，2016)。</li>
+</ul>
+<p>尽管CF方法很受欢迎并取得了成功，但它们仍然面临着一些严重的限制。这些限制包括：</p>
+<ul>
+<li><strong>冷启动</strong>：在多个用户购买某个项目之前，系统不能向某人推荐该项目。这个问题被称为冷启动。用户的冷启动是指最近加入推荐系统并且没有关于他或她的足够信息的用户(Elahi等人，2016；Hu和Pu，2011；Kim等人，2011；Lee，2010；Son，2016；Sharma和Ray，2016)。</li>
+<li><strong>可伸缩性</strong>：由于客户数据和产品数据的绝对数量，系统必须花费大量的金钱和时间来提取所有客户之间的相似性，导致其生产率较低(Hu和Pu，2011；Hernando等人，2016；Keramati和Khaleghi，2014；Lee，2010)。</li>
+<li><strong>user-item矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致user-item矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
+<li><strong>用户偏好的改变</strong>：用户的品味和偏好可能会随着时间的推移而改变。例如，一位最近生了孩子的母亲可能对购买婴儿服装感兴趣，她最近的购买可能反映了这种新的关注。这是当；她可能从来没有对这样的物品有任何兴趣(Ding等人，2006年；岩田，2008年；Lee等人，2008年)。(Ding et al.，2006；Iwata，2008；Lee et al.，2008)。</li>
+</ul>
+<p>上述限制可能会对RS的性能产生负面影响，从而限制系统创建有意义和准确的推荐。</p>
+</li>
+<li><p><strong>基于内容的过滤器(Content-Based Filter，CBF)</strong>：该方法基于这样的概念，即用户对他们以前感兴趣的项目感兴趣。因此，这些系统根据项目和产品之间的相似性提供建议(Anderson和Hiralall，2009年；Elahi等人，2016年)。因此，这种方法取决于物品的规格和与这些规格相关的用户配置文件的可用性(Anderson and Hiralall，2009)。这是因为在互联网上存储大量不同种类电子产品的目录是一项非常困难的任务(Bobadilla等人，2012年)。因此，音乐或视频文件等一些产品的内容分析非常困难；这个问题使得CF比CBF要好得多(Anderson和Hiralall，2009；Kim等人，2011)。与CBF相比，CF在电子商务中具有更高的灵活性和与RS的兼容性，使其成为最常用和最有用的RS系统之一(Burke，2002；Iwata，2008；Wang and Wu，2012)。因此，在本研究中，使用CF的概念作为主要的推荐机制。</p>
+</li>
+<li><p>混合方法：一些RS使用上述系统的组合来减少它们的限制；更多细节将在下面的实验背景部分提供(Burke，2002；Keramati和Khaleghi，2014)。</p>
+</li>
+</ol>
+<h2 id="客户细分"><a href="#客户细分" class="headerlink" title="客户细分"></a>客户细分</h2><p>客户细分是一种非常有用的数据挖掘方法，用于在电子商务的RS中找到“邻居”，在电子商务中，使用特定的方法，如聚类，来选择一些用户作为邻居，以改进偏好的预测(Khodabandehlou和Niknafs，2016；Li等人，2011年)。</p>
+<p>在RS中，选择合适的属性进行分割是影响系统性能的重要因素之一。最近购买、频率和货币模型(RFM)的属性是基于分析客户购买行为的一种很好的客户细分方法，它已经成功地用于许多RS(Keramati和Khaleghi，2014；Khodabandehlou和Zivari Rahman，2017；Lee，2010)。各种研究表明，在RFM模型中加入L(客户关系长度)指标将导致对客户的更准确分析，并将提高细分的质量(Li等人，2011年)。因此，在本研究中，LRFM模型被用于客户细分和识别具有相似购买行为的客户类别。</p>
+<p>此外，分割算法对识别出的片段的质量起着重要的作用。在聚类算法中，K-Means算法被认为是最成功和最合适的分割方法(Khodabandehlou和Niknafs，2016)，在许多研究中证明了它与RS的兼容性(Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Li等人，2011年)。K-Means是一种数据挖掘方法，它需要K的初始值，即聚类的数量，才能运行。确定最佳簇数的合适方法是自组织映射(SOM)算法。该算法是一种无监督神经网络，可以从数据中识别未知模式，并估计合适的聚类数量(Abidi和Ong，2000；Mosayebian等人，2012)。</p>
+<p>相关研究建议在RS中结合K-Means和SOM算法使用两阶段分割方法，以获得更准确的结果(Keramati和Khaleghi，2014；Mosayebian等人，2012年)。因此，本研究将利用这一模式进行客户细分。</p>
+<h2 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h2><p>关联规则是数据挖掘的重要方法之一，用于分析RS大型数据库中各种商品之间的市场篮子。分析购物篮已经成为发现用户购物车之间关系的流行系统(Hsu等人，2004；Liu and Shih，2005a)。Apriori算法是最常见的关联规则之一(Hsu等人，2004；Liu和Shih，2005a，2005b)，用于在已经购买了另一件物品时找到购买特定物品的概率模式。在RS中，已经形成了许多关于不同用户的购买行为的规则(Keramati和Khaleghi，2014；Liu和Shih，2005a，2005b)。在这些规则吸引程度的衡量标准中，我们可以提到支持性规则和置信度规则，它们分别指发现的规则的传播度和可接受性(Hsu等人，2004；Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Liu和Shih，2005a，2005b)。</p>
+<h1 id="评估措施"><a href="#评估措施" class="headerlink" title="评估措施"></a>评估措施</h1><p>评价推荐系统的性能是保证推荐系统通用性的重要一步。有一些评价RSS准确性或性能的众所周知的度量；诸如精确度、覆盖率和F度量(为了在这两个度量之间创建平衡)，它们可以很好地显示推荐系统的性能(Bobadilla等人，2012年；Elahi等人，2016；Ghazarian和Nematbakhsh，2014；Shambour和Lu，2015；Son，2016)。因此，为了评估所提出的研究模型的性能，采用了这些测量方法。</p>
+<p>在公式(1)和(2)中，喜爱的项目是指必须推荐给用户的一组产品或项目，而推荐的项目是已经由系统推荐给用户的项目的集合。精确度表示推荐集合中正确推荐的百分比，并评估这些推荐的精确度和准确性。通过公式(1)计算：</p>
+<script type="math/tex; mode=display">
+{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \tag{1}</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
+<script type="math/tex; mode=display">
+{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \tag{2}</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
+<script type="math/tex; mode=display">
+{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \tag{3}</script><h1 id="研究框架"><a href="#研究框架" class="headerlink" title="研究框架"></a>研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于product category-user矩阵提取关联规则。在阶段4中，完成user-item矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
+<p><img src="http://images.yingwai.top/picgo/derf1.png" alt=""></p>
+<center>
+    <i>图1 建议的研究系统的总体架构</i>
+</center>
+
+
+<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>数据准备(也称为数据预处理)是RSS开发过程中不可或缺的一步，占整个RSS开发所需时间的60%-70%。此步骤包括数据清理、数据集成和数据转换三个阶段。</p>
+<h3 id="数据清理"><a href="#数据清理" class="headerlink" title="数据清理"></a>数据清理</h3><p>数据清理过程包括完成缺失值、识别和消除离群值数据以及解决数据之间的冲突。此外，在此阶段，必须删除不相关或无用的字段或属性，如有必要，从初始数据集形成新的变量。在此阶段，将不完美的记录和信息不完整的客户从主数据集中剔除，数据集的记录从17,000条减少到15,386条，客户数量从2,542个减少到2,080个。为每个产品类别计算RFM变量。</p>
+<h3 id="数据集成"><a href="#数据集成" class="headerlink" title="数据集成"></a>数据集成</h3><p>为了更好地理解数据，并对每个数据集中的数据进行更好的科学管理，数据集成(将两个或多个数据集合并集成在一起)是必要的，这是数据准备的第二阶段。在这一阶段，客户交易数据与他们的个人资料数据(年龄、性别、教育程度、婚姻状况和职业)集成在一起。</p>
+<h3 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h3><p>在此阶段，必须将数据转换为适合数据挖掘和设计RS的不同形式。数据集中的字符串变量(如性别)将转换为数值变量和值。</p>
+<h2 id="基于LRFM模型的分割"><a href="#基于LRFM模型的分割" class="headerlink" title="基于LRFM模型的分割"></a>基于LRFM模型的分割</h2><p>本研究采用两阶段聚类法，结合SOM(确定最佳聚类数)和K-Means(创建聚类)方法进行分割。</p>
+<p>在此阶段，根据产品类别的RFM变量(每个产品类别的RFM变量的值分别计算)和L变量(客户关系的长度)进行客户细分。对于给定的客户，表1中给出了这些变量的样本，根据这些变量进行了细分。</p>
+<p>在本研究中，将LRFM模型用于产品类别层面的客户细分有三个原因，包括以下几个方面：</p>
+<ol>
+<li>通过减少user-item矩阵中的客户数量，提高了该方法的生产率和效率，从而降低了矩阵的可扩展性和稀疏性问题。</li>
+<li>这个模型不仅决定了顾客的价值，而且可以清楚地反映顾客的兴趣和偏好，例如，如果某一种产品的购买频率对于两个给定的顾客来说是相似的，可以推断这两个人对购买这两种商品的兴趣是一样的。M和R的变量也是以相同的方式推导出来的。</li>
+<li>模型中的产品类别变量R涉及客户最近的品味和偏好，由于最近的购买更能反映客户当前的兴趣和偏好，它将提供更准确的推荐，更符合客户当前的兴趣。</li>
+</ol>
+<p><img src="http://images.yingwai.top/picgo/dert1.png" alt=""></p>
+<center>
+    <i>表1 基于LRFM模型的客户细分属性</i>
+</center>
+
+
+
+<h2 id="基于product-category-user矩阵的关联规则提取"><a href="#基于product-category-user矩阵的关联规则提取" class="headerlink" title="基于product category-user矩阵的关联规则提取"></a>基于product category-user矩阵的关联规则提取</h2><p>为了提取关联规则，本研究使用了Apriori算法。在此阶段，使用product category-user矩阵(客户从单个产品类别购买的次数)的交易数据在前一阶段的每个聚类的级别提取关联规则。提取的规则用于确定每个目标客户的前N个推荐产品类别的列表。推荐的每个产品类别的优先级取决于其规则的可信度和支持措施。信任度和支持度值越大的产品类别，推荐优先级越高。此阶段中提取的规则的输出(即每个目标客户的预测产品类别)将作为下一阶段的输入。产品类别级规则提取的目的是减少user-item矩阵中的产品数量，有效缓解矩阵的可扩展性和稀疏性问题。</p>
+<h2 id="更改user-item矩阵"><a href="#更改user-item矩阵" class="headerlink" title="更改user-item矩阵"></a>更改user-item矩阵</h2><p>在CF系统中，user-item矩阵(包括购买/不购买项目的二进制数据或用户给予项目的分数)是关于购买偏好对客户进行聚类并确定目标客户的邻居的基础。然而，由于电子商务中商品种类繁多，该矩阵经常面临数据稀疏的问题。研究表明，推荐质量取决于user-item矩阵的密度。</p>
+<p>为了使该矩阵更加密集，以这样的方式使用分段和关联规则阶段的结果，即在用于确定目标客户的邻居的user-item矩阵中，他或她将仅与他或她的集群中的用户进行比较，并且项目将限于为目标客户预测的项目。由于减少了用户数和项目数，缓解了可伸缩性问题，提高了RS的速度和准确性。</p>
+<p>在他们的研究中，Lee等人。(2008)证明，最近进行的购买更能反映用户当前的偏好，最近添加到网站上出售的项目对用户更具吸引力。因此，基于表2，对于每个项目，考虑用户购买项目的时间(PT)和项目已经可供购买的时间(LT)(启动时间)的两个参数，并且改变user-item矩阵。</p>
+<p><img src="http://images.yingwai.top/picgo/dert2.png" alt=""></p>
+<center>
+    <i>表2 基于时间信息更改user-item矩阵</i>
+</center>
+
+
+
+
+
+<p>为了确定PT和LT变量的得分，在这个改变的矩阵中，首先根据这两个参数的潜伏期将这两个参数分为五类。因此，PT参数的分数包括过去购买(分数1)、过去购买(分数2)、最近购买(分数3)、最近购买(分数4)和最近购买(分数5)。对于LT参数，得分类似。根据表3，在user-item矩阵中，对于用户给出的分数，使用组合分数。例如，对于(2，5)的组合，分数将等于7(5+2)。在计算混合得分时，这两个参数的权重都是相同的。</p>
+<p><img src="http://images.yingwai.top/picgo/dert3.png" alt=""></p>
+<center>
+    <i>表3 对LT和PT参数进行评分</i>
+</center>
+
+
+<p>因此，创建了25(5×5)个双重组合，其中所有客户由55、54、53、…的组合表示。，11，其中，客户最好的类别是组合55(最近购买时间和最近上线时间的类别)和得分10，而客户最差的类别用11(最老的购买时间和最老的上线时间)表示，得分为2。根据这种评分方法，可以将客户划分为集群，并计算其相似度。创建这个新的user-item矩阵的目的是考虑用户随时间的喜好，从而提高推荐的准确性。</p>
+<h2 id="基于CF的相似度计算"><a href="#基于CF的相似度计算" class="headerlink" title="基于CF的相似度计算"></a>基于CF的相似度计算</h2><p>在CF系统中，计算每个目标客户与其他客户之间的相似度的方法有很多。最流行的方法之一是使用皮尔逊相关系数，与其他传统的统计方法相比，它提供了最好的预测和推荐结果(Bobadilla等人)。(2012年)。在皮尔逊的相关方法中，使用公式(4)测量两个给定客户$u$和$u’$之间的相似性：</p>
+<script type="math/tex; mode=display">
+Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \tag{4}</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的user-item矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
+<h2 id="基于人口统计属性的细分"><a href="#基于人口统计属性的细分" class="headerlink" title="基于人口统计属性的细分"></a>基于人口统计属性的细分</h2><p>在这个阶段，使用两阶段聚类方法，根据年龄、性别、教育程度、婚姻状况和职业等人口统计变量对客户进行细分，然后计算他们的簇内相似度。因此，如果两个客户具有相似的人口统计属性，他们对某些项目的态度会相似，这在CF方法中没有反映出来。在本研究中，基于这些变量进行客户细分的目的是为了更好地选择新用户的邻居，通过克服冷启动问题有效改善推荐过程。</p>
+<h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于user-item矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
+<script type="math/tex; mode=display">
+Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \tag{5}</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
+<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r<em>{u’,i})$，预测用户$u$对于项目$i$，$(r</em>{u,i})$的得分如下：</p>
+<script type="math/tex; mode=display">
+r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r<em>{u’,i})$越相似，将以更高的加权比率用于预测$(r</em>{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
+<h1 id="评估提出的推荐方法"><a href="#评估提出的推荐方法" class="headerlink" title="评估提出的推荐方法"></a>评估提出的推荐方法</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
+<p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
+<center>
+    <i>表4 传统CF推荐系统与提出的CF推荐系统的评价方法比较</i>
+</center>
+
+
+
+<p>在此阶段，将比较所提出的方法与传统CF推荐系统在不同N值(推荐项目数)下以及基于使用精确度、覆盖率和F度量的测试数据的结果的准确性。</p>
+<p>基于SOM算法，基于LRFM变量的最优聚类数为6个，基于人口统计变量的最优聚类数为5个。表4列出了基于不同N值的评估措施的传统方法和提出的方法的准确性。对于所有这些方法，参数K(邻居数目)的值都等于40。</p>
+<p>根据表4的结果，在每个准则下，所提出的系统都比传统系统具有更好的性能。事实上，传统系统(基于F-Measure)在5个推荐项目上的准确率为43.27%，而在所提出的系统中，该准确率为55.59%。在20个推荐项目中，传统方法的准确率为62.43%，其推荐系统的准确率为81.4%。在30个项目中，传统系统的准确率为68.54%，在提出的系统中，准确率为96.59%，表明该系统在30个项目上的准确率比传统系统提高了约28%。</p>
+<p><img src="http://images.yingwai.top/picgo/derf2.png" alt=""></p>
+<center>
+    <i>图2 比较传统方法和建议方法在不同N值下的性能(颜色请参见在线版本)</i>
+</center>
+
+
+<p><img src="http://images.yingwai.top/picgo/derf3.png" alt=""></p>
+<center>
+    <i>图3 评估不同K值对建议方法性能的影响(有关颜色，请参阅在线版本)</i>
+</center>
+
+
+<p>在此基础上，将推荐项数增加到N=30，两种方法的性能都有所提高。然而，增加数据数量并不会导致结果准确性的显著变化和提高。因此，将推荐项目的数量增加到某个阈值可以提高建议推荐的质量；该阈值等于N=30。为了更好地比较这两种方法的性能，图2描述了F-Measure准则的变化趋势。</p>
+<p>为了评估参数K的变化在所建议的研究方法的性能中的作用，图3中描述了三个不同N值的F测量值。基于图3，对于N参数的所有三个值，将邻居数增加到K=40将提高所提出的方法的性能。但是，进一步增加该参数会降低方法的精确度，从而对推荐质量产生负面影响。</p>
+<h1 id="结论及建议"><a href="#结论及建议" class="headerlink" title="结论及建议"></a>结论及建议</h1><p>本研究从冷启动、可扩展性、稀疏用户-项目矩阵以及用户兴趣的变化等方面考虑了电子商务中RS的基本和常见限制，以期解决或缓解这些限制。因此，为了克服这些局限性，人们利用一套数据挖掘方法，提出了一个综合性的电子商务推荐系统。综合研究结果，该系统的性能优于传统的CF系统。研究的总体结果表明，与传统系统相比，新的推荐系统的准确率有了显着的提高。因此，该系统对30个项目的推荐准确率比传统系统提高了约28%。此外，根据结果，系统在推荐30个项目时的准确率达到了最高水平；因此，当推荐项目数量超过30个时，传统系统和所提出的系统的准确率都没有明显的变化，因此，当推荐项目的数量超过30时，传统系统和本文提出的系统的准确率都没有明显的变化。例如，当推荐50个项目时，传统系统的准确率为68/84，新建议系统的准确率为94/45，这表明推荐项目的数量从30个增加到50个，准确率略有下降。因此，建议推荐项目的最大值为30个，因为这可能会导致计算和项目选择的复杂性。下面简要介绍一下研究成果和研究创新之处：</p>
+<ul>
+<li>在RS的开发过程中，在产品类别层面采用基于LRFM变量的细分方法，可以改进客户间相似度的确定方法，从而更准确、更恰当地选择目标客户的邻居。由于LRFM模型是识别客户购买行为和反映其偏好的合适方法之一，因此基于该模型在产品类别层次上进行细分，可以区分客户在购买产品类别时的偏好，并将具有相似品味和兴趣的客户归入同一聚类。例如，如果两个给定客户购买商品的频率相似，则可以得出结论，这两个客户对购买该产品类别中的商品表现出相同的兴趣水平。R和M的变量可以以相同的方式推断。另一方面，在产品类别水平上的变量R考虑了客户的利益，并且由于最近的购买更能反映客户的偏好，这将导致更准确的推荐。由于用户的喜好会随着时间的推移而改变，因此RS提供与客户当前兴趣相容的项目的能力会受到影响，这有时会导致推荐与客户当前喜好完全无关的项目。此外，在用户-项目矩阵中使用该分割的结果将降低矩阵的维数，将缓解KNN算法的稀疏矩阵和可伸缩性问题，这导致KNN算法的性能提高，因为在这种情况下，目标客户仅与用户-项目矩阵中他或她自己的集群内的客户相比较。因此，通过减少矩阵中的用户数，提高了KNN算法的速度和精度，改善了RS的整体性能。根据这一讨论和研究结果，可以安全地得出结论，使用LRFM模型可以加快提供建议的过程，并允许创建符合客户当前利益的准确建议。</li>
+<li>基于product category-user矩阵的关联规则提取提高了推荐方法的性能。这些规则通过评估产品类别之间的关系，预测他们购买的概率，并向目标客户推荐一套产品类别。将user-item矩阵限制为这些推荐产品类别中的项将降低矩阵的维数，有效地缓解了KNN算法的稀疏矩阵和可伸缩性问题。在该方法中，仅从从这些规则获得的产品类别中向目标客户提供推荐项目。结果表明，该方法通过减少矩阵中的项数，提高了KNN算法的速度和精度，有效地改善了RS的整体性能，研究结果表明该方法具有较好的性能。</li>
+<li>在RS的设计过程中考虑商品的购买时间以及它们在电子商务网站上的上线时间，将会提高推荐的质量。换言之，比起过去的购买，多留意顾客最近的购买，以及比起其他商品，多留意最近在网站上推出的商品，便可以更了解顾客现时的喜好，帮助他们找到更吸引人、更合意的商品。考虑到这些问题，RS才能更好地实现他们的最终目标，即向适当的个人提供适当的物品。在本研究中，这两个变量被用来创建一个新的用户-项目矩阵，并在表4和图2的基础上取得了很好的结果。</li>
+<li>为了更好地使推荐与用户的喜好相一致，人口特征的作用是无可否认的，因为大多数个人购买都取决于他们的年龄、性别、教育水平等。当它与其他变量如购买行为变量(包括LRFM和user-item矩阵)一起考虑时，这一作用更为显著，这是本研究通过定义一个新的相似性函数得出的。</li>
+</ul>
+<p>考虑到上述问题，本研究通过关注这些问题，利用各种数据挖掘方法，试图改进和完善以往关于CF系统的研究，以期提出一个准确率和性能最高的电子商务推荐系统。</p>
+<p>以下是对未来研究的一些建议：</p>
+<ol>
+<li>将CF方法和CBF方法相结合，开发了所提出的模型。</li>
+<li>研究基于个性特征的客户细分、其他人口统计变量(如地址和收入)以及其他行为变量(如购买商品的总数)对建议系统性能的影响。</li>
+<li>将所提出的方法应用于其他行业的数据集，以提供更强的通用性。</li>
+<li>使用大数据对提出的模型进行进一步评估，这些数据可以从大型网店获得。</li>
+</ol>
+<p>与过去的大多数研究一样，这项研究在实施和评估方面存在一些局限性，包括：</p>
+<ol>
+<li>使用的数据集的时间段限制为一年；</li>
+<li>研究数据仅限于一家网上服装店；</li>
+<li>正在研究的商店顾客数量有限。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>数据挖掘</tag>
+        <tag>推荐系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2298,167 +2459,6 @@ f(x) = \left\{ \begin{array}{lcl}0, & \mbox{if} & x < - \frac{1}{2} \\x + \frac{
       </tags>
   </entry>
   <entry>
-    <title>论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</title>
-    <url>/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/</url>
-    <content><![CDATA[<p><em>Samira Khodabandehlou</em></p>
-<p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=</a></p>
-<a id="more"></a>
-<p><img src="http://images.yingwai.top/picgo/Designing an e-commerce recommender system based on collaborative filtering using a data mining approach.jpg" alt=""></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>电子商务推荐系统已经转变为客户非常重要的决策辅助工具，利用信息技术和客户信息提供在线个性化推荐。同时，协同过滤推荐系统是电子商务系统成功的关键组成部分之一。尽管有协同过滤现在的普及和成功，这些系统仍然面临着一系列严重的限制，包括冷启动、user-item矩阵稀疏、可扩展性和用户兴趣在这段时间内的变化，这些都阻碍了对客户的准确推荐。虽然已有很多研究提出了克服这些局限性的方法，但还没有提供一个全面的模型来降低这些局限性：1)在产品类别层面上基于LRFM变量进行客户细分，以评估与公司的客户关系的长度、最近程度、频率和购买产品类别的金额；2)在每个聚类级别上基于用户-类别矩阵提取关联规则；3)根据人口统计变量进行客户细分；4)改变用户-项目矩阵并降低其维数；5)通过将细分方法的结果与CF加权组合来开发新的相似度函数。根据所获得的结果，本研究提出的系统消除了传统的CF约束，为客户的偏好提供了更准确、更合适的建议。</p>
-<p><strong>关键词：</strong>协同过滤；数据挖掘；电子商务；推荐系统；时态信息。</p>
-<p>本研究的主要目标包括：找出传统协同过滤在向合适的用户推荐合适商品方面的局限性，提出一个全面的、全新的推荐系统来消除传统CF的局限性，用真实的数据对推荐系统进行评估，以提供更准确、更符合顾客口味的推荐。</p>
-<h1 id="理论背景"><a href="#理论背景" class="headerlink" title="理论背景"></a>理论背景</h1><h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><p><strong>推荐系统</strong>是提高电子商务环境中决策过程质量的有用工具，因为它们通过提供必要的信息和有用的建议来帮助在线决策者选择与他们的愿望和要求一致的项目(Shambour and Lu，2015；Son，2016)。事实上，识别用户偏好的能力是个性化RS的核心(Kim等人，2011年)。Ricci等人。(2011)将RS定义为特定类型的信息系统，该信息系统：</p>
-<ol>
-<li>帮助客户选择他们没有亲身体验的项目；</li>
-<li>向顾客推荐商品；</li>
-<li>通过为客户提供信息来帮助他们决定购买哪种商品。</li>
-</ol>
-<p>创建推荐系统有五个阶段：收集数据、分析用户信息、计算相似度、选择邻居、预测并提出前N个项目的列表(Yahya和Al-Shamri，2016)。这些系统出现在20世纪90年代中期，通常分为三类(Lee，2010；Resnick，1994)：</p>
-<ol>
-<li><p><strong>协同过滤</strong>：这些系统根据一组被称为邻居的相似用户或相似项目的得分提供推荐(Kim等人，2005年)。CF是Netflix和Amazon等著名电子商务公司使用的最受欢迎的RS之一(Hernando等人，2016；Kim等人，2005年)。这些系统又根据它们用于预测用户偏好的算法类型分为两类(Ghazarian和Nematbakhsh，2014)：</p>
-<ul>
-<li><strong>Memory-based</strong>：这些系统使用用户项目评分矩阵和KNN算法来识别用户的邻居并预测他们的偏好(Ghazarian和Nematbakhsh，2014年；Hernando等人，2016年；Kim等人，2011年)，其中使用皮尔逊相关系数等方法计算用户之间的相似性(Bobadilla等人，2012年)。在本研究中，使用KNN算法和皮尔逊相关系数来提供建议。</li>
-<li><strong>Model-based</strong>：这些系统使用分段等方法处理用户的档案数据以提供建议，从而改进计算(Ghazarian和Nematbakhsh，2014；Hernando等人，2016)。</li>
-</ul>
-<p>尽管CF方法很受欢迎并取得了成功，但它们仍然面临着一些严重的限制。这些限制包括：</p>
-<ul>
-<li><strong>冷启动</strong>：在多个用户购买某个项目之前，系统不能向某人推荐该项目。这个问题被称为冷启动。用户的冷启动是指最近加入推荐系统并且没有关于他或她的足够信息的用户(Elahi等人，2016；Hu和Pu，2011；Kim等人，2011；Lee，2010；Son，2016；Sharma和Ray，2016)。</li>
-<li><strong>可伸缩性</strong>：由于客户数据和产品数据的绝对数量，系统必须花费大量的金钱和时间来提取所有客户之间的相似性，导致其生产率较低(Hu和Pu，2011；Hernando等人，2016；Keramati和Khaleghi，2014；Lee，2010)。</li>
-<li><strong>user-item矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致user-item矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
-<li><strong>用户偏好的改变</strong>：用户的品味和偏好可能会随着时间的推移而改变。例如，一位最近生了孩子的母亲可能对购买婴儿服装感兴趣，她最近的购买可能反映了这种新的关注。这是当；她可能从来没有对这样的物品有任何兴趣(Ding等人，2006年；岩田，2008年；Lee等人，2008年)。(Ding et al.，2006；Iwata，2008；Lee et al.，2008)。</li>
-</ul>
-<p>上述限制可能会对RS的性能产生负面影响，从而限制系统创建有意义和准确的推荐。</p>
-</li>
-<li><p><strong>基于内容的过滤器(Content-Based Filter，CBF)</strong>：该方法基于这样的概念，即用户对他们以前感兴趣的项目感兴趣。因此，这些系统根据项目和产品之间的相似性提供建议(Anderson和Hiralall，2009年；Elahi等人，2016年)。因此，这种方法取决于物品的规格和与这些规格相关的用户配置文件的可用性(Anderson and Hiralall，2009)。这是因为在互联网上存储大量不同种类电子产品的目录是一项非常困难的任务(Bobadilla等人，2012年)。因此，音乐或视频文件等一些产品的内容分析非常困难；这个问题使得CF比CBF要好得多(Anderson和Hiralall，2009；Kim等人，2011)。与CBF相比，CF在电子商务中具有更高的灵活性和与RS的兼容性，使其成为最常用和最有用的RS系统之一(Burke，2002；Iwata，2008；Wang and Wu，2012)。因此，在本研究中，使用CF的概念作为主要的推荐机制。</p>
-</li>
-<li><p>混合方法：一些RS使用上述系统的组合来减少它们的限制；更多细节将在下面的实验背景部分提供(Burke，2002；Keramati和Khaleghi，2014)。</p>
-</li>
-</ol>
-<h2 id="客户细分"><a href="#客户细分" class="headerlink" title="客户细分"></a>客户细分</h2><p>客户细分是一种非常有用的数据挖掘方法，用于在电子商务的RS中找到“邻居”，在电子商务中，使用特定的方法，如聚类，来选择一些用户作为邻居，以改进偏好的预测(Khodabandehlou和Niknafs，2016；Li等人，2011年)。</p>
-<p>在RS中，选择合适的属性进行分割是影响系统性能的重要因素之一。最近购买、频率和货币模型(RFM)的属性是基于分析客户购买行为的一种很好的客户细分方法，它已经成功地用于许多RS(Keramati和Khaleghi，2014；Khodabandehlou和Zivari Rahman，2017；Lee，2010)。各种研究表明，在RFM模型中加入L(客户关系长度)指标将导致对客户的更准确分析，并将提高细分的质量(Li等人，2011年)。因此，在本研究中，LRFM模型被用于客户细分和识别具有相似购买行为的客户类别。</p>
-<p>此外，分割算法对识别出的片段的质量起着重要的作用。在聚类算法中，K-Means算法被认为是最成功和最合适的分割方法(Khodabandehlou和Niknafs，2016)，在许多研究中证明了它与RS的兼容性(Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Li等人，2011年)。K-Means是一种数据挖掘方法，它需要K的初始值，即聚类的数量，才能运行。确定最佳簇数的合适方法是自组织映射(SOM)算法。该算法是一种无监督神经网络，可以从数据中识别未知模式，并估计合适的聚类数量(Abidi和Ong，2000；Mosayebian等人，2012)。</p>
-<p>相关研究建议在RS中结合K-Means和SOM算法使用两阶段分割方法，以获得更准确的结果(Keramati和Khaleghi，2014；Mosayebian等人，2012年)。因此，本研究将利用这一模式进行客户细分。</p>
-<h2 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h2><p>关联规则是数据挖掘的重要方法之一，用于分析RS大型数据库中各种商品之间的市场篮子。分析购物篮已经成为发现用户购物车之间关系的流行系统(Hsu等人，2004；Liu and Shih，2005a)。Apriori算法是最常见的关联规则之一(Hsu等人，2004；Liu和Shih，2005a，2005b)，用于在已经购买了另一件物品时找到购买特定物品的概率模式。在RS中，已经形成了许多关于不同用户的购买行为的规则(Keramati和Khaleghi，2014；Liu和Shih，2005a，2005b)。在这些规则吸引程度的衡量标准中，我们可以提到支持性规则和置信度规则，它们分别指发现的规则的传播度和可接受性(Hsu等人，2004；Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Liu和Shih，2005a，2005b)。</p>
-<h1 id="评估措施"><a href="#评估措施" class="headerlink" title="评估措施"></a>评估措施</h1><p>评价推荐系统的性能是保证推荐系统通用性的重要一步。有一些评价RSS准确性或性能的众所周知的度量；诸如精确度、覆盖率和F度量(为了在这两个度量之间创建平衡)，它们可以很好地显示推荐系统的性能(Bobadilla等人，2012年；Elahi等人，2016；Ghazarian和Nematbakhsh，2014；Shambour和Lu，2015；Son，2016)。因此，为了评估所提出的研究模型的性能，采用了这些测量方法。</p>
-<p>在公式(1)和(2)中，喜爱的项目是指必须推荐给用户的一组产品或项目，而推荐的项目是已经由系统推荐给用户的项目的集合。精确度表示推荐集合中正确推荐的百分比，并评估这些推荐的精确度和准确性。通过公式(1)计算：</p>
-<script type="math/tex; mode=display">
-{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \tag{1}</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
-<script type="math/tex; mode=display">
-{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \tag{2}</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
-<script type="math/tex; mode=display">
-{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \tag{3}</script><h1 id="研究框架"><a href="#研究框架" class="headerlink" title="研究框架"></a>研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于product category-user矩阵提取关联规则。在阶段4中，完成user-item矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
-<p><img src="http://images.yingwai.top/picgo/derf1.png" alt=""></p>
-<center>
-    <i>图1 建议的研究系统的总体架构</i>
-</center>
-
-
-<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>数据准备(也称为数据预处理)是RSS开发过程中不可或缺的一步，占整个RSS开发所需时间的60%-70%。此步骤包括数据清理、数据集成和数据转换三个阶段。</p>
-<h3 id="数据清理"><a href="#数据清理" class="headerlink" title="数据清理"></a>数据清理</h3><p>数据清理过程包括完成缺失值、识别和消除离群值数据以及解决数据之间的冲突。此外，在此阶段，必须删除不相关或无用的字段或属性，如有必要，从初始数据集形成新的变量。在此阶段，将不完美的记录和信息不完整的客户从主数据集中剔除，数据集的记录从17,000条减少到15,386条，客户数量从2,542个减少到2,080个。为每个产品类别计算RFM变量。</p>
-<h3 id="数据集成"><a href="#数据集成" class="headerlink" title="数据集成"></a>数据集成</h3><p>为了更好地理解数据，并对每个数据集中的数据进行更好的科学管理，数据集成(将两个或多个数据集合并集成在一起)是必要的，这是数据准备的第二阶段。在这一阶段，客户交易数据与他们的个人资料数据(年龄、性别、教育程度、婚姻状况和职业)集成在一起。</p>
-<h3 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h3><p>在此阶段，必须将数据转换为适合数据挖掘和设计RS的不同形式。数据集中的字符串变量(如性别)将转换为数值变量和值。</p>
-<h2 id="基于LRFM模型的分割"><a href="#基于LRFM模型的分割" class="headerlink" title="基于LRFM模型的分割"></a>基于LRFM模型的分割</h2><p>本研究采用两阶段聚类法，结合SOM(确定最佳聚类数)和K-Means(创建聚类)方法进行分割。</p>
-<p>在此阶段，根据产品类别的RFM变量(每个产品类别的RFM变量的值分别计算)和L变量(客户关系的长度)进行客户细分。对于给定的客户，表1中给出了这些变量的样本，根据这些变量进行了细分。</p>
-<p>在本研究中，将LRFM模型用于产品类别层面的客户细分有三个原因，包括以下几个方面：</p>
-<ol>
-<li>通过减少user-item矩阵中的客户数量，提高了该方法的生产率和效率，从而降低了矩阵的可扩展性和稀疏性问题。</li>
-<li>这个模型不仅决定了顾客的价值，而且可以清楚地反映顾客的兴趣和偏好，例如，如果某一种产品的购买频率对于两个给定的顾客来说是相似的，可以推断这两个人对购买这两种商品的兴趣是一样的。M和R的变量也是以相同的方式推导出来的。</li>
-<li>模型中的产品类别变量R涉及客户最近的品味和偏好，由于最近的购买更能反映客户当前的兴趣和偏好，它将提供更准确的推荐，更符合客户当前的兴趣。</li>
-</ol>
-<p><img src="http://images.yingwai.top/picgo/dert1.png" alt=""></p>
-<center>
-    <i>表1 基于LRFM模型的客户细分属性</i>
-</center>
-
-
-
-<h2 id="基于product-category-user矩阵的关联规则提取"><a href="#基于product-category-user矩阵的关联规则提取" class="headerlink" title="基于product category-user矩阵的关联规则提取"></a>基于product category-user矩阵的关联规则提取</h2><p>为了提取关联规则，本研究使用了Apriori算法。在此阶段，使用product category-user矩阵(客户从单个产品类别购买的次数)的交易数据在前一阶段的每个聚类的级别提取关联规则。提取的规则用于确定每个目标客户的前N个推荐产品类别的列表。推荐的每个产品类别的优先级取决于其规则的可信度和支持措施。信任度和支持度值越大的产品类别，推荐优先级越高。此阶段中提取的规则的输出(即每个目标客户的预测产品类别)将作为下一阶段的输入。产品类别级规则提取的目的是减少user-item矩阵中的产品数量，有效缓解矩阵的可扩展性和稀疏性问题。</p>
-<h2 id="更改user-item矩阵"><a href="#更改user-item矩阵" class="headerlink" title="更改user-item矩阵"></a>更改user-item矩阵</h2><p>在CF系统中，user-item矩阵(包括购买/不购买项目的二进制数据或用户给予项目的分数)是关于购买偏好对客户进行聚类并确定目标客户的邻居的基础。然而，由于电子商务中商品种类繁多，该矩阵经常面临数据稀疏的问题。研究表明，推荐质量取决于user-item矩阵的密度。</p>
-<p>为了使该矩阵更加密集，以这样的方式使用分段和关联规则阶段的结果，即在用于确定目标客户的邻居的user-item矩阵中，他或她将仅与他或她的集群中的用户进行比较，并且项目将限于为目标客户预测的项目。由于减少了用户数和项目数，缓解了可伸缩性问题，提高了RS的速度和准确性。</p>
-<p>在他们的研究中，Lee等人。(2008)证明，最近进行的购买更能反映用户当前的偏好，最近添加到网站上出售的项目对用户更具吸引力。因此，基于表2，对于每个项目，考虑用户购买项目的时间(PT)和项目已经可供购买的时间(LT)(启动时间)的两个参数，并且改变user-item矩阵。</p>
-<p><img src="http://images.yingwai.top/picgo/dert2.png" alt=""></p>
-<center>
-    <i>表2 基于时间信息更改user-item矩阵</i>
-</center>
-
-
-
-
-
-<p>为了确定PT和LT变量的得分，在这个改变的矩阵中，首先根据这两个参数的潜伏期将这两个参数分为五类。因此，PT参数的分数包括过去购买(分数1)、过去购买(分数2)、最近购买(分数3)、最近购买(分数4)和最近购买(分数5)。对于LT参数，得分类似。根据表3，在user-item矩阵中，对于用户给出的分数，使用组合分数。例如，对于(2，5)的组合，分数将等于7(5+2)。在计算混合得分时，这两个参数的权重都是相同的。</p>
-<p><img src="http://images.yingwai.top/picgo/dert3.png" alt=""></p>
-<center>
-    <i>表3 对LT和PT参数进行评分</i>
-</center>
-
-
-<p>因此，创建了25(5×5)个双重组合，其中所有客户由55、54、53、…的组合表示。，11，其中，客户最好的类别是组合55(最近购买时间和最近上线时间的类别)和得分10，而客户最差的类别用11(最老的购买时间和最老的上线时间)表示，得分为2。根据这种评分方法，可以将客户划分为集群，并计算其相似度。创建这个新的user-item矩阵的目的是考虑用户随时间的喜好，从而提高推荐的准确性。</p>
-<h2 id="基于CF的相似度计算"><a href="#基于CF的相似度计算" class="headerlink" title="基于CF的相似度计算"></a>基于CF的相似度计算</h2><p>在CF系统中，计算每个目标客户与其他客户之间的相似度的方法有很多。最流行的方法之一是使用皮尔逊相关系数，与其他传统的统计方法相比，它提供了最好的预测和推荐结果(Bobadilla等人)。(2012年)。在皮尔逊的相关方法中，使用公式(4)测量两个给定客户$u$和$u’$之间的相似性：</p>
-<script type="math/tex; mode=display">
-Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \tag{4}</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的user-item矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
-<h2 id="基于人口统计属性的细分"><a href="#基于人口统计属性的细分" class="headerlink" title="基于人口统计属性的细分"></a>基于人口统计属性的细分</h2><p>在这个阶段，使用两阶段聚类方法，根据年龄、性别、教育程度、婚姻状况和职业等人口统计变量对客户进行细分，然后计算他们的簇内相似度。因此，如果两个客户具有相似的人口统计属性，他们对某些项目的态度会相似，这在CF方法中没有反映出来。在本研究中，基于这些变量进行客户细分的目的是为了更好地选择新用户的邻居，通过克服冷启动问题有效改善推荐过程。</p>
-<h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于user-item矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
-<script type="math/tex; mode=display">
-Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \tag{5}</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
-<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r<em>{u’,i})$，预测用户$u$对于项目$i$，$(r</em>{u,i})$的得分如下：</p>
-<script type="math/tex; mode=display">
-r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r<em>{u’,i})$越相似，将以更高的加权比率用于预测$(r</em>{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
-<h1 id="评估提出的推荐方法"><a href="#评估提出的推荐方法" class="headerlink" title="评估提出的推荐方法"></a>评估提出的推荐方法</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
-<p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
-<center>
-    <i>表4 传统CF推荐系统与提出的CF推荐系统的评价方法比较</i>
-</center>
-
-
-
-<p>在此阶段，将比较所提出的方法与传统CF推荐系统在不同N值(推荐项目数)下以及基于使用精确度、覆盖率和F度量的测试数据的结果的准确性。</p>
-<p>基于SOM算法，基于LRFM变量的最优聚类数为6个，基于人口统计变量的最优聚类数为5个。表4列出了基于不同N值的评估措施的传统方法和提出的方法的准确性。对于所有这些方法，参数K(邻居数目)的值都等于40。</p>
-<p>根据表4的结果，在每个准则下，所提出的系统都比传统系统具有更好的性能。事实上，传统系统(基于F-Measure)在5个推荐项目上的准确率为43.27%，而在所提出的系统中，该准确率为55.59%。在20个推荐项目中，传统方法的准确率为62.43%，其推荐系统的准确率为81.4%。在30个项目中，传统系统的准确率为68.54%，在提出的系统中，准确率为96.59%，表明该系统在30个项目上的准确率比传统系统提高了约28%。</p>
-<p><img src="http://images.yingwai.top/picgo/derf2.png" alt=""></p>
-<center>
-    <i>图2 比较传统方法和建议方法在不同N值下的性能(颜色请参见在线版本)</i>
-</center>
-
-
-<p><img src="http://images.yingwai.top/picgo/derf3.png" alt=""></p>
-<center>
-    <i>图3 评估不同K值对建议方法性能的影响(有关颜色，请参阅在线版本)</i>
-</center>
-
-
-<p>在此基础上，将推荐项数增加到N=30，两种方法的性能都有所提高。然而，增加数据数量并不会导致结果准确性的显著变化和提高。因此，将推荐项目的数量增加到某个阈值可以提高建议推荐的质量；该阈值等于N=30。为了更好地比较这两种方法的性能，图2描述了F-Measure准则的变化趋势。</p>
-<p>为了评估参数K的变化在所建议的研究方法的性能中的作用，图3中描述了三个不同N值的F测量值。基于图3，对于N参数的所有三个值，将邻居数增加到K=40将提高所提出的方法的性能。但是，进一步增加该参数会降低方法的精确度，从而对推荐质量产生负面影响。</p>
-<h1 id="结论及建议"><a href="#结论及建议" class="headerlink" title="结论及建议"></a>结论及建议</h1><p>本研究从冷启动、可扩展性、稀疏用户-项目矩阵以及用户兴趣的变化等方面考虑了电子商务中RS的基本和常见限制，以期解决或缓解这些限制。因此，为了克服这些局限性，人们利用一套数据挖掘方法，提出了一个综合性的电子商务推荐系统。综合研究结果，该系统的性能优于传统的CF系统。研究的总体结果表明，与传统系统相比，新的推荐系统的准确率有了显着的提高。因此，该系统对30个项目的推荐准确率比传统系统提高了约28%。此外，根据结果，系统在推荐30个项目时的准确率达到了最高水平；因此，当推荐项目数量超过30个时，传统系统和所提出的系统的准确率都没有明显的变化，因此，当推荐项目的数量超过30时，传统系统和本文提出的系统的准确率都没有明显的变化。例如，当推荐50个项目时，传统系统的准确率为68/84，新建议系统的准确率为94/45，这表明推荐项目的数量从30个增加到50个，准确率略有下降。因此，建议推荐项目的最大值为30个，因为这可能会导致计算和项目选择的复杂性。下面简要介绍一下研究成果和研究创新之处：</p>
-<ul>
-<li>在RS的开发过程中，在产品类别层面采用基于LRFM变量的细分方法，可以改进客户间相似度的确定方法，从而更准确、更恰当地选择目标客户的邻居。由于LRFM模型是识别客户购买行为和反映其偏好的合适方法之一，因此基于该模型在产品类别层次上进行细分，可以区分客户在购买产品类别时的偏好，并将具有相似品味和兴趣的客户归入同一聚类。例如，如果两个给定客户购买商品的频率相似，则可以得出结论，这两个客户对购买该产品类别中的商品表现出相同的兴趣水平。R和M的变量可以以相同的方式推断。另一方面，在产品类别水平上的变量R考虑了客户的利益，并且由于最近的购买更能反映客户的偏好，这将导致更准确的推荐。由于用户的喜好会随着时间的推移而改变，因此RS提供与客户当前兴趣相容的项目的能力会受到影响，这有时会导致推荐与客户当前喜好完全无关的项目。此外，在用户-项目矩阵中使用该分割的结果将降低矩阵的维数，将缓解KNN算法的稀疏矩阵和可伸缩性问题，这导致KNN算法的性能提高，因为在这种情况下，目标客户仅与用户-项目矩阵中他或她自己的集群内的客户相比较。因此，通过减少矩阵中的用户数，提高了KNN算法的速度和精度，改善了RS的整体性能。根据这一讨论和研究结果，可以安全地得出结论，使用LRFM模型可以加快提供建议的过程，并允许创建符合客户当前利益的准确建议。</li>
-<li>基于product category-user矩阵的关联规则提取提高了推荐方法的性能。这些规则通过评估产品类别之间的关系，预测他们购买的概率，并向目标客户推荐一套产品类别。将user-item矩阵限制为这些推荐产品类别中的项将降低矩阵的维数，有效地缓解了KNN算法的稀疏矩阵和可伸缩性问题。在该方法中，仅从从这些规则获得的产品类别中向目标客户提供推荐项目。结果表明，该方法通过减少矩阵中的项数，提高了KNN算法的速度和精度，有效地改善了RS的整体性能，研究结果表明该方法具有较好的性能。</li>
-<li>在RS的设计过程中考虑商品的购买时间以及它们在电子商务网站上的上线时间，将会提高推荐的质量。换言之，比起过去的购买，多留意顾客最近的购买，以及比起其他商品，多留意最近在网站上推出的商品，便可以更了解顾客现时的喜好，帮助他们找到更吸引人、更合意的商品。考虑到这些问题，RS才能更好地实现他们的最终目标，即向适当的个人提供适当的物品。在本研究中，这两个变量被用来创建一个新的用户-项目矩阵，并在表4和图2的基础上取得了很好的结果。</li>
-<li>为了更好地使推荐与用户的喜好相一致，人口特征的作用是无可否认的，因为大多数个人购买都取决于他们的年龄、性别、教育水平等。当它与其他变量如购买行为变量(包括LRFM和user-item矩阵)一起考虑时，这一作用更为显著，这是本研究通过定义一个新的相似性函数得出的。</li>
-</ul>
-<p>考虑到上述问题，本研究通过关注这些问题，利用各种数据挖掘方法，试图改进和完善以往关于CF系统的研究，以期提出一个准确率和性能最高的电子商务推荐系统。</p>
-<p>以下是对未来研究的一些建议：</p>
-<ol>
-<li>将CF方法和CBF方法相结合，开发了所提出的模型。</li>
-<li>研究基于个性特征的客户细分、其他人口统计变量(如地址和收入)以及其他行为变量(如购买商品的总数)对建议系统性能的影响。</li>
-<li>将所提出的方法应用于其他行业的数据集，以提供更强的通用性。</li>
-<li>使用大数据对提出的模型进行进一步评估，这些数据可以从大型网店获得。</li>
-</ol>
-<p>与过去的大多数研究一样，这项研究在实施和评估方面存在一些局限性，包括：</p>
-<ol>
-<li>使用的数据集的时间段限制为一年；</li>
-<li>研究数据仅限于一家网上服装店；</li>
-<li>正在研究的商店顾客数量有限。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>数据挖掘</tag>
-        <tag>推荐系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>论文笔记 High-Throughput Semi-Honest Secure Three-Party Computation with an Honest Majority</title>
     <url>/2020/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-High-Throughput-Semi-Honest-Secure-Three-Party-Computation-with-an-Honest-Majority/</url>
     <content><![CDATA[<p><em>Toshinori Araki, Jun Furukawa, Yehuda Lindell, Ariel Nof, Kazuma Ohara</em></p>
@@ -2564,6 +2564,138 @@ a_1 b_1  = (x_3 - v_1)(y_3 - v_2) = x_3 y_3 - x_3 v_2 - y_3 v_1 + v_1 v_2 \tag{2
         <tag>密码学</tag>
         <tag>MPC</tag>
         <tag>Secret Sharing</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
+    <url>/2020/07/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
+    <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
+<p>CCS 2019</p>
+<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
+<a id="more"></a>
+<h1 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h1><p>本文设计了BFV[6，22]和CKKS[16]方案的多密钥变体。本文提出了一种新的生成重线性化密钥的方法，与文献[13]中的以前技术相比，该方法更简单、更快。此外，本文将这些方案[9，12，14]的最新自举算法应用于多密钥场景，以构建具有压缩密文的多密钥完全同态加密。最后，作者使用Microsoft SEAL[47]给出了本文的多密钥方案的概念验证实现，并给出了实验结果。据作者所知，这是支持打包密文的MKHE方案的第一个实际实现。</p>
+<p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络(CNN)模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，本文的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。作者注意到，本文的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
+<p><img src="http://images.yingwai.top/picgo/emkhef1.png" alt=""></p>
+<h1 id="BACKGROUND"><a href="#BACKGROUND" class="headerlink" title="BACKGROUND"></a>BACKGROUND</h1><h2 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h2><p>除非另有说明，否则所有对数都以 $2$ 为底。我们用粗体表示向量，例如$\mathbf{a}$，用大写粗体表示矩阵，例如 $\mathbf{A}$。本文用 $\langle \mathbf{u}, \mathbf{v} \rangle$ 表示两个向量 $\mathbf{u}, \mathbf{v}$ 的通常点积。对于实数 $r$，$\lfloor r \rceil$ 表示最表示最接近 $r$ 的整数，在平局的情况下向上舍入。本文用 $x \leftarrow D$ 表示按分布 $D$ 抽样的 $x$。对于有限集 $S$，$U(S)$ 表示 $S$ 上的均匀分布。本文用 $\lambda$ 表示安全参数：所有已知的对作用域内的密码方案的有效攻击都应该采用 $\Omega(2^\lambda)$ 位运算。</p>
+<h2 id="多密钥同态加密"><a href="#多密钥同态加密" class="headerlink" title="多密钥同态加密"></a>多密钥同态加密</h2><p>多密钥同态加密是一种密码系统，它允许我们对可能在不同密钥下加密的密文评估算术电路。</p>
+<p>设 $\mathcal{M}$ 是具有算术结构的消息空间。MKHE方案MKHE由五个PPT算法($\mathsf{Setup}, \mathsf{KeyGen}, \mathsf{Enc}, \mathsf{Dec}, \mathsf{Eval}$)组成。本文假设每个参与方都有对其公钥和私钥的引用(索引)。多密钥密文隐式包含<em>有序</em>集合 $T = {id<em>1, …, id_k}$ 相关联的引用。例如，新的密文 $\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk}</em>{id})$ 对应于单个元素集合 $T = {id}$，但是随着来自不同方的密文之间的计算的进行，参考集合的大小变得更大。</p>
+<ul>
+<li><p><strong>初始化</strong>：$pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$。将安全参数作为输入并返回公共参数化。本文假设所有其他算法都隐含地将 $pp$ 作为输入。</p>
+</li>
+<li><p><strong>密钥生成</strong>：$(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$。输出一对私钥和公钥。</p>
+</li>
+<li><p><strong>加密</strong>：$\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk})$。加密明文 $\mu \in \mathcal{M}$ 并输出密文 $\mathsf{ct} \in {0,1 }^*$。</p>
+</li>
+<li><p><strong>解密</strong>：$\mu \leftarrow \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; {\mathsf{sk}<em>{id}}</em>{id \in T})$。给定具有对应密钥序列的密文 $\overline{\mathsf{ct}}$，输出明文 $\mu$。</p>
+</li>
+<li><p><strong>同态评估</strong>：</p>
+<script type="math/tex; mode=display">
+\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,...,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})</script><p>给定电路 $\mathcal{C}$，多密钥密文的元组 $(\overline{\mathsf{ct}}<em>1,…,\overline{\mathsf{ct}}_l)$ 和对应的一组公钥 ${\mathsf{pk}</em>{id}}_{id \in T}$，输出密文 $\overline{\mathsf{ct}}$。它的参考集是输入密文 $\overline{\mathsf{ct}}_j, 1 \leq j \leq l$ 的联合 $T = T_1 \cup \cdots \cup T_l$。</p>
+</li>
+</ul>
+<p><strong>语义安全。</strong>对于任意两条消息 $\mu_0, \mu_1 \in \mathcal{M}, \ \ i = 0, 1$ 的分布 ${\mathsf{MKHE.Enc}(\mu_i; \mathsf{pk}) }$ 在 $pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$ 和 $(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$ 的计算上应该是不可区分的。</p>
+<p><strong>正确性和紧凑性。</strong>如果与 $k$ 方相关的密文的大小受固定多项式 ${\rm poly}(\cdot, \cdot)$ 的 ${\rm poly}(\lambda, k)$ 的限制，则MKHE方案是紧致的。</p>
+<p>对于 $1 \leq j \leq l$，设 $\overline{\mathsf{ct}}<em>j$ 为密文(参考集合 $T_j$)，使得 $\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}_j; {\mathsf{sk}</em>{id}}<em>{id \in T} = \mu_j$。设 $\mathcal{C} : \mathcal{M}^l \rightarrow \mathcal{M}$ 为电路，$\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l),{\mathsf{pk}</em>{id}}_{id \in T})$，其中 $T = T_1 \cup \cdots \cup T_l$。然后，</p>
+<script type="math/tex; mode=display">
+\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; \{\mathsf{sk}_{id}\}_{id \in T} = \mathcal{C}(\mu_1,...,\mu_l) \tag{1}</script><p>以压倒性的可能性。对于近似算术[16]，可以用类似于CKKS格式的近似相等来代替(1)的相等。</p>
+<h2 id="环上容错学习"><a href="#环上容错学习" class="headerlink" title="环上容错学习"></a>环上容错学习</h2><p>在整篇文章中，作者假设 $n$ 是2的幂整数，并且 $R=\mathbb{Z}[X]/(X^n+1)$。对于 $R$ 的模为整数 $q$ 的剩余环，本文记作 $R_q=R/(q·R)$。带参数 $(n,q,\chi,\psi)$ 的环学习假设是给定任意多项式数目的形式的样本 $(a_i,b_i=s \cdot a_i+e_i) \in R^2_q$，其中 $a_i$ 在 $R_q$ 中是一致随机的，$s$ 选自 $R_q$ 上的密钥分布 $\chi$，$e_i$ 取自 $R$ 上的误差分布 $\psi$，$b_i$ 是 $R_q$ 中的均匀随机元素、在计算上是不可区分的。</p>
+<h2 id="小工具分解"><a href="#小工具分解" class="headerlink" title="小工具分解"></a>小工具分解</h2><p>设 $\mathbf{g}=(g<em>i) \in \mathbb{Z}^d$ 为小工具向量，$q$ 为整数。小工具分解，由 $\mathbf{g}^{-1}$ 表示，是从 $R_q$ 到 $R^d$ 的函数，它将元素 $a \in R_q$ 转换成<em>小</em>多项式向量 $u=(u_0,…,u</em>{d−1})\in R^d$ ，使得 $a = \sum^{d-1}_{i=0} g_i \cdot u_i \pmod{q}$。</p>
+<p>小工具分解技术被广泛应用于HE方案的构建中。例如，非线性电路的同态评估是基于密钥切换技术的，并且大多数HE方案利用各种小工具分解方法来控制噪声增长。文献中已经提出了各种分解方法，如位分解[6，7]、基分解[17，21]和基于RNS的分解[4，30]。本文的实现利用了RNS友好的分解来提高效率。</p>
+<h1 id="本文的构造"><a href="#本文的构造" class="headerlink" title="本文的构造"></a>本文的构造</h1><h2 id="基本方案"><a href="#基本方案" class="headerlink" title="基本方案"></a>基本方案</h2><ul>
+<li>$\mathsf{Setup}(1^\lambda)$：对于给定的安全参数 $\lambda$，设置RLWE维数 $n$、密文模数 $q$、密钥分布 $\chi$ 和R上的误差分布 $\psi$。生成随机向量 $\mathbf{a} \leftarrow U(R^d_q)$。返回公共参数 $pp=(n, q, \chi, \psi, \mathbf{a})$。</li>
+<li>$\mathsf{KeyGen}(pp)$：选取密钥 $s \leftarrow \chi$。选取误差向量 $e \leftarrow \psi^d$，并将公钥在 $R^d_q$ 中设置为 $\mathbf{b} = -s \cdot \mathbf{a} + \mathbf{e} \pmod{q}$。</li>
+<li>$\mathsf{UniEnc}(\mu;s)$：对于输入明文 $\mu \in R$，生成密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \in R^{d \times 3}_q$，如下所示：<ol>
+<li>选取 $r \leftarrow \chi$；</li>
+<li>选取 $\mathbf{d}_1 \leftarrow U(R^d_q)$ 和 $\mathbf{e}_1 \leftarrow \psi^d$，然后设 $\mathbf{d}_0 = -s \cdot \mathbf{d}_1 + \mathbf{e}_1 + r \cdot \mathbf{g} \pmod{q}$；</li>
+<li>选取 $\mathbf{e}_2 \leftarrow \psi^d$ 然后设 $\mathbf{d}_2 = r \cdot \mathbf{a} + \mathbf{e}_2 + \mu \cdot \mathbf{g} \pmod{q}$。</li>
+</ol>
+</li>
+</ul>
+<p>公共参数 $pp$ 包含一个随机生成的向量 $\mathbf{a} \in R^d_q$，因此本文假设使用公共引用字符串模型。各方应将相同的公共参数作为密钥生成算法的输入，以支持多密钥同态运算。在以前关于MKHE的所有工作中都做出了同样的假设。</p>
+<p>单一加密算法是对称加密，它可以加密单个环形元件。一次加密的密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \leftarrow \mathsf{UniEnc}(\mu;s)$ 由 $R^d_q$ 中的三个矢量组成，其大小是 $R^{2d \times 2}_q$ 中普通RGSW密文的(3/4)倍。对于一次加密密文 $\mathbf{D}$，前两列 $[\mathbf{d}_0 | \mathbf{d}_1]$ 可以被视为秘密 $s$ 下的 $r$ 的加密，而 $[\mathbf{d}_2 | -\mathbf{a}]$ 形成秘密 $r$ 下的 $\mu$ 的加密。</p>
+<h2 id="再线性化"><a href="#再线性化" class="headerlink" title="再线性化"></a>再线性化</h2><p>在级联秘密 $\overline{\mathsf{sk}} = (1, s_1, …, s_k)$ 下加密的两个多密钥密文 $\overline{\mathsf{ct}}_i \in R^{k+1}_q$ 的张量积 $\overline{\mathsf{ct}} = \overline{\mathsf{ct}}_1 \otimes \overline{\mathsf{ct}}_2$ 可以看作是对应于张量平方密钥 $\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 的密文。$\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 包含一些与两个不同方相关的非线性项 $s_i \cdot s_j$。因此，计算服务器应该能够通过非线性项 $s_i \cdot s_j$ 的线性化来将扩展密文 $\overline{\mathsf{ct}} \in R^{(k+1) \times (k+1)}_q$ 转换为规范密文。</p>
+<p>本文的重新线性化方法需要由单个各方生成的相同公共材料(评估密钥)，如下所示：</p>
+<ul>
+<li>$\mathsf{EvkGen}(s)$：给定秘密 $s \in R$，返回 $\mathbf{D} \leftarrow \mathsf{UniEnc}(s;s)$。</li>
+</ul>
+<p>准确地说，每一方 $i$ 通过运行算法(si，bi)←KeyGen(Pp)和Di←EvkGen(Si)来生成其自己的秘密密钥、公共密钥和评估密钥，然后发布该对(bi，Di)。在本节的其余部分，我们将介绍两种重新线性化算法，并说明它们的优缺点。</p>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>PPML</tag>
+        <tag>HE</tag>
+        <tag>Neural Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Improved Garbled Circuit: Free XOR Gates and Applications</title>
+    <url>/2020/06/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Improved-Garbled-Circuit-Free-XOR-Gates-and-Applications/</url>
+    <content><![CDATA[<p><em>Vladimir Kolesnikov, Thomas Schneider</em></p>
+<p> <a href="https://dblp.uni-trier.de/db/conf/icalp/icalp2008-2.html#KolesnikovS08" target="_blank" rel="noopener">ICALP (2) 2008</a></p>
+<p><a href="https://dl.acm.org/doi/10.1007/978-3-540-70583-3_40" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1007/978-3-540-70583-3_40</a></p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文提出了一种新的用于两方安全函数评估(SFE)的乱码电路结构。在本文的单轮协议中，XOR门的评估是“免费的”，这导致了对最佳乱码电路实现的相应改进(例如Fairplay)。</p>
+<p>本文几乎完全使用XOR门来构建置换网络和通用电路(UC)；这使得它们的SFE(在计算和通信方面)提高了多达4倍。本文还改进了整数加法和等价性测试，最高可达2倍。</p>
+<p>本文依赖随机预言(RO)假设。本文的构造在半诚实模型中被证明是安全的。</p>
+<h2 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h2><ul>
+<li>在半诚实模型下，本文提出了一种新的用于两方安全函数评估(SFE)的乱码电路结构。</li>
+<li>在本文的一轮协议中，XOR门的计算是“免费的”(也就是说，不使用相关的乱码表和相应的散列或对称密钥操作)。在处理其他门时，本文的构造与最好的乱码电路实现(例如Fairplay)一样有效。</li>
+</ul>
+<h1 id="Setting-and-Preliminaries"><a href="#Setting-and-Preliminaries" class="headerlink" title="Setting and Preliminaries"></a>Setting and Preliminaries</h1><p>两方通用安全函数评估(SFE)允许双方评估其各自输入 $x$ 和 $y$ 上的任何函数，同时保持 $x$ 和 $y$ 的隐私。</p>
+<p>本文考虑具有 $k$ 个门和任意扇出的非循环布尔电路。也就是说，每个门的(单个)输出可以用作任意数量的门的输入。本文假设电路的门 $G_1,…,G_k$ 按拓扑排序。该顺序(不一定是唯一的)确保第 $i$ 个门 $G_i$ 不具有作为连续门 $G_j,\ j&gt;i$ 的输出的输入。总是可以通过 $O(k)$ 计算在非循环电路上获得拓扑顺序。</p>
+<p>本文专注于半诚实的模式，在这种模式下，参与者遵循协议，但试图从执行记录中学习信息。</p>
+<p>本文使用以下标准符号：$\in_R$ 表示均匀随机采样，$|$ 表示位串的连接。$\langle a, b \rangle$ 是一个包括了 $a,b$ 两个元素的向量，且其比特串表示为 $a | b$。$W_c = g(W_a, W_b)$ 表示2输入门 $G$，其用输入线 $W_a,W_b$ 和输出线 $W_c$ 计算函数 $g: {0,1}^2 \rightarrow {0,1 }$。</p>
+<p>设 $N$ 为安全参数。设 $S$ 是无限集，设 $X={X<em>s}</em>{s \in S}$ 和 $Y={Y<em>s}</em>{s \in S}$ 为分布全体。我们说 $X$ 和 $Y$ 在计算上是不可区分的，记为 $X \overset{c}{\equiv} Y$，如果对每个非均匀多项式时间微分器 $D$ 和所有足够大的 $s \in S, \ |Pr[D(X_s)=1]−Pr[D(Y_s)=1]|&lt;1/p(|s|) $ 对每个多项式 $p$。</p>
+<p><strong>随机预言。</strong>RO模型是一个有用的抽象。RO只是一个随机选择的函数 ${0,1}^* \mapsto {0,1}^N$ -一个不能被多项式参与者完全存储或遍历的大对象。RO模型为所有参与者提供了Oracle访问此类功能的权限。实际上，RO由散列函数(如SHA)建模。</p>
+<p><strong>不经意传输(OT)。</strong>2选1OT是两方协议。<em>发送方</em> $P<em>1$ 具有两个秘密 $m_0,m_1$，<em>接收方</em> $P_2$ 具有选择位 $i \in {0,1}$。在协议的最后，$P_2$ 得到 $m_i$，但没有获得关于 $m</em>{i-1}$ 的任何信息，$P_1$ 没有获得关于 $i$ 的任何信息。</p>
+<p><strong>姚氏乱码电路(GC)。</strong>参与者 $P_1$ 首先扰乱电路 $C$：对于每条线 $W_i$ 的值 $j$，他随机选择两个秘密 $w^0_i$ 和 $w^1_i$，其中 $w^j_i$ 是一个乱值，或者说是乱码。(注：$w^j_i$ 不透露 $j$。)。此外对于每个门 $G_i$，$P_1$ 创建具有以下属性的乱码表 $T_i$ 并将其发送到 $P_2$：给定一组 $G_i$ 的输入乱码，$T_i$ 允许恢复相应 $G_i$ 的输出的乱码，而不透露其他信息。然后参与方输入的乱码被(不经意地)传输到 $P_2$。现在 $P_2$ 可以使用表格 $T_i$ 通过逐个门地评估乱码电路来简单地获得乱码输出。如果在给定输入上对 $C$ 求值时，$W_i$ 取值 $j$，则称 $W_i$ 的乱码 $w^j_i$ <em>有效</em>。观察到，对于每根导线，$P_2$ 只能获得其有效乱码。电路的输出线没有乱码(或其乱码被公布)，因此 $P_2$ (仅)获知电路的输出，而不学习内部线路值。$P_1$ 从(半诚实的) $P_2$ 学习输出。(这一步在半诚实模型中是微不足道的，通常不会在分析中考虑。)。GC的正确性源于表 $T_i$ 的构建方法。任何一方都不会从协议执行中获知任何附加信息。</p>
+<h1 id="本文的协议"><a href="#本文的协议" class="headerlink" title="本文的协议"></a>本文的协议</h1><p>首先，本文展示了XOR门 $G$ 的SFE实现，它源自[14]中的一个。设 $G$ 有两根输入线 $W_a, W_b$，输出线 $W_c$。按如下方式对导线值进行乱码处理：随机选择 $w^0_a, w^0_b, R \in_R {0,1}^N$。设 $w^0_c = w^0_a \oplus w^0_b$ 和 $\forall i \in {a,b,c}: w^1_i = w^0_i \oplus R$。很容易看出，乱码门输出只需对乱码门输入进行异或运算即可获得：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+w^0_c &= w^0_a \oplus w^0_b = (w^0_a \oplus R) \oplus (w^0_b \oplus R) = w^1_a \oplus w^1_b \\
+w^1_c &= w^0_c \oplus R = w^0_a \oplus (w^0_b \oplus R) = w^0_a \oplus w^1_b = (w^0_a \oplus R) \oplus w^0_b = w^1_a \oplus w^0_b
+\end{align}</script><p>且乱码 $w^j_i$ 不会透露它们对应的线路值。</p>
+<p>上述异或结构对乱码值施加的限制：电路中每根导线的两个值的乱码必须相差相同的值，即对于某个全局 $R$，$\forall i: w^1_i = w^0_i \oplus R$。相比之下，在以前的GC结构中，所有乱码 $w^j_i$ 是独立随机选择的，并且安全性证明依赖于该性质。</p>
+<h2 id="本文的乱码电路构造"><a href="#本文的乱码电路构造" class="headerlink" title="本文的乱码电路构造"></a>本文的乱码电路构造</h2><p>设 $C$ 是一个电路。首先注意到，NOT门可以通过简单地消除它们并颠倒导线的值和乱码的对应关系来“免费”实现。</p>
+<p>在下面的Alg.1中，每个乱码 $w= \langle k, p \rangle$ 由密钥 $k \in {0,1}^N$ 和排列位 $p \in {0,1}$ 组成。密钥用于表条目的解密，$p$ 用于选择要解密的条目。每条导线的两个乱码 $w^0_i, w^1_i$ 按照异或构造的要求相关：对于选定的 $R\in_R {0,1}^N$，$\forall i: w^1_i = \langle k^1_i, p^1_i \rangle = \langle k^0_i \oplus R, p^0_i \oplus 1 \rangle$，其中 $w^0_i = \langle k^0_i, p^0_i \rangle$。$H: {0,1}^* \mapsto {0,1}^{N+1}$ 是一个RO。</p>
+<p>现在我们将上述想法形式化，并给出GC结构(Alg.1)和评估(Alg.2)。在SFE中，Alg.1由 $P_1$ 执行，Alg.2由 $P_2$ 执行。</p>
+<p><img src="http://images.yingwai.top/picgo/freeXORa1.png" alt=""></p>
+<p>注意，本文的表项加密(步骤3(C)iii)类似于Fairplay。Fairplay使用 $e_{v_a,v_b} = H(k^{v_a}_a | i | p^{v_a}_a | p^{v_b}_b) \oplus$ $H(k^{v_b}_b | i | p^{v_a}_a | p^{v_b}_b) \oplus$ $w^{g_i(v_a, v_b)}_c$。这是一个不重要的区别；我们可以使用Fairplay的加密。</p>
+<p><strong>安全方面的直觉。</strong>Alg.1使用RO $H$ 的输出作为一次性垫来加密乱码表中的乱码输出值(步骤3(C)III)和乱码输出表(步骤4a)。注意，在本文的整个构造过程中，$H$ 的输入(密钥和门索引)的任何特定组合都用于加密至多一个表项。(本文假设 $H$ 中的串联和字符串表示是“正确的”。)。此外，由于被篡改电路的评估者每条线路只知道一个被篡改的值，所以他可以精确地解密 $G_i$ 的乱码表中的一个条目。所有其他条目都使用多次赋值器无法猜到的至少一个密钥进行加密。因此，在他看来，每根电线的两个乱值中的一个看起来是随机的。</p>
+<p>现在给出相应的GC评估算法，由 $P_2$ 运行。回想一下，$P_2$ 会从 $P_1$ 获取所有乱码表格和 $P_1$ 输入值的乱码。由 $P_2$ 保存的输入值的乱码通过OT发送。</p>
+<p><img src="http://images.yingwai.top/picgo/freeXORa2.png" alt=""></p>
+<p>GC构造和评估算法可以直接用于以标准方式获得基于GC的SFE协议。为完整起见，本文包含了对此协议的描述。</p>
+<hr>
+<p><strong>Protocol 1.</strong> <em>(Two-party SFE protocol):</em></p>
+<ul>
+<li><p><strong>Inputs:</strong>  $P<em>1$ has private input $x = \langle x_1,..,x</em>{u<em>1} \rangle \in {0,1}^{u_1}$and $P_2$ has private input $y = \langle y_1,..,y</em>{u_2} \rangle \in {0,1}^{u_2}$.</p>
+</li>
+<li><p><strong>Auxiliary input:</strong>  A boolean acyclic circuit $C$ such that $\forall x \in {0,1}^{u_1}, y \in {0,1}^{u_2}$, it holds that $C(x,y) = f(x,y)$, where $f: {0,1}^{u_1} \times {0,1}^{u_2} \rightarrow {0,1}^v$. We require that $C$ is such that if a circuit-output wire leaves some gate $G$, then gate $G$ has no other wires leading from it into other gates (i.e., no circuit-output wire is also a gate-input wire). Likewise, a circuit-input wire that is also a circuit-output wire enters no gates. We also require that $C$ is modified to contain no NOT-gates and all n-input XOR-gates with $n &gt; 2$ replaced by 2-input XOR-gates as described in Section 3.1.</p>
+</li>
+<li><p><strong>The protocol:</strong></p>
+<ol>
+<li><p>$P_1$ constructs the garbled circuit using Algorithm 1 and sends it (i.e. the garbled tables) to $P_2$.</p>
+</li>
+<li><p>Let $W<em>1,.., W</em>{u<em>1}$ be the circuit input wires corresponding to $x$, and let $W</em>{u<em>1+1},..,W</em>{u_1+u_2}$ be the circuit input wires corresponding to $y$. Then, </p>
+<p>​    (a) $P<em>1$ sends $P_2$ the garbled values $w^{x_1}_1,..,w^{x</em>{u<em>1}}</em>{u_1}$.</p>
+<p>​    (b) For every $i \in {1, .., u<em>2}$, $P_1$ and $P_2$ execute a 1-out-of-2 oblivious transfer protocol, where $P_1$’s input is $(k^0</em>{u<em>1+i}, k^1</em>{u_1+i})$, and $P_2$’s input is $y_i$. All $u_2$ OT instances can be run in parallel.</p>
+</li>
+<li><p>$P_2$ now has the garbled tables and the garblings of circuit’s input wires. $P_2$ evaluates the garbled circuit, as described in Alg. 2, and outputs $f(x, y)$.</p>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+        <tag>MPC</tag>
+        <tag>Garbled Circuit</tag>
       </tags>
   </entry>
   <entry>
@@ -2674,75 +2806,6 @@ A = \sum^{m}_{j=1} A_j + \lambda I \quad \mathrm{and} \quad b = \sum^m_{j=1} b_j
       </tags>
   </entry>
   <entry>
-    <title>论文笔记 Improved Garbled Circuit: Free XOR Gates and Applications</title>
-    <url>/2020/06/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Improved-Garbled-Circuit-Free-XOR-Gates-and-Applications/</url>
-    <content><![CDATA[<p><em>Vladimir Kolesnikov, Thomas Schneider</em></p>
-<p> <a href="https://dblp.uni-trier.de/db/conf/icalp/icalp2008-2.html#KolesnikovS08" target="_blank" rel="noopener">ICALP (2) 2008</a></p>
-<p><a href="https://dl.acm.org/doi/10.1007/978-3-540-70583-3_40" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1007/978-3-540-70583-3_40</a></p>
-<a id="more"></a>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文提出了一种新的用于两方安全函数评估(SFE)的乱码电路结构。在本文的单轮协议中，XOR门的评估是“免费的”，这导致了对最佳乱码电路实现的相应改进(例如Fairplay)。</p>
-<p>本文几乎完全使用XOR门来构建置换网络和通用电路(UC)；这使得它们的SFE(在计算和通信方面)提高了多达4倍。本文还改进了整数加法和等价性测试，最高可达2倍。</p>
-<p>本文依赖随机预言(RO)假设。本文的构造在半诚实模型中被证明是安全的。</p>
-<h2 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h2><ul>
-<li>在半诚实模型下，本文提出了一种新的用于两方安全函数评估(SFE)的乱码电路结构。</li>
-<li>在本文的一轮协议中，XOR门的计算是“免费的”(也就是说，不使用相关的乱码表和相应的散列或对称密钥操作)。在处理其他门时，本文的构造与最好的乱码电路实现(例如Fairplay)一样有效。</li>
-</ul>
-<h1 id="Setting-and-Preliminaries"><a href="#Setting-and-Preliminaries" class="headerlink" title="Setting and Preliminaries"></a>Setting and Preliminaries</h1><p>两方通用安全函数评估(SFE)允许双方评估其各自输入 $x$ 和 $y$ 上的任何函数，同时保持 $x$ 和 $y$ 的隐私。</p>
-<p>本文考虑具有 $k$ 个门和任意扇出的非循环布尔电路。也就是说，每个门的(单个)输出可以用作任意数量的门的输入。本文假设电路的门 $G_1,…,G_k$ 按拓扑排序。该顺序(不一定是唯一的)确保第 $i$ 个门 $G_i$ 不具有作为连续门 $G_j,\ j&gt;i$ 的输出的输入。总是可以通过 $O(k)$ 计算在非循环电路上获得拓扑顺序。</p>
-<p>本文专注于半诚实的模式，在这种模式下，参与者遵循协议，但试图从执行记录中学习信息。</p>
-<p>本文使用以下标准符号：$\in_R$ 表示均匀随机采样，$|$ 表示位串的连接。$\langle a, b \rangle$ 是一个包括了 $a,b$ 两个元素的向量，且其比特串表示为 $a | b$。$W_c = g(W_a, W_b)$ 表示2输入门 $G$，其用输入线 $W_a,W_b$ 和输出线 $W_c$ 计算函数 $g: {0,1}^2 \rightarrow {0,1 }$。</p>
-<p>设 $N$ 为安全参数。设 $S$ 是无限集，设 $X={X<em>s}</em>{s \in S}$ 和 $Y={Y<em>s}</em>{s \in S}$ 为分布全体。我们说 $X$ 和 $Y$ 在计算上是不可区分的，记为 $X \overset{c}{\equiv} Y$，如果对每个非均匀多项式时间微分器 $D$ 和所有足够大的 $s \in S, \ |Pr[D(X_s)=1]−Pr[D(Y_s)=1]|&lt;1/p(|s|) $ 对每个多项式 $p$。</p>
-<p><strong>随机预言。</strong>RO模型是一个有用的抽象。RO只是一个随机选择的函数 ${0,1}^* \mapsto {0,1}^N$ -一个不能被多项式参与者完全存储或遍历的大对象。RO模型为所有参与者提供了Oracle访问此类功能的权限。实际上，RO由散列函数(如SHA)建模。</p>
-<p><strong>不经意传输(OT)。</strong>2选1OT是两方协议。<em>发送方</em> $P<em>1$ 具有两个秘密 $m_0,m_1$，<em>接收方</em> $P_2$ 具有选择位 $i \in {0,1}$。在协议的最后，$P_2$ 得到 $m_i$，但没有获得关于 $m</em>{i-1}$ 的任何信息，$P_1$ 没有获得关于 $i$ 的任何信息。</p>
-<p><strong>姚氏乱码电路(GC)。</strong>参与者 $P_1$ 首先扰乱电路 $C$：对于每条线 $W_i$ 的值 $j$，他随机选择两个秘密 $w^0_i$ 和 $w^1_i$，其中 $w^j_i$ 是一个乱值，或者说是乱码。(注：$w^j_i$ 不透露 $j$。)。此外对于每个门 $G_i$，$P_1$ 创建具有以下属性的乱码表 $T_i$ 并将其发送到 $P_2$：给定一组 $G_i$ 的输入乱码，$T_i$ 允许恢复相应 $G_i$ 的输出的乱码，而不透露其他信息。然后参与方输入的乱码被(不经意地)传输到 $P_2$。现在 $P_2$ 可以使用表格 $T_i$ 通过逐个门地评估乱码电路来简单地获得乱码输出。如果在给定输入上对 $C$ 求值时，$W_i$ 取值 $j$，则称 $W_i$ 的乱码 $w^j_i$ <em>有效</em>。观察到，对于每根导线，$P_2$ 只能获得其有效乱码。电路的输出线没有乱码(或其乱码被公布)，因此 $P_2$ (仅)获知电路的输出，而不学习内部线路值。$P_1$ 从(半诚实的) $P_2$ 学习输出。(这一步在半诚实模型中是微不足道的，通常不会在分析中考虑。)。GC的正确性源于表 $T_i$ 的构建方法。任何一方都不会从协议执行中获知任何附加信息。</p>
-<h1 id="本文的协议"><a href="#本文的协议" class="headerlink" title="本文的协议"></a>本文的协议</h1><p>首先，本文展示了XOR门 $G$ 的SFE实现，它源自[14]中的一个。设 $G$ 有两根输入线 $W_a, W_b$，输出线 $W_c$。按如下方式对导线值进行乱码处理：随机选择 $w^0_a, w^0_b, R \in_R {0,1}^N$。设 $w^0_c = w^0_a \oplus w^0_b$ 和 $\forall i \in {a,b,c}: w^1_i = w^0_i \oplus R$。很容易看出，乱码门输出只需对乱码门输入进行异或运算即可获得：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-w^0_c &= w^0_a \oplus w^0_b = (w^0_a \oplus R) \oplus (w^0_b \oplus R) = w^1_a \oplus w^1_b \\
-w^1_c &= w^0_c \oplus R = w^0_a \oplus (w^0_b \oplus R) = w^0_a \oplus w^1_b = (w^0_a \oplus R) \oplus w^0_b = w^1_a \oplus w^0_b
-\end{align}</script><p>且乱码 $w^j_i$ 不会透露它们对应的线路值。</p>
-<p>上述异或结构对乱码值施加的限制：电路中每根导线的两个值的乱码必须相差相同的值，即对于某个全局 $R$，$\forall i: w^1_i = w^0_i \oplus R$。相比之下，在以前的GC结构中，所有乱码 $w^j_i$ 是独立随机选择的，并且安全性证明依赖于该性质。</p>
-<h2 id="本文的乱码电路构造"><a href="#本文的乱码电路构造" class="headerlink" title="本文的乱码电路构造"></a>本文的乱码电路构造</h2><p>设 $C$ 是一个电路。首先注意到，NOT门可以通过简单地消除它们并颠倒导线的值和乱码的对应关系来“免费”实现。</p>
-<p>在下面的Alg.1中，每个乱码 $w= \langle k, p \rangle$ 由密钥 $k \in {0,1}^N$ 和排列位 $p \in {0,1}$ 组成。密钥用于表条目的解密，$p$ 用于选择要解密的条目。每条导线的两个乱码 $w^0_i, w^1_i$ 按照异或构造的要求相关：对于选定的 $R\in_R {0,1}^N$，$\forall i: w^1_i = \langle k^1_i, p^1_i \rangle = \langle k^0_i \oplus R, p^0_i \oplus 1 \rangle$，其中 $w^0_i = \langle k^0_i, p^0_i \rangle$。$H: {0,1}^* \mapsto {0,1}^{N+1}$ 是一个RO。</p>
-<p>现在我们将上述想法形式化，并给出GC结构(Alg.1)和评估(Alg.2)。在SFE中，Alg.1由 $P_1$ 执行，Alg.2由 $P_2$ 执行。</p>
-<p><img src="http://images.yingwai.top/picgo/freeXORa1.png" alt=""></p>
-<p>注意，本文的表项加密(步骤3(C)iii)类似于Fairplay。Fairplay使用 $e_{v_a,v_b} = H(k^{v_a}_a | i | p^{v_a}_a | p^{v_b}_b) \oplus$ $H(k^{v_b}_b | i | p^{v_a}_a | p^{v_b}_b) \oplus$ $w^{g_i(v_a, v_b)}_c$。这是一个不重要的区别；我们可以使用Fairplay的加密。</p>
-<p><strong>安全方面的直觉。</strong>Alg.1使用RO $H$ 的输出作为一次性垫来加密乱码表中的乱码输出值(步骤3(C)III)和乱码输出表(步骤4a)。注意，在本文的整个构造过程中，$H$ 的输入(密钥和门索引)的任何特定组合都用于加密至多一个表项。(本文假设 $H$ 中的串联和字符串表示是“正确的”。)。此外，由于被篡改电路的评估者每条线路只知道一个被篡改的值，所以他可以精确地解密 $G_i$ 的乱码表中的一个条目。所有其他条目都使用多次赋值器无法猜到的至少一个密钥进行加密。因此，在他看来，每根电线的两个乱值中的一个看起来是随机的。</p>
-<p>现在给出相应的GC评估算法，由 $P_2$ 运行。回想一下，$P_2$ 会从 $P_1$ 获取所有乱码表格和 $P_1$ 输入值的乱码。由 $P_2$ 保存的输入值的乱码通过OT发送。</p>
-<p><img src="http://images.yingwai.top/picgo/freeXORa2.png" alt=""></p>
-<p>GC构造和评估算法可以直接用于以标准方式获得基于GC的SFE协议。为完整起见，本文包含了对此协议的描述。</p>
-<hr>
-<p><strong>Protocol 1.</strong> <em>(Two-party SFE protocol):</em></p>
-<ul>
-<li><p><strong>Inputs:</strong>  $P<em>1$ has private input $x = \langle x_1,..,x</em>{u<em>1} \rangle \in {0,1}^{u_1}$and $P_2$ has private input $y = \langle y_1,..,y</em>{u_2} \rangle \in {0,1}^{u_2}$.</p>
-</li>
-<li><p><strong>Auxiliary input:</strong>  A boolean acyclic circuit $C$ such that $\forall x \in {0,1}^{u_1}, y \in {0,1}^{u_2}$, it holds that $C(x,y) = f(x,y)$, where $f: {0,1}^{u_1} \times {0,1}^{u_2} \rightarrow {0,1}^v$. We require that $C$ is such that if a circuit-output wire leaves some gate $G$, then gate $G$ has no other wires leading from it into other gates (i.e., no circuit-output wire is also a gate-input wire). Likewise, a circuit-input wire that is also a circuit-output wire enters no gates. We also require that $C$ is modified to contain no NOT-gates and all n-input XOR-gates with $n &gt; 2$ replaced by 2-input XOR-gates as described in Section 3.1.</p>
-</li>
-<li><p><strong>The protocol:</strong></p>
-<ol>
-<li><p>$P_1$ constructs the garbled circuit using Algorithm 1 and sends it (i.e. the garbled tables) to $P_2$.</p>
-</li>
-<li><p>Let $W<em>1,.., W</em>{u<em>1}$ be the circuit input wires corresponding to $x$, and let $W</em>{u<em>1+1},..,W</em>{u_1+u_2}$ be the circuit input wires corresponding to $y$. Then, </p>
-<p>​    (a) $P<em>1$ sends $P_2$ the garbled values $w^{x_1}_1,..,w^{x</em>{u<em>1}}</em>{u_1}$.</p>
-<p>​    (b) For every $i \in {1, .., u<em>2}$, $P_1$ and $P_2$ execute a 1-out-of-2 oblivious transfer protocol, where $P_1$’s input is $(k^0</em>{u<em>1+i}, k^1</em>{u_1+i})$, and $P_2$’s input is $y_i$. All $u_2$ OT instances can be run in parallel.</p>
-</li>
-<li><p>$P_2$ now has the garbled tables and the garblings of circuit’s input wires. $P_2$ evaluates the garbled circuit, as described in Alg. 2, and outputs $f(x, y)$.</p>
-</li>
-</ol>
-</li>
-</ul>
-<hr>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>密码学</tag>
-        <tag>MPC</tag>
-        <tag>Garbled Circuit</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>论文笔记 Oblivious Neural Network Predictions via MiniONN Transformations</title>
     <url>/2020/05/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Oblivious-Neural-Network-Predictions-via-MiniONN-Transformations/</url>
     <content><![CDATA[<p><em>Jian Liu, Mika Juuti, Yao Lu, N. Asokan</em></p>
@@ -2833,6 +2896,103 @@ z_2 &:= y_2^{\mathcal{C}} + y_2^{\mathcal{S}}.
         <tag>MPC</tag>
         <tag>PPML</tag>
         <tag>Neural Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Privacy-preserving SVM on Outsourced Genomic Data via Secure Multi-party Computation</title>
+    <url>/2020/07/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Privacy-preserving-SVM-on-Outsourced-Genomic-Data-via-Secure-Multi-party-Computation/</url>
+    <content><![CDATA[<p><em>Huajie Chen, Ali Burak Ünal, Mete Akgün, Nico Pfeifer∗</em></p>
+<p><a href="https://dblp.uni-trier.de/db/conf/codaspy/iwspa2020.html#ChenUAP20" target="_blank" rel="noopener">IWSPA@CODASPY 2020</a></p>
+<p><a href="https://dl.acm.org/doi/abs/10.1145/3375708.3380316" target="_blank" rel="noopener">https://dl.acm.org/doi/abs/10.1145/3375708.3380316</a></p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>机器学习方法以其高效、强大的数据挖掘能力被广泛应用于医学数据研究等领域。然而，将不受保护的数据提交给试图训练机器学习模型的第三方，当第三方受到对手的攻击时，可能会受到数据泄露和隐私侵犯的影响。因此，设计一种执行加密计算的协议是不可避免的。为了解决这个问题，我们提出了基于安全多方计算的协议来私下训练支持向量机模型。利用半诚实对手模型和不经意转移，所提出的协议能够在不牺牲个人隐私的情况下对来自不同来源的组合数据进行非线性支持向量机训练。这些协议被应用于在HIV序列数据上训练具有径向基函数核的支持向量机模型，以预测某种抗病毒药物的疗效，这只有在病毒只能使用人类CCR5辅助受体进入细胞的情况下才有效。以10个由随机生成的整数组成的数据源(每个数据源包含100个标记样本)的合成数据为基准，该协议在算术/布尔电路中分别平均消耗了2991.386/166.912毫秒的在线时间。优化后的参数对训练数据的交叉验证平均达到0.5819 F1分，随后在由CCR5及其亚型蛋白序列组成的测试数据集上交叉验证达到0.7058 F1分。在实际数据上的完整训练和测试过程，编码后总共包含766个样本，924个特征，分别使用算术/布尔电路平均耗时43.75/15.84秒，与文献中的一些现有研究相比，这表明了我们协议的有效性和高效性。</p>
+<h1 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h1><p>近年来，机器学习方法在许多科学研究领域得到了广泛的应用，通过发现数据中的模式来解决问题。在医疗数据上应用机器学习方法，例如支持向量机(SVM)，使得能够检测先前未知或对于人类实体来说太难识别的模式。因此，它可以为医疗技术的发展做出贡献。例如，通过使用聚类、多维缩放和支持向量机来表征新的艾滋病毒耐药突变[19]。以“稀疏组套索回归”为核心的基于网络的预后预测(NOP)方法已被编制成基于基因表达谱的乳腺癌状态预测方法[1]，人工神经网络(ANN)可以给出癌症的预测和预后[3]。</p>
+<p>随着最新的技术，如第二代/第三代DNA测序，获得完整的人类基因组已经变得高效和廉价，导致许多研究解决了各种与健康相关的研究问题。然而，在第三方访问数据的过程中，患者的隐私可能会受到泄露。针对这一问题，设计了基于安全多方计算(MPC)[13，14]和同态加密[6，8，10]的隐私保护机器学习方法。然而，这些方法在不同的安全假设下表现出不同的性能。这意味着他们必须在隐私和性能之间进行权衡。据我们所知，利用预测控制训练非线性支持向量机缺乏有效的方法。</p>
+<h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><p>在本文中，我们设计并实现了一个基于MPC的解决方案，将支持向量机训练外包给两个非合谋的代理服务器。我们的目标是使支持向量机在来自多个来源的海量数据上的隐私保护训练变得高效。为此，我们提出了基于算术秘密共享的Beaver乘法三元组[2]和基于布尔秘密共享的Goldreich-MicaliWigderson(GMW)协议[7]的两种不同的解决方案。我们使用单指令多数据(SIMD)操作，允许并行化来提高协议的性能。</p>
+<p>在我们的协议中，初始化阶段可以在本地完成。来自各种数据源(如医院)的基因组序列数据首先采用独热编码进行编码。接下来，编码序列被分成两份，并分别分配给计算方。自己的点积也在当地计算、拆分并分发给各方。在训练过程中，在计算方之间进行MPC，得到计算结果，然后将计算结果发送给用户并进行重构，得到包含来自不同来源的数据的点积以及来自同一方的数据的点积的完整的GRAM矩阵。最后，用户在所需的核矩阵上训练SVM模型，该核矩阵可以通过导出的GRAM矩阵来计算。类别标签在纯文本域中发送，因为它们不会显示关于样本的任何额外信息。</p>
+<p>我们将我们的方案应用于HIV序列数据，以预测某种抗病毒药物的疗效，只有当病毒只能使用人类CCR5辅助受体进入细胞时，这种方法才有效。我们设计的基于算术和布尔电路的协议对10个由随机生成的整数组成的数据源的在线执行电路消耗了2991.38/166.912毫秒的时间，每个数据源包含100个带标签的样本，每个样本中有924个特征，即列。我们通过F1-Score对我们的结果进行了评估，训练数据的平均得分为0.5819，测试数据的平均得分为0.7058，证明了该协议的有效性。在算术/布尔电路协议中，对实际数据的完整训练和测试过程分别花费了算术/布尔电路协议的43.75/15.84秒，编码后总共包含766个样本，924个特征。</p>
+<p>论文的其余部分安排如下：第二部分介绍了相关工作。第3节和第4节分别列出了所需的预备知识和协议的详细概念。第五节对协议进行了评价和进一步的讨论。第六节对本文进行了总结。</p>
+<h1 id="PRELIMINARIES"><a href="#PRELIMINARIES" class="headerlink" title="PRELIMINARIES"></a>PRELIMINARIES</h1><p>在这一部分中，给出了我们的方法所使用的方法和算法。</p>
+<h2 id="序列独热编码"><a href="#序列独热编码" class="headerlink" title="序列独热编码"></a>序列独热编码</h2><p>在数据预处理阶段，我们使用的序列通过一次热编码被编码成数字形式。假设 $c_i$ 是序列 $S$ 中位置 $i$ 处的角色，其中 $i \in \mathbb{Z}, i&lt; |S|$。因为有20个氨基酸残基和1个GAP，所以 $c_i$ 可以编码成21位的形式。</p>
+<p>例如，如果 $c_i$ 是丙氨酸，则 $c_i$ 将被编码为 “$1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0$”，如果 $c_i$ 是一个GAP，则 $c_i$ 为 “$0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1$”。随着编码程序的迭代，整个序列将被编码成上述格式。</p>
+<h2 id="序列相似性的度量"><a href="#序列相似性的度量" class="headerlink" title="序列相似性的度量"></a>序列相似性的度量</h2><p>为了评估序列的相似性，利用了汉明距离的倒数。汉明距离被描述为在具有相同长度的两个字符串之间的相同位置处的不同字符对的数量。例如，给定两个长度相同的字符串 $s<em>1$ 和 $s_2$，每个字符串中总共有 $l$ 个字符。$D</em>{\mathbb{H}}$ 为字符串 $s_1$ 和 $s_2$ 定义的汉明距离：</p>
+<script type="math/tex; mode=display">
+D_{\mathbb{H}}(s_1, s_2) = \sum^{l}_{i=1}I(s_1(i),s_2(i))</script><p>其中 $l$ 是序列的长度，$I$ 是函数，如果给定的两个字符 $s<em>1(i)$ 和 <script type="math/tex">s_2(i)</script> 相同，则该函数返回1，否则返回0。在本项目中，两个序列的碱基相似度与汉明距离成反比，即 $l-D</em>{\mathbb{H}}(s_1, s_2)$。</p>
+<p>根据第3.1节，现在可以将一个序列视为二进制值的一个向量 $\vec{v}$。如果同一位置的任意两个序列中的任意两个字符相同，则这两个编码字符的点积 $\vec{v_1} \cdot \vec{v_2}$ 结果为1，否则为0。在这种情况下，两个序列的相似性越大，点积就越高。一旦计算了所有可能的序列对的相似度，就获得了矩阵 $\mathbf{M} \in \mathbb{Z}^{n \times n}$，其中 $n$ 表示计算中涉及的序列的数目。</p>
+<h2 id="安全多方计算"><a href="#安全多方计算" class="headerlink" title="安全多方计算"></a>安全多方计算</h2><p>这里作者采用两方的设置，可以参考<a href="https://yuyingwai.cn/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/" target="_blank" rel="noopener">ABY</a>中第2节的算术共享和布尔共享。</p>
+<h2 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h2><p>支持向量机作为一种有监督的机器学习方法，经常被用来解决分类问题。它们已被证明在解决中、低尺度预测问题上优于许多其他方法，特别是在结合核函数的情况下。支持向量机的优化问题表示如下：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\min_{\omega \in \mathbb{R}^d, b\in \mathbb{R}, \xi \in \mathbb{R}^n} \ \ \  &\frac{1}{2} ||\omega||^2 + \frac{C}{n}\sum^n_{i=1} \xi_i \\
+\mbox{s.t.} \ \ \  &Y_i(\langle \omega, X_i \rangle + b) \geq 1 - \xi_i \tag{1} \\
+ &i=1,...,n,\  \xi_i \geq 0
+\end{align}</script><p>其中，$\omega, b, \xi, C, n$ 遵循列出的顺序，分别表示具有 $n$ 维数的向量、干扰 $\omega$ 和 $X_i$ 之间的点积的参数、确定点可以超出超平面多远的参数、惩罚的权重以及数据点的数量 $Y$。$X_i$ 和 $Y_i$ 表示数据特征向量及其标注。在上述支持向量机模型中，数据点被允许穿过超平面，但将受到松弛变量 $\xi_i$ 的惩罚，该松弛变量由惩罚因子 $C$ 缩放。通过调整 $C$，可以改变惩罚的权重。</p>
+<h2 id="径向基函数核"><a href="#径向基函数核" class="headerlink" title="径向基函数核"></a>径向基函数核</h2><p>RBF核因其有效性和普适性而被广泛应用于支持向量机分类中[9]，其核函数定义如下：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+K(\vec{x}, \vec{y}) &= \exp(- \frac{||\vec{x} - \vec{y}||^2}{2\sigma^2}) \tag{2}\\ 
+&= \exp(-\frac{\vec{x} \cdot \vec{x} - 2 \vec{x} \cdot \vec{y} + \vec{y} \cdot \vec{y}}{2 \sigma^2})
+\end{align}</script><p>在这个方程中，“$\cdot$” 表示向量之间的点积算子，而 $\sigma$ 则作为调整相似度的参数，当 $\sigma$ 增大时，指数函数的结果将趋于接近1，表明两个序列的相似度较高，反之亦然，此外，方程的第二行表明，在我们的协议中，只能根据用于计算径向基核矩阵的向量的点积来计算径向基核。</p>
+<h1 id="隐私保护支持向量机"><a href="#隐私保护支持向量机" class="headerlink" title="隐私保护支持向量机"></a>隐私保护支持向量机</h1><p>在这一部分中，我们系统地描述了我们的隐私保护支持向量机协议。在4.1节中，我们将对其进行概述，随后将详细说明协议的各个阶段。这里继承了3.3节中的记号。</p>
+<h2 id="系统概述"><a href="#系统概述" class="headerlink" title="系统概述"></a>系统概述</h2><p>在我们的协议中，来自多个医疗机构的基因组数据集以秘密共享的形式被外包给两个非共谋的代理服务器。两个非合谋的代理服务器在收到允许查询数据的第三方(如研究人员)的请求后，执行MPC以生成支持向量机训练所需的样本的GRAM矩阵。协议结构如图1所示，在此协议中，有以下各方扮演的角色：</p>
+<ol>
+<li><strong>数据源：</strong>在此上下文中，它们是医疗机构，表示为 $H_j$，其中 $j \in \mathbb{N}^+ , j \leq n$，其中 $n$ 表示数据源的数量。他们以秘密共享的形式将基因组数据上传到两个代理服务器。</li>
+<li><strong>用户：</strong>用户 $U$，例如科学研究人员，他请求两个代理服务器对秘密共享数据执行一些安全计算，以产生用于支持向量机训练的格拉姆矩阵。</li>
+<li><strong>两个代理服务器：</strong>两个非合谋服务器作为计算方，记为 $P_i$，其中 $i \in {0,1}$ 负责格拉姆矩阵的安全计算。在利用基因组数据训练机器学习模型的同时，选择两个不完全信任的第三方被认为是确保隐私保护的最实用和最实惠的解决方案[17]。</li>
+</ol>
+<p><img src="http://images.yingwai.top/picgo/ppossvmf1.png" alt=""></p>
+<center>
+    <i>图1 协议结构：从数据源到MPC，最终到用户进程</i>
+</center>
+
+
+
+
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ol>
+<li>$H_j$ 中的原始序列数据在本地编码为数字矢量(参见第4.2节)。</li>
+<li>在 $H_j$ 中，编码的序列数据在本地被分成两个共享 $A/B$，并分别发送到 $P_0$ 和 $P_1$ (参见第4.3节)。</li>
+<li>在 $H_j$ 中本地预先计算自身点积，然后它们也被分成两个份额 $A/B$，并分别发送到 $P_0$ 和 $P_1$ (参见第4.4节)。</li>
+</ol>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><ol>
+<li>接收到来自 $U$ 的查询后，在 $P_0$ 和 $P_1$ 之间进行预测编码，以在包含编码序列的文件之间获得所需的处理数据(参见第4.5节和第4.6节)。</li>
+<li>然后对自积和交叉点乘积进行积分以获得整个格拉姆矩阵，并将其传递给 $U$ (参见第4.7节)。</li>
+<li>在 $U$ 中使用格拉姆矩阵来训练支持向量机模型并测试结果模型(参见第4.8节)。</li>
+</ol>
+<h2 id="蛋白质序列编码"><a href="#蛋白质序列编码" class="headerlink" title="蛋白质序列编码"></a>蛋白质序列编码</h2><p>序列编码功能采用代表一个残基的一个字符，并将其编码为21位格式，如3.1节所述。输出文件包含编码序列，其中每行代表一个蛋白质序列，21列中的每一列代表一个残基(或gap)。</p>
+<h2 id="编码数据的秘密共享"><a href="#编码数据的秘密共享" class="headerlink" title="编码数据的秘密共享"></a>编码数据的秘密共享</h2><p>使用算术共享和布尔共享将原始编码数据分割成两个共享。在基于算术共享的协议中，产生的随机整数小于 $2^l$。此后，随机整数将作为共享并帮助构建另一个共享。在基于布尔共享的协议中，随机比特被生成为一个共享，并且它们被用来构造另一个共享。最终，在这两种协议中，两个共享将分别写入两个文件。使用算术共享的编码数据的秘密共享如图2所示。</p>
+<p><img src="http://images.yingwai.top/picgo/ppossvmf2.png" alt=""></p>
+<center>
+    <i>图2 共享数据生成</i>
+</center>
+
+
+
+
+<h2 id="本地计算自点积"><a href="#本地计算自点积" class="headerlink" title="本地计算自点积"></a>本地计算自点积</h2><p>数据源计算“自身点积”，这意味着每个数据点的两个实例的点积是在本地计算的。这样的本地计算降低了总的通信成本。该过程的结果是由前面提到的共享数据生成技术产生的点积矩阵的两部分。点积矩阵的份额接下来被分发到两个第三方代理服务器上，即 $P_0$ 和 $P_1$，然后可以在 $U$ 上重建这些份额。</p>
+<h2 id="使用算术电路进行点积计算"><a href="#使用算术电路进行点积计算" class="headerlink" title="使用算术电路进行点积计算"></a>使用算术电路进行点积计算</h2><p>所有需要乘成两个长数组的文件都被集成，省略了重复SIMD数据生成的不必要步骤。例如，假设文件 $A$、文件 $B$、文件 $C$ 分别表示为 $f_a$，$f_b$ 和 $f_c$，则这些文件中分别包含3、2和1个共享编码序列，由 $a_i,b_i,c_i$ 表示，其中 $i$ 表示某个文件中的序列索引。长阵列A将是 “$a_1a_2a_3a_1a_2a_3a_1a_2a_3b_1b_2$”，而另一个长阵列将是 “$b_1b_1b_1b_2b_2b_2c_1c_1c_1c_1c_1$”。这些操作分别称为 $\mbox{GetLongArrayA}()$ 和 $\mbox{GetLongArrayB}()$。</p>
+<p><img src="http://images.yingwai.top/picgo/ppossvma1.png" alt=""></p>
+<p>算法1首先构造两个长数组，以减少创建SIMD数据的次数。通过一次乘以两个长阵列，成功地降低了协议的运行时间。此算法省略了文件与其自身之间的点积计算，因为它可以先前本地计算，如第4.4节所述。通过将数组放入SIMD共享，从而实现对多个数据的操作。在乘法之后，然后执行每个点积计算块中的乘法结果的求和，以便分别对来自两个向量的每对元素的乘法进行局部求和。最后，将最终结果加载到数组中。图3显示了基于算术电路的安全协议的一般结构。</p>
+<h2 id="基于布尔电路的点积计算"><a href="#基于布尔电路的点积计算" class="headerlink" title="基于布尔电路的点积计算"></a>基于布尔电路的点积计算</h2><p>算法2类似于算法1。协议的结构如图3所示。两者之间的区别在于共享类型和电路类型。在此上下文中，仅在0和1之间执行乘法，这符合布尔共享的位长(1位)。因此，布尔电路中的安全与运算可以取代算术电路中的安全乘法，实现更好的计算性能。因此，共享的位长可以减少到1，这可以在通信过程中节省大量的计算能力。就布尔份额而言，它与算术份额差别很大，因此在以以前的方式局部相乘后无法求和。因此，设计了基于安全加法的特定函数，用于在点积块中对乘法结果求和。</p>
+<p><img src="http://images.yingwai.top/picgo/ppossvmf3.png" alt=""></p>
+<center>
+    <i>图3 点积计算</i>
+</center>
+
+<p><img src="http://images.yingwai.top/picgo/ppossvma2_.png" alt=""></p>
+<h2 id="结果数组集成与点积矩阵生成"><a href="#结果数组集成与点积矩阵生成" class="headerlink" title="结果数组集成与点积矩阵生成"></a>结果数组集成与点积矩阵生成</h2><p>通过我们的协议，可以在 $U$ 上手动将自身的点积重构成一个数组。然后计算自/交叉点乘积数组中访问位置的索引表。基于索引表，将生成 $2D$ 矢量，即 $n \times n$ 矩阵，其中 $n$ 表示计算中涉及的序列总数，并将其写入文件中作为最终输出。在机器学习中，必须严格遵循数据和标签的顺序，这样才能正确地训练模型。因此，数组的排序过程是必不可少的。</p>
+<h2 id="支持向量机交叉验证实验"><a href="#支持向量机交叉验证实验" class="headerlink" title="支持向量机交叉验证实验"></a>支持向量机交叉验证实验</h2><p>在所有数据中，随机选取20%的数据对模型进行检验。在计算格拉姆矩阵的基础上，通过5次交叉验证对支持向量机的误分类惩罚参数 $C$、类不平衡权值 $W$ 和径向基函数的相似度调整参数 $\sigma$ 进行优化。$C$ 和 $\sigma$ 分别在集合 $s<em>C=[10^{-3},10^{-2},\cdot \cdot \cdot,10^2, 10^3]$，$S</em>{\sigma}=[0.125, 0.25, 0.5, 1, 2, 4, 8]$ 上进行优化，而类权重选自集合 $S_W = [1:1,1:2,1:4,1:8,1:16]$，前者表示标签0的类权重，前者占多数，后者表示标签1的类权重。最终，确定在优化过程中达到最高F1得分的参数集。然后，利用这些最优参数对最终模型进行训练。最后，利用测试数据对训练好的模型进行检验，并用F1得分对预测结果进行评估。</p>
+<h2 id="安全性分析"><a href="#安全性分析" class="headerlink" title="安全性分析"></a>安全性分析</h2><p>将数据外包给 $N$ 非合谋、半诚实的第三方是在[11]中首次研究的。给出了通用解决方案的安全性证明。在我们的协议中，利用[11]中的外包思想，多个医疗机构将基因组数据外包给两个非合谋、半诚实的第三方。我们需要保护个人的隐私，他们的基因组数据被外包给两个非串通的服务器。我们基于算术电路和布尔电路的协议的安全性依赖于分别基于Beaver乘法三元组的协议[2]和GMW协议[7]的已证明的安全性。一个半诚实的对手最多可以攻破一个代理服务器，就可以获得个人私有基因组数据的一份。我们知道基因组数据是通过算术或布尔共享来共享的，所以它看起来像是统一随机的数据。这确保了敌手不能获得任何有关个人的私人基因组数据。我们的协议是安全的，不会受到恶意数据提供商和用户的攻击。数据提供者仅以共享的形式向两个代理服务器发送基因组数据，并且不接收来自其他方的任何消息。他们的恶意输入不会导致任何数据泄露。用户输入的任何变化都会导致不同的分析响应。这确保了针对恶意用户的安全性。所有通信方之间的机密性、完整性和认证都是使用最先进的技术(如TLS[5])提供的。</p>
+<h1 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h1><p>本文提出了两种支持向量机隐私保护训练方案，用于支持向量机对来自多个来源的外包基因组数据的隐私保护训练。在我们的方案中，我们利用算术秘密共享、布尔秘密共享和不经意转移来同时保证支持向量机训练的安全和高效。我们的协议在两个半可信代理服务器上执行，每个服务器只访问训练支持向量机所需的结果点积的一部分。我们的方案在半诚实对手模型下是安全的。我们在真实的HIV数据集和合成数据集上进行了实验，以显示我们协议的有效性和效率。在未来的工作中，我们将使我们的协议在不显著降低性能的情况下确保免受恶意攻击的安全。</p>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>MPC</tag>
+        <tag>PPML</tag>
+        <tag>Secret Sharing</tag>
+        <tag>SVM</tag>
+        <tag>HIV co-receptor prediction</tag>
       </tags>
   </entry>
   <entry>
@@ -2981,166 +3141,6 @@ b_2 = \left\{ \begin{array}{ll}
         <tag>Neural Network</tag>
         <tag>Linear Regression</tag>
         <tag>Logistic Regression</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 Privacy-preserving SVM on Outsourced Genomic Data via Secure Multi-party Computation</title>
-    <url>/2020/07/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Privacy-preserving-SVM-on-Outsourced-Genomic-Data-via-Secure-Multi-party-Computation/</url>
-    <content><![CDATA[<p><em>Huajie Chen, Ali Burak Ünal, Mete Akgün, Nico Pfeifer∗</em></p>
-<p><a href="https://dblp.uni-trier.de/db/conf/codaspy/iwspa2020.html#ChenUAP20" target="_blank" rel="noopener">IWSPA@CODASPY 2020</a></p>
-<p><a href="https://dl.acm.org/doi/abs/10.1145/3375708.3380316" target="_blank" rel="noopener">https://dl.acm.org/doi/abs/10.1145/3375708.3380316</a></p>
-<a id="more"></a>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>机器学习方法以其高效、强大的数据挖掘能力被广泛应用于医学数据研究等领域。然而，将不受保护的数据提交给试图训练机器学习模型的第三方，当第三方受到对手的攻击时，可能会受到数据泄露和隐私侵犯的影响。因此，设计一种执行加密计算的协议是不可避免的。为了解决这个问题，我们提出了基于安全多方计算的协议来私下训练支持向量机模型。利用半诚实对手模型和不经意转移，所提出的协议能够在不牺牲个人隐私的情况下对来自不同来源的组合数据进行非线性支持向量机训练。这些协议被应用于在HIV序列数据上训练具有径向基函数核的支持向量机模型，以预测某种抗病毒药物的疗效，这只有在病毒只能使用人类CCR5辅助受体进入细胞的情况下才有效。以10个由随机生成的整数组成的数据源(每个数据源包含100个标记样本)的合成数据为基准，该协议在算术/布尔电路中分别平均消耗了2991.386/166.912毫秒的在线时间。优化后的参数对训练数据的交叉验证平均达到0.5819 F1分，随后在由CCR5及其亚型蛋白序列组成的测试数据集上交叉验证达到0.7058 F1分。在实际数据上的完整训练和测试过程，编码后总共包含766个样本，924个特征，分别使用算术/布尔电路平均耗时43.75/15.84秒，与文献中的一些现有研究相比，这表明了我们协议的有效性和高效性。</p>
-<h1 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h1><p>近年来，机器学习方法在许多科学研究领域得到了广泛的应用，通过发现数据中的模式来解决问题。在医疗数据上应用机器学习方法，例如支持向量机(SVM)，使得能够检测先前未知或对于人类实体来说太难识别的模式。因此，它可以为医疗技术的发展做出贡献。例如，通过使用聚类、多维缩放和支持向量机来表征新的艾滋病毒耐药突变[19]。以“稀疏组套索回归”为核心的基于网络的预后预测(NOP)方法已被编制成基于基因表达谱的乳腺癌状态预测方法[1]，人工神经网络(ANN)可以给出癌症的预测和预后[3]。</p>
-<p>随着最新的技术，如第二代/第三代DNA测序，获得完整的人类基因组已经变得高效和廉价，导致许多研究解决了各种与健康相关的研究问题。然而，在第三方访问数据的过程中，患者的隐私可能会受到泄露。针对这一问题，设计了基于安全多方计算(MPC)[13，14]和同态加密[6，8，10]的隐私保护机器学习方法。然而，这些方法在不同的安全假设下表现出不同的性能。这意味着他们必须在隐私和性能之间进行权衡。据我们所知，利用预测控制训练非线性支持向量机缺乏有效的方法。</p>
-<h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><p>在本文中，我们设计并实现了一个基于MPC的解决方案，将支持向量机训练外包给两个非合谋的代理服务器。我们的目标是使支持向量机在来自多个来源的海量数据上的隐私保护训练变得高效。为此，我们提出了基于算术秘密共享的Beaver乘法三元组[2]和基于布尔秘密共享的Goldreich-MicaliWigderson(GMW)协议[7]的两种不同的解决方案。我们使用单指令多数据(SIMD)操作，允许并行化来提高协议的性能。</p>
-<p>在我们的协议中，初始化阶段可以在本地完成。来自各种数据源(如医院)的基因组序列数据首先采用独热编码进行编码。接下来，编码序列被分成两份，并分别分配给计算方。自己的点积也在当地计算、拆分并分发给各方。在训练过程中，在计算方之间进行MPC，得到计算结果，然后将计算结果发送给用户并进行重构，得到包含来自不同来源的数据的点积以及来自同一方的数据的点积的完整的GRAM矩阵。最后，用户在所需的核矩阵上训练SVM模型，该核矩阵可以通过导出的GRAM矩阵来计算。类别标签在纯文本域中发送，因为它们不会显示关于样本的任何额外信息。</p>
-<p>我们将我们的方案应用于HIV序列数据，以预测某种抗病毒药物的疗效，只有当病毒只能使用人类CCR5辅助受体进入细胞时，这种方法才有效。我们设计的基于算术和布尔电路的协议对10个由随机生成的整数组成的数据源的在线执行电路消耗了2991.38/166.912毫秒的时间，每个数据源包含100个带标签的样本，每个样本中有924个特征，即列。我们通过F1-Score对我们的结果进行了评估，训练数据的平均得分为0.5819，测试数据的平均得分为0.7058，证明了该协议的有效性。在算术/布尔电路协议中，对实际数据的完整训练和测试过程分别花费了算术/布尔电路协议的43.75/15.84秒，编码后总共包含766个样本，924个特征。</p>
-<p>论文的其余部分安排如下：第二部分介绍了相关工作。第3节和第4节分别列出了所需的预备知识和协议的详细概念。第五节对协议进行了评价和进一步的讨论。第六节对本文进行了总结。</p>
-<h1 id="PRELIMINARIES"><a href="#PRELIMINARIES" class="headerlink" title="PRELIMINARIES"></a>PRELIMINARIES</h1><p>在这一部分中，给出了我们的方法所使用的方法和算法。</p>
-<h2 id="序列独热编码"><a href="#序列独热编码" class="headerlink" title="序列独热编码"></a>序列独热编码</h2><p>在数据预处理阶段，我们使用的序列通过一次热编码被编码成数字形式。假设 $c_i$ 是序列 $S$ 中位置 $i$ 处的角色，其中 $i \in \mathbb{Z}, i&lt; |S|$。因为有20个氨基酸残基和1个GAP，所以 $c_i$ 可以编码成21位的形式。</p>
-<p>例如，如果 $c_i$ 是丙氨酸，则 $c_i$ 将被编码为 “$1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0$”，如果 $c_i$ 是一个GAP，则 $c_i$ 为 “$0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1$”。随着编码程序的迭代，整个序列将被编码成上述格式。</p>
-<h2 id="序列相似性的度量"><a href="#序列相似性的度量" class="headerlink" title="序列相似性的度量"></a>序列相似性的度量</h2><p>为了评估序列的相似性，利用了汉明距离的倒数。汉明距离被描述为在具有相同长度的两个字符串之间的相同位置处的不同字符对的数量。例如，给定两个长度相同的字符串 $s<em>1$ 和 $s_2$，每个字符串中总共有 $l$ 个字符。$D</em>{\mathbb{H}}$ 为字符串 $s_1$ 和 $s_2$ 定义的汉明距离：</p>
-<script type="math/tex; mode=display">
-D_{\mathbb{H}}(s_1, s_2) = \sum^{l}_{i=1}I(s_1(i),s_2(i))</script><p>其中 $l$ 是序列的长度，$I$ 是函数，如果给定的两个字符 $s<em>1(i)$ 和 <script type="math/tex">s_2(i)</script> 相同，则该函数返回1，否则返回0。在本项目中，两个序列的碱基相似度与汉明距离成反比，即 $l-D</em>{\mathbb{H}}(s_1, s_2)$。</p>
-<p>根据第3.1节，现在可以将一个序列视为二进制值的一个向量 $\vec{v}$。如果同一位置的任意两个序列中的任意两个字符相同，则这两个编码字符的点积 $\vec{v_1} \cdot \vec{v_2}$ 结果为1，否则为0。在这种情况下，两个序列的相似性越大，点积就越高。一旦计算了所有可能的序列对的相似度，就获得了矩阵 $\mathbf{M} \in \mathbb{Z}^{n \times n}$，其中 $n$ 表示计算中涉及的序列的数目。</p>
-<h2 id="安全多方计算"><a href="#安全多方计算" class="headerlink" title="安全多方计算"></a>安全多方计算</h2><p>这里作者采用两方的设置，可以参考<a href="https://yuyingwai.cn/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/" target="_blank" rel="noopener">ABY</a>中第2节的算术共享和布尔共享。</p>
-<h2 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h2><p>支持向量机作为一种有监督的机器学习方法，经常被用来解决分类问题。它们已被证明在解决中、低尺度预测问题上优于许多其他方法，特别是在结合核函数的情况下。支持向量机的优化问题表示如下：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\min_{\omega \in \mathbb{R}^d, b\in \mathbb{R}, \xi \in \mathbb{R}^n} \ \ \  &\frac{1}{2} ||\omega||^2 + \frac{C}{n}\sum^n_{i=1} \xi_i \\
-\mbox{s.t.} \ \ \  &Y_i(\langle \omega, X_i \rangle + b) \geq 1 - \xi_i \tag{1} \\
- &i=1,...,n,\  \xi_i \geq 0
-\end{align}</script><p>其中，$\omega, b, \xi, C, n$ 遵循列出的顺序，分别表示具有 $n$ 维数的向量、干扰 $\omega$ 和 $X_i$ 之间的点积的参数、确定点可以超出超平面多远的参数、惩罚的权重以及数据点的数量 $Y$。$X_i$ 和 $Y_i$ 表示数据特征向量及其标注。在上述支持向量机模型中，数据点被允许穿过超平面，但将受到松弛变量 $\xi_i$ 的惩罚，该松弛变量由惩罚因子 $C$ 缩放。通过调整 $C$，可以改变惩罚的权重。</p>
-<h2 id="径向基函数核"><a href="#径向基函数核" class="headerlink" title="径向基函数核"></a>径向基函数核</h2><p>RBF核因其有效性和普适性而被广泛应用于支持向量机分类中[9]，其核函数定义如下：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-K(\vec{x}, \vec{y}) &= \exp(- \frac{||\vec{x} - \vec{y}||^2}{2\sigma^2}) \tag{2}\\ 
-&= \exp(-\frac{\vec{x} \cdot \vec{x} - 2 \vec{x} \cdot \vec{y} + \vec{y} \cdot \vec{y}}{2 \sigma^2})
-\end{align}</script><p>在这个方程中，“$\cdot$” 表示向量之间的点积算子，而 $\sigma$ 则作为调整相似度的参数，当 $\sigma$ 增大时，指数函数的结果将趋于接近1，表明两个序列的相似度较高，反之亦然，此外，方程的第二行表明，在我们的协议中，只能根据用于计算径向基核矩阵的向量的点积来计算径向基核。</p>
-<h1 id="隐私保护支持向量机"><a href="#隐私保护支持向量机" class="headerlink" title="隐私保护支持向量机"></a>隐私保护支持向量机</h1><p>在这一部分中，我们系统地描述了我们的隐私保护支持向量机协议。在4.1节中，我们将对其进行概述，随后将详细说明协议的各个阶段。这里继承了3.3节中的记号。</p>
-<h2 id="系统概述"><a href="#系统概述" class="headerlink" title="系统概述"></a>系统概述</h2><p>在我们的协议中，来自多个医疗机构的基因组数据集以秘密共享的形式被外包给两个非共谋的代理服务器。两个非合谋的代理服务器在收到允许查询数据的第三方(如研究人员)的请求后，执行MPC以生成支持向量机训练所需的样本的GRAM矩阵。协议结构如图1所示，在此协议中，有以下各方扮演的角色：</p>
-<ol>
-<li><strong>数据源：</strong>在此上下文中，它们是医疗机构，表示为 $H_j$，其中 $j \in \mathbb{N}^+ , j \leq n$，其中 $n$ 表示数据源的数量。他们以秘密共享的形式将基因组数据上传到两个代理服务器。</li>
-<li><strong>用户：</strong>用户 $U$，例如科学研究人员，他请求两个代理服务器对秘密共享数据执行一些安全计算，以产生用于支持向量机训练的格拉姆矩阵。</li>
-<li><strong>两个代理服务器：</strong>两个非合谋服务器作为计算方，记为 $P_i$，其中 $i \in {0,1}$ 负责格拉姆矩阵的安全计算。在利用基因组数据训练机器学习模型的同时，选择两个不完全信任的第三方被认为是确保隐私保护的最实用和最实惠的解决方案[17]。</li>
-</ol>
-<p><img src="http://images.yingwai.top/picgo/ppossvmf1.png" alt=""></p>
-<center>
-    <i>图1 协议结构：从数据源到MPC，最终到用户进程</i>
-</center>
-
-
-
-
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ol>
-<li>$H_j$ 中的原始序列数据在本地编码为数字矢量(参见第4.2节)。</li>
-<li>在 $H_j$ 中，编码的序列数据在本地被分成两个共享 $A/B$，并分别发送到 $P_0$ 和 $P_1$ (参见第4.3节)。</li>
-<li>在 $H_j$ 中本地预先计算自身点积，然后它们也被分成两个份额 $A/B$，并分别发送到 $P_0$ 和 $P_1$ (参见第4.4节)。</li>
-</ol>
-<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><ol>
-<li>接收到来自 $U$ 的查询后，在 $P_0$ 和 $P_1$ 之间进行预测编码，以在包含编码序列的文件之间获得所需的处理数据(参见第4.5节和第4.6节)。</li>
-<li>然后对自积和交叉点乘积进行积分以获得整个格拉姆矩阵，并将其传递给 $U$ (参见第4.7节)。</li>
-<li>在 $U$ 中使用格拉姆矩阵来训练支持向量机模型并测试结果模型(参见第4.8节)。</li>
-</ol>
-<h2 id="蛋白质序列编码"><a href="#蛋白质序列编码" class="headerlink" title="蛋白质序列编码"></a>蛋白质序列编码</h2><p>序列编码功能采用代表一个残基的一个字符，并将其编码为21位格式，如3.1节所述。输出文件包含编码序列，其中每行代表一个蛋白质序列，21列中的每一列代表一个残基(或gap)。</p>
-<h2 id="编码数据的秘密共享"><a href="#编码数据的秘密共享" class="headerlink" title="编码数据的秘密共享"></a>编码数据的秘密共享</h2><p>使用算术共享和布尔共享将原始编码数据分割成两个共享。在基于算术共享的协议中，产生的随机整数小于 $2^l$。此后，随机整数将作为共享并帮助构建另一个共享。在基于布尔共享的协议中，随机比特被生成为一个共享，并且它们被用来构造另一个共享。最终，在这两种协议中，两个共享将分别写入两个文件。使用算术共享的编码数据的秘密共享如图2所示。</p>
-<p><img src="http://images.yingwai.top/picgo/ppossvmf2.png" alt=""></p>
-<center>
-    <i>图2 共享数据生成</i>
-</center>
-
-
-
-
-<h2 id="本地计算自点积"><a href="#本地计算自点积" class="headerlink" title="本地计算自点积"></a>本地计算自点积</h2><p>数据源计算“自身点积”，这意味着每个数据点的两个实例的点积是在本地计算的。这样的本地计算降低了总的通信成本。该过程的结果是由前面提到的共享数据生成技术产生的点积矩阵的两部分。点积矩阵的份额接下来被分发到两个第三方代理服务器上，即 $P_0$ 和 $P_1$，然后可以在 $U$ 上重建这些份额。</p>
-<h2 id="使用算术电路进行点积计算"><a href="#使用算术电路进行点积计算" class="headerlink" title="使用算术电路进行点积计算"></a>使用算术电路进行点积计算</h2><p>所有需要乘成两个长数组的文件都被集成，省略了重复SIMD数据生成的不必要步骤。例如，假设文件 $A$、文件 $B$、文件 $C$ 分别表示为 $f_a$，$f_b$ 和 $f_c$，则这些文件中分别包含3、2和1个共享编码序列，由 $a_i,b_i,c_i$ 表示，其中 $i$ 表示某个文件中的序列索引。长阵列A将是 “$a_1a_2a_3a_1a_2a_3a_1a_2a_3b_1b_2$”，而另一个长阵列将是 “$b_1b_1b_1b_2b_2b_2c_1c_1c_1c_1c_1$”。这些操作分别称为 $\mbox{GetLongArrayA}()$ 和 $\mbox{GetLongArrayB}()$。</p>
-<p><img src="http://images.yingwai.top/picgo/ppossvma1.png" alt=""></p>
-<p>算法1首先构造两个长数组，以减少创建SIMD数据的次数。通过一次乘以两个长阵列，成功地降低了协议的运行时间。此算法省略了文件与其自身之间的点积计算，因为它可以先前本地计算，如第4.4节所述。通过将数组放入SIMD共享，从而实现对多个数据的操作。在乘法之后，然后执行每个点积计算块中的乘法结果的求和，以便分别对来自两个向量的每对元素的乘法进行局部求和。最后，将最终结果加载到数组中。图3显示了基于算术电路的安全协议的一般结构。</p>
-<h2 id="基于布尔电路的点积计算"><a href="#基于布尔电路的点积计算" class="headerlink" title="基于布尔电路的点积计算"></a>基于布尔电路的点积计算</h2><p>算法2类似于算法1。协议的结构如图3所示。两者之间的区别在于共享类型和电路类型。在此上下文中，仅在0和1之间执行乘法，这符合布尔共享的位长(1位)。因此，布尔电路中的安全与运算可以取代算术电路中的安全乘法，实现更好的计算性能。因此，共享的位长可以减少到1，这可以在通信过程中节省大量的计算能力。就布尔份额而言，它与算术份额差别很大，因此在以以前的方式局部相乘后无法求和。因此，设计了基于安全加法的特定函数，用于在点积块中对乘法结果求和。</p>
-<p><img src="http://images.yingwai.top/picgo/ppossvmf3.png" alt=""></p>
-<center>
-    <i>图3 点积计算</i>
-</center>
-
-<p><img src="http://images.yingwai.top/picgo/ppossvma2_.png" alt=""></p>
-<h2 id="结果数组集成与点积矩阵生成"><a href="#结果数组集成与点积矩阵生成" class="headerlink" title="结果数组集成与点积矩阵生成"></a>结果数组集成与点积矩阵生成</h2><p>通过我们的协议，可以在 $U$ 上手动将自身的点积重构成一个数组。然后计算自/交叉点乘积数组中访问位置的索引表。基于索引表，将生成 $2D$ 矢量，即 $n \times n$ 矩阵，其中 $n$ 表示计算中涉及的序列总数，并将其写入文件中作为最终输出。在机器学习中，必须严格遵循数据和标签的顺序，这样才能正确地训练模型。因此，数组的排序过程是必不可少的。</p>
-<h2 id="支持向量机交叉验证实验"><a href="#支持向量机交叉验证实验" class="headerlink" title="支持向量机交叉验证实验"></a>支持向量机交叉验证实验</h2><p>在所有数据中，随机选取20%的数据对模型进行检验。在计算格拉姆矩阵的基础上，通过5次交叉验证对支持向量机的误分类惩罚参数 $C$、类不平衡权值 $W$ 和径向基函数的相似度调整参数 $\sigma$ 进行优化。$C$ 和 $\sigma$ 分别在集合 $s<em>C=[10^{-3},10^{-2},\cdot \cdot \cdot,10^2, 10^3]$，$S</em>{\sigma}=[0.125, 0.25, 0.5, 1, 2, 4, 8]$ 上进行优化，而类权重选自集合 $S_W = [1:1,1:2,1:4,1:8,1:16]$，前者表示标签0的类权重，前者占多数，后者表示标签1的类权重。最终，确定在优化过程中达到最高F1得分的参数集。然后，利用这些最优参数对最终模型进行训练。最后，利用测试数据对训练好的模型进行检验，并用F1得分对预测结果进行评估。</p>
-<h2 id="安全性分析"><a href="#安全性分析" class="headerlink" title="安全性分析"></a>安全性分析</h2><p>将数据外包给 $N$ 非合谋、半诚实的第三方是在[11]中首次研究的。给出了通用解决方案的安全性证明。在我们的协议中，利用[11]中的外包思想，多个医疗机构将基因组数据外包给两个非合谋、半诚实的第三方。我们需要保护个人的隐私，他们的基因组数据被外包给两个非串通的服务器。我们基于算术电路和布尔电路的协议的安全性依赖于分别基于Beaver乘法三元组的协议[2]和GMW协议[7]的已证明的安全性。一个半诚实的对手最多可以攻破一个代理服务器，就可以获得个人私有基因组数据的一份。我们知道基因组数据是通过算术或布尔共享来共享的，所以它看起来像是统一随机的数据。这确保了敌手不能获得任何有关个人的私人基因组数据。我们的协议是安全的，不会受到恶意数据提供商和用户的攻击。数据提供者仅以共享的形式向两个代理服务器发送基因组数据，并且不接收来自其他方的任何消息。他们的恶意输入不会导致任何数据泄露。用户输入的任何变化都会导致不同的分析响应。这确保了针对恶意用户的安全性。所有通信方之间的机密性、完整性和认证都是使用最先进的技术(如TLS[5])提供的。</p>
-<h1 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h1><p>本文提出了两种支持向量机隐私保护训练方案，用于支持向量机对来自多个来源的外包基因组数据的隐私保护训练。在我们的方案中，我们利用算术秘密共享、布尔秘密共享和不经意转移来同时保证支持向量机训练的安全和高效。我们的协议在两个半可信代理服务器上执行，每个服务器只访问训练支持向量机所需的结果点积的一部分。我们的方案在半诚实对手模型下是安全的。我们在真实的HIV数据集和合成数据集上进行了实验，以显示我们协议的有效性和效率。在未来的工作中，我们将使我们的协议在不显著降低性能的情况下确保免受恶意攻击的安全。</p>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>MPC</tag>
-        <tag>PPML</tag>
-        <tag>Secret Sharing</tag>
-        <tag>SVM</tag>
-        <tag>HIV co-receptor prediction</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
-    <url>/2020/07/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
-    <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
-<p>CCS 2019</p>
-<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
-<a id="more"></a>
-<h1 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h1><p>本文设计了BFV[6，22]和CKKS[16]方案的多密钥变体。本文提出了一种新的生成重线性化密钥的方法，与文献[13]中的以前技术相比，该方法更简单、更快。此外，本文将这些方案[9，12，14]的最新自举算法应用于多密钥场景，以构建具有压缩密文的多密钥完全同态加密。最后，作者使用Microsoft SEAL[47]给出了本文的多密钥方案的概念验证实现，并给出了实验结果。据作者所知，这是支持打包密文的MKHE方案的第一个实际实现。</p>
-<p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络(CNN)模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，本文的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。作者注意到，本文的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
-<p><img src="http://images.yingwai.top/picgo/emkhef1.png" alt=""></p>
-<h1 id="BACKGROUND"><a href="#BACKGROUND" class="headerlink" title="BACKGROUND"></a>BACKGROUND</h1><h2 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h2><p>除非另有说明，否则所有对数都以 $2$ 为底。我们用粗体表示向量，例如$\mathbf{a}$，用大写粗体表示矩阵，例如 $\mathbf{A}$。本文用 $\langle \mathbf{u}, \mathbf{v} \rangle$ 表示两个向量 $\mathbf{u}, \mathbf{v}$ 的通常点积。对于实数 $r$，$\lfloor r \rceil$ 表示最表示最接近 $r$ 的整数，在平局的情况下向上舍入。本文用 $x \leftarrow D$ 表示按分布 $D$ 抽样的 $x$。对于有限集 $S$，$U(S)$ 表示 $S$ 上的均匀分布。本文用 $\lambda$ 表示安全参数：所有已知的对作用域内的密码方案的有效攻击都应该采用 $\Omega(2^\lambda)$ 位运算。</p>
-<h2 id="多密钥同态加密"><a href="#多密钥同态加密" class="headerlink" title="多密钥同态加密"></a>多密钥同态加密</h2><p>多密钥同态加密是一种密码系统，它允许我们对可能在不同密钥下加密的密文评估算术电路。</p>
-<p>设 $\mathcal{M}$ 是具有算术结构的消息空间。MKHE方案MKHE由五个PPT算法($\mathsf{Setup}, \mathsf{KeyGen}, \mathsf{Enc}, \mathsf{Dec}, \mathsf{Eval}$)组成。本文假设每个参与方都有对其公钥和私钥的引用(索引)。多密钥密文隐式包含<em>有序</em>集合 $T = {id<em>1, …, id_k}$ 相关联的引用。例如，新的密文 $\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk}</em>{id})$ 对应于单个元素集合 $T = {id}$，但是随着来自不同方的密文之间的计算的进行，参考集合的大小变得更大。</p>
-<ul>
-<li><p><strong>初始化</strong>：$pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$。将安全参数作为输入并返回公共参数化。本文假设所有其他算法都隐含地将 $pp$ 作为输入。</p>
-</li>
-<li><p><strong>密钥生成</strong>：$(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$。输出一对私钥和公钥。</p>
-</li>
-<li><p><strong>加密</strong>：$\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk})$。加密明文 $\mu \in \mathcal{M}$ 并输出密文 $\mathsf{ct} \in {0,1 }^*$。</p>
-</li>
-<li><p><strong>解密</strong>：$\mu \leftarrow \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; {\mathsf{sk}<em>{id}}</em>{id \in T})$。给定具有对应密钥序列的密文 $\overline{\mathsf{ct}}$，输出明文 $\mu$。</p>
-</li>
-<li><p><strong>同态评估</strong>：</p>
-<script type="math/tex; mode=display">
-\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,...,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})</script><p>给定电路 $\mathcal{C}$，多密钥密文的元组 $(\overline{\mathsf{ct}}<em>1,…,\overline{\mathsf{ct}}_l)$ 和对应的一组公钥 ${\mathsf{pk}</em>{id}}_{id \in T}$，输出密文 $\overline{\mathsf{ct}}$。它的参考集是输入密文 $\overline{\mathsf{ct}}_j, 1 \leq j \leq l$ 的联合 $T = T_1 \cup \cdots \cup T_l$。</p>
-</li>
-</ul>
-<p><strong>语义安全。</strong>对于任意两条消息 $\mu_0, \mu_1 \in \mathcal{M}, \ \ i = 0, 1$ 的分布 ${\mathsf{MKHE.Enc}(\mu_i; \mathsf{pk}) }$ 在 $pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$ 和 $(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$ 的计算上应该是不可区分的。</p>
-<p><strong>正确性和紧凑性。</strong>如果与 $k$ 方相关的密文的大小受固定多项式 ${\rm poly}(\cdot, \cdot)$ 的 ${\rm poly}(\lambda, k)$ 的限制，则MKHE方案是紧致的。</p>
-<p>对于 $1 \leq j \leq l$，设 $\overline{\mathsf{ct}}<em>j$ 为密文(参考集合 $T_j$)，使得 $\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}_j; {\mathsf{sk}</em>{id}}<em>{id \in T} = \mu_j$。设 $\mathcal{C} : \mathcal{M}^l \rightarrow \mathcal{M}$ 为电路，$\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l),{\mathsf{pk}</em>{id}}_{id \in T})$，其中 $T = T_1 \cup \cdots \cup T_l$。然后，</p>
-<script type="math/tex; mode=display">
-\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; \{\mathsf{sk}_{id}\}_{id \in T} = \mathcal{C}(\mu_1,...,\mu_l) \tag{1}</script><p>以压倒性的可能性。对于近似算术[16]，可以用类似于CKKS格式的近似相等来代替(1)的相等。</p>
-<h2 id="环上容错学习"><a href="#环上容错学习" class="headerlink" title="环上容错学习"></a>环上容错学习</h2><p>在整篇文章中，作者假设 $n$ 是2的幂整数，并且 $R=\mathbb{Z}[X]/(X^n+1)$。对于 $R$ 的模为整数 $q$ 的剩余环，本文记作 $R_q=R/(q·R)$。带参数 $(n,q,\chi,\psi)$ 的环学习假设是给定任意多项式数目的形式的样本 $(a_i,b_i=s \cdot a_i+e_i) \in R^2_q$，其中 $a_i$ 在 $R_q$ 中是一致随机的，$s$ 选自 $R_q$ 上的密钥分布 $\chi$，$e_i$ 取自 $R$ 上的误差分布 $\psi$，$b_i$ 是 $R_q$ 中的均匀随机元素、在计算上是不可区分的。</p>
-<h2 id="小工具分解"><a href="#小工具分解" class="headerlink" title="小工具分解"></a>小工具分解</h2><p>设 $\mathbf{g}=(g<em>i) \in \mathbb{Z}^d$ 为小工具向量，$q$ 为整数。小工具分解，由 $\mathbf{g}^{-1}$ 表示，是从 $R_q$ 到 $R^d$ 的函数，它将元素 $a \in R_q$ 转换成<em>小</em>多项式向量 $u=(u_0,…,u</em>{d−1})\in R^d$ ，使得 $a = \sum^{d-1}_{i=0} g_i \cdot u_i \pmod{q}$。</p>
-<p>小工具分解技术被广泛应用于HE方案的构建中。例如，非线性电路的同态评估是基于密钥切换技术的，并且大多数HE方案利用各种小工具分解方法来控制噪声增长。文献中已经提出了各种分解方法，如位分解[6，7]、基分解[17，21]和基于RNS的分解[4，30]。本文的实现利用了RNS友好的分解来提高效率。</p>
-<h1 id="本文的构造"><a href="#本文的构造" class="headerlink" title="本文的构造"></a>本文的构造</h1><h2 id="基本方案"><a href="#基本方案" class="headerlink" title="基本方案"></a>基本方案</h2><ul>
-<li>$\mathsf{Setup}(1^\lambda)$：对于给定的安全参数 $\lambda$，设置RLWE维数 $n$、密文模数 $q$、密钥分布 $\chi$ 和R上的误差分布 $\psi$。生成随机向量 $\mathbf{a} \leftarrow U(R^d_q)$。返回公共参数 $pp=(n, q, \chi, \psi, \mathbf{a})$。</li>
-<li>$\mathsf{KeyGen}(pp)$：选取密钥 $s \leftarrow \chi$。选取误差向量 $e \leftarrow \psi^d$，并将公钥在 $R^d_q$ 中设置为 $\mathbf{b} = -s \cdot \mathbf{a} + \mathbf{e} \pmod{q}$。</li>
-<li>$\mathsf{UniEnc}(\mu;s)$：对于输入明文 $\mu \in R$，生成密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \in R^{d \times 3}_q$，如下所示：<ol>
-<li>选取 $r \leftarrow \chi$；</li>
-<li>选取 $\mathbf{d}_1 \leftarrow U(R^d_q)$ 和 $\mathbf{e}_1 \leftarrow \psi^d$，然后设 $\mathbf{d}_0 = -s \cdot \mathbf{d}_1 + \mathbf{e}_1 + r \cdot \mathbf{g} \pmod{q}$；</li>
-<li>选取 $\mathbf{e}_2 \leftarrow \psi^d$ 然后设 $\mathbf{d}_2 = r \cdot \mathbf{a} + \mathbf{e}_2 + \mu \cdot \mathbf{g} \pmod{q}$。</li>
-</ol>
-</li>
-</ul>
-<p>公共参数 $pp$ 包含一个随机生成的向量 $\mathbf{a} \in R^d_q$，因此本文假设使用公共引用字符串模型。各方应将相同的公共参数作为密钥生成算法的输入，以支持多密钥同态运算。在以前关于MKHE的所有工作中都做出了同样的假设。</p>
-<p>单一加密算法是对称加密，它可以加密单个环形元件。一次加密的密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \leftarrow \mathsf{UniEnc}(\mu;s)$ 由 $R^d_q$ 中的三个矢量组成，其大小是 $R^{2d \times 2}_q$ 中普通RGSW密文的(3/4)倍。对于一次加密密文 $\mathbf{D}$，前两列 $[\mathbf{d}_0 | \mathbf{d}_1]$ 可以被视为秘密 $s$ 下的 $r$ 的加密，而 $[\mathbf{d}_2 | -\mathbf{a}]$ 形成秘密 $r$ 下的 $\mu$ 的加密。</p>
-<h2 id="再线性化"><a href="#再线性化" class="headerlink" title="再线性化"></a>再线性化</h2><p>在级联秘密 $\overline{\mathsf{sk}} = (1, s_1, …, s_k)$ 下加密的两个多密钥密文 $\overline{\mathsf{ct}}_i \in R^{k+1}_q$ 的张量积 $\overline{\mathsf{ct}} = \overline{\mathsf{ct}}_1 \otimes \overline{\mathsf{ct}}_2$ 可以看作是对应于张量平方密钥 $\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 的密文。$\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 包含一些与两个不同方相关的非线性项 $s_i \cdot s_j$。因此，计算服务器应该能够通过非线性项 $s_i \cdot s_j$ 的线性化来将扩展密文 $\overline{\mathsf{ct}} \in R^{(k+1) \times (k+1)}_q$ 转换为规范密文。</p>
-<p>本文的重新线性化方法需要由单个各方生成的相同公共材料(评估密钥)，如下所示：</p>
-<ul>
-<li>$\mathsf{EvkGen}(s)$：给定秘密 $s \in R$，返回 $\mathbf{D} \leftarrow \mathsf{UniEnc}(s;s)$。</li>
-</ul>
-<p>准确地说，每一方 $i$ 通过运行算法(si，bi)←KeyGen(Pp)和Di←EvkGen(Si)来生成其自己的秘密密钥、公共密钥和评估密钥，然后发布该对(bi，Di)。在本节的其余部分，我们将介绍两种重新线性化算法，并说明它们的优缺点。</p>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>PPML</tag>
-        <tag>HE</tag>
-        <tag>Neural Network</tag>
       </tags>
   </entry>
   <entry>
