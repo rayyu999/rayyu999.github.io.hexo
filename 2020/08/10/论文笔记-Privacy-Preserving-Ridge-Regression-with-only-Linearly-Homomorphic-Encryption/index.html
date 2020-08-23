@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/jm.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/jm32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/jm16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/jm.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PPML,HE,Linear Regression," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Irene Giacomelli, Somesh Jha, Marc Joye, C. David Page, and Kyonghwan Yoon ACNS 2018 https:&#x2F;&#x2F;link.springer.com&#x2F;chapter&#x2F;10.1007&#x2F;978-3-319-93387-0_13">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记 Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption">
+<meta property="og:url" content="http://yoursite.com/2020/08/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Privacy-Preserving-Ridge-Regression-with-only-Linearly-Homomorphic-Encryption/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="Irene Giacomelli, Somesh Jha, Marc Joye, C. David Page, and Kyonghwan Yoon ACNS 2018 https:&#x2F;&#x2F;link.springer.com&#x2F;chapter&#x2F;10.1007&#x2F;978-3-319-93387-0_13">
+<meta property="og:image" content="http://images.yingwai.top/picgo/PPRRwoLHEp1.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/PPRRwoLHEp2.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/PPRRwoLHEp3.png">
+<meta property="article:published_time" content="2020-08-10T11:49:57.000Z">
+<meta property="article:modified_time" content="2020-08-23T14:33:37.437Z">
+<meta property="article:author" content="yyw">
+<meta property="article:tag" content="PPML">
+<meta property="article:tag" content="HE">
+<meta property="article:tag" content="Linear Regression">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/PPRRwoLHEp1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/08/10/论文笔记-Privacy-Preserving-Ridge-Regression-with-only-Linearly-Homomorphic-Encryption/"/>
+
+
+
+
+
+  <title>论文笔记 Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption | Ray's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ray's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Privacy-Preserving-Ridge-Regression-with-only-Linearly-Homomorphic-Encryption/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">论文笔记 Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-10T19:49:57+08:00">
+                2020-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.9k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>Irene Giacomelli, Somesh Jha, Marc Joye, C. David Page, and Kyonghwan Yoon</em></p>
+<p><a href="https://dblp.uni-trier.de/db/conf/acns/acns2018.html#GiacomelliJJPY18" target="_blank" rel="noopener">ACNS 2018</a></p>
+<p><a href="https://link.springer.com/chapter/10.1007/978-3-319-93387-0_13" target="_blank" rel="noopener">https://link.springer.com/chapter/10.1007/978-3-319-93387-0_13</a></p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>具有L2范数正则化的线性回归(即岭回归)是一种重要的统计技术，它使用线性函数来模拟某些解释值和结果值之间的关系。在许多应用中(例如，个性化医疗中的预测建模)，这些值表示由不愿意共享它们的几个不同方拥有的敏感数据。在这种情况下，训练线性回归模型变得具有挑战性，并且需要特定的密码解决方案。尼古拉恩科等人优雅地解决了这个问题。在标准普尔(奥克兰)2013年。他们提出了一个双服务器系统，使用线性同态加密(LHE)和姚的两方协议(乱码电路)。在这项工作中，我们提出了一种新的系统，它可以只使用LHE(即不使用姚的协议)来训练脊线性回归模型。这极大地提高了整体性能(在计算和通信方面)，因为姚的协议是以前解决方案中的主要瓶颈。在人工生成数据集和真实数据集上验证了该系统的有效性。</p>
+<h2 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h2><p>本文提出了一种新的两服务台模型中的岭回归系统。</p>
+<ul>
+<li><p>对于第一阶段，作者扩展了Nikolaenko等人使用的方法，涉及使用标记同态加密技术加密任意划分的数据集，以支持通过LHE方案加密的密文对之间的乘法。通过这种方式，作者展示了仅基于LHE的解决方案可以处理比水平分区情况更复杂的场景。</p>
+</li>
+<li><p>对于第二阶段，作者通过设计一个只利用底层加密方案的线性同态性质求解 $A \boldsymbol{w}=\boldsymbol{b}$ 的加性同态两方协议来避免姚的协议。这可以提高整体性能，特别是显著降低通信开销。作为一个亮点，如果我们水平划分(分成10个大小相等的部分)1000万个实例和20个特征的数据集，我们的隐私保护回归方法运行在2分钟以内，产生1.3MB的通信开销。在[23]中提出的系统需要超过50min和270MB的交换数据来执行类似的计算。</p>
+</li>
+<li><p>最后，作者注意到基于梯度下降的解决方案使用迭代算法，并且存在估计迭代次数 $t$ 的问题。或者 $t$ 被固定为确保找到模型的良好近似的高值，这为协议带来了更高的复杂度；或者 $t$ 是基于数据集自适应地选择的，这在隐私保护设置中可能是不可行的；或者 $t$ 是基于数据集自适应地选择的，这在隐私保护设置中可能是不可行的。本文求解 $A \boldsymbol{w}=\boldsymbol{b}$ 的解决方案不存在这个问题。</p>
+</li>
+</ul>
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p>见<a href="https://yuyingwai.cn/2020/08/09/论文笔记-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" target="_blank" rel="noopener">LoPED</a>中的2.1小节。</p>
+<h2 id="密码工具"><a href="#密码工具" class="headerlink" title="密码工具"></a>密码工具</h2><p>一般的加法同态算法只能计算一个密文和一个明文的乘积：</p>
+<script type="math/tex; mode=display">
+\mathsf{cMult}(a,c) = c \odot c \cdots \odot c \quad (a \ \mathrm{times})</script><p>而不能计算两个密文的乘积 $c \times c’$。因此作者在这里使用了一种称为 <em>labeled-homomorphic encryption</em>（labHE）的同态加密技术：</p>
+<p>令 $(\mathsf{Gen, Enc, Dec})$ 为一个具有安全参数 $\kappa$ 和明文空间 $\mathcal{M}$ 的LHE方案。假设乘法运算在 $\mathcal{M}$ 中给出；例如 $(\mathcal{M}, +, \cdot)$ 是一个有限环。令 $F: {0,1 }^s \times \mathcal{L} \rightarrow \mathcal{M}$ 是一个有种子空间为 ${0,1}^s \ (s = \mathrm{poly}(\kappa))$ 以及标记空间 $\mathcal{L}$ 的伪随机函数。定义：</p>
+<ul>
+<li><p>$\mathsf{labGen}(\kappa)$：对输入 $\kappa$，它运行 $\mathsf{Gen}(\kappa)$ 然后输出 $(sk, pk)$。</p>
+</li>
+<li><p>$\mathsf{localGen}(pk)$：对于每个用户 $i$ 以及公钥作为输入，它在 ${0,1}^s$ 中选取随机种子 $\sigma<em>i$ 然后计算 $pk_i = \mathsf{Enc}</em>{pk}(\underline{\sigma_i})$，其中 $\underline{\sigma_i}$ 是作为 $\mathcal{M}$ 中元素的 $\sigma_i$ 的编码。它输出 $(\sigma_i, pk_i)$。</p>
+</li>
+<li><p>$\mathsf{labEnc}<em>{pk}(\sigma_i, m, \tau)$：对来自用户 $i$ 的一个带有标签 $\tau \in \mathcal{L}$ 的消息 $m \in \mathcal{M}$，它计算 $b = F(\sigma_i, \tau)$ 然后输出标记的密文 $\boldsymbol{c} = (a, c) \in \mathcal{M \times C}$，其中 $a = m - b$ 在 $\mathcal{M}$ 中而 $c = \mathsf{Enc}</em>{pk}(b)$。</p>
+</li>
+<li><p>$\mathsf{labMult}(\boldsymbol{c, c’})$：输入两个标记的密文 $\boldsymbol{c} = (a, c)$ 和 $\boldsymbol{c’} = (a’, c’)$，它计算一个密文下的“乘积” $d = \mathsf{labMult}(\boldsymbol{c, c’})$ 为 $d = \mathsf{Enc}<em>{pk}(a \cdot a’) \odot \mathsf{cMult}(a, c’) \odot \mathsf{cMult}(a’, c)$。容易验证 $\mathsf{Dec}</em>{sk}(d) = m \cdot m’ - b \cdot b’$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+m \cdot m' &= (a+b)(a'+b')\\
+&= a \cdot a' + a \cdot c' + a' \cdot c + b \cdot b'
+\end{align}</script></li>
+<li><p>$\mathsf{labDec}<em>{sk}(pk_i, pk_j, \tilde{c})$：输入 $\tilde{c}$，它首先从 $\mathsf{Dec}</em>{sk}(pk<em>i)$ 恢复 $\sigma_i$ 和 $\sigma_j$。然后，它对所有 $t = 1,…,n$ 计算 $b_t = F(\sigma_i, \tau_t)$ 和 $b’_t = F(\sigma_j, \tau_t’)$。最后，它计算 $\tilde{b} = \sum^n</em>{t=1} b<em>t \cdot b_t’$ 和 $\tilde{m} = \mathsf{Dec}</em>{sk}(\tilde{c}) + \tilde{b}$。容易验证 $\tilde{m} = \sum^n_{t=1} m_t \cdot m_t’$。</p>
+</li>
+</ul>
+<h1 id="系统概览"><a href="#系统概览" class="headerlink" title="系统概览"></a>系统概览</h1><p><a href="https://yuyingwai.cn/2020/08/09/论文笔记-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" target="_blank" rel="noopener">LoPED</a>是基于本篇文章的，因此设定差不多。本文考虑这样的设置，其中训练数据集对于想要训练岭回归模型的实体不是明文可用的。相反，后者可以访问数据的加密副本，因此需要处理密钥的一方的帮助才能了解所需的模型。更准确地说，本文中的协议是为以下各方设计的：</p>
+<ul>
+<li><em>数据拥有者</em>：有 $m$ 个数据拥有者 $DO_1,…,DO_m$；每个 $DO_i$ 都有一个私有的数据集 $\mathcal{D}_i$ ，并且愿意共享其加密后的版本。</li>
+<li><em>机器学习引擎</em>（MLE）：这是希望对通过合并本地数据集 $\mathcal{D}_1,…,\mathcal{D}_m$ 而获得的数据集 $\mathcal{D}$ 运行线性回归算法，但只能访问它们的加密副本的一方。因此，MLE需要加密服务提供商的帮助。</li>
+<li><em>加密服务提供商</em>（CSP）负责初始化系统中使用的加密方案，并与MLE交互以帮助其完成其任务(计算线性回归模型)。CSP管理加密密钥，并且是唯一能够解密的实体。</li>
+</ul>
+<p>本文假设MLE和CSP没有串通，而且所有涉及的各方都是诚实但好奇的。此外，本文假设对于协议中涉及的每一对参与方，都存在一个私有的、经过身份验证的对等信道。特别是，任何两个参与者之间的通信都不能被窃听。</p>
+<p>本文的目标是确保MLE获得模型，而MLE和CSP都不会学习到模型本身所揭示的关于私有数据集 $\mathcal{D}_i$ 的任何其他信息。即使在两个服务器(MLE或CSP)中的一个与一些数据所有者勾结的情况下，它们也不应该了解关于诚实的数据所有者持有的数据的额外信息。为了实现这一目标，本文设计了一个系统，它可以被视为由前面提到的 $m+2$ 方运行的多方协议，并由一系列步骤指定。该系统具有以下两阶段架构：</p>
+<p><strong>阶段1（聚合本地数据集）：</strong>CSP生成密钥对 $(sk,pk)$，保存 $sk$ 以及公开 $pk$；每个 $DO_i$ 用 $pk$ 加密自己的数据集 $\mathcal{D}_i$ 并发送给MLE。MLE使用接收到的密文和同态的特性来获得 $A$ 和 $\boldsymbol{b}$ 的密文。</p>
+<p><strong>阶段2（计算模型）：</strong>MLE盲化 $A$ 和 $\boldsymbol{b}$ 并发送给CSP；后者解密对盲化后的数据解密并运行给定的算法。该算法的输出（“盲化模型”）是一个向量 $\tilde{\boldsymbol{w}}$，CSP把它发送给MLE，后者去盲化后获得 $\boldsymbol{w}^*$。</p>
+<ul>
+<li>MLE选取一个随机可逆矩阵 $R \in \mathrm{GL}(d, \mathcal{M})$ 和随机向量 $\boldsymbol{r} \in \mathcal{M}$，然后使用线性同态加密的性质计算 $C’ = \mathsf{Enc}<em>{pk}(AR)$ 和 $\boldsymbol{d’} = \mathsf{Enc}</em>{pk}(\boldsymbol{b} + A \boldsymbol{r})$。值 $C = AR$ 和 $\boldsymbol{d} = \boldsymbol{b} + A \boldsymbol{r}$ 就是“盲化数据”。</li>
+<li>CSP解密 $C’$ 和 $\boldsymbol{d’}$，然后计算 $\tilde{\boldsymbol{w}} = C^{-1} \boldsymbol{d}$。向量 $\tilde{\boldsymbol{w}}$ 为“盲化模型”，发送回给MLE。</li>
+<li>MLE计算 $\boldsymbol{w}^* = R \tilde{\boldsymbol{w}} - \boldsymbol{r}$，容易验证 $R \tilde{\boldsymbol{w}} - \boldsymbol{r} = R(AR)^{-1}(\boldsymbol{b} + A \boldsymbol{r}) - \boldsymbol{r} = A^{-1} \boldsymbol{b}$。</li>
+</ul>
+<h1 id="协议描述"><a href="#协议描述" class="headerlink" title="协议描述"></a>协议描述</h1><h2 id="阶段1：聚合数据集"><a href="#阶段1：聚合数据集" class="headerlink" title="阶段1：聚合数据集"></a>阶段1：聚合数据集</h2><p>两种情况，第一种情况为 $X$ 和 $\boldsymbol{y}$ 的数据集被水平划分为 $m$ 个数据集，即每个 $DO$ 拥有：</p>
+<script type="math/tex; mode=display">
+\mathcal{D}_k = \{(\boldsymbol{x}_{n_{k-1}+1}, y_{n_{k-1}+1}),...,(\boldsymbol{x}_{n_k}, y_{n_k}) \} \tag{2}</script><p>其中 $k = 1,…,m \ (0 = n_0 &lt; n_1&lt;\cdots&lt;n_m=m)$。这种情况下就是每个 $DO_i$ 对其数据集 $A$ 和 $\boldsymbol{b}$ 的所有项加密发送给MLE，后者进行聚合：</p>
+<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp1.png" alt=""></p>
+<p>第二种情况为每个 $DO$ 拥有 $X$ 和 $\boldsymbol{y}$ 中的某些元素：</p>
+<script type="math/tex; mode=display">
+\mathcal{D}_{k}=\left\{X[i, j]=\boldsymbol{x}_{i}[j] \mid(i, j) \in D_{k}\right\} \cup\left\{\boldsymbol{y}[i]=y_{i} \mid(i, 0) \in D_{k}\right\} \tag{3}</script><p>其中 $D_{k} \subseteq{1, \ldots, n} \times{0,1, \ldots, d}$。这种情况下，要计算矩阵 $A$ 和向量 $\boldsymbol{b}$ 就要把来自两个用户的数据乘在一起（例如一方拥有 $X$ 而另一方拥有 $\boldsymbol{y}$），此时可以用到前面的 $\mathsf{labMult}$：</p>
+<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp2.png" alt=""></p>
+<h2 id="阶段2：计算模型"><a href="#阶段2：计算模型" class="headerlink" title="阶段2：计算模型"></a>阶段2：计算模型</h2><p>在阶段1的最后，MLE知道了 $A$ 和 $\boldsymbol{b}$ 的密文。第3节中已经描述过大致的过程，即MLE先发送盲化后的数据给CSP，后者求解得到盲化后的模型后发送回给MLE，最后MLE去盲化得到模型 $\boldsymbol{w}^*$：</p>
+<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp3.png" alt=""></p>
+<h2 id="参数的选择"><a href="#参数的选择" class="headerlink" title="参数的选择"></a>参数的选择</h2><p>在 $\Pi_2$ 的最后一步使用了有理数重构从 $\mathbb{Z}_N$ 中计算的 $A \boldsymbol{w} = \boldsymbol{b}$ 的解中恢复 $\boldsymbol{w}^* \in \mathbb{Q}^d$。如果有理数 $t=r/s$ 且 $−R\leq r\leq R, 0&lt;s \leq S$ 以及 $\gcd(s,N)=1$ 在 $\mathbb{Z}_N$ 中表示为 $t’ = rs^{-1} \bmod N$，则拉格朗日-高斯算法在 $2RS &lt;N$ 的情况下唯一地恢复 $r$ 和 $s$。</p>
+<p>由于 $\boldsymbol{w}^* = A^{-1}\boldsymbol{b} = \frac{1}{\mathrm{det}(A)} \mathrm{adj}(A)\boldsymbol{b} \in \mathbb{Q}^d$，为了使得选择的 $N$ 满足前面提到的条件，需要限制 $\mathrm{det}(A)$ 和向量 $\mathrm{adj}(A)\boldsymbol{b}$ 的条目。令 $\alpha = \max {|A |<em>{\infty},| \boldsymbol{b} |</em>{\infty} }$，利用Hadamard不等式，有 $0 &lt; \mathrm{det}(A) \leq \alpha^d$（$A$ 是正定矩阵）和 $| \mathrm{adj}(A)\boldsymbol{b} |_{\infty} \leq d(d-1)^{\frac{d-1}{2}} \alpha^d$。</p>
+<p>对 $X$ 和 $\boldsymbol{y}$ 使用与第二节相同的假设（即 $X$ 和 $\boldsymbol{y}$ 的条目都是 $[-\delta, \delta]$ 中的实数，有最多 $\ell$ 位小数），有 $\alpha \leq 10^{2\ell}(n \delta^2 + \lambda)$。由此得出条件 $2RS &lt; N$ 在以下情况时满足：</p>
+<script type="math/tex; mode=display">
+2d(d-1)^{\frac{d-1}{2}} 10^{4\ell d}(n\delta^2 + \lambda)^{2d} < N \tag{4}</script><h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><p><a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>仅使用相加的秘密共享和海狸三元组来设计假设数据集的任意分区的系统。就通信复杂度而言，SecureML在任意划分的情况下比本文的解决方案执行得更好。然而，如果训练数据集是水平划分的，并且 $n \gg d$（例如 $n=Θ(d^{2.5})$）。例如，如果 $d=100, n=105$时，SecureML中的系统只有预处理阶段的200MB，而 $Π_{1,\mathrm{hor}}+Π_2$ 的总成本小于120MB。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PPML/" rel="tag"><i class="fa fa-tag"></i> PPML</a>
+          
+            <a href="/tags/HE/" rel="tag"><i class="fa fa-tag"></i> HE</a>
+          
+            <a href="/tags/Linear-Regression/" rel="tag"><i class="fa fa-tag"></i> Linear Regression</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" rel="next" title="论文笔记 Linear-Regression on Packed Encrypted Data in the Two-Server Model">
+                <i class="fa fa-chevron-left"></i> 论文笔记 Linear-Regression on Packed Encrypted Data in the Two-Server Model
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/08/23/%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%94%B5%E8%84%91%E4%B8%8A%E6%9B%B4%E6%96%B0Hexo%E5%8D%9A%E5%AE%A2/" rel="prev" title="在不同的电脑上更新Hexo博客">
+                在不同的电脑上更新Hexo博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/20200417221334.jpg"
+                alt="yyw" />
+            
+              <p class="site-author-name" itemprop="name">yyw</p>
+              <p class="site-description motion-element" itemprop="description">Do not go gentle into that good night.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#本文的贡献"><span class="nav-number">1.1.</span> <span class="nav-text">本文的贡献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Background"><span class="nav-number">2.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性回归"><span class="nav-number">2.1.</span> <span class="nav-text">线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密码工具"><span class="nav-number">2.2.</span> <span class="nav-text">密码工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统概览"><span class="nav-number">3.</span> <span class="nav-text">系统概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议描述"><span class="nav-number">4.</span> <span class="nav-text">协议描述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阶段1：聚合数据集"><span class="nav-number">4.1.</span> <span class="nav-text">阶段1：聚合数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阶段2：计算模型"><span class="nav-number">4.2.</span> <span class="nav-text">阶段2：计算模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数的选择"><span class="nav-number">4.3.</span> <span class="nav-text">参数的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂度"><span class="nav-number">4.4.</span> <span class="nav-text">复杂度</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-tree" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yyw</span>
+
+  
+</div>
+
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">84.8k</span>
+  
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/jm.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/jm32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/jm16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/jm.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PPML,HE,Neural Network," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hao Chen, Wei Dai, Miran Kim, Yongsoo Song CCS 2019 https:&#x2F;&#x2F;dl.acm.org&#x2F;doi&#x2F;10.1145&#x2F;3319535.3363207">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference">
+<meta property="og:url" content="http://yoursite.com/2020/07/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="Hao Chen, Wei Dai, Miran Kim, Yongsoo Song CCS 2019 https:&#x2F;&#x2F;dl.acm.org&#x2F;doi&#x2F;10.1145&#x2F;3319535.3363207">
+<meta property="og:image" content="http://images.yingwai.top/picgo/emkhef1.png">
+<meta property="article:published_time" content="2020-07-09T06:56:51.000Z">
+<meta property="article:modified_time" content="2020-08-23T14:33:37.435Z">
+<meta property="article:author" content="yyw">
+<meta property="article:tag" content="PPML">
+<meta property="article:tag" content="HE">
+<meta property="article:tag" content="Neural Network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/emkhef1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/09/论文笔记-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/"/>
+
+
+
+
+
+  <title>论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference | Ray's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ray's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-09T14:56:51+08:00">
+                2020-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
+<p>CCS 2019</p>
+<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
+<a id="more"></a>
+<h1 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h1><p>本文设计了BFV[6，22]和CKKS[16]方案的多密钥变体。本文提出了一种新的生成重线性化密钥的方法，与文献[13]中的以前技术相比，该方法更简单、更快。此外，本文将这些方案[9，12，14]的最新自举算法应用于多密钥场景，以构建具有压缩密文的多密钥完全同态加密。最后，作者使用Microsoft SEAL[47]给出了本文的多密钥方案的概念验证实现，并给出了实验结果。据作者所知，这是支持打包密文的MKHE方案的第一个实际实现。</p>
+<p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络(CNN)模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，本文的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。作者注意到，本文的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
+<p><img src="http://images.yingwai.top/picgo/emkhef1.png" alt=""></p>
+<h1 id="BACKGROUND"><a href="#BACKGROUND" class="headerlink" title="BACKGROUND"></a>BACKGROUND</h1><h2 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h2><p>除非另有说明，否则所有对数都以 $2$ 为底。我们用粗体表示向量，例如$\mathbf{a}$，用大写粗体表示矩阵，例如 $\mathbf{A}$。本文用 $\langle \mathbf{u}, \mathbf{v} \rangle$ 表示两个向量 $\mathbf{u}, \mathbf{v}$ 的通常点积。对于实数 $r$，$\lfloor r \rceil$ 表示最表示最接近 $r$ 的整数，在平局的情况下向上舍入。本文用 $x \leftarrow D$ 表示按分布 $D$ 抽样的 $x$。对于有限集 $S$，$U(S)$ 表示 $S$ 上的均匀分布。本文用 $\lambda$ 表示安全参数：所有已知的对作用域内的密码方案的有效攻击都应该采用 $\Omega(2^\lambda)$ 位运算。</p>
+<h2 id="多密钥同态加密"><a href="#多密钥同态加密" class="headerlink" title="多密钥同态加密"></a>多密钥同态加密</h2><p>多密钥同态加密是一种密码系统，它允许我们对可能在不同密钥下加密的密文评估算术电路。</p>
+<p>设 $\mathcal{M}$ 是具有算术结构的消息空间。MKHE方案MKHE由五个PPT算法($\mathsf{Setup}, \mathsf{KeyGen}, \mathsf{Enc}, \mathsf{Dec}, \mathsf{Eval}$)组成。本文假设每个参与方都有对其公钥和私钥的引用(索引)。多密钥密文隐式包含<em>有序</em>集合 $T = {id<em>1, …, id_k}$ 相关联的引用。例如，新的密文 $\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk}</em>{id})$ 对应于单个元素集合 $T = {id}$，但是随着来自不同方的密文之间的计算的进行，参考集合的大小变得更大。</p>
+<ul>
+<li><p><strong>初始化</strong>：$pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$。将安全参数作为输入并返回公共参数化。本文假设所有其他算法都隐含地将 $pp$ 作为输入。</p>
+</li>
+<li><p><strong>密钥生成</strong>：$(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$。输出一对私钥和公钥。</p>
+</li>
+<li><p><strong>加密</strong>：$\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk})$。加密明文 $\mu \in \mathcal{M}$ 并输出密文 $\mathsf{ct} \in {0,1 }^*$。</p>
+</li>
+<li><p><strong>解密</strong>：$\mu \leftarrow \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; {\mathsf{sk}<em>{id}}</em>{id \in T})$。给定具有对应密钥序列的密文 $\overline{\mathsf{ct}}$，输出明文 $\mu$。</p>
+</li>
+<li><p><strong>同态评估</strong>：</p>
+<script type="math/tex; mode=display">
+\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,...,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})</script><p>给定电路 $\mathcal{C}$，多密钥密文的元组 $(\overline{\mathsf{ct}}<em>1,…,\overline{\mathsf{ct}}_l)$ 和对应的一组公钥 ${\mathsf{pk}</em>{id}}_{id \in T}$，输出密文 $\overline{\mathsf{ct}}$。它的参考集是输入密文 $\overline{\mathsf{ct}}_j, 1 \leq j \leq l$ 的联合 $T = T_1 \cup \cdots \cup T_l$。</p>
+</li>
+</ul>
+<p><strong>语义安全。</strong>对于任意两条消息 $\mu_0, \mu_1 \in \mathcal{M}, \ \ i = 0, 1$ 的分布 ${\mathsf{MKHE.Enc}(\mu_i; \mathsf{pk}) }$ 在 $pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$ 和 $(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$ 的计算上应该是不可区分的。</p>
+<p><strong>正确性和紧凑性。</strong>如果与 $k$ 方相关的密文的大小受固定多项式 ${\rm poly}(\cdot, \cdot)$ 的 ${\rm poly}(\lambda, k)$ 的限制，则MKHE方案是紧致的。</p>
+<p>对于 $1 \leq j \leq l$，设 $\overline{\mathsf{ct}}<em>j$ 为密文(参考集合 $T_j$)，使得 $\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}_j; {\mathsf{sk}</em>{id}}<em>{id \in T} = \mu_j$。设 $\mathcal{C} : \mathcal{M}^l \rightarrow \mathcal{M}$ 为电路，$\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l),{\mathsf{pk}</em>{id}}_{id \in T})$，其中 $T = T_1 \cup \cdots \cup T_l$。然后，</p>
+<script type="math/tex; mode=display">
+\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; \{\mathsf{sk}_{id}\}_{id \in T} = \mathcal{C}(\mu_1,...,\mu_l) \tag{1}</script><p>以压倒性的可能性。对于近似算术[16]，可以用类似于CKKS格式的近似相等来代替(1)的相等。</p>
+<h2 id="环上容错学习"><a href="#环上容错学习" class="headerlink" title="环上容错学习"></a>环上容错学习</h2><p>在整篇文章中，作者假设 $n$ 是2的幂整数，并且 $R=\mathbb{Z}[X]/(X^n+1)$。对于 $R$ 的模为整数 $q$ 的剩余环，本文记作 $R_q=R/(q·R)$。带参数 $(n,q,\chi,\psi)$ 的环学习假设是给定任意多项式数目的形式的样本 $(a_i,b_i=s \cdot a_i+e_i) \in R^2_q$，其中 $a_i$ 在 $R_q$ 中是一致随机的，$s$ 选自 $R_q$ 上的密钥分布 $\chi$，$e_i$ 取自 $R$ 上的误差分布 $\psi$，$b_i$ 是 $R_q$ 中的均匀随机元素、在计算上是不可区分的。</p>
+<h2 id="小工具分解"><a href="#小工具分解" class="headerlink" title="小工具分解"></a>小工具分解</h2><p>设 $\mathbf{g}=(g<em>i) \in \mathbb{Z}^d$ 为小工具向量，$q$ 为整数。小工具分解，由 $\mathbf{g}^{-1}$ 表示，是从 $R_q$ 到 $R^d$ 的函数，它将元素 $a \in R_q$ 转换成<em>小</em>多项式向量 $u=(u_0,…,u</em>{d−1})\in R^d$ ，使得 $a = \sum^{d-1}_{i=0} g_i \cdot u_i \pmod{q}$。</p>
+<p>小工具分解技术被广泛应用于HE方案的构建中。例如，非线性电路的同态评估是基于密钥切换技术的，并且大多数HE方案利用各种小工具分解方法来控制噪声增长。文献中已经提出了各种分解方法，如位分解[6，7]、基分解[17，21]和基于RNS的分解[4，30]。本文的实现利用了RNS友好的分解来提高效率。</p>
+<h1 id="本文的构造"><a href="#本文的构造" class="headerlink" title="本文的构造"></a>本文的构造</h1><h2 id="基本方案"><a href="#基本方案" class="headerlink" title="基本方案"></a>基本方案</h2><ul>
+<li>$\mathsf{Setup}(1^\lambda)$：对于给定的安全参数 $\lambda$，设置RLWE维数 $n$、密文模数 $q$、密钥分布 $\chi$ 和R上的误差分布 $\psi$。生成随机向量 $\mathbf{a} \leftarrow U(R^d_q)$。返回公共参数 $pp=(n, q, \chi, \psi, \mathbf{a})$。</li>
+<li>$\mathsf{KeyGen}(pp)$：选取密钥 $s \leftarrow \chi$。选取误差向量 $e \leftarrow \psi^d$，并将公钥在 $R^d_q$ 中设置为 $\mathbf{b} = -s \cdot \mathbf{a} + \mathbf{e} \pmod{q}$。</li>
+<li>$\mathsf{UniEnc}(\mu;s)$：对于输入明文 $\mu \in R$，生成密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \in R^{d \times 3}_q$，如下所示：<ol>
+<li>选取 $r \leftarrow \chi$；</li>
+<li>选取 $\mathbf{d}_1 \leftarrow U(R^d_q)$ 和 $\mathbf{e}_1 \leftarrow \psi^d$，然后设 $\mathbf{d}_0 = -s \cdot \mathbf{d}_1 + \mathbf{e}_1 + r \cdot \mathbf{g} \pmod{q}$；</li>
+<li>选取 $\mathbf{e}_2 \leftarrow \psi^d$ 然后设 $\mathbf{d}_2 = r \cdot \mathbf{a} + \mathbf{e}_2 + \mu \cdot \mathbf{g} \pmod{q}$。</li>
+</ol>
+</li>
+</ul>
+<p>公共参数 $pp$ 包含一个随机生成的向量 $\mathbf{a} \in R^d_q$，因此本文假设使用公共引用字符串模型。各方应将相同的公共参数作为密钥生成算法的输入，以支持多密钥同态运算。在以前关于MKHE的所有工作中都做出了同样的假设。</p>
+<p>单一加密算法是对称加密，它可以加密单个环形元件。一次加密的密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \leftarrow \mathsf{UniEnc}(\mu;s)$ 由 $R^d_q$ 中的三个矢量组成，其大小是 $R^{2d \times 2}_q$ 中普通RGSW密文的(3/4)倍。对于一次加密密文 $\mathbf{D}$，前两列 $[\mathbf{d}_0 | \mathbf{d}_1]$ 可以被视为秘密 $s$ 下的 $r$ 的加密，而 $[\mathbf{d}_2 | -\mathbf{a}]$ 形成秘密 $r$ 下的 $\mu$ 的加密。</p>
+<h2 id="再线性化"><a href="#再线性化" class="headerlink" title="再线性化"></a>再线性化</h2><p>在级联秘密 $\overline{\mathsf{sk}} = (1, s_1, …, s_k)$ 下加密的两个多密钥密文 $\overline{\mathsf{ct}}_i \in R^{k+1}_q$ 的张量积 $\overline{\mathsf{ct}} = \overline{\mathsf{ct}}_1 \otimes \overline{\mathsf{ct}}_2$ 可以看作是对应于张量平方密钥 $\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 的密文。$\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 包含一些与两个不同方相关的非线性项 $s_i \cdot s_j$。因此，计算服务器应该能够通过非线性项 $s_i \cdot s_j$ 的线性化来将扩展密文 $\overline{\mathsf{ct}} \in R^{(k+1) \times (k+1)}_q$ 转换为规范密文。</p>
+<p>本文的重新线性化方法需要由单个各方生成的相同公共材料(评估密钥)，如下所示：</p>
+<ul>
+<li>$\mathsf{EvkGen}(s)$：给定秘密 $s \in R$，返回 $\mathbf{D} \leftarrow \mathsf{UniEnc}(s;s)$。</li>
+</ul>
+<p>准确地说，每一方 $i$ 通过运行算法(si，bi)←KeyGen(Pp)和Di←EvkGen(Si)来生成其自己的秘密密钥、公共密钥和评估密钥，然后发布该对(bi，Di)。在本节的其余部分，我们将介绍两种重新线性化算法，并说明它们的优缺点。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PPML/" rel="tag"><i class="fa fa-tag"></i> PPML</a>
+          
+            <a href="/tags/HE/" rel="tag"><i class="fa fa-tag"></i> HE</a>
+          
+            <a href="/tags/Neural-Network/" rel="tag"><i class="fa fa-tag"></i> Neural Network</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/06/%E7%BE%A4%E4%B8%8E%E7%8E%AF%E7%9A%84%E6%A6%82%E5%BF%B5/" rel="next" title="群与环的概念">
+                <i class="fa fa-chevron-left"></i> 群与环的概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/10/Zotero%E7%9A%84%E9%99%84%E4%BB%B6%E5%90%8C%E6%AD%A5/" rel="prev" title="Zotero的附件同步">
+                Zotero的附件同步 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/20200417221334.jpg"
+                alt="yyw" />
+            
+              <p class="site-author-name" itemprop="name">yyw</p>
+              <p class="site-description motion-element" itemprop="description">Do not go gentle into that good night.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#本文的贡献"><span class="nav-number">1.</span> <span class="nav-text">本文的贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BACKGROUND"><span class="nav-number">2.</span> <span class="nav-text">BACKGROUND</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#记号法"><span class="nav-number">2.1.</span> <span class="nav-text">记号法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多密钥同态加密"><span class="nav-number">2.2.</span> <span class="nav-text">多密钥同态加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环上容错学习"><span class="nav-number">2.3.</span> <span class="nav-text">环上容错学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小工具分解"><span class="nav-number">2.4.</span> <span class="nav-text">小工具分解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本文的构造"><span class="nav-number">3.</span> <span class="nav-text">本文的构造</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本方案"><span class="nav-number">3.1.</span> <span class="nav-text">基本方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再线性化"><span class="nav-number">3.2.</span> <span class="nav-text">再线性化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-tree" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yyw</span>
+
+  
+</div>
+
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">84.8k</span>
+  
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

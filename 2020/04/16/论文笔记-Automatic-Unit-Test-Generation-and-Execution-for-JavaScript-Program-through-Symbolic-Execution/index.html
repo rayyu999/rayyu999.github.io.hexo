@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/jm.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/jm32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/jm16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/jm.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,测试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+and+Execution+for+J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记 Automatic Unit Test Generation and Execution for JavaScript Program through Symbolic Execution">
+<meta property="og:url" content="http://yoursite.com/2020/04/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Automatic-Unit-Test-Generation-and-Execution-for-JavaScript-Program-through-Symbolic-Execution/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="Hideo Tanida, Guodong Li, Indradeep Ghosh, Tadahiro Uehara Published in ICSEA 2014 https:&#x2F;&#x2F;scholar.google.com&#x2F;scholar?hl&#x3D;zh-CN&amp;as_sdt&#x3D;0%2C5&amp;q&#x3D;Automatic+Unit+Test+Generation+and+Execution+for+J">
+<meta property="og:image" content="http://images.yingwai.top/picgo/SymJSf2.png">
+<meta property="article:published_time" content="2020-04-16T07:29:36.000Z">
+<meta property="article:modified_time" content="2020-08-23T14:33:37.434Z">
+<meta property="article:author" content="yyw">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/SymJSf2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/16/论文笔记-Automatic-Unit-Test-Generation-and-Execution-for-JavaScript-Program-through-Symbolic-Execution/"/>
+
+
+
+
+
+  <title>论文笔记 Automatic Unit Test Generation and Execution for JavaScript Program through Symbolic Execution | Ray's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ray's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Automatic-Unit-Test-Generation-and-Execution-for-JavaScript-Program-through-Symbolic-Execution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">论文笔记 Automatic Unit Test Generation and Execution for JavaScript Program through Symbolic Execution</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-16T15:29:36+08:00">
+                2020-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  21 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://www.semanticscholar.org/author/Hideo-Tanida/2725857" target="_blank" rel="noopener">Hideo Tanida</a>, <a href="https://www.semanticscholar.org/author/Guodong-Li/1720073" target="_blank" rel="noopener">Guodong Li</a>, <a href="https://www.semanticscholar.org/author/Indradeep-Ghosh/3291522" target="_blank" rel="noopener">Indradeep Ghosh</a>, <a href="https://www.semanticscholar.org/author/Tadahiro-Uehara/3081128" target="_blank" rel="noopener">Tadahiro Uehara</a></p>
+<p>Published in ICSEA 2014</p>
+<p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Automatic+Unit+Test+Generation+and+Execution+for+JavaScript+Program+through+Symbolic+Execution&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Automatic+Unit+Test+Generation+and+Execution+for+JavaScript+Program+through+Symbolic+Execution&amp;btnG=</a></p>
+<a id="more"></a>
+<h2 id="摘要及介绍"><a href="#摘要及介绍" class="headerlink" title="摘要及介绍"></a>摘要及介绍</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​        考虑到对更具交互性的Web/移动应用程序的需求，JavaScript有望成为一种使用更广泛的编程语言。虽然JavaScript代码的可靠性将更加重要，但与其他语言相比，该语言的测试技术仍然不足。本文提出了一种为JavaScript代码自动生成高覆盖率单元测试的技术。该技术使用JavaScript代码的符号执行引擎，以及自动为不感兴趣的代码生成存根的存根/驱动程序生成引擎。本文的方法允许全自动生成用于高覆盖率的JavaScript代码单元测试的输入数据，从而以较少的工作量确保目标代码的质量。</p>
+<h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3><ul>
+<li>本文提出了一种在工具<strong>SymJS</strong>上通过符号执行为JavaScript代码生成测试输入的技术；</li>
+<li>对比现有工具，本文的约束求解器<strong>PASS</strong>[10]允许为具有各种复杂字符串操作的程序生成测试；</li>
+<li>并且不需要对目标代码进行任何修改，而现有的符号执行器需要修改和多次运行，因此适用于现实中的开发；</li>
+<li>本文的自动生成存根/驱动程序代码允许完全自动生成测试数据。</li>
+</ul>
+<h3 id="现有的工具"><a href="#现有的工具" class="headerlink" title="现有的工具"></a>现有的工具</h3><p>​        现有的JavaScript代码测试工具包括<strong>Kudzu</strong>[8]和<strong>Jalangi</strong>[9]。kudzu自动生成程序函数的输入数据，目的是自动发现目标中的安全漏洞。Jalangi允许在正常的具体执行下修改路径约束，以便获得与以前运行不同的结果。然而，由于字符串约束处理方面的限制，以及需要手动创建用于测试的驱动程序/存根，这些工具不能应用于现实中JavaScript代码的单元测试。</p>
+<h2 id="背景及基础知识"><a href="#背景及基础知识" class="headerlink" title="背景及基础知识"></a>背景及基础知识</h2><h3 id="符号执行"><a href="#符号执行" class="headerlink" title="符号执行"></a>符号执行</h3><p>​        符号执行（Symbolic Execution）是一种程序分析技术，可以通过分析程序源代码来得到测试输入。通俗来讲，比如说游戏中一个角色在佩戴各种装备之后的面板数值为：攻击力xxx、防御力xxx…；此时通过佩戴装备到获得属性的过程就好比一个程序，佩戴装备的品质就是这个程序的输入，而最后获得的属性就是这个程序的输出；符号执行的过程则是进行分析，从某组给定的属性逆向推导，最后得到某组质量的装备，佩戴这组装备可以获得一开始给定的属性。</p>
+<h4 id="符号执行的基本原理"><a href="#符号执行的基本原理" class="headerlink" title="符号执行的基本原理"></a>符号执行的基本原理</h4><p>​        符号执行的关键思想是把输入变为符号值，那么程序的输出值就是一个符号输入值的函数。在程序执行期间，获得每个执行路径中的变量的值要满足的约束。在获得程序内所有路径的约束之后，通过将约束提供给诸如可满足性模理论（SMT）[7]求解器之类的求解器，可以获得执行每条路径的输入变量的具体值。</p>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/26927127" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26927127</a></p>
+<h4 id="通过符号执行生成测试输入"><a href="#通过符号执行生成测试输入" class="headerlink" title="通过符号执行生成测试输入"></a>通过符号执行生成测试输入</h4><p>​        在程序的符号执行期间，执行每个路径所需要满足的约束是以迭代的方式计算的。在访问程序内每条可能的路径之后，获得所有路径的约束。使用<strong>SMT</strong>等求解器可以获得满足约束条件的变量的具体值。得到的值是与约束条件相对应的，可以用来进行测试。</p>
+<h3 id="SymJS"><a href="#SymJS" class="headerlink" title="SymJS"></a>SymJS</h3><p>SymJS是一个用于自动测试JavaScript Web应用程序客户端的框架，该工具包括一个用于JavaScript的符号执行引擎和一个Web页面的自动的事件资源管理器。而其中符号引擎包括一个符号虚拟机、一个字符串+数字解算器和一个符号可执行DOM模型。</p>
+<p>​        SymJS解释从目标程序源代码编译的字节码。现有的符号执行器（如<strong>Klee</strong>[2]和<strong>Symbol Pathfinder</strong>[3]）都采用这种方法。处理字节码而不是源代码允许实现符号执行器，而无需处理语言的复杂语法。SymJS被实现为Rhino字节码的解释器，它在执行每条字节码指令时更新程序状态(堆/栈内容和路径条件)。在命中分支指令时，它复制程序状态并继续执行两个分支。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Tool</th>
+<th style="text-align:center">Target Lang.</th>
+<th style="text-align:center">Sym.VM</th>
+<th style="text-align:center">Dep./Cache Solving</th>
+<th style="text-align:center">String Solving</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SymJS</td>
+<td style="text-align:center">JavaScript</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+</tr>
+<tr>
+<td style="text-align:center">KLEE [2]</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+</tr>
+<tr>
+<td style="text-align:center">SAGE [6]</td>
+<td style="text-align:center">x86 binary</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+</tr>
+<tr>
+<td style="text-align:center">Sym JPF [3]</td>
+<td style="text-align:center">Java</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+</tr>
+<tr>
+<td style="text-align:center">Kudzu [8]</td>
+<td style="text-align:center">JavaScript</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+</tr>
+<tr>
+<td style="text-align:center">Jalangi [9]</td>
+<td style="text-align:center">JavaScript</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Limited</td>
+</tr>
+</tbody>
+</table>
+</div>
+<center>
+    <i>表I 符号执行器的比较</i>
+</center>
+
+
+<p>​        为了实现目标程序的符号执行，本文修改了原始Rhino对表II中所示指令的解释。堆栈操作、异常处理和变量范围管理的指令处理保持不变。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Arithemetic/Logical Operations</td>
+<td style="text-align:center">ADD, SUB, MUL, DIV, MOD, NEG, POS, BITNOT, BITAND, BITOR, BITXOR, LSH, RSH,URSH <em>etc.</em></td>
+</tr>
+<tr>
+<td style="text-align:center">Comparisons</td>
+<td style="text-align:center">EQ, NE, GE, GT, LE, LT, NOT, SHEQ, SHNE <em>etc.</em></td>
+</tr>
+<tr>
+<td style="text-align:center">Branches</td>
+<td style="text-align:center">IFEQ, IFNE, IFEQ_POP <em>etc.</em></td>
+</tr>
+<tr>
+<td style="text-align:center">Function Calls</td>
+<td style="text-align:center">RETURN, CALL, TAIL_CALL <em>etc.</em></td>
+</tr>
+<tr>
+<td style="text-align:center">Object Manipulations</td>
+<td style="text-align:center">NEW, REF, IN, INSTANCEOF, TYPEOF, GETNAME, SETNAME, NAME <em>etc.</em></td>
+</tr>
+<tr>
+<td style="text-align:center">Object Accesses</td>
+<td style="text-align:center">GETPROP, SETPROP, DELPROP, GETELEM, SETELEM, GETREF, SETREF <em>etc.</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<center>
+    <i>表II 修改后的指令解释</i>
+</center>
+例如，指令 `ADD op1 op2` 解释如下：
+
+(1)从堆栈中弹出操作数 `op1` 和 `op2` 。操作数可以使用抽象的值，也可以使用具体的值。
+
+(2)检查操作数的类型。如果两个操作数都是字符串，则计算结果是操作数的拼接。如果它们是数值，则结果是操作数的总和。否则，将**根据ECMAScript语言标准转换值**，结果是将获得的值拼接或相加。
+
+#### 分支指令
+
+​        比较指令之后是Rhino字节码中的分支指令。SymJS处理比较和分支指令对，如下所示：
+
+​        首先，在进行必要的类型转换后，生成与比较结果相对应的布尔公式。假设所创建的公式由符号 $c$ 表示，我们检查 $c$ 及其否定 $\neg c$ 是否与路径条件 $pc$ 一起满足。换句话说，我们检查 $pc \land c$ 和 $pc \land \neg c$ 的可满足性。如果两者都是可满足的，我们建立对应于 $pc \land c$ 和 $pc \land \neg c$ 的状态 $s_1, s_2$，并从状态 $s_1$ 和 $s_2$ 继续执行。如果其中一个是可满足的，则选择与可满足的状态相对应的状态，并从该点继续执行。
+
+​        SymJS支持两种方式来管理在命中分支等情况下创建的状态。第一种方法是**存储程序状态变量，包括堆/栈的内容**，如[2] [3]中所做的那样。第二种方法是**只记住在分支上走哪一侧。此方法需要在回溯时从初始状态重新执行目标程序。**但是，它得益于其简单的实现和较小的内存占用。这种方法被称为“模糊”，类似于[4] [6]中介绍的技术。但是，本文的技术是在符号执行器上实现的，不需要修改现有JavaScript工具[8] [9]所需的目标代码。
+
+​        在通过模糊化执行程序的符号过程中，状态仅由分支上的哪一方表示和存储。该信息可用于从程序的初始状态重新执行该程序，并探索目标可能采取的状态空间。在模糊化期间，用与表I中的测试1-6相对应的路径条件符号执行图1中的目标程序之后的状态如表IV所示。符号L、R表示在分支指令上走左/右分支。
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span> (<span class="params">s, a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 0</span></span><br><span class="line">		s = <span class="literal">null</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (s.length &lt;= <span class="number">5</span>) &#123; <span class="comment">// block 1</span></span><br><span class="line">			a = a + status;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(””.equals(s)) &#123; <span class="comment">// block 2</span></span><br><span class="line">				Lib.m0(); <span class="comment">// Unreachable</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123; <span class="comment">// block 3</span></span><br><span class="line">				Lib.m1();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (a &lt;= Lib.m2()) &#123; <span class="comment">// block A</span></span><br><span class="line">	a = <span class="number">0</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">// block B</span></span><br><span class="line">	a = a + s.length; <span class="comment">// Error with null s</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>
+    <i>图1 一个代码框架：
+    s, a, Lib.m2()可以取任意值</i>
+</center>
+
+
+
+<p><img src="http://images.yingwai.top/picgo/SymJSf2.png" alt=""></p>
+<center>
+    <i>图2 代码执行路径</i>
+</center>
+
+
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Test No.</th>
+<th style="text-align:left">Blocks Executed</th>
+<th>State Representation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">0, A</td>
+<td>L;L</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">0, B</td>
+<td>L;R</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">1, A</td>
+<td>R;L;L</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">1, B</td>
+<td>R;L;R</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left">3, A</td>
+<td>R;R;R;L</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left">3, B</td>
+<td>R;R;R;R</td>
+</tr>
+</tbody>
+</table>
+</div>
+<center>
+    <i>表IV 执行图1代码后的模糊表示</i>
+</center>
+
+
+
+<h4 id="PASS"><a href="#PASS" class="headerlink" title="PASS"></a>PASS</h4><p>​        对于表IV中的每个状态表示，可以获得相应的路径条件。如果有可能获得满足约束条件的解，则可以将其用作测试期间的输入。关于数值的约束可以通过SMT求解器来解决，但<strong>SMT不能处理对于字符串的约束</strong>。因此本文使用约束求解器PASS。</p>
+<p>​        <strong>PASS可以处理对整数、位向量、浮点数和字符串的约束。</strong>虽然以前的支持字符串约束的约束解算器使用位向量或自动机，但通过参数化数组传递引入的建模可以实现更高效的求解。因此，它可以解决ECMAScript标准中与字符串操作相对应的大部分约束。</p>
+<h4 id="符号存根及驱动程序"><a href="#符号存根及驱动程序" class="headerlink" title="符号存根及驱动程序"></a>符号存根及驱动程序</h4><p>​        符号变量是通过符号执行生成测试输入的对象。<strong>SymJS允许通过函数调用定义符号变量。</strong>下面的代码片段展示了定义符号字符串变量的例子：</p>
+<p><code>var s = symjs_mk_symbol_string();</code></p>
+<p>​        以上的例子定义了字符串类型的符号变量，也可以通过<code>symjs_mk_symbolic_int()</code>、<code>symjs_mk_symbolic_bool()</code>和<code>symjs_mk_symbolic_real()</code>分别定义整型、布尔型以及浮点型的符号变量。虽然SymJS只允许字符串、整数、布尔值和浮点数是符号的，但它们的约束作为更复杂的对象的组成部分保留在赋值/引用上，从而允许生成对象组成部分的值不断变化的测试。</p>
+<p>​        为了确定图1中函数<code>func0()</code>的测试输入，需要额外的代码段。首先需要一个如下所示的符号驱动程序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = symjs_mk_symbolic_string();</span><br><span class="line"><span class="keyword">var</span> a = symjs_mk_symbolic_float();</span><br><span class="line">func0(s, a);</span><br></pre></td></tr></table></figure>
+<center>
+    <i>图3 用于执行图1中代码的符号驱动程序</i>
+</center>
+
+<p>驱动程序声明符号变量并将它们作为参数传递给函数。注入依赖项的存根也是必需的。如下所示的符号存根包括符号变量声明。通过存根，包含对<code>Lib.m2()</code>的函数调用的返回值，以测试SymJS获得的输入。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> symjs_mk_symbolic_float();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<center>
+    <i>图4 提供图1中代码使用的Lib.m2()的符号存根</i>
+</center>
+
+<p>函数<code>symjs_mk_symbolic_*()</code>是用于在测试生成期间定义新符号变量的表达式。<strong>SymJS允许使用生成的测试输入进行正常的具体执行。</strong>在具体执行期间，函数返回测试输入中包含的具体值。SymJS可以将测试输入导出为JavaScript Object Notation (JSON) 格式的外部文件。文件可以由测试回放库读取，该库在<code>symjs_mk_symbolic_*()</code>函数调用中返回相应的测试输入数据。加载到典型Web浏览器中的测试库可以在没有自定义JavaScript解释器的情况下执行生成的测试。</p>
+<h2 id="符号存根及驱动程序的自动生成"><a href="#符号存根及驱动程序的自动生成" class="headerlink" title="符号存根及驱动程序的自动生成"></a>符号存根及驱动程序的自动生成</h2><p>​        如第2部分所述，符号存根和驱动程序需要对目标函数进行符号执行并获得测试输入。返回符号变量的符号存根用于生成从被测函数调用的函数的返回值。需要符号驱动程序来改变传递给测试函数的参数。</p>
+<h3 id="生成符号存根和驱动程序的策略"><a href="#生成符号存根和驱动程序的策略" class="headerlink" title="生成符号存根和驱动程序的策略"></a>生成符号存根和驱动程序的策略</h3><p>​        本文的符号存根生成技术为指定的函数和类生成存根。本文的驱动程序生成技术发出调用指定函数的代码。</p>
+<p>​        对于存根生成，生成函数根据调用者期望的返回值类型，创建和返回对象。以下是预期类型与返回对象之间的映射关系：</p>
+<ul>
+<li><p>字符串、整数、布尔值和浮点数这些可以被SymJS作为符号处理的类型（后面称为SymJS基础类型）：</p>
+<p>新定义的相应类型的符号变量。</p>
+</li>
+<li><p>其他类：</p>
+<p>预期类型的新实例化对象。如果该类的目标是生成存根，则返回<strong>新实例化的存根对象</strong>。</p>
+</li>
+<li><p>Void：不返回任何内容。</p>
+</li>
+</ul>
+<p>​        为了创建类的存根，还需要生成构造函数的存根。在这里，本文生成空构造函数，这将导致所有无状态对象。我们的方法假设没有对存根类的字段的直接访问，并且不为字段生成存根。</p>
+<p>​        注意：即使返回值类型不是SymJS的基本类型，也可能得到多个测试输入。如果在返回的对象中定义的函数返回符号变量，会出现这种情况。如果<strong>非SymJS基本类型的对象包含返回SymJS基本类型的对象的函数，并且非SymJS基本类型生成了存根</strong>，就会发生这种情况。因此可以通过调用返回非SymJS基本类型的函数来获得多组测试输入。</p>
+<p>​        使用本文的技术生成的符号驱动程序具有以下功能：</p>
+<ul>
+<li>如果待测函数不是静态的、需要一个实例去执行，则实例化对应类的对象并调用该函数</li>
+<li>如果待测函数是静态的，就直接调用函数</li>
+</ul>
+<p>对于传递给函数的参数，驱动程序根据预期类型提供以下对象：</p>
+<ul>
+<li><p>SymJS基本类型：</p>
+<p>新定义的相应类型的符号变量。</p>
+</li>
+<li><p>其他类：</p>
+<p>预期类型的新实例化对象。如果该类的目标是存根生成，则传递新实例化的存根对象。</p>
+</li>
+</ul>
+<p>​        选择参数的方式类似于解决在符号存根中返回什么的方式。</p>
+<h3 id="从注释生成符号存根和驱动程序"><a href="#从注释生成符号存根和驱动程序" class="headerlink" title="从注释生成符号存根和驱动程序"></a>从注释生成符号存根和驱动程序</h3><p>​        上一部分提出的符号存根/驱动程序生成策略需要知道来自目标代码的类型信息，生成存根需要调用方期望的返回值类型，需要传递给被测函数的参数类型才能生成驱动程序。</p>
+<p>​        但是JavaScript是一种动态类型语言，在真正运行前很难确定返回值和参数的类型。很多JavaScript程序对返回值和参数的类型有一个期望，通常是在应用程序编程接口（API）等中给出的。此外，有一种方法可以<strong>用机器可读的方式表示JavaScript代码的类型信息</strong>，就是JSDoc风格的注释。本文从JSDoc3[13]约定的风格的注释中获取类型信息，生成符号存根和驱动程序。</p>
+<p>​        JSDoc3主要允许通过<code>@return</code>注释声明返回值类型。为了为图1的代码片段中使用的函数<code>Lib.m2()</code>生成符号存根，需要如下所示的注释：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;Number&#125;</span> </span>m2 value */</span></span><br><span class="line">Lib.m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
+<p>如果将此类注释附加到函数的原始源代码，则可以确定返回值的类型。根据获得的返回值类型，可以以全自动的方式生成图4中的符号存根。该示例演示了为返回SymJS原语的函数生成符号存根。下面展示了为返回非SymJS基本类型的函数生成符号存根的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@return <span class="type">&#123;tx.Data&#125;</span> </span>data */</span></span><br><span class="line">tx.Ui.getValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ... &#125;;</span><br></pre></td></tr></table></figure>
+<center>
+    ↓
+</center>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tx.Ui.getValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> tx.Data();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>​        符号驱动程序的生成也是一样的。</p>
+<p>​        传递给函数的参数类型通常使用JSDoc3的<code>@param</code>注释给出。函数<code>func0()</code>的符号驱动程序可以从该函数中的注释生成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@param <span class="type">&#123;String&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param <span class="type">&#123;Number&#125;</span> </span>a */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func0</span>(<span class="params">s, a</span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p>注释给出了函数的参数类型，允许生成图3中的符号驱动程序。</p>
+<p>​        提出的自动生成符号存根和驱动程序的技术是作为JSDoc3的插件实现的。也可以使用其他来源的类型信息，例如API规范文档。</p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>​        本文使用一个工业JavaScript程序进行了实验。该程序对应于在本文的自定义Web应用程序实现框架上实现的Web应用程序的客户端部分。该程序调用未在我们的框架中包装的ECMAScript标准中定义的API，并且它只包含对标准API或本文的框架的调用。表V显示了目标程序的统计数据：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">#Line</th>
+<th style="text-align:center">#Function</th>
+<th style="text-align:center">#File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">431</td>
+<td style="text-align:center">23</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<center>
+    <i>表V 目标程序的统计数据</i>
+</center>
+
+<h3 id="符号存根和驱动程序的生成"><a href="#符号存根和驱动程序的生成" class="headerlink" title="符号存根和驱动程序的生成"></a>符号存根和驱动程序的生成</h3><p>​        使用本文的方法成功地为框架中定义的所有类和函数生成存根。表VI列出了生成的存根的统计数据：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">#Line(Orig.)</th>
+<th style="text-align:center">#Line(Stub)</th>
+<th style="text-align:center">#Function</th>
+<th style="text-align:center">#File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2843</td>
+<td style="text-align:center">1304</td>
+<td style="text-align:center">154</td>
+<td style="text-align:center">13</td>
+</tr>
+</tbody>
+</table>
+</div>
+<center>
+    <i>表VI 用于生成存根的框架源代码和生成的存根的统计数据</i>
+</center>
+
+<h3 id="生成测试输入和执行测试"><a href="#生成测试输入和执行测试" class="headerlink" title="生成测试输入和执行测试"></a>生成测试输入和执行测试</h3><p>​        所有函数的符号执行在1秒内完成，并生成测试输入。测试输入的数量（将具体值赋给符号变量）在目标函数之间是不同的。对于没有分支的函数，只生成1个测试输入，而对于更复杂的函数，获得的测试数量变化到27个。</p>
+<p>​        利用获得的测试输入来具体执行目标函数。运行在网络浏览器上的测试回放库用于重放测试。使用JSCover[14]测量测试期间的代码覆盖率，获得92%的行覆盖率。结果表明，该技术能够自动生成单元测试输入，实现高代码覆盖率。</p>
+<h3 id="实验中未覆盖的代码"><a href="#实验中未覆盖的代码" class="headerlink" title="实验中未覆盖的代码"></a>实验中未覆盖的代码</h3><p>​        实验结果表明，该方法可以生成代码覆盖率较高的测试输入，但没有达到100%的覆盖率，这意味着目标程序的某些部分没有被执行。以下是使用我们的方法未执行到的代码类。</p>
+<p>​        <strong>意外类型的代码处理对象没有被覆盖到。</strong>由于JavaScript是一种动态类型语言，函数可能会返回意外类型的对象。为了处理这种情况，目标程序包含类型检查和后续错误处理代码。但是，通过本文的技术生成的符号存根总是返回源代码批注中描述的类型的对象。这样的存根不能利用处理不同于注释类型的对象的代码部分。</p>
+<p>​        <strong>没有对象类型前提的代码也没有被覆盖到。</strong>目标程序包含在运行时确定对象类型并相应地处理它们的代码片段。然而，本文的技术不能涵盖这样的程序。从返回值类型未知的函数中，我们生成返回默认JavaScript “Object” 的存根。因此，与自定义类的对象交互的代码没有被覆盖。</p>
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h2><p>​        本文提出了一种为JavaScript代码自动生成单元测试输入数据的技术。该技术使用符号执行引擎，以便在测试期间实现高代码覆盖率。该技术分为两个阶段，由以下全自动步骤组成：</p>
+<ul>
+<li>基于从注释获得的类型信息生成符号存根/驱动程序</li>
+<li>通过目标代码的符号执行生成测试输入</li>
+</ul>
+<p>​        实验结果显示，该技术可以生成92%的行覆盖率的测试，表明本文的技术可以自动生成和执行JavaScript代码的单元测试。</p>
+<h3 id="Future-Work"><a href="#Future-Work" class="headerlink" title="Future Work"></a>Future Work</h3><p>​        未来的方向包括更多的验证试验和各种目标程序。虽然作者已经用相对较小的程序进行了实验，但也需要在较大的目标上进行实验。</p>
+<p>​        根据实验结果，需要改进符号存根。可以使用引发异常的符号存根触发代码处理异常。除了更复杂的自动存根生成策略外，手动修改自动生成的存根被认为是增加覆盖率的有效方法。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] C. Cadar, V . Ganesh, P . M. Pawlowski, D. L. Dill, and D. R. Engler, <em>“EXE: Automatically Generating Inputs of Death,”</em> in Proceedings of the 13th ACM Conference on Computer and Communications Security, 2006, pp. 322–335.</p>
+<p>[2] C. Cadar, D. Dunbar, and D. Engler, <em>“KLEE: Unassisted and Automatic Generation of High-coverage Tests for Complex Systems Programs,”</em> in Proceedings of the 8th USENIX Conference on Operating Systems Design and Implementation, 2008, pp. 209–224.</p>
+<p>[3] C. S. Pǎsǎreanu and N. Rungta, <em>“Symbolic PathFinder: Symbolic Execution of Java Bytecode,”</em> in Proceedings of the IEEE/ACM International Conference on Automated Software Engineering, 2010, pp. 179–180.</p>
+<p>[4] K. Sen, D. Marinov, and G. Agha, <em>“CUTE: A Concolic Unit Testing Engine for C,”</em> in Proceedings of the 10th European Software Engineering Conference, 2005, pp. 263–272.</p>
+<p>[5] N. Tillmann and J. De Halleux, <em>“Pex: White Box Test Generation for .NET,”</em> in Proceedings of the 2nd International Conference on Tests and Proofs, ser. TAP’08, 2008, pp. 134–153.</p>
+<p>[6] P . Godefroid, M. Y . Levin, and D. Molnar, <em>“SAGE: Whitebox Fuzzing for Security Testing,”</em> Queue, 2012, pp. 20:20–20:27.</p>
+<p>[7] L. De Moura and N. Bjørner, <em>“Satisfiability Modulo Theories: Introduction and Applications,”</em> Commun. ACM, vol. 54, no. 9, 2011, pp. 69–77.</p>
+<p>[8] P. Saxena, D. Akhawe, S. Hanna, F. Mao, S. McCamant, and D. Song, <em>“A Symbolic Execution Framework for JavaScript,”</em> in Proceedings of the 2010 IEEE Symposium on Security and Privacy, 2010, pp. 513–528.</p>
+<p>[9] K. Sen, S. Kalasapur, T. Brutch, and S. Gibbs, <em>“Jalangi: A selective record-replay and dynamic analysis framework for javascript,”</em> in Proceedings of the 2013 9th Joint Meeting on Foundations of Software Engineering, 2013, pp. 488–498.</p>
+<p>[10] G. Li and I. Ghosh, <em>“PASS: String Solving with Parameterized Array and Interval Automaton,”</em> in Proceedings of Haifa Verification Conference, 2013, pp. 15–31.</p>
+<p>[11] ECMA International, Standard ECMA-262 - ECMAScript Language Specification, 5th ed., June 2011. [Online]. Available: <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm" target="_blank" rel="noopener">http://www.ecma-international.org/publications/standards/Ecma-262.htm</a></p>
+<p>[12] <em>“Rhino,”</em> <a href="https://developer.mozilla.org/en-US/docs/Rhino" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Rhino</a>, [Online; accessed 2014.08.15].</p>
+<p>[13] <em>“Use JSDoc,”</em> <a href="http://usejsdoc.org/index.html" target="_blank" rel="noopener">http://usejsdoc.org/index.html</a>, [Online; accessed 2014.08.15].</p>
+<p>[14] <em>“JSCover - JavaScript code coverage,”</em> <a href="http://tntim96.github.io/JSCover/" target="_blank" rel="noopener">http://tntim96.github.io/JSCover/</a> <a href="http://usejsdoc.org/index.html" target="_blank" rel="noopener">http://usejsdoc.org/index.html</a>, [Online; accessed 2014.08.15].</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
+          
+            <a href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="next" title="Hexo博客搭建">
+                <i class="fa fa-chevron-left"></i> Hexo博客搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/20/CCF%E6%8E%A8%E8%8D%90%E5%9B%BD%E9%99%85%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE%E5%92%8C%E6%9C%9F%E5%88%8A%E7%9B%AE%E5%BD%95%EF%BC%88%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%EF%BC%89/" rel="prev" title="CCF推荐国际学术会议和期刊目录（网络与信息安全）">
+                CCF推荐国际学术会议和期刊目录（网络与信息安全） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/20200417221334.jpg"
+                alt="yyw" />
+            
+              <p class="site-author-name" itemprop="name">yyw</p>
+              <p class="site-description motion-element" itemprop="description">Do not go gentle into that good night.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要及介绍"><span class="nav-number">1.</span> <span class="nav-text">摘要及介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现有的工具"><span class="nav-number">1.3.</span> <span class="nav-text">现有的工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景及基础知识"><span class="nav-number">2.</span> <span class="nav-text">背景及基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号执行"><span class="nav-number">2.1.</span> <span class="nav-text">符号执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#符号执行的基本原理"><span class="nav-number">2.1.1.</span> <span class="nav-text">符号执行的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过符号执行生成测试输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">通过符号执行生成测试输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SymJS"><span class="nav-number">2.2.</span> <span class="nav-text">SymJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PASS"><span class="nav-number">2.2.1.</span> <span class="nav-text">PASS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号存根及驱动程序"><span class="nav-number">2.2.2.</span> <span class="nav-text">符号存根及驱动程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号存根及驱动程序的自动生成"><span class="nav-number">3.</span> <span class="nav-text">符号存根及驱动程序的自动生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成符号存根和驱动程序的策略"><span class="nav-number">3.1.</span> <span class="nav-text">生成符号存根和驱动程序的策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从注释生成符号存根和驱动程序"><span class="nav-number">3.2.</span> <span class="nav-text">从注释生成符号存根和驱动程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation"><span class="nav-number">4.</span> <span class="nav-text">Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号存根和驱动程序的生成"><span class="nav-number">4.1.</span> <span class="nav-text">符号存根和驱动程序的生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成测试输入和执行测试"><span class="nav-number">4.2.</span> <span class="nav-text">生成测试输入和执行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验中未覆盖的代码"><span class="nav-number">4.3.</span> <span class="nav-text">实验中未覆盖的代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusions"><span class="nav-number">5.</span> <span class="nav-text">Conclusions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Work"><span class="nav-number">5.1.</span> <span class="nav-text">Future Work</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-tree" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yyw</span>
+
+  
+</div>
+
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">84.8k</span>
+  
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
