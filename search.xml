@@ -4115,4 +4115,130 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
         <tag>面向对象</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java的final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块</title>
+    <url>/2020/08/24/Java%E7%9A%84final%E3%80%81static%E3%80%81%E5%8C%BF%E5%90%8D%E5%AF%B9%E8%B1%A1%E3%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E3%80%81%E5%8C%85%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E8%AE%BF%E9%97%AE%E3%80%81%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%9D%97/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h1 id="final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块"><a href="#final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块" class="headerlink" title="final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块"></a>final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块</h1><h2 id="final"><a href="#final" class="headerlink" title="final"></a><code>final</code></h2><p>关键字，最终的意思。</p>
+<ul>
+<li><code>final</code> 修饰的类：最终的类，不能被继承。</li>
+<li><code>final</code> 修饰的变量：相当于是一个常量，在编译生成 .class 文件后，该变量未常量值。</li>
+<li><code>final</code> 修饰的方法：最终的方法，子类不能重写，可以继承过来使用。</li>
+</ul>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a><code>static</code></h2><p>关键字，静态的意思。</p>
+<p>可以用来修饰类中的成员（成员变量，成员方法）</p>
+<p>注意：也可以用来修饰成员内部类</p>
+<ul>
+<li><p>特点：</p>
+<p>被静态所修饰的成员，会被所有的对象所共享</p>
+<p>被静态所修饰的成员，可以通过类名直接调用，方便</p>
+<ul>
+<li><code>Person.county = &quot;中国&quot;;</code></li>
+<li><code>Person.method();</code></li>
+</ul>
+</li>
+<li><p>注意事项：</p>
+<p>静态的成员，随着类的加载而加载，优先于对象存在</p>
+<p>在静态方法中，没有 <code>this</code> 关键字</p>
+<p>静态方法中，只能调用静态的成员（静态成员变量，静态成员方法）</p>
+</li>
+</ul>
+<p><img src="http://images.yingwai.top/picgo/JavaSE13f2.JPG" alt="静态的共享数据"></p>
+<center>
+    <i>静态的共享数据</i>
+</center>
+
+
+
+<p><img src="http://images.yingwai.top/picgo/JavaSE13f1.JPG" alt="静态的内存图"></p>
+<center>
+    <i>静态的内存图</i>
+</center>
+
+
+
+<h2 id="匿名对象"><a href="#匿名对象" class="headerlink" title="匿名对象"></a>匿名对象</h2><p>一个没有名字的对象。</p>
+<ul>
+<li><p>特点：</p>
+<p>创建匿名对象直接使用，没有对象名</p>
+<p>匿名对象在没有指定其引用变量时，只能使用一次</p>
+<p>匿名对象可以作为方法接收得参数、方法返回值使用</p>
+</li>
+</ul>
+<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><p>在一个类中，定义了一个新类，这个新的类就是内部类。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123; <span class="comment">// 外部类</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123; <span class="comment">// 内部类</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>特点</p>
+<p>内部类可以直接访问外部类的成员，包含私有的成员</p>
+</li>
+</ul>
+<h2 id="包的声明与访问"><a href="#包的声明与访问" class="headerlink" title="包的声明与访问"></a>包的声明与访问</h2><ul>
+<li><p>类中包的声明格式：</p>
+<p><code>package 包名.包名.包名…;</code></p>
+</li>
+<li><p>带有包的类，创建对象格式：<code>包名.类名 变量名 = new 包名.类名();</code></p>
+<p><code>cn.itcast.Demo d = new cn.itcast.Demo();</code></p>
+</li>
+<li><p>导包的格式：</p>
+<p><code>import 包名.类名;</code></p>
+</li>
+</ul>
+<h2 id="权限修饰符"><a href="#权限修饰符" class="headerlink" title="权限修饰符"></a>权限修饰符</h2><p><code>public</code>：公共的</p>
+<p><code>protected</code>：受保护的</p>
+<p><code>default</code>：默认的（可以不写）</p>
+<p><code>private</code>：私有的</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center"><code>public</code></th>
+<th style="text-align:center"><code>protected</code></th>
+<th style="text-align:center"><code>default</code></th>
+<th style="text-align:center"><code>private</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在当前类中</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+</tr>
+<tr>
+<td>同一包中的其他类</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>不同包中的子类</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>不同包中的其他类</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>局部代码块：定义在方法中的，用来限制变量的作用范围</p>
+<p>构造代码块：定义在类中方法外，用来给对象中的成员初始化赋值</p>
+<p>静态代码块：定义在类中方法外，用来给类的静态成员初始化赋值</p>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
 </search>
