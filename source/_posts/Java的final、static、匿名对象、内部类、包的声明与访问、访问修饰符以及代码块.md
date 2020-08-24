@@ -46,6 +46,20 @@ tags: Java
 
   静态方法中，只能调用静态的成员（静态成员变量，静态成员方法）
 
+![静态的共享数据](http://images.yingwai.top/picgo/JavaSE13f2.JPG)
+
+<center>
+    <i>静态的共享数据</i>
+</center>
+
+
+
+![静态的内存图](http://images.yingwai.top/picgo/JavaSE13f1.JPG)
+
+<center>
+    <i>静态的内存图</i>
+</center>
+
 
 
 ## 匿名对象
