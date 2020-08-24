@@ -705,6 +705,399 @@
       </tags>
   </entry>
   <entry>
+    <title>Java接口、多态总结</title>
+    <url>/2020/08/24/Java%E6%8E%A5%E5%8F%A3%E3%80%81%E5%A4%9A%E6%80%81%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口是功能的集合，同样可看做是一种数据类型，是比抽象类更为抽象的”类”。<br>接口只描述所应该具备的方法，并没有具体实现，具体的实现由接口的实现类(相当于接口的子类)来完成。这样将功能的定义与实现分离，优化了程序设计。<br>请记住：一切事物均有功能，即一切事物均有接口。</p>
+<p>接口的出现避免了单继承的局限性。父类中定义的事物的基本功能。接口中定义的事物的扩展功能。</p>
+<h3 id="接口的特点"><a href="#接口的特点" class="headerlink" title="接口的特点"></a>接口的特点</h3><ol>
+<li><p>定义一个接口用 <code>interface</code> 关键字：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> 接口名 </span>&#123;</span><br><span class="line">    抽象方法<span class="number">1</span>;</span><br><span class="line">    抽象方法<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个类实现一个接口，实现 <code>implements</code> 关键字：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 类名 <span class="keyword">implements</span> 接口名 </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口不能直接创建对象</p>
+<p>通过多态的方式，由子类来创建对象，接口多态。</p>
+</li>
+</ol>
+<h3 id="接口中的成员特点"><a href="#接口中的成员特点" class="headerlink" title="接口中的成员特点"></a>接口中的成员特点</h3><ul>
+<li><p>成员变量：</p>
+<p>只能是 <code>final</code> 修饰的常量</p>
+<p>默认修饰符：<code>public static final</code></p>
+</li>
+<li><p>构造方法：</p>
+<p>无</p>
+</li>
+<li><p>成员方法：</p>
+<p>只能是抽象方法</p>
+<p>默认修饰符：<code>public abstract</code></p>
+</li>
+</ul>
+<h3 id="类与类、类与接口、接口与接口之间的关系"><a href="#类与类、类与接口、接口与接口之间的关系" class="headerlink" title="类与类、类与接口、接口与接口之间的关系"></a>类与类、类与接口、接口与接口之间的关系</h3><ul>
+<li><p>类与类：</p>
+<p>继承关系，单继承，可以是多层继承</p>
+</li>
+<li><p>类与接口：</p>
+<p>实现关系，单实现，也可以多实现（因为没有方法冲突的问题）</p>
+</li>
+<li><p>接口与接口：</p>
+<p>继承关系，单继承，也可以是多继承</p>
+</li>
+</ul>
+<p>Java中的类可以继承一个父类的同时，实现多个接口</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态是继封装、继承之后，面向对象的第三大特性。</p>
+<p>现实事物经常会体现出多种形态，如学生，学生是人的一种，则一个具体的同学张三既是学生也是人，即出现两种形态。</p>
+<p>Java作为面向对象的语言，同样可以描述一个事物的多种形态。如Student类继承了Person类，一个Student的对象便既是Student，又是Person。</p>
+<p>Java中多态的代码体现在一个子类对象(实现类对象)既可以给这个子类(实现类对象)引用变量赋值，又可以给这个子类(实现类对象)的父类(接口)变量赋值。</p>
+<p>如Student类可以为Person类的子类。那么一个Student对象既可以赋值给一个Student类型的引用，也可以赋值给一个Person类型的引用。</p>
+<p>最终多态体现为父类引用变量可以指向子类对象。</p>
+<p>多态的前提是必须有子父类关系或者类实现接口关系，否则无法完成多态。</p>
+<p>在使用多态后的父类引用变量调用方法时，会调用子类重写后的方法。</p>
+<h3 id="多态使用的前提"><a href="#多态使用的前提" class="headerlink" title="多态使用的前提"></a>多态使用的前提</h3><ol>
+<li>有继承或者实现关系</li>
+<li>要方法重写</li>
+<li>父类引用指向子类对象</li>
+</ol>
+<h3 id="多态的成员访问特点"><a href="#多态的成员访问特点" class="headerlink" title="多态的成员访问特点"></a>多态的成员访问特点</h3><p>方法的运行看右边（子类），其它都看左边（父类）。</p>
+<h3 id="多态的利弊"><a href="#多态的利弊" class="headerlink" title="多态的利弊"></a>多态的利弊</h3><p>好处：提高了程序的扩展性</p>
+<p>弊端：不能访问子类特有的功能</p>
+<h3 id="多态的分类"><a href="#多态的分类" class="headerlink" title="多态的分类"></a>多态的分类</h3><ul>
+<li><p>类的多态</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(“重写父类抽象方法”);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//类的多态使用</span></span><br><span class="line">Fu fu= <span class="keyword">new</span> Zi();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口的多态</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">implements</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(“重写接口抽象方法”);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接口的多态使用</span></span><br><span class="line">Fu fu = <span class="keyword">new</span> Zi();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="instanceof-关键字"><a href="#instanceof-关键字" class="headerlink" title="instanceof 关键字"></a><code>instanceof</code> 关键字</h2><p>格式：<code>对象名 instanceof 类名</code></p>
+<p>返回值：<code>true, false</code></p>
+<p>作用：判断指定的对象是否为给定类创建的对象</p>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java继承、抽象总结</title>
+    <url>/2020/08/24/Java%E7%BB%A7%E6%89%BF%E3%80%81%E6%8A%BD%E8%B1%A1%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><ul>
+<li><p>继承：是指在一个现有类的基础上去构建一个新的类，构建出来的新类被称作子类，现有类被称作父类，子类会自动拥有父类所有。</p>
+</li>
+<li><p>继承的好处：可继承的属性和方法。</p>
+<ul>
+<li>提高了代表的可维护性</li>
+<li>提高了代码的复用性</li>
+<li>让类与类之间产生了继承关系</li>
+</ul>
+</li>
+<li><p>继承的弊端：</p>
+<ul>
+<li>类与类之间的耦合度过高</li>
+</ul>
+</li>
+<li><p>继承特点：</p>
+<ul>
+<li><p>java中类只能够单继承，不能多继承，可以多层继承</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Yy</span> <span class="keyword">extends</span> <span class="title">Object</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fu</span> <span class="keyword">extends</span> <span class="title">Yy</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>所有的类都直接或者间接的继承了 Object类，Object类称为祖宗类</p>
+</li>
+</ul>
+</li>
+<li><p>继承的注意事项：</p>
+<ol>
+<li><p>使用关键字 <code>extends</code> 让类与类之间 产生继承关系</p>
+</li>
+<li><p>父类私有的成员，子类不能继承，因为根本看不到</p>
+</li>
+<li><p>不能为了继承某个功能而随意进行继承操作， 必须要符合 is a 的关系</p>
+<p>苹果 is a 水果</p>
+<p>男人 is a 人</p>
+<p>狗  is a 人 ， 这种情况就不能继承了</p>
+</li>
+</ol>
+</li>
+<li><p>继承中的成员变量关系：</p>
+<ul>
+<li><p>不同名的变量：</p>
+<p>子类直接继承使用</p>
+</li>
+<li><p>同名的变量：</p>
+<p>默认访问的是子类自己的成员变量, 想访问父类中的同名变量，请使用 <code>super.成员变量;</code></p>
+</li>
+</ul>
+</li>
+<li><p>继承中的成员方法关系：</p>
+<ul>
+<li><p>不同名的方法：</p>
+<p>子类直接继承使用</p>
+</li>
+<li><p>同名的方法：</p>
+<p>默认访问的是子类自己的成员方法，想访问父类中的同名方法，请使用 super.成员方法();</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>super:用来表示当前对象中包含的父类对象空间的引用</p>
+<ul>
+<li><p>调用父类的成员变量：</p>
+<p><code>super.成员变量;</code></p>
+</li>
+<li><p>调用方法的成员方法:</p>
+<p><code>super.成员方法();</code></p>
+</li>
+</ul>
+</li>
+<li><p>方法重写(override)：指在子父类中，出现了方法声明相同的情况，也叫做方法覆盖，方法复写</p>
+<ul>
+<li>方法重写的注意事项：<ol>
+<li>子类的方法声明要与父类相同</li>
+<li>子类要重写方法的方法，方法的权限修饰符不能比父类的更低</li>
+<li>父类私有的方法，子类不能够进行方法重写</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>方法重载(overload)：指 在同一个类中，多个方法名称相同，它们的参数列表不同(个数不同，数据类型不同)</p>
+</li>
+</ul>
+<h1 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h1><ul>
+<li><p>抽象方法： 方法只有声明部分，没有方法体</p>
+</li>
+<li><p>抽象类： 包含抽象方法的类，一定是抽象类</p>
+<p>使用 <code>abstract</code> 修饰的类，是抽象类</p>
+</li>
+<li><p>抽象类的特点：</p>
+<ol>
+<li>抽象类与抽象方法都必须使用 <code>abstract</code> 来修饰</li>
+<li>抽象类不能直接创建对象</li>
+<li>抽象类中可以有抽象方法，也可以没有抽象方法</li>
+<li>抽象类的子类<ul>
+<li>实现了抽象方法的具体类</li>
+<li>抽象类</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>抽象类面试题：</p>
+<ol>
+<li>抽象类中是否可以没有抽象方法？如果可以，那么，该类还定义成抽象类有意义吗？为什么？</li>
+<li>可以没有抽象方法，有意义，不会让其他人直接创建该类对象</li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java构造方法总结</title>
+    <url>/2020/08/24/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h2 id="this-关键字"><a href="#this-关键字" class="headerlink" title="this 关键字"></a><code>this</code> 关键字</h2><p><code>this</code> 关键字，本类对象的引用</p>
+<ul>
+<li><p><code>this</code> 是在方法中使用的，哪个对象调用了该方法，那么 <code>this</code> 就代表调用该方法的对象引用</p>
+</li>
+<li><p><code>this</code> 什么时候存在的？当创建对象的时候，<code>this</code> 存在的</p>
+</li>
+<li><p><code>this</code> 的作用：用来区别同名的成员变量与局部变量（<code>this.成员变量</code>）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>用来给类的成员进行初始化操作</p>
+<ul>
+<li><p>格式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修饰符 类名 (参数列表) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造方法的特点：</p>
+<ol>
+<li>方法名与类名想同</li>
+<li>没有返回值，也没有返回值类型，连 <code>void</code> 也没有</li>
+</ol>
+</li>
+<li><p>构造方法什么时候会被调用执行？</p>
+<p>只有在创建对象的时候才可以被调用</p>
+</li>
+</ul>
+<h2 id="super-关键字"><a href="#super-关键字" class="headerlink" title="super 关键字"></a><code>super</code> 关键字</h2><p>指的是父类的存储空间（理解为父类的引用）</p>
+<ul>
+<li><p>调用父类的成员变量：</p>
+<p><code>super.成员变量;</code></p>
+</li>
+<li><p>调用父类的构造方法：</p>
+<p><code>super(参数);</code></p>
+</li>
+<li><p>调用方法的成员方法：</p>
+<p><code>super.成员方法();</code></p>
+</li>
+</ul>
+<h2 id="继承中的构造方法注意事项"><a href="#继承中的构造方法注意事项" class="headerlink" title="继承中的构造方法注意事项"></a>继承中的构造方法注意事项</h2><ol>
+<li><p>如果我们手动给出了构造方法，编译器不会再给我们提供默认的空参数构造方法；</p>
+<p>如果我们没有写任何的构造方法，编译器提供给我们一个空参数构造方法</p>
+</li>
+<li><p>在构造方法中，默认的第一条语句为 <code>super();</code></p>
+<p>它是用来访问父类中的空参数构造方法，进行父类成员的初始化操作</p>
+</li>
+<li><p>当父类中没有空参数构造方法的时候，怎么办？</p>
+<ul>
+<li><p>通过 <code>super(参数);</code> 访问父类有参数的构造方法</p>
+</li>
+<li><p>通过 <code>this(参数);</code> 访问本类中其他构造方法</p>
+<p>注意：<em>本类中的其他构造方法已经能够正常访问父类构造方法</em></p>
+</li>
+</ul>
+</li>
+<li><p><code>super(参数);</code> 与 <code>this(参数);</code> 不能同时在构造方法中存在</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java的final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块</title>
+    <url>/2020/08/24/Java%E7%9A%84final%E3%80%81static%E3%80%81%E5%8C%BF%E5%90%8D%E5%AF%B9%E8%B1%A1%E3%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E3%80%81%E5%8C%85%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E8%AE%BF%E9%97%AE%E3%80%81%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%9D%97/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h2 id="final"><a href="#final" class="headerlink" title="final"></a><code>final</code></h2><p>关键字，最终的意思。</p>
+<ul>
+<li><code>final</code> 修饰的类：最终的类，不能被继承。</li>
+<li><code>final</code> 修饰的变量：相当于是一个常量，在编译生成 .class 文件后，该变量未常量值。</li>
+<li><code>final</code> 修饰的方法：最终的方法，子类不能重写，可以继承过来使用。</li>
+</ul>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a><code>static</code></h2><p>关键字，静态的意思。</p>
+<p>可以用来修饰类中的成员（成员变量，成员方法）</p>
+<p>注意：也可以用来修饰成员内部类</p>
+<ul>
+<li><p>特点：</p>
+<p>被静态所修饰的成员，会被所有的对象所共享</p>
+<p>被静态所修饰的成员，可以通过类名直接调用，方便</p>
+<ul>
+<li><code>Person.county = &quot;中国&quot;;</code></li>
+<li><code>Person.method();</code></li>
+</ul>
+</li>
+<li><p>注意事项：</p>
+<p>静态的成员，随着类的加载而加载，优先于对象存在</p>
+<p>在静态方法中，没有 <code>this</code> 关键字</p>
+<p>静态方法中，只能调用静态的成员（静态成员变量，静态成员方法）</p>
+</li>
+</ul>
+<p><img src="http://images.yingwai.top/picgo/JavaSE13f2.JPG" alt="静态的共享数据"></p>
+<center>
+    <i>静态的共享数据</i>
+</center>
+
+
+
+<p><img src="http://images.yingwai.top/picgo/JavaSE13f1.JPG" alt="静态的内存图"></p>
+<center>
+    <i>静态的内存图</i>
+</center>
+
+
+
+<h2 id="匿名对象"><a href="#匿名对象" class="headerlink" title="匿名对象"></a>匿名对象</h2><p>一个没有名字的对象。</p>
+<ul>
+<li><p>特点：</p>
+<p>创建匿名对象直接使用，没有对象名</p>
+<p>匿名对象在没有指定其引用变量时，只能使用一次</p>
+<p>匿名对象可以作为方法接收得参数、方法返回值使用</p>
+</li>
+</ul>
+<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><p>在一个类中，定义了一个新类，这个新的类就是内部类。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123; <span class="comment">// 外部类</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123; <span class="comment">// 内部类</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>特点</p>
+<p>内部类可以直接访问外部类的成员，包含私有的成员</p>
+</li>
+</ul>
+<h2 id="包的声明与访问"><a href="#包的声明与访问" class="headerlink" title="包的声明与访问"></a>包的声明与访问</h2><ul>
+<li><p>类中包的声明格式：</p>
+<p><code>package 包名.包名.包名…;</code></p>
+</li>
+<li><p>带有包的类，创建对象格式：<code>包名.类名 变量名 = new 包名.类名();</code></p>
+<p><code>cn.itcast.Demo d = new cn.itcast.Demo();</code></p>
+</li>
+<li><p>导包的格式：</p>
+<p><code>import 包名.类名;</code></p>
+</li>
+</ul>
+<h2 id="权限修饰符"><a href="#权限修饰符" class="headerlink" title="权限修饰符"></a>权限修饰符</h2><p><code>public</code>：公共的</p>
+<p><code>protected</code>：受保护的</p>
+<p><code>default</code>：默认的（可以不写）</p>
+<p><code>private</code>：私有的</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center"><code>public</code></th>
+<th style="text-align:center"><code>protected</code></th>
+<th style="text-align:center"><code>default</code></th>
+<th style="text-align:center"><code>private</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在当前类中</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+</tr>
+<tr>
+<td>同一包中的其他类</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>不同包中的子类</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>不同包中的其他类</td>
+<td style="text-align:center">$\surd$</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>局部代码块：定义在方法中的，用来限制变量的作用范围</p>
+<p>构造代码块：定义在类中方法外，用来给对象中的成员初始化赋值</p>
+<p>静态代码块：定义在类中方法外，用来给类的静态成员初始化赋值</p>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo博客搭建</title>
     <url>/2020/04/11/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<hr>
@@ -858,6 +1251,47 @@ z_2 = x_1y_2 + x_2y_1 + x_2y_2</script><p>这时结果 $z$ 就以加法共享的
         <tag>MPC</tag>
         <tag>PPML</tag>
         <tag>Secret Sharing</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Zotero的附件同步</title>
+    <url>/2020/07/10/Zotero%E7%9A%84%E9%99%84%E4%BB%B6%E5%90%8C%E6%AD%A5/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<p>Zotero的存储空间只有100M，不付费的话使用起来肯定不够。因此可以使用坚果云来同步附件，这样做的好处是ios上的PaperShip也可以通过WebDAV读取资料。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>注册一个坚果云账号，然后开启第三方应用管理：</p>
+<ol>
+<li><p>登陆坚果云网页端，点击右上角的账号名称——账户信息——安全选项</p>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf1.png" alt=""></p>
+<p>然后点击添加应用，应用名称填Zotero(也可以填其它，只要你记得对应的软件)，会自动生成一个应用密码。</p>
+</li>
+<li><p>打开Zotero，点击菜单栏的编辑——首选项——同步，在文件同步中选择WebDav，复制坚果云内第三方应用管理的服务器地址、账户和密码，复制完成后点击 <em>验证服务器</em>。</p>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf2.png" alt=""></p>
+<p>这一步出现问题的话可以尝试在坚果云网页端手动建立一个zotero根目录，与zotero填的地址对应。</p>
+</li>
+</ol>
+<h1 id="ZotFile的安装与设置"><a href="#ZotFile的安装与设置" class="headerlink" title="ZotFile的安装与设置"></a>ZotFile的安装与设置</h1><p>进入<a href="http://zotfile.com/" target="_blank" rel="noopener">zotfile官网 </a>下载。<br>然后打开Zotero，点击菜单栏工具——插件，有以下界面：</p>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf3.png" alt=""></p>
+<p>点击右上角的齿轮，选择 <em>Install Add-on From File…</em>，在弹出的插件安装中选择刚才下载的xpi文件进行安装。</p>
+<p>安装完成后点击菜单栏工具——ZotFile Preferences——General Settings：</p>
+<ol>
+<li>将Source Folder for Attaching new Files中的目录设置为浏览器默认的下载文件目录；</li>
+<li>将Location of Files中的目录设置为第一个Attach stored copy of files，要选择这个才能与前面的WebDAV设置配合使用。</li>
+</ol>
+<p><img src="http://images.yingwai.top/picgo/zeterojgyf4.png" alt=""></p>
+<p>下面的 /%w/%y 是命名格式，也可以设置成别的。</p>
+<p>完成以上操作后，当我们在浏览器中点击Zotero插件时，软件就会自动将下载下来的pdf文件拷贝到云盘的目录中，并将它的目录链接保存到对应的文献条目下。</p>
+<h1 id="PaperShip使用"><a href="#PaperShip使用" class="headerlink" title="PaperShip使用"></a>PaperShip使用</h1><p>方法类似上面，只要在坚果云网页端添加应用，在PaperShip登陆时选择WebDAV，把账号密码输入即可。这样在PC端管理的文献就可以方便地在移动端进行访问。</p>
+<p>效果：</p>
+<p><img src="http://images.yingwai.top/picgo/zoterojgyf5.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Zotero</tag>
+        <tag>坚果云</tag>
+        <tag>PaperShip</tag>
       </tags>
   </entry>
   <entry>
@@ -1026,47 +1460,6 @@ z_2 = x_1y_2 + x_2y_1 + x_2y_2</script><p>这时结果 $z$ 就以加法共享的
       <tags>
         <tag>密码学</tag>
         <tag>MPC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Zotero的附件同步</title>
-    <url>/2020/07/10/Zotero%E7%9A%84%E9%99%84%E4%BB%B6%E5%90%8C%E6%AD%A5/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<p>Zotero的存储空间只有100M，不付费的话使用起来肯定不够。因此可以使用坚果云来同步附件，这样做的好处是ios上的PaperShip也可以通过WebDAV读取资料。</p>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>注册一个坚果云账号，然后开启第三方应用管理：</p>
-<ol>
-<li><p>登陆坚果云网页端，点击右上角的账号名称——账户信息——安全选项</p>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf1.png" alt=""></p>
-<p>然后点击添加应用，应用名称填Zotero(也可以填其它，只要你记得对应的软件)，会自动生成一个应用密码。</p>
-</li>
-<li><p>打开Zotero，点击菜单栏的编辑——首选项——同步，在文件同步中选择WebDav，复制坚果云内第三方应用管理的服务器地址、账户和密码，复制完成后点击 <em>验证服务器</em>。</p>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf2.png" alt=""></p>
-<p>这一步出现问题的话可以尝试在坚果云网页端手动建立一个zotero根目录，与zotero填的地址对应。</p>
-</li>
-</ol>
-<h1 id="ZotFile的安装与设置"><a href="#ZotFile的安装与设置" class="headerlink" title="ZotFile的安装与设置"></a>ZotFile的安装与设置</h1><p>进入<a href="http://zotfile.com/" target="_blank" rel="noopener">zotfile官网 </a>下载。<br>然后打开Zotero，点击菜单栏工具——插件，有以下界面：</p>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf3.png" alt=""></p>
-<p>点击右上角的齿轮，选择 <em>Install Add-on From File…</em>，在弹出的插件安装中选择刚才下载的xpi文件进行安装。</p>
-<p>安装完成后点击菜单栏工具——ZotFile Preferences——General Settings：</p>
-<ol>
-<li>将Source Folder for Attaching new Files中的目录设置为浏览器默认的下载文件目录；</li>
-<li>将Location of Files中的目录设置为第一个Attach stored copy of files，要选择这个才能与前面的WebDAV设置配合使用。</li>
-</ol>
-<p><img src="http://images.yingwai.top/picgo/zeterojgyf4.png" alt=""></p>
-<p>下面的 /%w/%y 是命名格式，也可以设置成别的。</p>
-<p>完成以上操作后，当我们在浏览器中点击Zotero插件时，软件就会自动将下载下来的pdf文件拷贝到云盘的目录中，并将它的目录链接保存到对应的文献条目下。</p>
-<h1 id="PaperShip使用"><a href="#PaperShip使用" class="headerlink" title="PaperShip使用"></a>PaperShip使用</h1><p>方法类似上面，只要在坚果云网页端添加应用，在PaperShip登陆时选择WebDAV，把账号密码输入即可。这样在PC端管理的文献就可以方便地在移动端进行访问。</p>
-<p>效果：</p>
-<p><img src="http://images.yingwai.top/picgo/zoterojgyf5.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Zotero</tag>
-        <tag>坚果云</tag>
-        <tag>PaperShip</tag>
       </tags>
   </entry>
   <entry>
@@ -1368,51 +1761,6 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
       </tags>
   </entry>
   <entry>
-    <title>在不同的电脑上更新Hexo博客</title>
-    <url>/2020/08/23/%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%94%B5%E8%84%91%E4%B8%8A%E6%9B%B4%E6%96%B0Hexo%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<p>参考了<a href="https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。" target="_blank" rel="noopener">https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。</a></p>
-<p>思路是使用git的分支来管理。</p>
-<h1 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h1><p>原本编辑博客的电脑：</p>
-<ol>
-<li><p>首先在github上新建一个hexo分支，并设置它为默认分支。</p>
-</li>
-<li><p>在电脑上的其它目录中，克隆hexo仓库到本地，获得隐藏的.git文件夹。</p>
-</li>
-<li><p>复制这个文件夹到原来的博客目录下，删除博客主题目录下的.git文件夹，然后前面克隆的文件夹就可以删除了。</p>
-</li>
-<li><p>上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="本机编辑博客"><a href="#本机编辑博客" class="headerlink" title="本机编辑博客"></a>本机编辑博客</h1><p>编辑完文章后，</p>
-<ol>
-<li><p>上传到hexo分支</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d -g</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="在别的电脑上编辑博客"><a href="#在别的电脑上编辑博客" class="headerlink" title="在别的电脑上编辑博客"></a>在别的电脑上编辑博客</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li>安装git</li>
-<li>克隆github上的hexo分支到本地</li>
-<li>安装node.js</li>
-<li>安装hexo（不需要初始化）</li>
-</ol>
-<p>后面两步可以参考<a href="https://yuyingwai.cn/2020/04/11/Hexo博客搭建/" target="_blank" rel="noopener">Hexo博客搭建</a>。</p>
-<h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><p><strong>每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先执行<code>git pull origin hexo</code> 命令</strong>，即将远端最新的hexo分支拉到本地，使本地与远端达到同步。</p>
-<p>然后与本机编辑一样，先用 <code>git add .</code>、<code>git commit -m &quot;备注&quot;</code> 和 <code>git push origin hexo</code> 上传，再进行部署。</p>
-]]></content>
-      <categories>
-        <category>Env</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>群与环的概念</title>
     <url>/2020/07/06/%E7%BE%A4%E4%B8%8E%E7%8E%AF%E7%9A%84%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<hr>
@@ -1484,6 +1832,51 @@ a^n \cdot a^m = a^{m+n}, \ \ (a^n)^m = a^{mn}</script><h2 id="环例子"><a href
         <tag>群</tag>
         <tag>环</tag>
         <tag>近世代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在不同的电脑上更新Hexo博客</title>
+    <url>/2020/08/23/%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%94%B5%E8%84%91%E4%B8%8A%E6%9B%B4%E6%96%B0Hexo%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<p>参考了<a href="https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。" target="_blank" rel="noopener">https://helloliwen.github.io/870ed150.html以及https://www.zhihu.com/question/21193762中CrazyMilk的回答。</a></p>
+<p>思路是使用git的分支来管理。</p>
+<h1 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h1><p>原本编辑博客的电脑：</p>
+<ol>
+<li><p>首先在github上新建一个hexo分支，并设置它为默认分支。</p>
+</li>
+<li><p>在电脑上的其它目录中，克隆hexo仓库到本地，获得隐藏的.git文件夹。</p>
+</li>
+<li><p>复制这个文件夹到原来的博客目录下，删除博客主题目录下的.git文件夹，然后前面克隆的文件夹就可以删除了。</p>
+</li>
+<li><p>上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="本机编辑博客"><a href="#本机编辑博客" class="headerlink" title="本机编辑博客"></a>本机编辑博客</h1><p>编辑完文章后，</p>
+<ol>
+<li><p>上传到hexo分支</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"备注"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin hexo</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo d -g</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="在别的电脑上编辑博客"><a href="#在别的电脑上编辑博客" class="headerlink" title="在别的电脑上编辑博客"></a>在别的电脑上编辑博客</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<li>安装git</li>
+<li>克隆github上的hexo分支到本地</li>
+<li>安装node.js</li>
+<li>安装hexo（不需要初始化）</li>
+</ol>
+<p>后面两步可以参考<a href="https://yuyingwai.cn/2020/04/11/Hexo博客搭建/" target="_blank" rel="noopener">Hexo博客搭建</a>。</p>
+<h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><p><strong>每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先执行<code>git pull origin hexo</code> 命令</strong>，即将远端最新的hexo分支拉到本地，使本地与远端达到同步。</p>
+<p>然后与本机编辑一样，先用 <code>git add .</code>、<code>git commit -m &quot;备注&quot;</code> 和 <code>git push origin hexo</code> 上传，再进行部署。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1589,6 +1982,91 @@ a^n \cdot a^m = a^{m+n}, \ \ (a^n)^m = a^{mn}</script><h2 id="环例子"><a href
         <tag>MPC</tag>
         <tag>PPML</tag>
         <tag>Secret Sharing</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 ABY3: A Mixed Protocol Framework for Machine Learning</title>
+    <url>/2020/06/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ABY3-A-Mixed-Protocol-Framework-for-Machine-Learning/</url>
+    <content><![CDATA[<p><em>Payman Mohassel, Peter Rindal</em></p>
+<p>CCS 2018</p>
+<p><a href="https://dl.acm.org/doi/10.1145/3243734.3243760" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3243734.3243760</a></p>
+<a id="more"></a>
+<p><img src="http://images.yingwai.top/picgo/ABY3.png" alt=""></p>
+<h1 id="本文贡献"><a href="#本文贡献" class="headerlink" title="本文贡献"></a>本文贡献</h1><ul>
+<li>新的共享十进制数近似定点乘法协议；</li>
+<li>提出了三方的ABY框架，其中许多转换都是基于新技术，并在本文中首次进行了设计和优化；</li>
+<li>提高了矩阵乘法的效率；</li>
+<li>有效的分段多项式函数评估。</li>
+</ul>
+<h1 id="计算模型"><a href="#计算模型" class="headerlink" title="计算模型"></a>计算模型</h1><p>本文采用三方的重复共享，即把一个数 $x$ 拆成三份，各方都拥有三份中的两份，下面是ABY三种共享形式：</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt4.png" alt=""></p>
+<p>在这种设置下，三方交互式地计算函数 $f(x)$，本篇文章主要针对机器学习中的算法。</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt2.png" alt=""></p>
+<h2 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h2><p>在秘密共享的情况下，计算两个数 $[![x]!], [![y]!]$ 的和 $[![z]!] = [![x]!] + [![y]!]$ 比较简单，各方直接将其对应的份额在本地相加即可，不需要交互：</p>
+<script type="math/tex; mode=display">
+z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h2><p>计算两个数 $[![x]!], [![y]!]$ 的积 $[![z]!] = [![x]!] * [![y]!]$ 则复杂一点。在两方共享的情况下，需要借助额外的乘法三元组来计算，开销非常大。而三方下的复制共享这时候就起作用了，将 $xy$ 展开可以观察到有九项，每一项是两个份额的乘积，因此每一方只需要计算其可以计算的九项中的其中三项即可保持结果 $z$ 继续在三方中是加法共享的。计算完成后再把对应的结果发送给另一方，即可保持 $z$ 是重复共享的。</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt3.png" alt=""></p>
+<p>可以看到乘法操作只包含了本地操作和各方各一次发送，开销比两方的情况下小很多。</p>
+<h1 id="本文的框架"><a href="#本文的框架" class="headerlink" title="本文的框架"></a>本文的框架</h1><h2 id="定点运算"><a href="#定点运算" class="headerlink" title="定点运算"></a>定点运算</h2><p>定点值定义为使用二进制补码表示的一个 $k$ 位整数，其中底部 $d$ 位表示小数，即对于正值，位 $i$ 表示 $2$ 的 $(i−d)$ 次方。由于预计结果将保持在 $2^k$ 以下，因此可以使用相应的整数运算来执行加法和减法。乘法也可以以相同的方式执行，但是十进制位的数量加倍，因此必须除以 $2^d$ 以保持 $d$ 个十进制位不变。</p>
+<p>在得到乘法结果后，各方可以直接把本地的份额后 $d$ 位截断，但这样会<strong>把原本份额相加的进位也截断了</strong>，导致截断后重构出来的 $\tilde{x} \neq x$。作者参考了<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中的两方协议，给出了他们自己的在三方下的实现：</p>
+<p><img src="http://images.yingwai.top/picgo/aby3f1.png" alt=""></p>
+<p>一开始作者的想法是把 $x’$ 的截断 $x = x’/2^d$ 拆成 $[![x]!] := (x_1, x_2, x_3) = (x’_1/2^d, (x’_2 + x’_3)/2^d-r, r)$，其中 $r$ 是 $\mathbb{Z}^k_2$ 中的随机数，但发现这样做有两轮通信的限制，于是进一步优化得到上面的协议。</p>
+<h2 id="矢量化乘法"><a href="#矢量化乘法" class="headerlink" title="矢量化乘法"></a>矢量化乘法</h2><p>两个向量作内积定义为 $\vec{x} \cdot \vec{y} := \sum^n_{i=1} x_i y_i$。在本文的背景下计算内积，朴素的做法是对两个向量的每一个元素都执行一次乘法+截断协议，但这样需要通信 $O(n)$ 次通信。</p>
+<p>于是作者进行了优化：各方只需要在本地将两个向量 $\vec{x},\vec{y}$ 的 $n$ 个分量计算相乘的份额，然后把这 $n$ 个积相加就得到了 $z’$ 的3/3共享，最后执行上一小节中的截断协议将 $[![z’]!]$ 截断为 $[![z]!]:= (z’+r’)/2^d - [![r]!]$。</p>
+<p>这样做不仅可以减少通信开销，而且误差也比执行 $n$ 次乘法+截断协议低（总共只进行了一次截断，相对于整体内积的误差为 $2^{-d}$）。</p>
+<h2 id="共享转换"><a href="#共享转换" class="headerlink" title="共享转换"></a>共享转换</h2><p>机器学习中有很多不同的函数，而不同的函数有适合其计算的不同共享方式：算术共享适合计算乘法和加法，而二进制共享适合计算非线性函数、最大池化以及平均值等。两方的情况可以参考<a href="https://yuyingwai.cn/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/" target="_blank" rel="noopener">ABY</a>，本文给出了三方下的共享转换。</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt6.png" alt=""></p>
+<h3 id="位分解"><a href="#位分解" class="headerlink" title="位分解"></a>位分解</h3><p>$[![x]!]^A \rightarrow [![\vec{x}]!]^B$</p>
+<p>最基础的想法是各方将其份额 $[![x]!]^A = (x_1, x_2, x_3)$ 输入到布尔电路中计算它们的和，但可以进行优化。观察到 $[![x]!]^A = (x_1, x_2, x_3)$ 可以转换为 $[![x_1]!]^B := (x_1,0,0), [![x_2]!]^B := (0,x_2,0), [![x_3]!]^B := (0,0,x_3)$ 而不需要交互。</p>
+<p>这里没太看懂，用到了各种加法器。作者首先观察到 $x_1 + x_2 + x_3$ 的计算可以减少成执行 $k$ 个相互独立的全加器计算 $2c+s$：$\mathsf{FA}(x_1[i], x_2[i], x_3[i-1]) \rightarrow (c[i], s[i])$，其中 $i \in {0,…,k-1}$。然后再使用平行前缀加法器计算 $2[![c]!]^B + [![s]!]^B$。对于半诚实的情况，$P_2$ 可以提供 $(x_1 + x_2)$ 作为输入计算 $[![x]!]^B := [![x_1 + x_2]!]^B + [![x_3]!]^B$。</p>
+<h3 id="位提取"><a href="#位提取" class="headerlink" title="位提取"></a>位提取</h3><p>$[![x]!]^A \rightarrow [![x[i]]!]^B$</p>
+<p>跟上面的情况类似，只是这次是提取比特串中的单一比特，把上一小节的电路中不必要的门去掉即可。</p>
+<h3 id="位组合"><a href="#位组合" class="headerlink" title="位组合"></a>位组合</h3><p>$[![x]!]^B \rightarrow [![x]!]^A$</p>
+<p>用到的还是与上面类似的电路，只是操作顺序有点变化。首先 $P_1, P_2$ 输入一个随机共享 $[![-x_2]!]^B$，$P_2, P_3$ 同样输入一个随机共享 $[![-x_3]!]^B$，这两个将会是最终的转换结果的部分。这里可以利用两方间的密钥作为随机种子来生成随机数。</p>
+<p>然后三方计算 $\mathsf{FA}([![x[i]]!]^B, [![-x_2[i]]!]^B, [![-x_3[i]]!]^B) \rightarrow ([![c[i]]!]^B, [![s[i]]!]^B)$，其中 $i \in {0,…,k-1}$。然后使用并行前缀加法器计算 $[![x_1]!]^B := 2[![c]!]^B + [![s]!]^B$。同样在半诚实下可以进一步优化，$P_2$ 提供 $(-x_2, -x_3)$ 作为输入计算 $[![x_1]!]^B := [![x]!]^B + [![-x_2 - x_3]!]^B$，$x_1$ 对 $P_1, P_3$ 开放，最后的共享定义为 $[![x]!]^A := (x_1, x_2, x_3)$。</p>
+<h3 id="位注入"><a href="#位注入" class="headerlink" title="位注入"></a>位注入</h3><p>$[![x]!]^B \rightarrow [![x]!]^A$</p>
+<p>当需要将以二进制共享方式编码的单个位 $x$ 提升为算术共享 $[![x]!]^A$ 时，通常会出现另一种特殊情况，参考3.4。</p>
+<h3 id="联合姚输入"><a href="#联合姚输入" class="headerlink" title="联合姚输入"></a>联合姚输入</h3><p>在姚共享中，对于一个比特 $x$，$P<em>1$（评估者）拥有 $k^x</em>{\mathsf{x}}$ 而另外两方拥有 $k^0<em>{\mathsf{x}} \in {0,1}^{\kappa}$ 和一个全局随机串 $\Delta \in {0,1}^{\kappa}$ 使得 $k^1</em>{\mathsf{x}} := k^0<em>{\mathsf{x}} \oplus \Delta$。转换到姚共享和从姚共享转换的一个有用的原语是双方提供双方都知道的输入的能力。比如说 $P_1, P_2$ 知道一个比特 $x$，想生成共享 $[![x]!]^Y$。在半诚实设置中比较简单，$P_2$ 可以本地生成并发送 $[![x]!]^Y$ 给 $P_1$。但是在恶意设置下 $P_1$ 需要在不知道 $\Delta$ 的情况下验证 $[![x]!]^Y$ 正确地将 $x$ 编码。于是 $P_3$ 可以帮助 $P_1$ 进行验证：$P_2, P_3$ 同时发送 $k^0</em>{\mathsf{x}}$ 和 $k^1_{\mathsf{x}}$ 的承诺方案给 $P_1$ ，后者可以检查两个承诺是否一致以及是否能打开承诺。</p>
+<h3 id="姚共享到二进制共享"><a href="#姚共享到二进制共享" class="headerlink" title="姚共享到二进制共享"></a>姚共享到二进制共享</h3><p>$[![x]!]^Y \rightarrow [![x]!]^B$</p>
+<p>在两方的情况下，密钥的最低有效位（置换位）形成 $x$ 的两方共享，即 $x \oplus p<em>{\mathsf{x}} = k^x</em>{\mathsf{x}}[0]$，其中 $p<em>{\mathsf{x}} = k^0</em>{\mathsf{x}}[0]$。三方下 $P<em>3$ 也知道 $p</em>{\mathsf{x}}$，首先 $P<em>1,P_2$ 本地生成随机比特 $r$ 然后 $P_1$ 将 $k^x</em>{\mathsf{x}}[0] \oplus r = x \oplus p<em>{\mathsf{x}} \oplus r$ 发送给 $P_3$。于是就完成了共享的转换，原本的共享被转换为 $[![x]!]^B = (x \oplus p</em>{\mathsf{x}} \oplus r, r, p_{\mathsf{x}})$。</p>
+<p>在恶意的设置下，需要确认 $P<em>1$ 发送给 $P_3$ 的 $x \oplus b \oplus r$ 中的 $b = p</em>{\mathsf{x}}$。首先 $P<em>1, P_2$ 选取 $k^r</em>{\mathsf{r}} \leftarrow {0,1}^{\kappa}$，后者发送 $k^0<em>{\mathsf{r}} := k^r</em>{\mathsf{r}} \oplus (r \Delta)$ 给 $P<em>3$。然后 $P_2,P_3$ 发送承诺 $C_0 = \mathsf{Comm}(k^{p</em>{\mathsf{x}}}<em>{\mathsf{y}}), C_1 = \mathsf{Comm}(k^{\overline{p</em>{\mathsf{x}}}}<em>{\mathsf{y}})$ 给 $P_1$，其中 $k^0</em>{\mathsf{y}} := k^0<em>{\mathsf{x}} \oplus k^0</em>{\mathsf{r}}$。$P<em>1$ 发送 $k^{x \oplus r}</em>{\mathsf{y}} := k^x<em>{\mathsf{x} } \oplus k^r</em>{\mathsf{r}}$ 给 $P<em>3$，后者验证其是否在集合 ${k^0</em>{\mathsf{y}}, k^1<em>{\mathsf{y}}}$ 中。$P_1$ 同样验证承诺 $C</em>{p<em>{\mathsf{x}} \oplus x \oplus r}$ 是否可以打开为 $k^{x \oplus r}</em>{\mathsf{y}}$ 以及 $C<em>0, C_1$ 是否一致。注意到 $x \oplus p</em>{\mathsf{x}} = k^x<em>{\mathsf{x}}[0]$，于是三方就可以计算共享 $[![x]!]^B = (x \oplus p</em>{\mathsf{x}} \oplus r, r, p<em>{\mathsf{x}})$。观察到 $P_3$ 将 $x \oplus p</em>{\mathsf{x}} \oplus r$ 计算为 $k^{x \oplus r}<em>{\mathsf{y}}[0] \oplus p</em>{\mathsf{r}}$。</p>
+<h3 id="二进制共享到姚共享"><a href="#二进制共享到姚共享" class="headerlink" title="二进制共享到姚共享"></a>二进制共享到姚共享</h3><p>$[![x]!]^B \rightarrow [![x]!]^Y$</p>
+<p>设 $[![x]!]^B = (x_1, x_2, x_3)$。各方使用前面讨论的程序共同输入份额 $[![x_1]!]^Y,[![x_2]!]^Y,[![x_3]!]^Y$ 作为联合姚输入。然后可以使用乱码电路来计算最终份额，该电路计算三个值的异或 $[![x]!]^Y := [![x_1]!]^Y \oplus [![x_2]!]^Y \oplus [![x_3]!]^Y$ 。使用Free-XOR技术，这不需要三方之间的任何通信，并且可以由 $P_1$ 本地计算。在半诚实的设置中，可以基于 $P_2$ 知道 $x_2$ 和 $x_3$ 这一事实来进一步优化。因此，它们可以本地计算 $x_2 \oplus x_3$，并将 $[![x_2 \oplus x_3]!]^Y$ 发送给 $P_1$，后者本地计算 $[![x]!]^Y := [![x_1]!]^Y \oplus [![x_2 \oplus x_3]!]^Y$。</p>
+<h3 id="姚共享到算术共享"><a href="#姚共享到算术共享" class="headerlink" title="姚共享到算术共享"></a>姚共享到算术共享</h3><p>$[![x]!]^Y \rightarrow [![x]!]^A$</p>
+<p>自然的想法是将姚共享先转换成二进制共享，再用位组合中的方法转换为算术共享。作者在这里也给出了优化方案，还是使用到了乱码电路，对这部分看得不是很懂。</p>
+<h3 id="算术共享到姚共享"><a href="#算术共享到姚共享" class="headerlink" title="算术共享到姚共享"></a>算术共享到姚共享</h3><p>$[![x]!]^A \rightarrow [![x]!]^Y$</p>
+<p>各方联合输入 $[![x]!]^A = (x_1, x_2, x_3)$ 的共享 $[![x_1]!]^Y,[![x_2]!]^Y,[![x_3]!]^Y$。然后使用一个乱码电路生成 $[![x]!]^Y := [![x_1]!]^Y + [![x_2]!]^Y + [![x_3]!]^Y$。</p>
+<h2 id="计算-a-A-b-B-ab-A"><a href="#计算-a-A-b-B-ab-A" class="headerlink" title="计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$"></a>计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$</h2><p>虽然将共享转换后再计算上面的公式也可以，但作者在这里给出了更有效的特定协议。在训练Logistic回归和神经网络模型中通常用于逼近非线性激活函数的分段线性或多项式函数的计算需要重复该操作。</p>
+<h3 id="半诚实"><a href="#半诚实" class="headerlink" title="半诚实"></a>半诚实</h3><h4 id="三方OT"><a href="#三方OT" class="headerlink" title="三方OT"></a>三方OT</h4><p>作者首先给出了三方下的不经意传输协议，在两方的OT中有两个角色：sender和receiver。在这里作者添加了一个<em>helper</em>的角色，他不会收到输出且知道receiver的选择位。这个对于(sender, receiver, helper)的功能记为 $((m_0, m_1),c, c) \mapsto (\perp, m_c, \perp)$。</p>
+<p>首先sender和helper选取随机串 $w_0, w_1 \leftarrow {0,1}^k$。sender将消息盲化：$m_0 \oplus w_0, m_1 \oplus w_1$ 然后发送给receiver。helper知道receiver希望收到消息 $m_c$，这样helper可以发送 $w_c$ 给receiver来让后者重构 $m_c$。</p>
+<h4 id="计算-a-b-B-ab-A"><a href="#计算-a-b-B-ab-A" class="headerlink" title="计算 $a[![b]!]^B = [![ab]!]^A$"></a>计算 $a[![b]!]^B = [![ab]!]^A$</h4><p>最简单的一种情况是 $P<em>1$ 知道的一个公共值 $a \in \mathbb{Z}</em>{2^k}$ 和一个共享比特 $b \in {0,1}$ 的乘法。首先 $P<em>3$ (sender)选取随机数 $r \leftarrow \mathbb{Z}</em>{2^k}$ 和定义两个消息 $m<em>i := (i \oplus b_1 \oplus b_3)a - r$，其中 $i \in {0,1}$。$P_2$ (receiver)为了学习消息 $m</em>{b<em>2} = (b_2 \oplus b_1 \oplus b_3)a - r = ba - r$，定义他的输入为 $b_2$。注意到 $P_1$ (helper)也知道 $b_2$，因此这里可以使用前面提到的三方OT。然后三方本地生成重复0共享 $(s_1, s_2, s_3)$ 来计算 $[![c]!] = [![ab]!] = (s_1 + r, ab-r+s_3, s_3)$。但是为了令这个2/3秘密共享合法，$c_2 = ab - r + s_3$ 要发送给 $P_1$，导致需要总共两轮通信。或者可以(并行地)重复执行三方OT过程，$P_3$ 担任sender输入 $(i+b_2+b_3)a - r + s_3$，其中 $i \in {0,1}$。于是 $P_1$ (receiver)输入 $b_2$，在第一轮中获知消息 $c_2$（非 $m</em>{b_2}$），总共 $6k$ 比特和 $1$ 轮通信。</p>
+<h4 id="计算-a-A-b-B-ab-A-1"><a href="#计算-a-A-b-B-ab-A-1" class="headerlink" title="计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$"></a>计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$</h4><p>在半诚实下，并行地执行两次 $a[![b]!]^B = [![ab]!]^A$ 过程就足够了。关键在于观察到上述计算中的 $a$ 不必是公开的。也就是说，$P_1$ 可以私下选择 $a$ 的值。利用这一点，可以观察到表达式可以写成 $[![a]!][![b]!]^B = a_1[![b]!]^B + (a_2 + a_3)[![b]!]^B$。$P_1$ 充当第一次的sender，$P_3$ 充当第二次的sender。每一方总共在 $1$ 轮上传送 $4k$ 比特。</p>
+<h3 id="恶意"><a href="#恶意" class="headerlink" title="恶意"></a>恶意</h3><h4 id="计算-a-b-B-ab-A-1"><a href="#计算-a-b-B-ab-A-1" class="headerlink" title="计算 $a[![b]!]^B = [![ab]!]^A$"></a>计算 $a[![b]!]^B = [![ab]!]^A$</h4><p>因为 $P_1$ 可以任意选择他输入到OT的值 $a$，所以半诚实方法在恶意设置下不适用。为了避开这一点，作者在这里先执行对 $b$ 的<em>位注入</em>。即计算 $[![b]!]^B \rightarrow [![b]!]^A$ 然后 $a[![b]!]^A = [![ab]!]^A$。在3.3节中提到，各方可以在本地计算共享 $[![b_1]!]^A, [![b_2]!]^A, [![b_2]!]^A$，其中 $[![b]!]^B = (b_1, b_2, b_3)$。现在可以通过计算 $[![b_1 \oplus b_2]!]^A = [![d]!]^A :=$ $[![b_1]!]^A + [![b_2]!]^A - 2[![b_1]!]^A[![b_2]!]^A$ 和 $[![b]!]^A := [![d \oplus b_3]!]^A$ 在算术电路中模拟这些值的异或。然后可以将最终结果计算为 $[![ab]!]^A := a[![b]!]^A$，其中每一方用 $a$ 去乘以自己 $b$ 的份额。</p>
+<h4 id="计算-a-A-b-B-ab-A-2"><a href="#计算-a-A-b-B-ab-A-2" class="headerlink" title="计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$"></a>计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$</h4><p>同样，这里可以重复位注入过程，将 $[![b]!]^B$ 转换为 $[![b]!]^A$，然后使用乘法协议计算 $[![a]!]^A[![b]!]^A$。</p>
+<h2 id="多项式分段函数"><a href="#多项式分段函数" class="headerlink" title="多项式分段函数"></a>多项式分段函数</h2><p>设 $f<em>1,…,f_m$ 表示具有公共系数的多项式以及有 $-\infty = c_0 &lt; c_1 &lt; … &lt; c</em>{m-1} &lt; c<em>m = \infty$ 使得 $c</em>{i-1}&lt;x \leq c<em>i$ 时 $f(x) = f_i(x)$。本文的方法是先计算向量 $b_1,…,b_m \in {0,1}$ 的秘密共享值使得 $b_i = 1 \Leftrightarrow c</em>{i-1} &lt; x \leq c_i$，然后 $f$ 可以计算为 $f(x) = \sum_i b_i f_i(x)$。</p>
+<p><img src="http://images.yingwai.top/picgo/aby3ppt5.png" alt=""></p>
+<p>比如说要比较 $[![x]!]$ 与 $c$ 的大小，可以看成提取 $[![x-c]!]$ 的最高有效位(MSB)（为1时 $x-c&lt;0$）。这里可以对 $[![x-c]!]$ 使用5.3中的位提取来获得二进制共享 $[![b]!]^B := [![\mathsf{msb}(x-c)]!]^B$。</p>
+<p>每个 $f<em>i$ 函数被表示为多项式 $f_i([![x]!]) = a</em>{i,j}[![x]!]^j + … + a<em>{i,1}[![x]!] + a</em>{i,0}$，其中所有的 $a<em>{i,l}$ 都是公知的常数。当 $f_i$ 为0次多项式时，使用3.4中的技术可以将计算 $b_if_i([![x]!])$ 优化为 $a</em>{i,0}[![b]!]^B$。另外当 $f<em>i$ 的系数为整数时，给定 $[![x]!]^l$，$a</em>{i,l} [![x]!]^l$ 的计算可以在本地进行。但是当 $a_{i,j}$ 有非零小数时，将按照3.1的方法执行交互式截断。</p>
+<h1 id="应用到机器学习"><a href="#应用到机器学习" class="headerlink" title="应用到机器学习"></a>应用到机器学习</h1><p>作者还给出了本文框架分别在线性回归、逻辑回归以及神经网络中的应用。</p>
+<h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p><img src="http://images.yingwai.top/picgo/aby3ppt7.png" alt=""></p>
+<p>线性回归是比较简单的一种模型，前向运算和更新权重都只包含了加法和乘法操作，因此只要利用前面提到的加法和乘法协议就可以完成一个线性回归模型的训练。</p>
+<h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p><img src="http://images.yingwai.top/picgo/aby3ppt8.png" alt=""></p>
+<p>逻辑回归是在线性回归的基础上增加了一个Sigmoid函数，因为在秘密共享的情况下计算指数函数很困难，因此可以定义一个近似函数或用多项式去逼近。文中3.5节给出了计算此类函数的方法，这里近似函数可以使用<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中定义的：</p>
+<script type="math/tex; mode=display">
+f(x) = \left\{ \begin{array}{lcl}0, & \mbox{if} & x < - \frac{1}{2} \\x + \frac{1}{2}, & \mbox{if} & - \frac{1}{2} \leq x \leq \frac{1}{2} \\1, & \mbox{if} & x > \frac{1}{2}\end{array}\right.</script><p><img src="http://images.yingwai.top/picgo/smlf5.png" alt=""></p>
+<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><p><img src="http://images.yingwai.top/picgo/aby3ppt9.png" alt=""></p>
+<p>一个神经网络由很多个神经元组成，每一个神经元可以看成是与逻辑回归计算一致的单元，只是最后的非线性函数不一定是Sigmoid函数（替换成ReLU）。</p>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>MPC</tag>
+        <tag>PPML</tag>
+        <tag>Secret Sharing</tag>
+        <tag>Neural Network</tag>
+        <tag>Linear Regression</tag>
+        <tag>Logistic Regression</tag>
       </tags>
   </entry>
   <entry>
@@ -1855,255 +2333,9 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
         <tag>PPML</tag>
         <tag>Secret Sharing</tag>
         <tag>Neural Network</tag>
+        <tag>Linear Regression</tag>
+        <tag>Logistic Regression</tag>
         <tag>SVM</tag>
-        <tag>Linear Regression</tag>
-        <tag>Logistic Regression</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</title>
-    <url>/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/</url>
-    <content><![CDATA[<p><em>Samira Khodabandehlou</em></p>
-<p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=</a></p>
-<a id="more"></a>
-<p><img src="http://images.yingwai.top/picgo/Designing an e-commerce recommender system based on collaborative filtering using a data mining approach.jpg" alt=""></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>电子商务推荐系统已经转变为客户非常重要的决策辅助工具，利用信息技术和客户信息提供在线个性化推荐。同时，协同过滤推荐系统是电子商务系统成功的关键组成部分之一。尽管有协同过滤现在的普及和成功，这些系统仍然面临着一系列严重的限制，包括冷启动、user-item矩阵稀疏、可扩展性和用户兴趣在这段时间内的变化，这些都阻碍了对客户的准确推荐。虽然已有很多研究提出了克服这些局限性的方法，但还没有提供一个全面的模型来降低这些局限性：1)在产品类别层面上基于LRFM变量进行客户细分，以评估与公司的客户关系的长度、最近程度、频率和购买产品类别的金额；2)在每个聚类级别上基于用户-类别矩阵提取关联规则；3)根据人口统计变量进行客户细分；4)改变用户-项目矩阵并降低其维数；5)通过将细分方法的结果与CF加权组合来开发新的相似度函数。根据所获得的结果，本研究提出的系统消除了传统的CF约束，为客户的偏好提供了更准确、更合适的建议。</p>
-<p><strong>关键词：</strong>协同过滤；数据挖掘；电子商务；推荐系统；时态信息。</p>
-<p>本研究的主要目标包括：找出传统协同过滤在向合适的用户推荐合适商品方面的局限性，提出一个全面的、全新的推荐系统来消除传统CF的局限性，用真实的数据对推荐系统进行评估，以提供更准确、更符合顾客口味的推荐。</p>
-<h1 id="理论背景"><a href="#理论背景" class="headerlink" title="理论背景"></a>理论背景</h1><h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><p><strong>推荐系统</strong>是提高电子商务环境中决策过程质量的有用工具，因为它们通过提供必要的信息和有用的建议来帮助在线决策者选择与他们的愿望和要求一致的项目(Shambour and Lu，2015；Son，2016)。事实上，识别用户偏好的能力是个性化RS的核心(Kim等人，2011年)。Ricci等人。(2011)将RS定义为特定类型的信息系统，该信息系统：</p>
-<ol>
-<li>帮助客户选择他们没有亲身体验的项目；</li>
-<li>向顾客推荐商品；</li>
-<li>通过为客户提供信息来帮助他们决定购买哪种商品。</li>
-</ol>
-<p>创建推荐系统有五个阶段：收集数据、分析用户信息、计算相似度、选择邻居、预测并提出前N个项目的列表(Yahya和Al-Shamri，2016)。这些系统出现在20世纪90年代中期，通常分为三类(Lee，2010；Resnick，1994)：</p>
-<ol>
-<li><p><strong>协同过滤</strong>：这些系统根据一组被称为邻居的相似用户或相似项目的得分提供推荐(Kim等人，2005年)。CF是Netflix和Amazon等著名电子商务公司使用的最受欢迎的RS之一(Hernando等人，2016；Kim等人，2005年)。这些系统又根据它们用于预测用户偏好的算法类型分为两类(Ghazarian和Nematbakhsh，2014)：</p>
-<ul>
-<li><strong>Memory-based</strong>：这些系统使用用户项目评分矩阵和KNN算法来识别用户的邻居并预测他们的偏好(Ghazarian和Nematbakhsh，2014年；Hernando等人，2016年；Kim等人，2011年)，其中使用皮尔逊相关系数等方法计算用户之间的相似性(Bobadilla等人，2012年)。在本研究中，使用KNN算法和皮尔逊相关系数来提供建议。</li>
-<li><strong>Model-based</strong>：这些系统使用分段等方法处理用户的档案数据以提供建议，从而改进计算(Ghazarian和Nematbakhsh，2014；Hernando等人，2016)。</li>
-</ul>
-<p>尽管CF方法很受欢迎并取得了成功，但它们仍然面临着一些严重的限制。这些限制包括：</p>
-<ul>
-<li><strong>冷启动</strong>：在多个用户购买某个项目之前，系统不能向某人推荐该项目。这个问题被称为冷启动。用户的冷启动是指最近加入推荐系统并且没有关于他或她的足够信息的用户(Elahi等人，2016；Hu和Pu，2011；Kim等人，2011；Lee，2010；Son，2016；Sharma和Ray，2016)。</li>
-<li><strong>可伸缩性</strong>：由于客户数据和产品数据的绝对数量，系统必须花费大量的金钱和时间来提取所有客户之间的相似性，导致其生产率较低(Hu和Pu，2011；Hernando等人，2016；Keramati和Khaleghi，2014；Lee，2010)。</li>
-<li><strong>user-item矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致user-item矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
-<li><strong>用户偏好的改变</strong>：用户的品味和偏好可能会随着时间的推移而改变。例如，一位最近生了孩子的母亲可能对购买婴儿服装感兴趣，她最近的购买可能反映了这种新的关注。这是当；她可能从来没有对这样的物品有任何兴趣(Ding等人，2006年；岩田，2008年；Lee等人，2008年)。(Ding et al.，2006；Iwata，2008；Lee et al.，2008)。</li>
-</ul>
-<p>上述限制可能会对RS的性能产生负面影响，从而限制系统创建有意义和准确的推荐。</p>
-</li>
-<li><p><strong>基于内容的过滤器(Content-Based Filter，CBF)</strong>：该方法基于这样的概念，即用户对他们以前感兴趣的项目感兴趣。因此，这些系统根据项目和产品之间的相似性提供建议(Anderson和Hiralall，2009年；Elahi等人，2016年)。因此，这种方法取决于物品的规格和与这些规格相关的用户配置文件的可用性(Anderson and Hiralall，2009)。这是因为在互联网上存储大量不同种类电子产品的目录是一项非常困难的任务(Bobadilla等人，2012年)。因此，音乐或视频文件等一些产品的内容分析非常困难；这个问题使得CF比CBF要好得多(Anderson和Hiralall，2009；Kim等人，2011)。与CBF相比，CF在电子商务中具有更高的灵活性和与RS的兼容性，使其成为最常用和最有用的RS系统之一(Burke，2002；Iwata，2008；Wang and Wu，2012)。因此，在本研究中，使用CF的概念作为主要的推荐机制。</p>
-</li>
-<li><p>混合方法：一些RS使用上述系统的组合来减少它们的限制；更多细节将在下面的实验背景部分提供(Burke，2002；Keramati和Khaleghi，2014)。</p>
-</li>
-</ol>
-<h2 id="客户细分"><a href="#客户细分" class="headerlink" title="客户细分"></a>客户细分</h2><p>客户细分是一种非常有用的数据挖掘方法，用于在电子商务的RS中找到“邻居”，在电子商务中，使用特定的方法，如聚类，来选择一些用户作为邻居，以改进偏好的预测(Khodabandehlou和Niknafs，2016；Li等人，2011年)。</p>
-<p>在RS中，选择合适的属性进行分割是影响系统性能的重要因素之一。最近购买、频率和货币模型(RFM)的属性是基于分析客户购买行为的一种很好的客户细分方法，它已经成功地用于许多RS(Keramati和Khaleghi，2014；Khodabandehlou和Zivari Rahman，2017；Lee，2010)。各种研究表明，在RFM模型中加入L(客户关系长度)指标将导致对客户的更准确分析，并将提高细分的质量(Li等人，2011年)。因此，在本研究中，LRFM模型被用于客户细分和识别具有相似购买行为的客户类别。</p>
-<p>此外，分割算法对识别出的片段的质量起着重要的作用。在聚类算法中，K-Means算法被认为是最成功和最合适的分割方法(Khodabandehlou和Niknafs，2016)，在许多研究中证明了它与RS的兼容性(Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Li等人，2011年)。K-Means是一种数据挖掘方法，它需要K的初始值，即聚类的数量，才能运行。确定最佳簇数的合适方法是自组织映射(SOM)算法。该算法是一种无监督神经网络，可以从数据中识别未知模式，并估计合适的聚类数量(Abidi和Ong，2000；Mosayebian等人，2012)。</p>
-<p>相关研究建议在RS中结合K-Means和SOM算法使用两阶段分割方法，以获得更准确的结果(Keramati和Khaleghi，2014；Mosayebian等人，2012年)。因此，本研究将利用这一模式进行客户细分。</p>
-<h2 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h2><p>关联规则是数据挖掘的重要方法之一，用于分析RS大型数据库中各种商品之间的市场篮子。分析购物篮已经成为发现用户购物车之间关系的流行系统(Hsu等人，2004；Liu and Shih，2005a)。Apriori算法是最常见的关联规则之一(Hsu等人，2004；Liu和Shih，2005a，2005b)，用于在已经购买了另一件物品时找到购买特定物品的概率模式。在RS中，已经形成了许多关于不同用户的购买行为的规则(Keramati和Khaleghi，2014；Liu和Shih，2005a，2005b)。在这些规则吸引程度的衡量标准中，我们可以提到支持性规则和置信度规则，它们分别指发现的规则的传播度和可接受性(Hsu等人，2004；Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Liu和Shih，2005a，2005b)。</p>
-<h1 id="评估措施"><a href="#评估措施" class="headerlink" title="评估措施"></a>评估措施</h1><p>评价推荐系统的性能是保证推荐系统通用性的重要一步。有一些评价RSS准确性或性能的众所周知的度量；诸如精确度、覆盖率和F度量(为了在这两个度量之间创建平衡)，它们可以很好地显示推荐系统的性能(Bobadilla等人，2012年；Elahi等人，2016；Ghazarian和Nematbakhsh，2014；Shambour和Lu，2015；Son，2016)。因此，为了评估所提出的研究模型的性能，采用了这些测量方法。</p>
-<p>在公式(1)和(2)中，喜爱的项目是指必须推荐给用户的一组产品或项目，而推荐的项目是已经由系统推荐给用户的项目的集合。精确度表示推荐集合中正确推荐的百分比，并评估这些推荐的精确度和准确性。通过公式(1)计算：</p>
-<script type="math/tex; mode=display">
-{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \tag{1}</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
-<script type="math/tex; mode=display">
-{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \tag{2}</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
-<script type="math/tex; mode=display">
-{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \tag{3}</script><h1 id="研究框架"><a href="#研究框架" class="headerlink" title="研究框架"></a>研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于product category-user矩阵提取关联规则。在阶段4中，完成user-item矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
-<p><img src="http://images.yingwai.top/picgo/derf1.png" alt=""></p>
-<center>
-    <i>图1 建议的研究系统的总体架构</i>
-</center>
-
-
-<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>数据准备(也称为数据预处理)是RSS开发过程中不可或缺的一步，占整个RSS开发所需时间的60%-70%。此步骤包括数据清理、数据集成和数据转换三个阶段。</p>
-<h3 id="数据清理"><a href="#数据清理" class="headerlink" title="数据清理"></a>数据清理</h3><p>数据清理过程包括完成缺失值、识别和消除离群值数据以及解决数据之间的冲突。此外，在此阶段，必须删除不相关或无用的字段或属性，如有必要，从初始数据集形成新的变量。在此阶段，将不完美的记录和信息不完整的客户从主数据集中剔除，数据集的记录从17,000条减少到15,386条，客户数量从2,542个减少到2,080个。为每个产品类别计算RFM变量。</p>
-<h3 id="数据集成"><a href="#数据集成" class="headerlink" title="数据集成"></a>数据集成</h3><p>为了更好地理解数据，并对每个数据集中的数据进行更好的科学管理，数据集成(将两个或多个数据集合并集成在一起)是必要的，这是数据准备的第二阶段。在这一阶段，客户交易数据与他们的个人资料数据(年龄、性别、教育程度、婚姻状况和职业)集成在一起。</p>
-<h3 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h3><p>在此阶段，必须将数据转换为适合数据挖掘和设计RS的不同形式。数据集中的字符串变量(如性别)将转换为数值变量和值。</p>
-<h2 id="基于LRFM模型的分割"><a href="#基于LRFM模型的分割" class="headerlink" title="基于LRFM模型的分割"></a>基于LRFM模型的分割</h2><p>本研究采用两阶段聚类法，结合SOM(确定最佳聚类数)和K-Means(创建聚类)方法进行分割。</p>
-<p>在此阶段，根据产品类别的RFM变量(每个产品类别的RFM变量的值分别计算)和L变量(客户关系的长度)进行客户细分。对于给定的客户，表1中给出了这些变量的样本，根据这些变量进行了细分。</p>
-<p>在本研究中，将LRFM模型用于产品类别层面的客户细分有三个原因，包括以下几个方面：</p>
-<ol>
-<li>通过减少user-item矩阵中的客户数量，提高了该方法的生产率和效率，从而降低了矩阵的可扩展性和稀疏性问题。</li>
-<li>这个模型不仅决定了顾客的价值，而且可以清楚地反映顾客的兴趣和偏好，例如，如果某一种产品的购买频率对于两个给定的顾客来说是相似的，可以推断这两个人对购买这两种商品的兴趣是一样的。M和R的变量也是以相同的方式推导出来的。</li>
-<li>模型中的产品类别变量R涉及客户最近的品味和偏好，由于最近的购买更能反映客户当前的兴趣和偏好，它将提供更准确的推荐，更符合客户当前的兴趣。</li>
-</ol>
-<p><img src="http://images.yingwai.top/picgo/dert1.png" alt=""></p>
-<center>
-    <i>表1 基于LRFM模型的客户细分属性</i>
-</center>
-
-
-
-<h2 id="基于product-category-user矩阵的关联规则提取"><a href="#基于product-category-user矩阵的关联规则提取" class="headerlink" title="基于product category-user矩阵的关联规则提取"></a>基于product category-user矩阵的关联规则提取</h2><p>为了提取关联规则，本研究使用了Apriori算法。在此阶段，使用product category-user矩阵(客户从单个产品类别购买的次数)的交易数据在前一阶段的每个聚类的级别提取关联规则。提取的规则用于确定每个目标客户的前N个推荐产品类别的列表。推荐的每个产品类别的优先级取决于其规则的可信度和支持措施。信任度和支持度值越大的产品类别，推荐优先级越高。此阶段中提取的规则的输出(即每个目标客户的预测产品类别)将作为下一阶段的输入。产品类别级规则提取的目的是减少user-item矩阵中的产品数量，有效缓解矩阵的可扩展性和稀疏性问题。</p>
-<h2 id="更改user-item矩阵"><a href="#更改user-item矩阵" class="headerlink" title="更改user-item矩阵"></a>更改user-item矩阵</h2><p>在CF系统中，user-item矩阵(包括购买/不购买项目的二进制数据或用户给予项目的分数)是关于购买偏好对客户进行聚类并确定目标客户的邻居的基础。然而，由于电子商务中商品种类繁多，该矩阵经常面临数据稀疏的问题。研究表明，推荐质量取决于user-item矩阵的密度。</p>
-<p>为了使该矩阵更加密集，以这样的方式使用分段和关联规则阶段的结果，即在用于确定目标客户的邻居的user-item矩阵中，他或她将仅与他或她的集群中的用户进行比较，并且项目将限于为目标客户预测的项目。由于减少了用户数和项目数，缓解了可伸缩性问题，提高了RS的速度和准确性。</p>
-<p>在他们的研究中，Lee等人。(2008)证明，最近进行的购买更能反映用户当前的偏好，最近添加到网站上出售的项目对用户更具吸引力。因此，基于表2，对于每个项目，考虑用户购买项目的时间(PT)和项目已经可供购买的时间(LT)(启动时间)的两个参数，并且改变user-item矩阵。</p>
-<p><img src="http://images.yingwai.top/picgo/dert2.png" alt=""></p>
-<center>
-    <i>表2 基于时间信息更改user-item矩阵</i>
-</center>
-
-
-
-
-
-<p>为了确定PT和LT变量的得分，在这个改变的矩阵中，首先根据这两个参数的潜伏期将这两个参数分为五类。因此，PT参数的分数包括过去购买(分数1)、过去购买(分数2)、最近购买(分数3)、最近购买(分数4)和最近购买(分数5)。对于LT参数，得分类似。根据表3，在user-item矩阵中，对于用户给出的分数，使用组合分数。例如，对于(2，5)的组合，分数将等于7(5+2)。在计算混合得分时，这两个参数的权重都是相同的。</p>
-<p><img src="http://images.yingwai.top/picgo/dert3.png" alt=""></p>
-<center>
-    <i>表3 对LT和PT参数进行评分</i>
-</center>
-
-
-<p>因此，创建了25(5×5)个双重组合，其中所有客户由55、54、53、…的组合表示。，11，其中，客户最好的类别是组合55(最近购买时间和最近上线时间的类别)和得分10，而客户最差的类别用11(最老的购买时间和最老的上线时间)表示，得分为2。根据这种评分方法，可以将客户划分为集群，并计算其相似度。创建这个新的user-item矩阵的目的是考虑用户随时间的喜好，从而提高推荐的准确性。</p>
-<h2 id="基于CF的相似度计算"><a href="#基于CF的相似度计算" class="headerlink" title="基于CF的相似度计算"></a>基于CF的相似度计算</h2><p>在CF系统中，计算每个目标客户与其他客户之间的相似度的方法有很多。最流行的方法之一是使用皮尔逊相关系数，与其他传统的统计方法相比，它提供了最好的预测和推荐结果(Bobadilla等人)。(2012年)。在皮尔逊的相关方法中，使用公式(4)测量两个给定客户$u$和$u’$之间的相似性：</p>
-<script type="math/tex; mode=display">
-Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \tag{4}</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的user-item矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
-<h2 id="基于人口统计属性的细分"><a href="#基于人口统计属性的细分" class="headerlink" title="基于人口统计属性的细分"></a>基于人口统计属性的细分</h2><p>在这个阶段，使用两阶段聚类方法，根据年龄、性别、教育程度、婚姻状况和职业等人口统计变量对客户进行细分，然后计算他们的簇内相似度。因此，如果两个客户具有相似的人口统计属性，他们对某些项目的态度会相似，这在CF方法中没有反映出来。在本研究中，基于这些变量进行客户细分的目的是为了更好地选择新用户的邻居，通过克服冷启动问题有效改善推荐过程。</p>
-<h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于user-item矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
-<script type="math/tex; mode=display">
-Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \tag{5}</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
-<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r<em>{u’,i})$，预测用户$u$对于项目$i$，$(r</em>{u,i})$的得分如下：</p>
-<script type="math/tex; mode=display">
-r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r<em>{u’,i})$越相似，将以更高的加权比率用于预测$(r</em>{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
-<h1 id="评估提出的推荐方法"><a href="#评估提出的推荐方法" class="headerlink" title="评估提出的推荐方法"></a>评估提出的推荐方法</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
-<p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
-<center>
-    <i>表4 传统CF推荐系统与提出的CF推荐系统的评价方法比较</i>
-</center>
-
-
-
-<p>在此阶段，将比较所提出的方法与传统CF推荐系统在不同N值(推荐项目数)下以及基于使用精确度、覆盖率和F度量的测试数据的结果的准确性。</p>
-<p>基于SOM算法，基于LRFM变量的最优聚类数为6个，基于人口统计变量的最优聚类数为5个。表4列出了基于不同N值的评估措施的传统方法和提出的方法的准确性。对于所有这些方法，参数K(邻居数目)的值都等于40。</p>
-<p>根据表4的结果，在每个准则下，所提出的系统都比传统系统具有更好的性能。事实上，传统系统(基于F-Measure)在5个推荐项目上的准确率为43.27%，而在所提出的系统中，该准确率为55.59%。在20个推荐项目中，传统方法的准确率为62.43%，其推荐系统的准确率为81.4%。在30个项目中，传统系统的准确率为68.54%，在提出的系统中，准确率为96.59%，表明该系统在30个项目上的准确率比传统系统提高了约28%。</p>
-<p><img src="http://images.yingwai.top/picgo/derf2.png" alt=""></p>
-<center>
-    <i>图2 比较传统方法和建议方法在不同N值下的性能(颜色请参见在线版本)</i>
-</center>
-
-
-<p><img src="http://images.yingwai.top/picgo/derf3.png" alt=""></p>
-<center>
-    <i>图3 评估不同K值对建议方法性能的影响(有关颜色，请参阅在线版本)</i>
-</center>
-
-
-<p>在此基础上，将推荐项数增加到N=30，两种方法的性能都有所提高。然而，增加数据数量并不会导致结果准确性的显著变化和提高。因此，将推荐项目的数量增加到某个阈值可以提高建议推荐的质量；该阈值等于N=30。为了更好地比较这两种方法的性能，图2描述了F-Measure准则的变化趋势。</p>
-<p>为了评估参数K的变化在所建议的研究方法的性能中的作用，图3中描述了三个不同N值的F测量值。基于图3，对于N参数的所有三个值，将邻居数增加到K=40将提高所提出的方法的性能。但是，进一步增加该参数会降低方法的精确度，从而对推荐质量产生负面影响。</p>
-<h1 id="结论及建议"><a href="#结论及建议" class="headerlink" title="结论及建议"></a>结论及建议</h1><p>本研究从冷启动、可扩展性、稀疏用户-项目矩阵以及用户兴趣的变化等方面考虑了电子商务中RS的基本和常见限制，以期解决或缓解这些限制。因此，为了克服这些局限性，人们利用一套数据挖掘方法，提出了一个综合性的电子商务推荐系统。综合研究结果，该系统的性能优于传统的CF系统。研究的总体结果表明，与传统系统相比，新的推荐系统的准确率有了显着的提高。因此，该系统对30个项目的推荐准确率比传统系统提高了约28%。此外，根据结果，系统在推荐30个项目时的准确率达到了最高水平；因此，当推荐项目数量超过30个时，传统系统和所提出的系统的准确率都没有明显的变化，因此，当推荐项目的数量超过30时，传统系统和本文提出的系统的准确率都没有明显的变化。例如，当推荐50个项目时，传统系统的准确率为68/84，新建议系统的准确率为94/45，这表明推荐项目的数量从30个增加到50个，准确率略有下降。因此，建议推荐项目的最大值为30个，因为这可能会导致计算和项目选择的复杂性。下面简要介绍一下研究成果和研究创新之处：</p>
-<ul>
-<li>在RS的开发过程中，在产品类别层面采用基于LRFM变量的细分方法，可以改进客户间相似度的确定方法，从而更准确、更恰当地选择目标客户的邻居。由于LRFM模型是识别客户购买行为和反映其偏好的合适方法之一，因此基于该模型在产品类别层次上进行细分，可以区分客户在购买产品类别时的偏好，并将具有相似品味和兴趣的客户归入同一聚类。例如，如果两个给定客户购买商品的频率相似，则可以得出结论，这两个客户对购买该产品类别中的商品表现出相同的兴趣水平。R和M的变量可以以相同的方式推断。另一方面，在产品类别水平上的变量R考虑了客户的利益，并且由于最近的购买更能反映客户的偏好，这将导致更准确的推荐。由于用户的喜好会随着时间的推移而改变，因此RS提供与客户当前兴趣相容的项目的能力会受到影响，这有时会导致推荐与客户当前喜好完全无关的项目。此外，在用户-项目矩阵中使用该分割的结果将降低矩阵的维数，将缓解KNN算法的稀疏矩阵和可伸缩性问题，这导致KNN算法的性能提高，因为在这种情况下，目标客户仅与用户-项目矩阵中他或她自己的集群内的客户相比较。因此，通过减少矩阵中的用户数，提高了KNN算法的速度和精度，改善了RS的整体性能。根据这一讨论和研究结果，可以安全地得出结论，使用LRFM模型可以加快提供建议的过程，并允许创建符合客户当前利益的准确建议。</li>
-<li>基于product category-user矩阵的关联规则提取提高了推荐方法的性能。这些规则通过评估产品类别之间的关系，预测他们购买的概率，并向目标客户推荐一套产品类别。将user-item矩阵限制为这些推荐产品类别中的项将降低矩阵的维数，有效地缓解了KNN算法的稀疏矩阵和可伸缩性问题。在该方法中，仅从从这些规则获得的产品类别中向目标客户提供推荐项目。结果表明，该方法通过减少矩阵中的项数，提高了KNN算法的速度和精度，有效地改善了RS的整体性能，研究结果表明该方法具有较好的性能。</li>
-<li>在RS的设计过程中考虑商品的购买时间以及它们在电子商务网站上的上线时间，将会提高推荐的质量。换言之，比起过去的购买，多留意顾客最近的购买，以及比起其他商品，多留意最近在网站上推出的商品，便可以更了解顾客现时的喜好，帮助他们找到更吸引人、更合意的商品。考虑到这些问题，RS才能更好地实现他们的最终目标，即向适当的个人提供适当的物品。在本研究中，这两个变量被用来创建一个新的用户-项目矩阵，并在表4和图2的基础上取得了很好的结果。</li>
-<li>为了更好地使推荐与用户的喜好相一致，人口特征的作用是无可否认的，因为大多数个人购买都取决于他们的年龄、性别、教育水平等。当它与其他变量如购买行为变量(包括LRFM和user-item矩阵)一起考虑时，这一作用更为显著，这是本研究通过定义一个新的相似性函数得出的。</li>
-</ul>
-<p>考虑到上述问题，本研究通过关注这些问题，利用各种数据挖掘方法，试图改进和完善以往关于CF系统的研究，以期提出一个准确率和性能最高的电子商务推荐系统。</p>
-<p>以下是对未来研究的一些建议：</p>
-<ol>
-<li>将CF方法和CBF方法相结合，开发了所提出的模型。</li>
-<li>研究基于个性特征的客户细分、其他人口统计变量(如地址和收入)以及其他行为变量(如购买商品的总数)对建议系统性能的影响。</li>
-<li>将所提出的方法应用于其他行业的数据集，以提供更强的通用性。</li>
-<li>使用大数据对提出的模型进行进一步评估，这些数据可以从大型网店获得。</li>
-</ol>
-<p>与过去的大多数研究一样，这项研究在实施和评估方面存在一些局限性，包括：</p>
-<ol>
-<li>使用的数据集的时间段限制为一年；</li>
-<li>研究数据仅限于一家网上服装店；</li>
-<li>正在研究的商店顾客数量有限。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>数据挖掘</tag>
-        <tag>推荐系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 ABY3: A Mixed Protocol Framework for Machine Learning</title>
-    <url>/2020/06/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ABY3-A-Mixed-Protocol-Framework-for-Machine-Learning/</url>
-    <content><![CDATA[<p><em>Payman Mohassel, Peter Rindal</em></p>
-<p>CCS 2018</p>
-<p><a href="https://dl.acm.org/doi/10.1145/3243734.3243760" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3243734.3243760</a></p>
-<a id="more"></a>
-<p><img src="http://images.yingwai.top/picgo/ABY3.png" alt=""></p>
-<h1 id="本文贡献"><a href="#本文贡献" class="headerlink" title="本文贡献"></a>本文贡献</h1><ul>
-<li>新的共享十进制数近似定点乘法协议；</li>
-<li>提出了三方的ABY框架，其中许多转换都是基于新技术，并在本文中首次进行了设计和优化；</li>
-<li>提高了矩阵乘法的效率；</li>
-<li>有效的分段多项式函数评估。</li>
-</ul>
-<h1 id="计算模型"><a href="#计算模型" class="headerlink" title="计算模型"></a>计算模型</h1><p>本文采用三方的重复共享，即把一个数 $x$ 拆成三份，各方都拥有三份中的两份，下面是ABY三种共享形式：</p>
-<p><img src="http://images.yingwai.top/picgo/aby3ppt4.png" alt=""></p>
-<p>在这种设置下，三方交互式地计算函数 $f(x)$，本篇文章主要针对机器学习中的算法。</p>
-<p><img src="http://images.yingwai.top/picgo/aby3ppt2.png" alt=""></p>
-<h2 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h2><p>在秘密共享的情况下，计算两个数 $[![x]!], [![y]!]$ 的和 $[![z]!] = [![x]!] + [![y]!]$ 比较简单，各方直接将其对应的份额在本地相加即可，不需要交互：</p>
-<script type="math/tex; mode=display">
-z_i = x_i + y_i</script><h2 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h2><p>计算两个数 $[![x]!], [![y]!]$ 的积 $[![z]!] = [![x]!] * [![y]!]$ 则复杂一点。在两方共享的情况下，需要借助额外的乘法三元组来计算，开销非常大。而三方下的复制共享这时候就起作用了，将 $xy$ 展开可以观察到有九项，每一项是两个份额的乘积，因此每一方只需要计算其可以计算的九项中的其中三项即可保持结果 $z$ 继续在三方中是加法共享的。计算完成后再把对应的结果发送给另一方，即可保持 $z$ 是重复共享的。</p>
-<p><img src="http://images.yingwai.top/picgo/aby3ppt3.png" alt=""></p>
-<p>可以看到乘法操作只包含了本地操作和各方各一次发送，开销比两方的情况下小很多。</p>
-<h1 id="本文的框架"><a href="#本文的框架" class="headerlink" title="本文的框架"></a>本文的框架</h1><h2 id="定点运算"><a href="#定点运算" class="headerlink" title="定点运算"></a>定点运算</h2><p>定点值定义为使用二进制补码表示的一个 $k$ 位整数，其中底部 $d$ 位表示小数，即对于正值，位 $i$ 表示 $2$ 的 $(i−d)$ 次方。由于预计结果将保持在 $2^k$ 以下，因此可以使用相应的整数运算来执行加法和减法。乘法也可以以相同的方式执行，但是十进制位的数量加倍，因此必须除以 $2^d$ 以保持 $d$ 个十进制位不变。</p>
-<p>在得到乘法结果后，各方可以直接把本地的份额后 $d$ 位截断，但这样会<strong>把原本份额相加的进位也截断了</strong>，导致截断后重构出来的 $\tilde{x} \neq x$。作者参考了<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中的两方协议，给出了他们自己的在三方下的实现：</p>
-<p><img src="http://images.yingwai.top/picgo/aby3f1.png" alt=""></p>
-<p>一开始作者的想法是把 $x’$ 的截断 $x = x’/2^d$ 拆成 $[![x]!] := (x_1, x_2, x_3) = (x’_1/2^d, (x’_2 + x’_3)/2^d-r, r)$，其中 $r$ 是 $\mathbb{Z}^k_2$ 中的随机数，但发现这样做有两轮通信的限制，于是进一步优化得到上面的协议。</p>
-<h2 id="矢量化乘法"><a href="#矢量化乘法" class="headerlink" title="矢量化乘法"></a>矢量化乘法</h2><p>两个向量作内积定义为 $\vec{x} \cdot \vec{y} := \sum^n_{i=1} x_i y_i$。在本文的背景下计算内积，朴素的做法是对两个向量的每一个元素都执行一次乘法+截断协议，但这样需要通信 $O(n)$ 次通信。</p>
-<p>于是作者进行了优化：各方只需要在本地将两个向量 $\vec{x},\vec{y}$ 的 $n$ 个分量计算相乘的份额，然后把这 $n$ 个积相加就得到了 $z’$ 的3/3共享，最后执行上一小节中的截断协议将 $[![z’]!]$ 截断为 $[![z]!]:= (z’+r’)/2^d - [![r]!]$。</p>
-<p>这样做不仅可以减少通信开销，而且误差也比执行 $n$ 次乘法+截断协议低（总共只进行了一次截断，相对于整体内积的误差为 $2^{-d}$）。</p>
-<h2 id="共享转换"><a href="#共享转换" class="headerlink" title="共享转换"></a>共享转换</h2><p>机器学习中有很多不同的函数，而不同的函数有适合其计算的不同共享方式：算术共享适合计算乘法和加法，而二进制共享适合计算非线性函数、最大池化以及平均值等。两方的情况可以参考<a href="https://yuyingwai.cn/2020/06/11/论文笔记-ABY-A-Framework-for-Efficient-Mixed-Protocol-Secure-Two-Party-Computation/" target="_blank" rel="noopener">ABY</a>，本文给出了三方下的共享转换。</p>
-<p><img src="http://images.yingwai.top/picgo/aby3ppt6.png" alt=""></p>
-<h3 id="位分解"><a href="#位分解" class="headerlink" title="位分解"></a>位分解</h3><p>$[![x]!]^A \rightarrow [![\vec{x}]!]^B$</p>
-<p>最基础的想法是各方将其份额 $[![x]!]^A = (x_1, x_2, x_3)$ 输入到布尔电路中计算它们的和，但可以进行优化。观察到 $[![x]!]^A = (x_1, x_2, x_3)$ 可以转换为 $[![x_1]!]^B := (x_1,0,0), [![x_2]!]^B := (0,x_2,0), [![x_3]!]^B := (0,0,x_3)$ 而不需要交互。</p>
-<p>这里没太看懂，用到了各种加法器。作者首先观察到 $x_1 + x_2 + x_3$ 的计算可以减少成执行 $k$ 个相互独立的全加器计算 $2c+s$：$\mathsf{FA}(x_1[i], x_2[i], x_3[i-1]) \rightarrow (c[i], s[i])$，其中 $i \in {0,…,k-1}$。然后再使用平行前缀加法器计算 $2[![c]!]^B + [![s]!]^B$。对于半诚实的情况，$P_2$ 可以提供 $(x_1 + x_2)$ 作为输入计算 $[![x]!]^B := [![x_1 + x_2]!]^B + [![x_3]!]^B$。</p>
-<h3 id="位提取"><a href="#位提取" class="headerlink" title="位提取"></a>位提取</h3><p>$[![x]!]^A \rightarrow [![x[i]]!]^B$</p>
-<p>跟上面的情况类似，只是这次是提取比特串中的单一比特，把上一小节的电路中不必要的门去掉即可。</p>
-<h3 id="位组合"><a href="#位组合" class="headerlink" title="位组合"></a>位组合</h3><p>$[![x]!]^B \rightarrow [![x]!]^A$</p>
-<p>用到的还是与上面类似的电路，只是操作顺序有点变化。首先 $P_1, P_2$ 输入一个随机共享 $[![-x_2]!]^B$，$P_2, P_3$ 同样输入一个随机共享 $[![-x_3]!]^B$，这两个将会是最终的转换结果的部分。这里可以利用两方间的密钥作为随机种子来生成随机数。</p>
-<p>然后三方计算 $\mathsf{FA}([![x[i]]!]^B, [![-x_2[i]]!]^B, [![-x_3[i]]!]^B) \rightarrow ([![c[i]]!]^B, [![s[i]]!]^B)$，其中 $i \in {0,…,k-1}$。然后使用并行前缀加法器计算 $[![x_1]!]^B := 2[![c]!]^B + [![s]!]^B$。同样在半诚实下可以进一步优化，$P_2$ 提供 $(-x_2, -x_3)$ 作为输入计算 $[![x_1]!]^B := [![x]!]^B + [![-x_2 - x_3]!]^B$，$x_1$ 对 $P_1, P_3$ 开放，最后的共享定义为 $[![x]!]^A := (x_1, x_2, x_3)$。</p>
-<h3 id="位注入"><a href="#位注入" class="headerlink" title="位注入"></a>位注入</h3><p>$[![x]!]^B \rightarrow [![x]!]^A$</p>
-<p>当需要将以二进制共享方式编码的单个位 $x$ 提升为算术共享 $[![x]!]^A$ 时，通常会出现另一种特殊情况，参考3.4。</p>
-<h3 id="联合姚输入"><a href="#联合姚输入" class="headerlink" title="联合姚输入"></a>联合姚输入</h3><p>在姚共享中，对于一个比特 $x$，$P<em>1$（评估者）拥有 $k^x</em>{\mathsf{x}}$ 而另外两方拥有 $k^0<em>{\mathsf{x}} \in {0,1}^{\kappa}$ 和一个全局随机串 $\Delta \in {0,1}^{\kappa}$ 使得 $k^1</em>{\mathsf{x}} := k^0<em>{\mathsf{x}} \oplus \Delta$。转换到姚共享和从姚共享转换的一个有用的原语是双方提供双方都知道的输入的能力。比如说 $P_1, P_2$ 知道一个比特 $x$，想生成共享 $[![x]!]^Y$。在半诚实设置中比较简单，$P_2$ 可以本地生成并发送 $[![x]!]^Y$ 给 $P_1$。但是在恶意设置下 $P_1$ 需要在不知道 $\Delta$ 的情况下验证 $[![x]!]^Y$ 正确地将 $x$ 编码。于是 $P_3$ 可以帮助 $P_1$ 进行验证：$P_2, P_3$ 同时发送 $k^0</em>{\mathsf{x}}$ 和 $k^1_{\mathsf{x}}$ 的承诺方案给 $P_1$ ，后者可以检查两个承诺是否一致以及是否能打开承诺。</p>
-<h3 id="姚共享到二进制共享"><a href="#姚共享到二进制共享" class="headerlink" title="姚共享到二进制共享"></a>姚共享到二进制共享</h3><p>$[![x]!]^Y \rightarrow [![x]!]^B$</p>
-<p>在两方的情况下，密钥的最低有效位（置换位）形成 $x$ 的两方共享，即 $x \oplus p<em>{\mathsf{x}} = k^x</em>{\mathsf{x}}[0]$，其中 $p<em>{\mathsf{x}} = k^0</em>{\mathsf{x}}[0]$。三方下 $P<em>3$ 也知道 $p</em>{\mathsf{x}}$，首先 $P<em>1,P_2$ 本地生成随机比特 $r$ 然后 $P_1$ 将 $k^x</em>{\mathsf{x}}[0] \oplus r = x \oplus p<em>{\mathsf{x}} \oplus r$ 发送给 $P_3$。于是就完成了共享的转换，原本的共享被转换为 $[![x]!]^B = (x \oplus p</em>{\mathsf{x}} \oplus r, r, p_{\mathsf{x}})$。</p>
-<p>在恶意的设置下，需要确认 $P<em>1$ 发送给 $P_3$ 的 $x \oplus b \oplus r$ 中的 $b = p</em>{\mathsf{x}}$。首先 $P<em>1, P_2$ 选取 $k^r</em>{\mathsf{r}} \leftarrow {0,1}^{\kappa}$，后者发送 $k^0<em>{\mathsf{r}} := k^r</em>{\mathsf{r}} \oplus (r \Delta)$ 给 $P<em>3$。然后 $P_2,P_3$ 发送承诺 $C_0 = \mathsf{Comm}(k^{p</em>{\mathsf{x}}}<em>{\mathsf{y}}), C_1 = \mathsf{Comm}(k^{\overline{p</em>{\mathsf{x}}}}<em>{\mathsf{y}})$ 给 $P_1$，其中 $k^0</em>{\mathsf{y}} := k^0<em>{\mathsf{x}} \oplus k^0</em>{\mathsf{r}}$。$P<em>1$ 发送 $k^{x \oplus r}</em>{\mathsf{y}} := k^x<em>{\mathsf{x} } \oplus k^r</em>{\mathsf{r}}$ 给 $P<em>3$，后者验证其是否在集合 ${k^0</em>{\mathsf{y}}, k^1<em>{\mathsf{y}}}$ 中。$P_1$ 同样验证承诺 $C</em>{p<em>{\mathsf{x}} \oplus x \oplus r}$ 是否可以打开为 $k^{x \oplus r}</em>{\mathsf{y}}$ 以及 $C<em>0, C_1$ 是否一致。注意到 $x \oplus p</em>{\mathsf{x}} = k^x<em>{\mathsf{x}}[0]$，于是三方就可以计算共享 $[![x]!]^B = (x \oplus p</em>{\mathsf{x}} \oplus r, r, p<em>{\mathsf{x}})$。观察到 $P_3$ 将 $x \oplus p</em>{\mathsf{x}} \oplus r$ 计算为 $k^{x \oplus r}<em>{\mathsf{y}}[0] \oplus p</em>{\mathsf{r}}$。</p>
-<h3 id="二进制共享到姚共享"><a href="#二进制共享到姚共享" class="headerlink" title="二进制共享到姚共享"></a>二进制共享到姚共享</h3><p>$[![x]!]^B \rightarrow [![x]!]^Y$</p>
-<p>设 $[![x]!]^B = (x_1, x_2, x_3)$。各方使用前面讨论的程序共同输入份额 $[![x_1]!]^Y,[![x_2]!]^Y,[![x_3]!]^Y$ 作为联合姚输入。然后可以使用乱码电路来计算最终份额，该电路计算三个值的异或 $[![x]!]^Y := [![x_1]!]^Y \oplus [![x_2]!]^Y \oplus [![x_3]!]^Y$ 。使用Free-XOR技术，这不需要三方之间的任何通信，并且可以由 $P_1$ 本地计算。在半诚实的设置中，可以基于 $P_2$ 知道 $x_2$ 和 $x_3$ 这一事实来进一步优化。因此，它们可以本地计算 $x_2 \oplus x_3$，并将 $[![x_2 \oplus x_3]!]^Y$ 发送给 $P_1$，后者本地计算 $[![x]!]^Y := [![x_1]!]^Y \oplus [![x_2 \oplus x_3]!]^Y$。</p>
-<h3 id="姚共享到算术共享"><a href="#姚共享到算术共享" class="headerlink" title="姚共享到算术共享"></a>姚共享到算术共享</h3><p>$[![x]!]^Y \rightarrow [![x]!]^A$</p>
-<p>自然的想法是将姚共享先转换成二进制共享，再用位组合中的方法转换为算术共享。作者在这里也给出了优化方案，还是使用到了乱码电路，对这部分看得不是很懂。</p>
-<h3 id="算术共享到姚共享"><a href="#算术共享到姚共享" class="headerlink" title="算术共享到姚共享"></a>算术共享到姚共享</h3><p>$[![x]!]^A \rightarrow [![x]!]^Y$</p>
-<p>各方联合输入 $[![x]!]^A = (x_1, x_2, x_3)$ 的共享 $[![x_1]!]^Y,[![x_2]!]^Y,[![x_3]!]^Y$。然后使用一个乱码电路生成 $[![x]!]^Y := [![x_1]!]^Y + [![x_2]!]^Y + [![x_3]!]^Y$。</p>
-<h2 id="计算-a-A-b-B-ab-A"><a href="#计算-a-A-b-B-ab-A" class="headerlink" title="计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$"></a>计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$</h2><p>虽然将共享转换后再计算上面的公式也可以，但作者在这里给出了更有效的特定协议。在训练Logistic回归和神经网络模型中通常用于逼近非线性激活函数的分段线性或多项式函数的计算需要重复该操作。</p>
-<h3 id="半诚实"><a href="#半诚实" class="headerlink" title="半诚实"></a>半诚实</h3><h4 id="三方OT"><a href="#三方OT" class="headerlink" title="三方OT"></a>三方OT</h4><p>作者首先给出了三方下的不经意传输协议，在两方的OT中有两个角色：sender和receiver。在这里作者添加了一个<em>helper</em>的角色，他不会收到输出且知道receiver的选择位。这个对于(sender, receiver, helper)的功能记为 $((m_0, m_1),c, c) \mapsto (\perp, m_c, \perp)$。</p>
-<p>首先sender和helper选取随机串 $w_0, w_1 \leftarrow {0,1}^k$。sender将消息盲化：$m_0 \oplus w_0, m_1 \oplus w_1$ 然后发送给receiver。helper知道receiver希望收到消息 $m_c$，这样helper可以发送 $w_c$ 给receiver来让后者重构 $m_c$。</p>
-<h4 id="计算-a-b-B-ab-A"><a href="#计算-a-b-B-ab-A" class="headerlink" title="计算 $a[![b]!]^B = [![ab]!]^A$"></a>计算 $a[![b]!]^B = [![ab]!]^A$</h4><p>最简单的一种情况是 $P<em>1$ 知道的一个公共值 $a \in \mathbb{Z}</em>{2^k}$ 和一个共享比特 $b \in {0,1}$ 的乘法。首先 $P<em>3$ (sender)选取随机数 $r \leftarrow \mathbb{Z}</em>{2^k}$ 和定义两个消息 $m<em>i := (i \oplus b_1 \oplus b_3)a - r$，其中 $i \in {0,1}$。$P_2$ (receiver)为了学习消息 $m</em>{b<em>2} = (b_2 \oplus b_1 \oplus b_3)a - r = ba - r$，定义他的输入为 $b_2$。注意到 $P_1$ (helper)也知道 $b_2$，因此这里可以使用前面提到的三方OT。然后三方本地生成重复0共享 $(s_1, s_2, s_3)$ 来计算 $[![c]!] = [![ab]!] = (s_1 + r, ab-r+s_3, s_3)$。但是为了令这个2/3秘密共享合法，$c_2 = ab - r + s_3$ 要发送给 $P_1$，导致需要总共两轮通信。或者可以(并行地)重复执行三方OT过程，$P_3$ 担任sender输入 $(i+b_2+b_3)a - r + s_3$，其中 $i \in {0,1}$。于是 $P_1$ (receiver)输入 $b_2$，在第一轮中获知消息 $c_2$（非 $m</em>{b_2}$），总共 $6k$ 比特和 $1$ 轮通信。</p>
-<h4 id="计算-a-A-b-B-ab-A-1"><a href="#计算-a-A-b-B-ab-A-1" class="headerlink" title="计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$"></a>计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$</h4><p>在半诚实下，并行地执行两次 $a[![b]!]^B = [![ab]!]^A$ 过程就足够了。关键在于观察到上述计算中的 $a$ 不必是公开的。也就是说，$P_1$ 可以私下选择 $a$ 的值。利用这一点，可以观察到表达式可以写成 $[![a]!][![b]!]^B = a_1[![b]!]^B + (a_2 + a_3)[![b]!]^B$。$P_1$ 充当第一次的sender，$P_3$ 充当第二次的sender。每一方总共在 $1$ 轮上传送 $4k$ 比特。</p>
-<h3 id="恶意"><a href="#恶意" class="headerlink" title="恶意"></a>恶意</h3><h4 id="计算-a-b-B-ab-A-1"><a href="#计算-a-b-B-ab-A-1" class="headerlink" title="计算 $a[![b]!]^B = [![ab]!]^A$"></a>计算 $a[![b]!]^B = [![ab]!]^A$</h4><p>因为 $P_1$ 可以任意选择他输入到OT的值 $a$，所以半诚实方法在恶意设置下不适用。为了避开这一点，作者在这里先执行对 $b$ 的<em>位注入</em>。即计算 $[![b]!]^B \rightarrow [![b]!]^A$ 然后 $a[![b]!]^A = [![ab]!]^A$。在3.3节中提到，各方可以在本地计算共享 $[![b_1]!]^A, [![b_2]!]^A, [![b_2]!]^A$，其中 $[![b]!]^B = (b_1, b_2, b_3)$。现在可以通过计算 $[![b_1 \oplus b_2]!]^A = [![d]!]^A :=$ $[![b_1]!]^A + [![b_2]!]^A - 2[![b_1]!]^A[![b_2]!]^A$ 和 $[![b]!]^A := [![d \oplus b_3]!]^A$ 在算术电路中模拟这些值的异或。然后可以将最终结果计算为 $[![ab]!]^A := a[![b]!]^A$，其中每一方用 $a$ 去乘以自己 $b$ 的份额。</p>
-<h4 id="计算-a-A-b-B-ab-A-2"><a href="#计算-a-A-b-B-ab-A-2" class="headerlink" title="计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$"></a>计算 $[![a]!]^A [![b]!]^B = [![ab]!]^A$</h4><p>同样，这里可以重复位注入过程，将 $[![b]!]^B$ 转换为 $[![b]!]^A$，然后使用乘法协议计算 $[![a]!]^A[![b]!]^A$。</p>
-<h2 id="多项式分段函数"><a href="#多项式分段函数" class="headerlink" title="多项式分段函数"></a>多项式分段函数</h2><p>设 $f<em>1,…,f_m$ 表示具有公共系数的多项式以及有 $-\infty = c_0 &lt; c_1 &lt; … &lt; c</em>{m-1} &lt; c<em>m = \infty$ 使得 $c</em>{i-1}&lt;x \leq c<em>i$ 时 $f(x) = f_i(x)$。本文的方法是先计算向量 $b_1,…,b_m \in {0,1}$ 的秘密共享值使得 $b_i = 1 \Leftrightarrow c</em>{i-1} &lt; x \leq c_i$，然后 $f$ 可以计算为 $f(x) = \sum_i b_i f_i(x)$。</p>
-<p><img src="http://images.yingwai.top/picgo/aby3ppt5.png" alt=""></p>
-<p>比如说要比较 $[![x]!]$ 与 $c$ 的大小，可以看成提取 $[![x-c]!]$ 的最高有效位(MSB)（为1时 $x-c&lt;0$）。这里可以对 $[![x-c]!]$ 使用5.3中的位提取来获得二进制共享 $[![b]!]^B := [![\mathsf{msb}(x-c)]!]^B$。</p>
-<p>每个 $f<em>i$ 函数被表示为多项式 $f_i([![x]!]) = a</em>{i,j}[![x]!]^j + … + a<em>{i,1}[![x]!] + a</em>{i,0}$，其中所有的 $a<em>{i,l}$ 都是公知的常数。当 $f_i$ 为0次多项式时，使用3.4中的技术可以将计算 $b_if_i([![x]!])$ 优化为 $a</em>{i,0}[![b]!]^B$。另外当 $f<em>i$ 的系数为整数时，给定 $[![x]!]^l$，$a</em>{i,l} [![x]!]^l$ 的计算可以在本地进行。但是当 $a_{i,j}$ 有非零小数时，将按照3.1的方法执行交互式截断。</p>
-<h1 id="应用到机器学习"><a href="#应用到机器学习" class="headerlink" title="应用到机器学习"></a>应用到机器学习</h1><p>作者还给出了本文框架分别在线性回归、逻辑回归以及神经网络中的应用。</p>
-<h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p><img src="http://images.yingwai.top/picgo/aby3ppt7.png" alt=""></p>
-<p>线性回归是比较简单的一种模型，前向运算和更新权重都只包含了加法和乘法操作，因此只要利用前面提到的加法和乘法协议就可以完成一个线性回归模型的训练。</p>
-<h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p><img src="http://images.yingwai.top/picgo/aby3ppt8.png" alt=""></p>
-<p>逻辑回归是在线性回归的基础上增加了一个Sigmoid函数，因为在秘密共享的情况下计算指数函数很困难，因此可以定义一个近似函数或用多项式去逼近。文中3.5节给出了计算此类函数的方法，这里近似函数可以使用<a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>中定义的：</p>
-<script type="math/tex; mode=display">
-f(x) = \left\{ \begin{array}{lcl}0, & \mbox{if} & x < - \frac{1}{2} \\x + \frac{1}{2}, & \mbox{if} & - \frac{1}{2} \leq x \leq \frac{1}{2} \\1, & \mbox{if} & x > \frac{1}{2}\end{array}\right.</script><p><img src="http://images.yingwai.top/picgo/smlf5.png" alt=""></p>
-<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><p><img src="http://images.yingwai.top/picgo/aby3ppt9.png" alt=""></p>
-<p>一个神经网络由很多个神经元组成，每一个神经元可以看成是与逻辑回归计算一致的单元，只是最后的非线性函数不一定是Sigmoid函数（替换成ReLU）。</p>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>MPC</tag>
-        <tag>PPML</tag>
-        <tag>Secret Sharing</tag>
-        <tag>Neural Network</tag>
-        <tag>Linear Regression</tag>
-        <tag>Logistic Regression</tag>
       </tags>
   </entry>
   <entry>
@@ -2567,69 +2799,6 @@ a_1 b_1  = (x_3 - v_1)(y_3 - v_2) = x_3 y_3 - x_3 v_2 - y_3 v_1 + v_1 v_2 \tag{2
       </tags>
   </entry>
   <entry>
-    <title>论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
-    <url>/2020/07/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
-    <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
-<p>CCS 2019</p>
-<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
-<a id="more"></a>
-<h1 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h1><p>本文设计了BFV[6，22]和CKKS[16]方案的多密钥变体。本文提出了一种新的生成重线性化密钥的方法，与文献[13]中的以前技术相比，该方法更简单、更快。此外，本文将这些方案[9，12，14]的最新自举算法应用于多密钥场景，以构建具有压缩密文的多密钥完全同态加密。最后，作者使用Microsoft SEAL[47]给出了本文的多密钥方案的概念验证实现，并给出了实验结果。据作者所知，这是支持打包密文的MKHE方案的第一个实际实现。</p>
-<p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络(CNN)模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，本文的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。作者注意到，本文的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
-<p><img src="http://images.yingwai.top/picgo/emkhef1.png" alt=""></p>
-<h1 id="BACKGROUND"><a href="#BACKGROUND" class="headerlink" title="BACKGROUND"></a>BACKGROUND</h1><h2 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h2><p>除非另有说明，否则所有对数都以 $2$ 为底。我们用粗体表示向量，例如$\mathbf{a}$，用大写粗体表示矩阵，例如 $\mathbf{A}$。本文用 $\langle \mathbf{u}, \mathbf{v} \rangle$ 表示两个向量 $\mathbf{u}, \mathbf{v}$ 的通常点积。对于实数 $r$，$\lfloor r \rceil$ 表示最表示最接近 $r$ 的整数，在平局的情况下向上舍入。本文用 $x \leftarrow D$ 表示按分布 $D$ 抽样的 $x$。对于有限集 $S$，$U(S)$ 表示 $S$ 上的均匀分布。本文用 $\lambda$ 表示安全参数：所有已知的对作用域内的密码方案的有效攻击都应该采用 $\Omega(2^\lambda)$ 位运算。</p>
-<h2 id="多密钥同态加密"><a href="#多密钥同态加密" class="headerlink" title="多密钥同态加密"></a>多密钥同态加密</h2><p>多密钥同态加密是一种密码系统，它允许我们对可能在不同密钥下加密的密文评估算术电路。</p>
-<p>设 $\mathcal{M}$ 是具有算术结构的消息空间。MKHE方案MKHE由五个PPT算法($\mathsf{Setup}, \mathsf{KeyGen}, \mathsf{Enc}, \mathsf{Dec}, \mathsf{Eval}$)组成。本文假设每个参与方都有对其公钥和私钥的引用(索引)。多密钥密文隐式包含<em>有序</em>集合 $T = {id<em>1, …, id_k}$ 相关联的引用。例如，新的密文 $\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk}</em>{id})$ 对应于单个元素集合 $T = {id}$，但是随着来自不同方的密文之间的计算的进行，参考集合的大小变得更大。</p>
-<ul>
-<li><p><strong>初始化</strong>：$pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$。将安全参数作为输入并返回公共参数化。本文假设所有其他算法都隐含地将 $pp$ 作为输入。</p>
-</li>
-<li><p><strong>密钥生成</strong>：$(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$。输出一对私钥和公钥。</p>
-</li>
-<li><p><strong>加密</strong>：$\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk})$。加密明文 $\mu \in \mathcal{M}$ 并输出密文 $\mathsf{ct} \in {0,1 }^*$。</p>
-</li>
-<li><p><strong>解密</strong>：$\mu \leftarrow \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; {\mathsf{sk}<em>{id}}</em>{id \in T})$。给定具有对应密钥序列的密文 $\overline{\mathsf{ct}}$，输出明文 $\mu$。</p>
-</li>
-<li><p><strong>同态评估</strong>：</p>
-<script type="math/tex; mode=display">
-\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,...,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})</script><p>给定电路 $\mathcal{C}$，多密钥密文的元组 $(\overline{\mathsf{ct}}<em>1,…,\overline{\mathsf{ct}}_l)$ 和对应的一组公钥 ${\mathsf{pk}</em>{id}}_{id \in T}$，输出密文 $\overline{\mathsf{ct}}$。它的参考集是输入密文 $\overline{\mathsf{ct}}_j, 1 \leq j \leq l$ 的联合 $T = T_1 \cup \cdots \cup T_l$。</p>
-</li>
-</ul>
-<p><strong>语义安全。</strong>对于任意两条消息 $\mu_0, \mu_1 \in \mathcal{M}, \ \ i = 0, 1$ 的分布 ${\mathsf{MKHE.Enc}(\mu_i; \mathsf{pk}) }$ 在 $pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$ 和 $(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$ 的计算上应该是不可区分的。</p>
-<p><strong>正确性和紧凑性。</strong>如果与 $k$ 方相关的密文的大小受固定多项式 ${\rm poly}(\cdot, \cdot)$ 的 ${\rm poly}(\lambda, k)$ 的限制，则MKHE方案是紧致的。</p>
-<p>对于 $1 \leq j \leq l$，设 $\overline{\mathsf{ct}}<em>j$ 为密文(参考集合 $T_j$)，使得 $\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}_j; {\mathsf{sk}</em>{id}}<em>{id \in T} = \mu_j$。设 $\mathcal{C} : \mathcal{M}^l \rightarrow \mathcal{M}$ 为电路，$\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l),{\mathsf{pk}</em>{id}}_{id \in T})$，其中 $T = T_1 \cup \cdots \cup T_l$。然后，</p>
-<script type="math/tex; mode=display">
-\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; \{\mathsf{sk}_{id}\}_{id \in T} = \mathcal{C}(\mu_1,...,\mu_l) \tag{1}</script><p>以压倒性的可能性。对于近似算术[16]，可以用类似于CKKS格式的近似相等来代替(1)的相等。</p>
-<h2 id="环上容错学习"><a href="#环上容错学习" class="headerlink" title="环上容错学习"></a>环上容错学习</h2><p>在整篇文章中，作者假设 $n$ 是2的幂整数，并且 $R=\mathbb{Z}[X]/(X^n+1)$。对于 $R$ 的模为整数 $q$ 的剩余环，本文记作 $R_q=R/(q·R)$。带参数 $(n,q,\chi,\psi)$ 的环学习假设是给定任意多项式数目的形式的样本 $(a_i,b_i=s \cdot a_i+e_i) \in R^2_q$，其中 $a_i$ 在 $R_q$ 中是一致随机的，$s$ 选自 $R_q$ 上的密钥分布 $\chi$，$e_i$ 取自 $R$ 上的误差分布 $\psi$，$b_i$ 是 $R_q$ 中的均匀随机元素、在计算上是不可区分的。</p>
-<h2 id="小工具分解"><a href="#小工具分解" class="headerlink" title="小工具分解"></a>小工具分解</h2><p>设 $\mathbf{g}=(g<em>i) \in \mathbb{Z}^d$ 为小工具向量，$q$ 为整数。小工具分解，由 $\mathbf{g}^{-1}$ 表示，是从 $R_q$ 到 $R^d$ 的函数，它将元素 $a \in R_q$ 转换成<em>小</em>多项式向量 $u=(u_0,…,u</em>{d−1})\in R^d$ ，使得 $a = \sum^{d-1}_{i=0} g_i \cdot u_i \pmod{q}$。</p>
-<p>小工具分解技术被广泛应用于HE方案的构建中。例如，非线性电路的同态评估是基于密钥切换技术的，并且大多数HE方案利用各种小工具分解方法来控制噪声增长。文献中已经提出了各种分解方法，如位分解[6，7]、基分解[17，21]和基于RNS的分解[4，30]。本文的实现利用了RNS友好的分解来提高效率。</p>
-<h1 id="本文的构造"><a href="#本文的构造" class="headerlink" title="本文的构造"></a>本文的构造</h1><h2 id="基本方案"><a href="#基本方案" class="headerlink" title="基本方案"></a>基本方案</h2><ul>
-<li>$\mathsf{Setup}(1^\lambda)$：对于给定的安全参数 $\lambda$，设置RLWE维数 $n$、密文模数 $q$、密钥分布 $\chi$ 和R上的误差分布 $\psi$。生成随机向量 $\mathbf{a} \leftarrow U(R^d_q)$。返回公共参数 $pp=(n, q, \chi, \psi, \mathbf{a})$。</li>
-<li>$\mathsf{KeyGen}(pp)$：选取密钥 $s \leftarrow \chi$。选取误差向量 $e \leftarrow \psi^d$，并将公钥在 $R^d_q$ 中设置为 $\mathbf{b} = -s \cdot \mathbf{a} + \mathbf{e} \pmod{q}$。</li>
-<li>$\mathsf{UniEnc}(\mu;s)$：对于输入明文 $\mu \in R$，生成密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \in R^{d \times 3}_q$，如下所示：<ol>
-<li>选取 $r \leftarrow \chi$；</li>
-<li>选取 $\mathbf{d}_1 \leftarrow U(R^d_q)$ 和 $\mathbf{e}_1 \leftarrow \psi^d$，然后设 $\mathbf{d}_0 = -s \cdot \mathbf{d}_1 + \mathbf{e}_1 + r \cdot \mathbf{g} \pmod{q}$；</li>
-<li>选取 $\mathbf{e}_2 \leftarrow \psi^d$ 然后设 $\mathbf{d}_2 = r \cdot \mathbf{a} + \mathbf{e}_2 + \mu \cdot \mathbf{g} \pmod{q}$。</li>
-</ol>
-</li>
-</ul>
-<p>公共参数 $pp$ 包含一个随机生成的向量 $\mathbf{a} \in R^d_q$，因此本文假设使用公共引用字符串模型。各方应将相同的公共参数作为密钥生成算法的输入，以支持多密钥同态运算。在以前关于MKHE的所有工作中都做出了同样的假设。</p>
-<p>单一加密算法是对称加密，它可以加密单个环形元件。一次加密的密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \leftarrow \mathsf{UniEnc}(\mu;s)$ 由 $R^d_q$ 中的三个矢量组成，其大小是 $R^{2d \times 2}_q$ 中普通RGSW密文的(3/4)倍。对于一次加密密文 $\mathbf{D}$，前两列 $[\mathbf{d}_0 | \mathbf{d}_1]$ 可以被视为秘密 $s$ 下的 $r$ 的加密，而 $[\mathbf{d}_2 | -\mathbf{a}]$ 形成秘密 $r$ 下的 $\mu$ 的加密。</p>
-<h2 id="再线性化"><a href="#再线性化" class="headerlink" title="再线性化"></a>再线性化</h2><p>在级联秘密 $\overline{\mathsf{sk}} = (1, s_1, …, s_k)$ 下加密的两个多密钥密文 $\overline{\mathsf{ct}}_i \in R^{k+1}_q$ 的张量积 $\overline{\mathsf{ct}} = \overline{\mathsf{ct}}_1 \otimes \overline{\mathsf{ct}}_2$ 可以看作是对应于张量平方密钥 $\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 的密文。$\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 包含一些与两个不同方相关的非线性项 $s_i \cdot s_j$。因此，计算服务器应该能够通过非线性项 $s_i \cdot s_j$ 的线性化来将扩展密文 $\overline{\mathsf{ct}} \in R^{(k+1) \times (k+1)}_q$ 转换为规范密文。</p>
-<p>本文的重新线性化方法需要由单个各方生成的相同公共材料(评估密钥)，如下所示：</p>
-<ul>
-<li>$\mathsf{EvkGen}(s)$：给定秘密 $s \in R$，返回 $\mathbf{D} \leftarrow \mathsf{UniEnc}(s;s)$。</li>
-</ul>
-<p>准确地说，每一方 $i$ 通过运行算法(si，bi)←KeyGen(Pp)和Di←EvkGen(Si)来生成其自己的秘密密钥、公共密钥和评估密钥，然后发布该对(bi，Di)。在本节的其余部分，我们将介绍两种重新线性化算法，并说明它们的优缺点。</p>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>PPML</tag>
-        <tag>HE</tag>
-        <tag>Neural Network</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>论文笔记 Improved Garbled Circuit: Free XOR Gates and Applications</title>
     <url>/2020/06/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Improved-Garbled-Circuit-Free-XOR-Gates-and-Applications/</url>
     <content><![CDATA[<p><em>Vladimir Kolesnikov, Thomas Schneider</em></p>
@@ -2696,6 +2865,230 @@ w^1_c &= w^0_c \oplus R = w^0_a \oplus (w^0_b \oplus R) = w^0_a \oplus w^1_b = (
         <tag>密码学</tag>
         <tag>MPC</tag>
         <tag>Garbled Circuit</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Efficient Multi-Key Homomorphic Encryption with Packed Ciphertexts with Application to Oblivious Neural Network Inference</title>
+    <url>/2020/07/09/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Efficient-Multi-Key-Homomorphic-Encryption-with-Packed-Ciphertexts-with-Application-to-Oblivious-Neural-Network-Inference/</url>
+    <content><![CDATA[<p><em>Hao Chen, Wei Dai, Miran Kim, Yongsoo Song</em></p>
+<p>CCS 2019</p>
+<p><a href="https://dl.acm.org/doi/10.1145/3319535.3363207" target="_blank" rel="noopener">https://dl.acm.org/doi/10.1145/3319535.3363207</a></p>
+<a id="more"></a>
+<h1 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h1><p>本文设计了BFV[6，22]和CKKS[16]方案的多密钥变体。本文提出了一种新的生成重线性化密钥的方法，与文献[13]中的以前技术相比，该方法更简单、更快。此外，本文将这些方案[9，12，14]的最新自举算法应用于多密钥场景，以构建具有压缩密文的多密钥完全同态加密。最后，作者使用Microsoft SEAL[47]给出了本文的多密钥方案的概念验证实现，并给出了实验结果。据作者所知，这是支持打包密文的MKHE方案的第一个实际实现。</p>
+<p>本文还提出了MKHE的第一个可行的应用，它安全地评估了预先训练的卷积神经网络(CNN)模型。本文构建了一个高效的协议，云服务器使用模型提供者提供的分类器为数据所有者提供在线预测服务，同时使用MKHE保护数据和模型的隐私。如图1所示，本文的方案支持多密钥操作，使得以较低的端到端延迟和接近最佳的数据和模型提供者成本来实现这一点。服务器可以存储以不同密钥加密的大量密文，但是特定任务的计算成本仅取决于与电路相关的各方的数量。作者注意到，本文的解决方案比单密钥HE更有优势，因为ML模型提供者不需要将未加密的模型发送到服务器。</p>
+<p><img src="http://images.yingwai.top/picgo/emkhef1.png" alt=""></p>
+<h1 id="BACKGROUND"><a href="#BACKGROUND" class="headerlink" title="BACKGROUND"></a>BACKGROUND</h1><h2 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h2><p>除非另有说明，否则所有对数都以 $2$ 为底。我们用粗体表示向量，例如$\mathbf{a}$，用大写粗体表示矩阵，例如 $\mathbf{A}$。本文用 $\langle \mathbf{u}, \mathbf{v} \rangle$ 表示两个向量 $\mathbf{u}, \mathbf{v}$ 的通常点积。对于实数 $r$，$\lfloor r \rceil$ 表示最表示最接近 $r$ 的整数，在平局的情况下向上舍入。本文用 $x \leftarrow D$ 表示按分布 $D$ 抽样的 $x$。对于有限集 $S$，$U(S)$ 表示 $S$ 上的均匀分布。本文用 $\lambda$ 表示安全参数：所有已知的对作用域内的密码方案的有效攻击都应该采用 $\Omega(2^\lambda)$ 位运算。</p>
+<h2 id="多密钥同态加密"><a href="#多密钥同态加密" class="headerlink" title="多密钥同态加密"></a>多密钥同态加密</h2><p>多密钥同态加密是一种密码系统，它允许我们对可能在不同密钥下加密的密文评估算术电路。</p>
+<p>设 $\mathcal{M}$ 是具有算术结构的消息空间。MKHE方案MKHE由五个PPT算法($\mathsf{Setup}, \mathsf{KeyGen}, \mathsf{Enc}, \mathsf{Dec}, \mathsf{Eval}$)组成。本文假设每个参与方都有对其公钥和私钥的引用(索引)。多密钥密文隐式包含<em>有序</em>集合 $T = {id<em>1, …, id_k}$ 相关联的引用。例如，新的密文 $\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk}</em>{id})$ 对应于单个元素集合 $T = {id}$，但是随着来自不同方的密文之间的计算的进行，参考集合的大小变得更大。</p>
+<ul>
+<li><p><strong>初始化</strong>：$pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$。将安全参数作为输入并返回公共参数化。本文假设所有其他算法都隐含地将 $pp$ 作为输入。</p>
+</li>
+<li><p><strong>密钥生成</strong>：$(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$。输出一对私钥和公钥。</p>
+</li>
+<li><p><strong>加密</strong>：$\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk})$。加密明文 $\mu \in \mathcal{M}$ 并输出密文 $\mathsf{ct} \in {0,1 }^*$。</p>
+</li>
+<li><p><strong>解密</strong>：$\mu \leftarrow \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; {\mathsf{sk}<em>{id}}</em>{id \in T})$。给定具有对应密钥序列的密文 $\overline{\mathsf{ct}}$，输出明文 $\mu$。</p>
+</li>
+<li><p><strong>同态评估</strong>：</p>
+<script type="math/tex; mode=display">
+\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,...,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})</script><p>给定电路 $\mathcal{C}$，多密钥密文的元组 $(\overline{\mathsf{ct}}<em>1,…,\overline{\mathsf{ct}}_l)$ 和对应的一组公钥 ${\mathsf{pk}</em>{id}}_{id \in T}$，输出密文 $\overline{\mathsf{ct}}$。它的参考集是输入密文 $\overline{\mathsf{ct}}_j, 1 \leq j \leq l$ 的联合 $T = T_1 \cup \cdots \cup T_l$。</p>
+</li>
+</ul>
+<p><strong>语义安全。</strong>对于任意两条消息 $\mu_0, \mu_1 \in \mathcal{M}, \ \ i = 0, 1$ 的分布 ${\mathsf{MKHE.Enc}(\mu_i; \mathsf{pk}) }$ 在 $pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$ 和 $(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$ 的计算上应该是不可区分的。</p>
+<p><strong>正确性和紧凑性。</strong>如果与 $k$ 方相关的密文的大小受固定多项式 ${\rm poly}(\cdot, \cdot)$ 的 ${\rm poly}(\lambda, k)$ 的限制，则MKHE方案是紧致的。</p>
+<p>对于 $1 \leq j \leq l$，设 $\overline{\mathsf{ct}}<em>j$ 为密文(参考集合 $T_j$)，使得 $\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}_j; {\mathsf{sk}</em>{id}}<em>{id \in T} = \mu_j$。设 $\mathcal{C} : \mathcal{M}^l \rightarrow \mathcal{M}$ 为电路，$\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l),{\mathsf{pk}</em>{id}}_{id \in T})$，其中 $T = T_1 \cup \cdots \cup T_l$。然后，</p>
+<script type="math/tex; mode=display">
+\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; \{\mathsf{sk}_{id}\}_{id \in T} = \mathcal{C}(\mu_1,...,\mu_l) \tag{1}</script><p>以压倒性的可能性。对于近似算术[16]，可以用类似于CKKS格式的近似相等来代替(1)的相等。</p>
+<h2 id="环上容错学习"><a href="#环上容错学习" class="headerlink" title="环上容错学习"></a>环上容错学习</h2><p>在整篇文章中，作者假设 $n$ 是2的幂整数，并且 $R=\mathbb{Z}[X]/(X^n+1)$。对于 $R$ 的模为整数 $q$ 的剩余环，本文记作 $R_q=R/(q·R)$。带参数 $(n,q,\chi,\psi)$ 的环学习假设是给定任意多项式数目的形式的样本 $(a_i,b_i=s \cdot a_i+e_i) \in R^2_q$，其中 $a_i$ 在 $R_q$ 中是一致随机的，$s$ 选自 $R_q$ 上的密钥分布 $\chi$，$e_i$ 取自 $R$ 上的误差分布 $\psi$，$b_i$ 是 $R_q$ 中的均匀随机元素、在计算上是不可区分的。</p>
+<h2 id="小工具分解"><a href="#小工具分解" class="headerlink" title="小工具分解"></a>小工具分解</h2><p>设 $\mathbf{g}=(g<em>i) \in \mathbb{Z}^d$ 为小工具向量，$q$ 为整数。小工具分解，由 $\mathbf{g}^{-1}$ 表示，是从 $R_q$ 到 $R^d$ 的函数，它将元素 $a \in R_q$ 转换成<em>小</em>多项式向量 $u=(u_0,…,u</em>{d−1})\in R^d$ ，使得 $a = \sum^{d-1}_{i=0} g_i \cdot u_i \pmod{q}$。</p>
+<p>小工具分解技术被广泛应用于HE方案的构建中。例如，非线性电路的同态评估是基于密钥切换技术的，并且大多数HE方案利用各种小工具分解方法来控制噪声增长。文献中已经提出了各种分解方法，如位分解[6，7]、基分解[17，21]和基于RNS的分解[4，30]。本文的实现利用了RNS友好的分解来提高效率。</p>
+<h1 id="本文的构造"><a href="#本文的构造" class="headerlink" title="本文的构造"></a>本文的构造</h1><h2 id="基本方案"><a href="#基本方案" class="headerlink" title="基本方案"></a>基本方案</h2><ul>
+<li>$\mathsf{Setup}(1^\lambda)$：对于给定的安全参数 $\lambda$，设置RLWE维数 $n$、密文模数 $q$、密钥分布 $\chi$ 和R上的误差分布 $\psi$。生成随机向量 $\mathbf{a} \leftarrow U(R^d_q)$。返回公共参数 $pp=(n, q, \chi, \psi, \mathbf{a})$。</li>
+<li>$\mathsf{KeyGen}(pp)$：选取密钥 $s \leftarrow \chi$。选取误差向量 $e \leftarrow \psi^d$，并将公钥在 $R^d_q$ 中设置为 $\mathbf{b} = -s \cdot \mathbf{a} + \mathbf{e} \pmod{q}$。</li>
+<li>$\mathsf{UniEnc}(\mu;s)$：对于输入明文 $\mu \in R$，生成密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \in R^{d \times 3}_q$，如下所示：<ol>
+<li>选取 $r \leftarrow \chi$；</li>
+<li>选取 $\mathbf{d}_1 \leftarrow U(R^d_q)$ 和 $\mathbf{e}_1 \leftarrow \psi^d$，然后设 $\mathbf{d}_0 = -s \cdot \mathbf{d}_1 + \mathbf{e}_1 + r \cdot \mathbf{g} \pmod{q}$；</li>
+<li>选取 $\mathbf{e}_2 \leftarrow \psi^d$ 然后设 $\mathbf{d}_2 = r \cdot \mathbf{a} + \mathbf{e}_2 + \mu \cdot \mathbf{g} \pmod{q}$。</li>
+</ol>
+</li>
+</ul>
+<p>公共参数 $pp$ 包含一个随机生成的向量 $\mathbf{a} \in R^d_q$，因此本文假设使用公共引用字符串模型。各方应将相同的公共参数作为密钥生成算法的输入，以支持多密钥同态运算。在以前关于MKHE的所有工作中都做出了同样的假设。</p>
+<p>单一加密算法是对称加密，它可以加密单个环形元件。一次加密的密文 $\mathbf{D} = [\mathbf{d}_0 | \mathbf{d}_1 | \mathbf{d}_2] \leftarrow \mathsf{UniEnc}(\mu;s)$ 由 $R^d_q$ 中的三个矢量组成，其大小是 $R^{2d \times 2}_q$ 中普通RGSW密文的(3/4)倍。对于一次加密密文 $\mathbf{D}$，前两列 $[\mathbf{d}_0 | \mathbf{d}_1]$ 可以被视为秘密 $s$ 下的 $r$ 的加密，而 $[\mathbf{d}_2 | -\mathbf{a}]$ 形成秘密 $r$ 下的 $\mu$ 的加密。</p>
+<h2 id="再线性化"><a href="#再线性化" class="headerlink" title="再线性化"></a>再线性化</h2><p>在级联秘密 $\overline{\mathsf{sk}} = (1, s_1, …, s_k)$ 下加密的两个多密钥密文 $\overline{\mathsf{ct}}_i \in R^{k+1}_q$ 的张量积 $\overline{\mathsf{ct}} = \overline{\mathsf{ct}}_1 \otimes \overline{\mathsf{ct}}_2$ 可以看作是对应于张量平方密钥 $\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 的密文。$\overline{\mathsf{sk}} \otimes \overline{\mathsf{sk}}$ 包含一些与两个不同方相关的非线性项 $s_i \cdot s_j$。因此，计算服务器应该能够通过非线性项 $s_i \cdot s_j$ 的线性化来将扩展密文 $\overline{\mathsf{ct}} \in R^{(k+1) \times (k+1)}_q$ 转换为规范密文。</p>
+<p>本文的重新线性化方法需要由单个各方生成的相同公共材料(评估密钥)，如下所示：</p>
+<ul>
+<li>$\mathsf{EvkGen}(s)$：给定秘密 $s \in R$，返回 $\mathbf{D} \leftarrow \mathsf{UniEnc}(s;s)$。</li>
+</ul>
+<p>准确地说，每一方 $i$ 通过运行算法(si，bi)←KeyGen(Pp)和Di←EvkGen(Si)来生成其自己的秘密密钥、公共密钥和评估密钥，然后发布该对(bi，Di)。在本节的其余部分，我们将介绍两种重新线性化算法，并说明它们的优缺点。</p>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>PPML</tag>
+        <tag>HE</tag>
+        <tag>Neural Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</title>
+    <url>/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/</url>
+    <content><![CDATA[<p><em>Samira Khodabandehlou</em></p>
+<p><a href="https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=" target="_blank" rel="noopener">https://scholar.google.com/scholar?hl=zh-CN&amp;as_sdt=0%2C5&amp;q=Designing+an+e-commerce+recommender+system+based+on+collaborative+filtering+using+a+data+mining+approach&amp;btnG=</a></p>
+<a id="more"></a>
+<p><img src="http://images.yingwai.top/picgo/Designing an e-commerce recommender system based on collaborative filtering using a data mining approach.jpg" alt=""></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>电子商务推荐系统已经转变为客户非常重要的决策辅助工具，利用信息技术和客户信息提供在线个性化推荐。同时，协同过滤推荐系统是电子商务系统成功的关键组成部分之一。尽管有协同过滤现在的普及和成功，这些系统仍然面临着一系列严重的限制，包括冷启动、user-item矩阵稀疏、可扩展性和用户兴趣在这段时间内的变化，这些都阻碍了对客户的准确推荐。虽然已有很多研究提出了克服这些局限性的方法，但还没有提供一个全面的模型来降低这些局限性：1)在产品类别层面上基于LRFM变量进行客户细分，以评估与公司的客户关系的长度、最近程度、频率和购买产品类别的金额；2)在每个聚类级别上基于用户-类别矩阵提取关联规则；3)根据人口统计变量进行客户细分；4)改变用户-项目矩阵并降低其维数；5)通过将细分方法的结果与CF加权组合来开发新的相似度函数。根据所获得的结果，本研究提出的系统消除了传统的CF约束，为客户的偏好提供了更准确、更合适的建议。</p>
+<p><strong>关键词：</strong>协同过滤；数据挖掘；电子商务；推荐系统；时态信息。</p>
+<p>本研究的主要目标包括：找出传统协同过滤在向合适的用户推荐合适商品方面的局限性，提出一个全面的、全新的推荐系统来消除传统CF的局限性，用真实的数据对推荐系统进行评估，以提供更准确、更符合顾客口味的推荐。</p>
+<h1 id="理论背景"><a href="#理论背景" class="headerlink" title="理论背景"></a>理论背景</h1><h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><p><strong>推荐系统</strong>是提高电子商务环境中决策过程质量的有用工具，因为它们通过提供必要的信息和有用的建议来帮助在线决策者选择与他们的愿望和要求一致的项目(Shambour and Lu，2015；Son，2016)。事实上，识别用户偏好的能力是个性化RS的核心(Kim等人，2011年)。Ricci等人。(2011)将RS定义为特定类型的信息系统，该信息系统：</p>
+<ol>
+<li>帮助客户选择他们没有亲身体验的项目；</li>
+<li>向顾客推荐商品；</li>
+<li>通过为客户提供信息来帮助他们决定购买哪种商品。</li>
+</ol>
+<p>创建推荐系统有五个阶段：收集数据、分析用户信息、计算相似度、选择邻居、预测并提出前N个项目的列表(Yahya和Al-Shamri，2016)。这些系统出现在20世纪90年代中期，通常分为三类(Lee，2010；Resnick，1994)：</p>
+<ol>
+<li><p><strong>协同过滤</strong>：这些系统根据一组被称为邻居的相似用户或相似项目的得分提供推荐(Kim等人，2005年)。CF是Netflix和Amazon等著名电子商务公司使用的最受欢迎的RS之一(Hernando等人，2016；Kim等人，2005年)。这些系统又根据它们用于预测用户偏好的算法类型分为两类(Ghazarian和Nematbakhsh，2014)：</p>
+<ul>
+<li><strong>Memory-based</strong>：这些系统使用用户项目评分矩阵和KNN算法来识别用户的邻居并预测他们的偏好(Ghazarian和Nematbakhsh，2014年；Hernando等人，2016年；Kim等人，2011年)，其中使用皮尔逊相关系数等方法计算用户之间的相似性(Bobadilla等人，2012年)。在本研究中，使用KNN算法和皮尔逊相关系数来提供建议。</li>
+<li><strong>Model-based</strong>：这些系统使用分段等方法处理用户的档案数据以提供建议，从而改进计算(Ghazarian和Nematbakhsh，2014；Hernando等人，2016)。</li>
+</ul>
+<p>尽管CF方法很受欢迎并取得了成功，但它们仍然面临着一些严重的限制。这些限制包括：</p>
+<ul>
+<li><strong>冷启动</strong>：在多个用户购买某个项目之前，系统不能向某人推荐该项目。这个问题被称为冷启动。用户的冷启动是指最近加入推荐系统并且没有关于他或她的足够信息的用户(Elahi等人，2016；Hu和Pu，2011；Kim等人，2011；Lee，2010；Son，2016；Sharma和Ray，2016)。</li>
+<li><strong>可伸缩性</strong>：由于客户数据和产品数据的绝对数量，系统必须花费大量的金钱和时间来提取所有客户之间的相似性，导致其生产率较低(Hu和Pu，2011；Hernando等人，2016；Keramati和Khaleghi，2014；Lee，2010)。</li>
+<li><strong>user-item矩阵的稀疏性</strong>：由于用户数量巨大，一个项目通常没有足够的分数或购买，导致user-item矩阵稀疏(Adomavicius和Tuzhlin，2005；Ghazarian和Nematbakhsh，2014；Karimi Alavije等人，2015，Sharma和Ray，2016)。</li>
+<li><strong>用户偏好的改变</strong>：用户的品味和偏好可能会随着时间的推移而改变。例如，一位最近生了孩子的母亲可能对购买婴儿服装感兴趣，她最近的购买可能反映了这种新的关注。这是当；她可能从来没有对这样的物品有任何兴趣(Ding等人，2006年；岩田，2008年；Lee等人，2008年)。(Ding et al.，2006；Iwata，2008；Lee et al.，2008)。</li>
+</ul>
+<p>上述限制可能会对RS的性能产生负面影响，从而限制系统创建有意义和准确的推荐。</p>
+</li>
+<li><p><strong>基于内容的过滤器(Content-Based Filter，CBF)</strong>：该方法基于这样的概念，即用户对他们以前感兴趣的项目感兴趣。因此，这些系统根据项目和产品之间的相似性提供建议(Anderson和Hiralall，2009年；Elahi等人，2016年)。因此，这种方法取决于物品的规格和与这些规格相关的用户配置文件的可用性(Anderson and Hiralall，2009)。这是因为在互联网上存储大量不同种类电子产品的目录是一项非常困难的任务(Bobadilla等人，2012年)。因此，音乐或视频文件等一些产品的内容分析非常困难；这个问题使得CF比CBF要好得多(Anderson和Hiralall，2009；Kim等人，2011)。与CBF相比，CF在电子商务中具有更高的灵活性和与RS的兼容性，使其成为最常用和最有用的RS系统之一(Burke，2002；Iwata，2008；Wang and Wu，2012)。因此，在本研究中，使用CF的概念作为主要的推荐机制。</p>
+</li>
+<li><p>混合方法：一些RS使用上述系统的组合来减少它们的限制；更多细节将在下面的实验背景部分提供(Burke，2002；Keramati和Khaleghi，2014)。</p>
+</li>
+</ol>
+<h2 id="客户细分"><a href="#客户细分" class="headerlink" title="客户细分"></a>客户细分</h2><p>客户细分是一种非常有用的数据挖掘方法，用于在电子商务的RS中找到“邻居”，在电子商务中，使用特定的方法，如聚类，来选择一些用户作为邻居，以改进偏好的预测(Khodabandehlou和Niknafs，2016；Li等人，2011年)。</p>
+<p>在RS中，选择合适的属性进行分割是影响系统性能的重要因素之一。最近购买、频率和货币模型(RFM)的属性是基于分析客户购买行为的一种很好的客户细分方法，它已经成功地用于许多RS(Keramati和Khaleghi，2014；Khodabandehlou和Zivari Rahman，2017；Lee，2010)。各种研究表明，在RFM模型中加入L(客户关系长度)指标将导致对客户的更准确分析，并将提高细分的质量(Li等人，2011年)。因此，在本研究中，LRFM模型被用于客户细分和识别具有相似购买行为的客户类别。</p>
+<p>此外，分割算法对识别出的片段的质量起着重要的作用。在聚类算法中，K-Means算法被认为是最成功和最合适的分割方法(Khodabandehlou和Niknafs，2016)，在许多研究中证明了它与RS的兼容性(Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Li等人，2011年)。K-Means是一种数据挖掘方法，它需要K的初始值，即聚类的数量，才能运行。确定最佳簇数的合适方法是自组织映射(SOM)算法。该算法是一种无监督神经网络，可以从数据中识别未知模式，并估计合适的聚类数量(Abidi和Ong，2000；Mosayebian等人，2012)。</p>
+<p>相关研究建议在RS中结合K-Means和SOM算法使用两阶段分割方法，以获得更准确的结果(Keramati和Khaleghi，2014；Mosayebian等人，2012年)。因此，本研究将利用这一模式进行客户细分。</p>
+<h2 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h2><p>关联规则是数据挖掘的重要方法之一，用于分析RS大型数据库中各种商品之间的市场篮子。分析购物篮已经成为发现用户购物车之间关系的流行系统(Hsu等人，2004；Liu and Shih，2005a)。Apriori算法是最常见的关联规则之一(Hsu等人，2004；Liu和Shih，2005a，2005b)，用于在已经购买了另一件物品时找到购买特定物品的概率模式。在RS中，已经形成了许多关于不同用户的购买行为的规则(Keramati和Khaleghi，2014；Liu和Shih，2005a，2005b)。在这些规则吸引程度的衡量标准中，我们可以提到支持性规则和置信度规则，它们分别指发现的规则的传播度和可接受性(Hsu等人，2004；Keramati和Khaleghi，2014；Karimi Alavije等人，2015；Liu和Shih，2005a，2005b)。</p>
+<h1 id="评估措施"><a href="#评估措施" class="headerlink" title="评估措施"></a>评估措施</h1><p>评价推荐系统的性能是保证推荐系统通用性的重要一步。有一些评价RSS准确性或性能的众所周知的度量；诸如精确度、覆盖率和F度量(为了在这两个度量之间创建平衡)，它们可以很好地显示推荐系统的性能(Bobadilla等人，2012年；Elahi等人，2016；Ghazarian和Nematbakhsh，2014；Shambour和Lu，2015；Son，2016)。因此，为了评估所提出的研究模型的性能，采用了这些测量方法。</p>
+<p>在公式(1)和(2)中，喜爱的项目是指必须推荐给用户的一组产品或项目，而推荐的项目是已经由系统推荐给用户的项目的集合。精确度表示推荐集合中正确推荐的百分比，并评估这些推荐的精确度和准确性。通过公式(1)计算：</p>
+<script type="math/tex; mode=display">
+{\rm Precision}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Recommended \  Items} \tag{1}</script><p>覆盖率表示已经向用户建议了多少用户喜欢的项目的百分比，并使用公式(2)计算：</p>
+<script type="math/tex; mode=display">
+{\rm Coverage}=\frac{\rm Recommended \ Items\cap Favorite \  Items}{\rm Favorite \  Items} \tag{2}</script><p>F-MEASURE是精度和覆盖范围的调和平均值，使用公式(3)计算：</p>
+<script type="math/tex; mode=display">
+{\rm F - measure}=\frac{2 \times \rm Coverage \cap Precision}{\rm Coverage + Precision} \tag{3}</script><h1 id="研究框架"><a href="#研究框架" class="headerlink" title="研究框架"></a>研究框架</h1><p>在设计和开发RSS时，真实、高质量的数据是非常重要的。本研究使用的这组数据与伊朗一家销售服装的网站的真实数据相关，时间范围为2015年1月21日至2016年1月21日(12个月)。此数据集涉及2542个客户和17,000条记录。在这家商店里，产品分为女装、男装、童装、女装、男装、女包和鞋、男包和鞋等七大类。据此，本研究提出的系统框架由八个主要阶段组成。在第一阶段，准备数据。该阶段由数据清理、数据整合、数据转换三个子阶段组成。在第二阶段，基于LRFM模型进行客户细分。在阶段3，基于product category-user矩阵提取关联规则。在阶段4中，完成user-item矩阵的改变。阶段5显示了基于CF的相似度计算。在阶段6中，根据人口统计特征对客户进行细分。在阶段7中，基于新的相似性函数来确定邻居。在最后阶段，推荐是根据用户的需求和特点量身定做的。在下文中，我们将对所有这些阶段进行详细说明。建议系统的总体框架如图1所示。</p>
+<p><img src="http://images.yingwai.top/picgo/derf1.png" alt=""></p>
+<center>
+    <i>图1 建议的研究系统的总体架构</i>
+</center>
+
+
+<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>数据准备(也称为数据预处理)是RSS开发过程中不可或缺的一步，占整个RSS开发所需时间的60%-70%。此步骤包括数据清理、数据集成和数据转换三个阶段。</p>
+<h3 id="数据清理"><a href="#数据清理" class="headerlink" title="数据清理"></a>数据清理</h3><p>数据清理过程包括完成缺失值、识别和消除离群值数据以及解决数据之间的冲突。此外，在此阶段，必须删除不相关或无用的字段或属性，如有必要，从初始数据集形成新的变量。在此阶段，将不完美的记录和信息不完整的客户从主数据集中剔除，数据集的记录从17,000条减少到15,386条，客户数量从2,542个减少到2,080个。为每个产品类别计算RFM变量。</p>
+<h3 id="数据集成"><a href="#数据集成" class="headerlink" title="数据集成"></a>数据集成</h3><p>为了更好地理解数据，并对每个数据集中的数据进行更好的科学管理，数据集成(将两个或多个数据集合并集成在一起)是必要的，这是数据准备的第二阶段。在这一阶段，客户交易数据与他们的个人资料数据(年龄、性别、教育程度、婚姻状况和职业)集成在一起。</p>
+<h3 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h3><p>在此阶段，必须将数据转换为适合数据挖掘和设计RS的不同形式。数据集中的字符串变量(如性别)将转换为数值变量和值。</p>
+<h2 id="基于LRFM模型的分割"><a href="#基于LRFM模型的分割" class="headerlink" title="基于LRFM模型的分割"></a>基于LRFM模型的分割</h2><p>本研究采用两阶段聚类法，结合SOM(确定最佳聚类数)和K-Means(创建聚类)方法进行分割。</p>
+<p>在此阶段，根据产品类别的RFM变量(每个产品类别的RFM变量的值分别计算)和L变量(客户关系的长度)进行客户细分。对于给定的客户，表1中给出了这些变量的样本，根据这些变量进行了细分。</p>
+<p>在本研究中，将LRFM模型用于产品类别层面的客户细分有三个原因，包括以下几个方面：</p>
+<ol>
+<li>通过减少user-item矩阵中的客户数量，提高了该方法的生产率和效率，从而降低了矩阵的可扩展性和稀疏性问题。</li>
+<li>这个模型不仅决定了顾客的价值，而且可以清楚地反映顾客的兴趣和偏好，例如，如果某一种产品的购买频率对于两个给定的顾客来说是相似的，可以推断这两个人对购买这两种商品的兴趣是一样的。M和R的变量也是以相同的方式推导出来的。</li>
+<li>模型中的产品类别变量R涉及客户最近的品味和偏好，由于最近的购买更能反映客户当前的兴趣和偏好，它将提供更准确的推荐，更符合客户当前的兴趣。</li>
+</ol>
+<p><img src="http://images.yingwai.top/picgo/dert1.png" alt=""></p>
+<center>
+    <i>表1 基于LRFM模型的客户细分属性</i>
+</center>
+
+
+
+<h2 id="基于product-category-user矩阵的关联规则提取"><a href="#基于product-category-user矩阵的关联规则提取" class="headerlink" title="基于product category-user矩阵的关联规则提取"></a>基于product category-user矩阵的关联规则提取</h2><p>为了提取关联规则，本研究使用了Apriori算法。在此阶段，使用product category-user矩阵(客户从单个产品类别购买的次数)的交易数据在前一阶段的每个聚类的级别提取关联规则。提取的规则用于确定每个目标客户的前N个推荐产品类别的列表。推荐的每个产品类别的优先级取决于其规则的可信度和支持措施。信任度和支持度值越大的产品类别，推荐优先级越高。此阶段中提取的规则的输出(即每个目标客户的预测产品类别)将作为下一阶段的输入。产品类别级规则提取的目的是减少user-item矩阵中的产品数量，有效缓解矩阵的可扩展性和稀疏性问题。</p>
+<h2 id="更改user-item矩阵"><a href="#更改user-item矩阵" class="headerlink" title="更改user-item矩阵"></a>更改user-item矩阵</h2><p>在CF系统中，user-item矩阵(包括购买/不购买项目的二进制数据或用户给予项目的分数)是关于购买偏好对客户进行聚类并确定目标客户的邻居的基础。然而，由于电子商务中商品种类繁多，该矩阵经常面临数据稀疏的问题。研究表明，推荐质量取决于user-item矩阵的密度。</p>
+<p>为了使该矩阵更加密集，以这样的方式使用分段和关联规则阶段的结果，即在用于确定目标客户的邻居的user-item矩阵中，他或她将仅与他或她的集群中的用户进行比较，并且项目将限于为目标客户预测的项目。由于减少了用户数和项目数，缓解了可伸缩性问题，提高了RS的速度和准确性。</p>
+<p>在他们的研究中，Lee等人。(2008)证明，最近进行的购买更能反映用户当前的偏好，最近添加到网站上出售的项目对用户更具吸引力。因此，基于表2，对于每个项目，考虑用户购买项目的时间(PT)和项目已经可供购买的时间(LT)(启动时间)的两个参数，并且改变user-item矩阵。</p>
+<p><img src="http://images.yingwai.top/picgo/dert2.png" alt=""></p>
+<center>
+    <i>表2 基于时间信息更改user-item矩阵</i>
+</center>
+
+
+
+
+
+<p>为了确定PT和LT变量的得分，在这个改变的矩阵中，首先根据这两个参数的潜伏期将这两个参数分为五类。因此，PT参数的分数包括过去购买(分数1)、过去购买(分数2)、最近购买(分数3)、最近购买(分数4)和最近购买(分数5)。对于LT参数，得分类似。根据表3，在user-item矩阵中，对于用户给出的分数，使用组合分数。例如，对于(2，5)的组合，分数将等于7(5+2)。在计算混合得分时，这两个参数的权重都是相同的。</p>
+<p><img src="http://images.yingwai.top/picgo/dert3.png" alt=""></p>
+<center>
+    <i>表3 对LT和PT参数进行评分</i>
+</center>
+
+
+<p>因此，创建了25(5×5)个双重组合，其中所有客户由55、54、53、…的组合表示。，11，其中，客户最好的类别是组合55(最近购买时间和最近上线时间的类别)和得分10，而客户最差的类别用11(最老的购买时间和最老的上线时间)表示，得分为2。根据这种评分方法，可以将客户划分为集群，并计算其相似度。创建这个新的user-item矩阵的目的是考虑用户随时间的喜好，从而提高推荐的准确性。</p>
+<h2 id="基于CF的相似度计算"><a href="#基于CF的相似度计算" class="headerlink" title="基于CF的相似度计算"></a>基于CF的相似度计算</h2><p>在CF系统中，计算每个目标客户与其他客户之间的相似度的方法有很多。最流行的方法之一是使用皮尔逊相关系数，与其他传统的统计方法相比，它提供了最好的预测和推荐结果(Bobadilla等人)。(2012年)。在皮尔逊的相关方法中，使用公式(4)测量两个给定客户$u$和$u’$之间的相似性：</p>
+<script type="math/tex; mode=display">
+Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\sum^n_{i=1}(r_{ui}-\bar{r}_u)^2\sum^n_{i=1}(r_{u'i}-\bar{r}_{u'})^2}} \tag{4}</script><p>在这个等式中，$n$是两个用户得分的项目数，$i$是两个用户得分的项目集合，$r_{ui}$是用户$u$给出的项目$i$的得分，$\bar{r}_u$是用户的平均得分。在本研究中，使用基于新的user-item矩阵的Pearson相关方法，计算客户偏好之间的相似度，然后将该阶段的结果(基于CF的相似度)用于预测客户的偏好。</p>
+<h2 id="基于人口统计属性的细分"><a href="#基于人口统计属性的细分" class="headerlink" title="基于人口统计属性的细分"></a>基于人口统计属性的细分</h2><p>在这个阶段，使用两阶段聚类方法，根据年龄、性别、教育程度、婚姻状况和职业等人口统计变量对客户进行细分，然后计算他们的簇内相似度。因此，如果两个客户具有相似的人口统计属性，他们对某些项目的态度会相似，这在CF方法中没有反映出来。在本研究中，基于这些变量进行客户细分的目的是为了更好地选择新用户的邻居，通过克服冷启动问题有效改善推荐过程。</p>
+<h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于user-item矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
+<script type="math/tex; mode=display">
+Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \tag{5}</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
+<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r<em>{u’,i})$，预测用户$u$对于项目$i$，$(r</em>{u,i})$的得分如下：</p>
+<script type="math/tex; mode=display">
+r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r<em>{u’,i})$越相似，将以更高的加权比率用于预测$(r</em>{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
+<h1 id="评估提出的推荐方法"><a href="#评估提出的推荐方法" class="headerlink" title="评估提出的推荐方法"></a>评估提出的推荐方法</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
+<p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
+<center>
+    <i>表4 传统CF推荐系统与提出的CF推荐系统的评价方法比较</i>
+</center>
+
+
+
+<p>在此阶段，将比较所提出的方法与传统CF推荐系统在不同N值(推荐项目数)下以及基于使用精确度、覆盖率和F度量的测试数据的结果的准确性。</p>
+<p>基于SOM算法，基于LRFM变量的最优聚类数为6个，基于人口统计变量的最优聚类数为5个。表4列出了基于不同N值的评估措施的传统方法和提出的方法的准确性。对于所有这些方法，参数K(邻居数目)的值都等于40。</p>
+<p>根据表4的结果，在每个准则下，所提出的系统都比传统系统具有更好的性能。事实上，传统系统(基于F-Measure)在5个推荐项目上的准确率为43.27%，而在所提出的系统中，该准确率为55.59%。在20个推荐项目中，传统方法的准确率为62.43%，其推荐系统的准确率为81.4%。在30个项目中，传统系统的准确率为68.54%，在提出的系统中，准确率为96.59%，表明该系统在30个项目上的准确率比传统系统提高了约28%。</p>
+<p><img src="http://images.yingwai.top/picgo/derf2.png" alt=""></p>
+<center>
+    <i>图2 比较传统方法和建议方法在不同N值下的性能(颜色请参见在线版本)</i>
+</center>
+
+
+<p><img src="http://images.yingwai.top/picgo/derf3.png" alt=""></p>
+<center>
+    <i>图3 评估不同K值对建议方法性能的影响(有关颜色，请参阅在线版本)</i>
+</center>
+
+
+<p>在此基础上，将推荐项数增加到N=30，两种方法的性能都有所提高。然而，增加数据数量并不会导致结果准确性的显著变化和提高。因此，将推荐项目的数量增加到某个阈值可以提高建议推荐的质量；该阈值等于N=30。为了更好地比较这两种方法的性能，图2描述了F-Measure准则的变化趋势。</p>
+<p>为了评估参数K的变化在所建议的研究方法的性能中的作用，图3中描述了三个不同N值的F测量值。基于图3，对于N参数的所有三个值，将邻居数增加到K=40将提高所提出的方法的性能。但是，进一步增加该参数会降低方法的精确度，从而对推荐质量产生负面影响。</p>
+<h1 id="结论及建议"><a href="#结论及建议" class="headerlink" title="结论及建议"></a>结论及建议</h1><p>本研究从冷启动、可扩展性、稀疏用户-项目矩阵以及用户兴趣的变化等方面考虑了电子商务中RS的基本和常见限制，以期解决或缓解这些限制。因此，为了克服这些局限性，人们利用一套数据挖掘方法，提出了一个综合性的电子商务推荐系统。综合研究结果，该系统的性能优于传统的CF系统。研究的总体结果表明，与传统系统相比，新的推荐系统的准确率有了显着的提高。因此，该系统对30个项目的推荐准确率比传统系统提高了约28%。此外，根据结果，系统在推荐30个项目时的准确率达到了最高水平；因此，当推荐项目数量超过30个时，传统系统和所提出的系统的准确率都没有明显的变化，因此，当推荐项目的数量超过30时，传统系统和本文提出的系统的准确率都没有明显的变化。例如，当推荐50个项目时，传统系统的准确率为68/84，新建议系统的准确率为94/45，这表明推荐项目的数量从30个增加到50个，准确率略有下降。因此，建议推荐项目的最大值为30个，因为这可能会导致计算和项目选择的复杂性。下面简要介绍一下研究成果和研究创新之处：</p>
+<ul>
+<li>在RS的开发过程中，在产品类别层面采用基于LRFM变量的细分方法，可以改进客户间相似度的确定方法，从而更准确、更恰当地选择目标客户的邻居。由于LRFM模型是识别客户购买行为和反映其偏好的合适方法之一，因此基于该模型在产品类别层次上进行细分，可以区分客户在购买产品类别时的偏好，并将具有相似品味和兴趣的客户归入同一聚类。例如，如果两个给定客户购买商品的频率相似，则可以得出结论，这两个客户对购买该产品类别中的商品表现出相同的兴趣水平。R和M的变量可以以相同的方式推断。另一方面，在产品类别水平上的变量R考虑了客户的利益，并且由于最近的购买更能反映客户的偏好，这将导致更准确的推荐。由于用户的喜好会随着时间的推移而改变，因此RS提供与客户当前兴趣相容的项目的能力会受到影响，这有时会导致推荐与客户当前喜好完全无关的项目。此外，在用户-项目矩阵中使用该分割的结果将降低矩阵的维数，将缓解KNN算法的稀疏矩阵和可伸缩性问题，这导致KNN算法的性能提高，因为在这种情况下，目标客户仅与用户-项目矩阵中他或她自己的集群内的客户相比较。因此，通过减少矩阵中的用户数，提高了KNN算法的速度和精度，改善了RS的整体性能。根据这一讨论和研究结果，可以安全地得出结论，使用LRFM模型可以加快提供建议的过程，并允许创建符合客户当前利益的准确建议。</li>
+<li>基于product category-user矩阵的关联规则提取提高了推荐方法的性能。这些规则通过评估产品类别之间的关系，预测他们购买的概率，并向目标客户推荐一套产品类别。将user-item矩阵限制为这些推荐产品类别中的项将降低矩阵的维数，有效地缓解了KNN算法的稀疏矩阵和可伸缩性问题。在该方法中，仅从从这些规则获得的产品类别中向目标客户提供推荐项目。结果表明，该方法通过减少矩阵中的项数，提高了KNN算法的速度和精度，有效地改善了RS的整体性能，研究结果表明该方法具有较好的性能。</li>
+<li>在RS的设计过程中考虑商品的购买时间以及它们在电子商务网站上的上线时间，将会提高推荐的质量。换言之，比起过去的购买，多留意顾客最近的购买，以及比起其他商品，多留意最近在网站上推出的商品，便可以更了解顾客现时的喜好，帮助他们找到更吸引人、更合意的商品。考虑到这些问题，RS才能更好地实现他们的最终目标，即向适当的个人提供适当的物品。在本研究中，这两个变量被用来创建一个新的用户-项目矩阵，并在表4和图2的基础上取得了很好的结果。</li>
+<li>为了更好地使推荐与用户的喜好相一致，人口特征的作用是无可否认的，因为大多数个人购买都取决于他们的年龄、性别、教育水平等。当它与其他变量如购买行为变量(包括LRFM和user-item矩阵)一起考虑时，这一作用更为显著，这是本研究通过定义一个新的相似性函数得出的。</li>
+</ul>
+<p>考虑到上述问题，本研究通过关注这些问题，利用各种数据挖掘方法，试图改进和完善以往关于CF系统的研究，以期提出一个准确率和性能最高的电子商务推荐系统。</p>
+<p>以下是对未来研究的一些建议：</p>
+<ol>
+<li>将CF方法和CBF方法相结合，开发了所提出的模型。</li>
+<li>研究基于个性特征的客户细分、其他人口统计变量(如地址和收入)以及其他行为变量(如购买商品的总数)对建议系统性能的影响。</li>
+<li>将所提出的方法应用于其他行业的数据集，以提供更强的通用性。</li>
+<li>使用大数据对提出的模型进行进一步评估，这些数据可以从大型网店获得。</li>
+</ol>
+<p>与过去的大多数研究一样，这项研究在实施和评估方面存在一些局限性，包括：</p>
+<ol>
+<li>使用的数据集的时间段限制为一年；</li>
+<li>研究数据仅限于一家网上服装店；</li>
+<li>正在研究的商店顾客数量有限。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>数据挖掘</tag>
+        <tag>推荐系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2795,6 +3188,84 @@ A = \sum^{m}_{j=1} A_j + \lambda I \quad \mathrm{and} \quad b = \sum^m_{j=1} b_j
 <p>我们注意到，虽然可以对类型M编码执行加法，但它的效率低于将两个类型A编码相加。例如当 $\mathsf{sl}=d$ 时，将两个Type-M向量相加需要 $d$ 次运算，但是添加两个Type-A编码只需要一次操作。</p>
 <p><img src="http://images.yingwai.top/picgo/LoPEDf7.png" alt=""></p>
 <p>Type-M编码的向量与Type-L编码的矩阵相乘得到的结果序列化后，直接把多余的0去掉就可以变成与Type-A编码的向量格式一致，从而可以直接把两个向量相加（例子见图7）。</p>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>PPML</tag>
+        <tag>HE</tag>
+        <tag>Linear Regression</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记 Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption</title>
+    <url>/2020/08/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Privacy-Preserving-Ridge-Regression-with-only-Linearly-Homomorphic-Encryption/</url>
+    <content><![CDATA[<p><em>Irene Giacomelli, Somesh Jha, Marc Joye, C. David Page, and Kyonghwan Yoon</em></p>
+<p><a href="https://dblp.uni-trier.de/db/conf/acns/acns2018.html#GiacomelliJJPY18" target="_blank" rel="noopener">ACNS 2018</a></p>
+<p><a href="https://link.springer.com/chapter/10.1007/978-3-319-93387-0_13" target="_blank" rel="noopener">https://link.springer.com/chapter/10.1007/978-3-319-93387-0_13</a></p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>具有L2范数正则化的线性回归(即岭回归)是一种重要的统计技术，它使用线性函数来模拟某些解释值和结果值之间的关系。在许多应用中(例如，个性化医疗中的预测建模)，这些值表示由不愿意共享它们的几个不同方拥有的敏感数据。在这种情况下，训练线性回归模型变得具有挑战性，并且需要特定的密码解决方案。尼古拉恩科等人优雅地解决了这个问题。在标准普尔(奥克兰)2013年。他们提出了一个双服务器系统，使用线性同态加密(LHE)和姚的两方协议(乱码电路)。在这项工作中，我们提出了一种新的系统，它可以只使用LHE(即不使用姚的协议)来训练脊线性回归模型。这极大地提高了整体性能(在计算和通信方面)，因为姚的协议是以前解决方案中的主要瓶颈。在人工生成数据集和真实数据集上验证了该系统的有效性。</p>
+<h2 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h2><p>本文提出了一种新的两服务台模型中的岭回归系统。</p>
+<ul>
+<li><p>对于第一阶段，作者扩展了Nikolaenko等人使用的方法，涉及使用标记同态加密技术加密任意划分的数据集，以支持通过LHE方案加密的密文对之间的乘法。通过这种方式，作者展示了仅基于LHE的解决方案可以处理比水平分区情况更复杂的场景。</p>
+</li>
+<li><p>对于第二阶段，作者通过设计一个只利用底层加密方案的线性同态性质求解 $A \boldsymbol{w}=\boldsymbol{b}$ 的加性同态两方协议来避免姚的协议。这可以提高整体性能，特别是显著降低通信开销。作为一个亮点，如果我们水平划分(分成10个大小相等的部分)1000万个实例和20个特征的数据集，我们的隐私保护回归方法运行在2分钟以内，产生1.3MB的通信开销。在[23]中提出的系统需要超过50min和270MB的交换数据来执行类似的计算。</p>
+</li>
+<li><p>最后，作者注意到基于梯度下降的解决方案使用迭代算法，并且存在估计迭代次数 $t$ 的问题。或者 $t$ 被固定为确保找到模型的良好近似的高值，这为协议带来了更高的复杂度；或者 $t$ 是基于数据集自适应地选择的，这在隐私保护设置中可能是不可行的；或者 $t$ 是基于数据集自适应地选择的，这在隐私保护设置中可能是不可行的。本文求解 $A \boldsymbol{w}=\boldsymbol{b}$ 的解决方案不存在这个问题。</p>
+</li>
+</ul>
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p>见<a href="https://yuyingwai.cn/2020/08/09/论文笔记-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" target="_blank" rel="noopener">LoPED</a>中的2.1小节。</p>
+<h2 id="密码工具"><a href="#密码工具" class="headerlink" title="密码工具"></a>密码工具</h2><p>一般的加法同态算法只能计算一个密文和一个明文的乘积：</p>
+<script type="math/tex; mode=display">
+\mathsf{cMult}(a,c) = c \odot c \cdots \odot c \quad (a \ \mathrm{times})</script><p>而不能计算两个密文的乘积 $c \times c’$。因此作者在这里使用了一种称为 <em>labeled-homomorphic encryption</em>（labHE）的同态加密技术：</p>
+<p>令 $(\mathsf{Gen, Enc, Dec})$ 为一个具有安全参数 $\kappa$ 和明文空间 $\mathcal{M}$ 的LHE方案。假设乘法运算在 $\mathcal{M}$ 中给出；例如 $(\mathcal{M}, +, \cdot)$ 是一个有限环。令 $F: {0,1 }^s \times \mathcal{L} \rightarrow \mathcal{M}$ 是一个有种子空间为 ${0,1}^s \ (s = \mathrm{poly}(\kappa))$ 以及标记空间 $\mathcal{L}$ 的伪随机函数。定义：</p>
+<ul>
+<li><p>$\mathsf{labGen}(\kappa)$：对输入 $\kappa$，它运行 $\mathsf{Gen}(\kappa)$ 然后输出 $(sk, pk)$。</p>
+</li>
+<li><p>$\mathsf{localGen}(pk)$：对于每个用户 $i$ 以及公钥作为输入，它在 ${0,1}^s$ 中选取随机种子 $\sigma<em>i$ 然后计算 $pk_i = \mathsf{Enc}</em>{pk}(\underline{\sigma_i})$，其中 $\underline{\sigma_i}$ 是作为 $\mathcal{M}$ 中元素的 $\sigma_i$ 的编码。它输出 $(\sigma_i, pk_i)$。</p>
+</li>
+<li><p>$\mathsf{labEnc}<em>{pk}(\sigma_i, m, \tau)$：对来自用户 $i$ 的一个带有标签 $\tau \in \mathcal{L}$ 的消息 $m \in \mathcal{M}$，它计算 $b = F(\sigma_i, \tau)$ 然后输出标记的密文 $\boldsymbol{c} = (a, c) \in \mathcal{M \times C}$，其中 $a = m - b$ 在 $\mathcal{M}$ 中而 $c = \mathsf{Enc}</em>{pk}(b)$。</p>
+</li>
+<li><p>$\mathsf{labMult}(\boldsymbol{c, c’})$：输入两个标记的密文 $\boldsymbol{c} = (a, c)$ 和 $\boldsymbol{c’} = (a’, c’)$，它计算一个密文下的“乘积” $d = \mathsf{labMult}(\boldsymbol{c, c’})$ 为 $d = \mathsf{Enc}<em>{pk}(a \cdot a’) \odot \mathsf{cMult}(a, c’) \odot \mathsf{cMult}(a’, c)$。容易验证 $\mathsf{Dec}</em>{sk}(d) = m \cdot m’ - b \cdot b’$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+m \cdot m' &= (a+b)(a'+b')\\
+&= a \cdot a' + a \cdot c' + a' \cdot c + b \cdot b'
+\end{align}</script></li>
+<li><p>$\mathsf{labDec}<em>{sk}(pk_i, pk_j, \tilde{c})$：输入 $\tilde{c}$，它首先从 $\mathsf{Dec}</em>{sk}(pk<em>i)$ 恢复 $\sigma_i$ 和 $\sigma_j$。然后，它对所有 $t = 1,…,n$ 计算 $b_t = F(\sigma_i, \tau_t)$ 和 $b’_t = F(\sigma_j, \tau_t’)$。最后，它计算 $\tilde{b} = \sum^n</em>{t=1} b<em>t \cdot b_t’$ 和 $\tilde{m} = \mathsf{Dec}</em>{sk}(\tilde{c}) + \tilde{b}$。容易验证 $\tilde{m} = \sum^n_{t=1} m_t \cdot m_t’$。</p>
+</li>
+</ul>
+<h1 id="系统概览"><a href="#系统概览" class="headerlink" title="系统概览"></a>系统概览</h1><p><a href="https://yuyingwai.cn/2020/08/09/论文笔记-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" target="_blank" rel="noopener">LoPED</a>是基于本篇文章的，因此设定差不多。本文考虑这样的设置，其中训练数据集对于想要训练岭回归模型的实体不是明文可用的。相反，后者可以访问数据的加密副本，因此需要处理密钥的一方的帮助才能了解所需的模型。更准确地说，本文中的协议是为以下各方设计的：</p>
+<ul>
+<li><em>数据拥有者</em>：有 $m$ 个数据拥有者 $DO_1,…,DO_m$；每个 $DO_i$ 都有一个私有的数据集 $\mathcal{D}_i$ ，并且愿意共享其加密后的版本。</li>
+<li><em>机器学习引擎</em>（MLE）：这是希望对通过合并本地数据集 $\mathcal{D}_1,…,\mathcal{D}_m$ 而获得的数据集 $\mathcal{D}$ 运行线性回归算法，但只能访问它们的加密副本的一方。因此，MLE需要加密服务提供商的帮助。</li>
+<li><em>加密服务提供商</em>（CSP）负责初始化系统中使用的加密方案，并与MLE交互以帮助其完成其任务(计算线性回归模型)。CSP管理加密密钥，并且是唯一能够解密的实体。</li>
+</ul>
+<p>本文假设MLE和CSP没有串通，而且所有涉及的各方都是诚实但好奇的。此外，本文假设对于协议中涉及的每一对参与方，都存在一个私有的、经过身份验证的对等信道。特别是，任何两个参与者之间的通信都不能被窃听。</p>
+<p>本文的目标是确保MLE获得模型，而MLE和CSP都不会学习到模型本身所揭示的关于私有数据集 $\mathcal{D}_i$ 的任何其他信息。即使在两个服务器(MLE或CSP)中的一个与一些数据所有者勾结的情况下，它们也不应该了解关于诚实的数据所有者持有的数据的额外信息。为了实现这一目标，本文设计了一个系统，它可以被视为由前面提到的 $m+2$ 方运行的多方协议，并由一系列步骤指定。该系统具有以下两阶段架构：</p>
+<p><strong>阶段1（聚合本地数据集）：</strong>CSP生成密钥对 $(sk,pk)$，保存 $sk$ 以及公开 $pk$；每个 $DO_i$ 用 $pk$ 加密自己的数据集 $\mathcal{D}_i$ 并发送给MLE。MLE使用接收到的密文和同态的特性来获得 $A$ 和 $\boldsymbol{b}$ 的密文。</p>
+<p><strong>阶段2（计算模型）：</strong>MLE盲化 $A$ 和 $\boldsymbol{b}$ 并发送给CSP；后者解密对盲化后的数据解密并运行给定的算法。该算法的输出（“盲化模型”）是一个向量 $\tilde{\boldsymbol{w}}$，CSP把它发送给MLE，后者去盲化后获得 $\boldsymbol{w}^*$。</p>
+<ul>
+<li>MLE选取一个随机可逆矩阵 $R \in \mathrm{GL}(d, \mathcal{M})$ 和随机向量 $\boldsymbol{r} \in \mathcal{M}$，然后使用线性同态加密的性质计算 $C’ = \mathsf{Enc}<em>{pk}(AR)$ 和 $\boldsymbol{d’} = \mathsf{Enc}</em>{pk}(\boldsymbol{b} + A \boldsymbol{r})$。值 $C = AR$ 和 $\boldsymbol{d} = \boldsymbol{b} + A \boldsymbol{r}$ 就是“盲化数据”。</li>
+<li>CSP解密 $C’$ 和 $\boldsymbol{d’}$，然后计算 $\tilde{\boldsymbol{w}} = C^{-1} \boldsymbol{d}$。向量 $\tilde{\boldsymbol{w}}$ 为“盲化模型”，发送回给MLE。</li>
+<li>MLE计算 $\boldsymbol{w}^* = R \tilde{\boldsymbol{w}} - \boldsymbol{r}$，容易验证 $R \tilde{\boldsymbol{w}} - \boldsymbol{r} = R(AR)^{-1}(\boldsymbol{b} + A \boldsymbol{r}) - \boldsymbol{r} = A^{-1} \boldsymbol{b}$。</li>
+</ul>
+<h1 id="协议描述"><a href="#协议描述" class="headerlink" title="协议描述"></a>协议描述</h1><h2 id="阶段1：聚合数据集"><a href="#阶段1：聚合数据集" class="headerlink" title="阶段1：聚合数据集"></a>阶段1：聚合数据集</h2><p>两种情况，第一种情况为 $X$ 和 $\boldsymbol{y}$ 的数据集被水平划分为 $m$ 个数据集，即每个 $DO$ 拥有：</p>
+<script type="math/tex; mode=display">
+\mathcal{D}_k = \{(\boldsymbol{x}_{n_{k-1}+1}, y_{n_{k-1}+1}),...,(\boldsymbol{x}_{n_k}, y_{n_k}) \} \tag{2}</script><p>其中 $k = 1,…,m \ (0 = n_0 &lt; n_1&lt;\cdots&lt;n_m=m)$。这种情况下就是每个 $DO_i$ 对其数据集 $A$ 和 $\boldsymbol{b}$ 的所有项加密发送给MLE，后者进行聚合：</p>
+<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp1.png" alt=""></p>
+<p>第二种情况为每个 $DO$ 拥有 $X$ 和 $\boldsymbol{y}$ 中的某些元素：</p>
+<script type="math/tex; mode=display">
+\mathcal{D}_{k}=\left\{X[i, j]=\boldsymbol{x}_{i}[j] \mid(i, j) \in D_{k}\right\} \cup\left\{\boldsymbol{y}[i]=y_{i} \mid(i, 0) \in D_{k}\right\} \tag{3}</script><p>其中 $D_{k} \subseteq{1, \ldots, n} \times{0,1, \ldots, d}$。这种情况下，要计算矩阵 $A$ 和向量 $\boldsymbol{b}$ 就要把来自两个用户的数据乘在一起（例如一方拥有 $X$ 而另一方拥有 $\boldsymbol{y}$），此时可以用到前面的 $\mathsf{labMult}$：</p>
+<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp2.png" alt=""></p>
+<h2 id="阶段2：计算模型"><a href="#阶段2：计算模型" class="headerlink" title="阶段2：计算模型"></a>阶段2：计算模型</h2><p>在阶段1的最后，MLE知道了 $A$ 和 $\boldsymbol{b}$ 的密文。第3节中已经描述过大致的过程，即MLE先发送盲化后的数据给CSP，后者求解得到盲化后的模型后发送回给MLE，最后MLE去盲化得到模型 $\boldsymbol{w}^*$：</p>
+<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp3.png" alt=""></p>
+<h2 id="参数的选择"><a href="#参数的选择" class="headerlink" title="参数的选择"></a>参数的选择</h2><p>在 $\Pi_2$ 的最后一步使用了有理数重构从 $\mathbb{Z}_N$ 中计算的 $A \boldsymbol{w} = \boldsymbol{b}$ 的解中恢复 $\boldsymbol{w}^* \in \mathbb{Q}^d$。如果有理数 $t=r/s$ 且 $−R\leq r\leq R, 0&lt;s \leq S$ 以及 $\gcd(s,N)=1$ 在 $\mathbb{Z}_N$ 中表示为 $t’ = rs^{-1} \bmod N$，则拉格朗日-高斯算法在 $2RS &lt;N$ 的情况下唯一地恢复 $r$ 和 $s$。</p>
+<p>由于 $\boldsymbol{w}^* = A^{-1}\boldsymbol{b} = \frac{1}{\mathrm{det}(A)} \mathrm{adj}(A)\boldsymbol{b} \in \mathbb{Q}^d$，为了使得选择的 $N$ 满足前面提到的条件，需要限制 $\mathrm{det}(A)$ 和向量 $\mathrm{adj}(A)\boldsymbol{b}$ 的条目。令 $\alpha = \max {|A |<em>{\infty},| \boldsymbol{b} |</em>{\infty} }$，利用Hadamard不等式，有 $0 &lt; \mathrm{det}(A) \leq \alpha^d$（$A$ 是正定矩阵）和 $| \mathrm{adj}(A)\boldsymbol{b} |_{\infty} \leq d(d-1)^{\frac{d-1}{2}} \alpha^d$。</p>
+<p>对 $X$ 和 $\boldsymbol{y}$ 使用与第二节相同的假设（即 $X$ 和 $\boldsymbol{y}$ 的条目都是 $[-\delta, \delta]$ 中的实数，有最多 $\ell$ 位小数），有 $\alpha \leq 10^{2\ell}(n \delta^2 + \lambda)$。由此得出条件 $2RS &lt; N$ 在以下情况时满足：</p>
+<script type="math/tex; mode=display">
+2d(d-1)^{\frac{d-1}{2}} 10^{4\ell d}(n\delta^2 + \lambda)^{2d} < N \tag{4}</script><h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><p><a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>仅使用相加的秘密共享和海狸三元组来设计假设数据集的任意分区的系统。就通信复杂度而言，SecureML在任意划分的情况下比本文的解决方案执行得更好。然而，如果训练数据集是水平划分的，并且 $n \gg d$（例如 $n=Θ(d^{2.5})$）。例如，如果 $d=100, n=105$时，SecureML中的系统只有预处理阶段的200MB，而 $Π_{1,\mathrm{hor}}+Π_2$ 的总成本小于120MB。</p>
 ]]></content>
       <categories>
         <category>Papers</category>
@@ -2993,84 +3464,6 @@ K(\vec{x}, \vec{y}) &= \exp(- \frac{||\vec{x} - \vec{y}||^2}{2\sigma^2}) \tag{2}
         <tag>Secret Sharing</tag>
         <tag>SVM</tag>
         <tag>HIV co-receptor prediction</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记 Privacy-Preserving Ridge Regression with only Linearly-Homomorphic Encryption</title>
-    <url>/2020/08/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Privacy-Preserving-Ridge-Regression-with-only-Linearly-Homomorphic-Encryption/</url>
-    <content><![CDATA[<p><em>Irene Giacomelli, Somesh Jha, Marc Joye, C. David Page, and Kyonghwan Yoon</em></p>
-<p><a href="https://dblp.uni-trier.de/db/conf/acns/acns2018.html#GiacomelliJJPY18" target="_blank" rel="noopener">ACNS 2018</a></p>
-<p><a href="https://link.springer.com/chapter/10.1007/978-3-319-93387-0_13" target="_blank" rel="noopener">https://link.springer.com/chapter/10.1007/978-3-319-93387-0_13</a></p>
-<a id="more"></a>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>具有L2范数正则化的线性回归(即岭回归)是一种重要的统计技术，它使用线性函数来模拟某些解释值和结果值之间的关系。在许多应用中(例如，个性化医疗中的预测建模)，这些值表示由不愿意共享它们的几个不同方拥有的敏感数据。在这种情况下，训练线性回归模型变得具有挑战性，并且需要特定的密码解决方案。尼古拉恩科等人优雅地解决了这个问题。在标准普尔(奥克兰)2013年。他们提出了一个双服务器系统，使用线性同态加密(LHE)和姚的两方协议(乱码电路)。在这项工作中，我们提出了一种新的系统，它可以只使用LHE(即不使用姚的协议)来训练脊线性回归模型。这极大地提高了整体性能(在计算和通信方面)，因为姚的协议是以前解决方案中的主要瓶颈。在人工生成数据集和真实数据集上验证了该系统的有效性。</p>
-<h2 id="本文的贡献"><a href="#本文的贡献" class="headerlink" title="本文的贡献"></a>本文的贡献</h2><p>本文提出了一种新的两服务台模型中的岭回归系统。</p>
-<ul>
-<li><p>对于第一阶段，作者扩展了Nikolaenko等人使用的方法，涉及使用标记同态加密技术加密任意划分的数据集，以支持通过LHE方案加密的密文对之间的乘法。通过这种方式，作者展示了仅基于LHE的解决方案可以处理比水平分区情况更复杂的场景。</p>
-</li>
-<li><p>对于第二阶段，作者通过设计一个只利用底层加密方案的线性同态性质求解 $A \boldsymbol{w}=\boldsymbol{b}$ 的加性同态两方协议来避免姚的协议。这可以提高整体性能，特别是显著降低通信开销。作为一个亮点，如果我们水平划分(分成10个大小相等的部分)1000万个实例和20个特征的数据集，我们的隐私保护回归方法运行在2分钟以内，产生1.3MB的通信开销。在[23]中提出的系统需要超过50min和270MB的交换数据来执行类似的计算。</p>
-</li>
-<li><p>最后，作者注意到基于梯度下降的解决方案使用迭代算法，并且存在估计迭代次数 $t$ 的问题。或者 $t$ 被固定为确保找到模型的良好近似的高值，这为协议带来了更高的复杂度；或者 $t$ 是基于数据集自适应地选择的，这在隐私保护设置中可能是不可行的；或者 $t$ 是基于数据集自适应地选择的，这在隐私保护设置中可能是不可行的。本文求解 $A \boldsymbol{w}=\boldsymbol{b}$ 的解决方案不存在这个问题。</p>
-</li>
-</ul>
-<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p>见<a href="https://yuyingwai.cn/2020/08/09/论文笔记-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" target="_blank" rel="noopener">LoPED</a>中的2.1小节。</p>
-<h2 id="密码工具"><a href="#密码工具" class="headerlink" title="密码工具"></a>密码工具</h2><p>一般的加法同态算法只能计算一个密文和一个明文的乘积：</p>
-<script type="math/tex; mode=display">
-\mathsf{cMult}(a,c) = c \odot c \cdots \odot c \quad (a \ \mathrm{times})</script><p>而不能计算两个密文的乘积 $c \times c’$。因此作者在这里使用了一种称为 <em>labeled-homomorphic encryption</em>（labHE）的同态加密技术：</p>
-<p>令 $(\mathsf{Gen, Enc, Dec})$ 为一个具有安全参数 $\kappa$ 和明文空间 $\mathcal{M}$ 的LHE方案。假设乘法运算在 $\mathcal{M}$ 中给出；例如 $(\mathcal{M}, +, \cdot)$ 是一个有限环。令 $F: {0,1 }^s \times \mathcal{L} \rightarrow \mathcal{M}$ 是一个有种子空间为 ${0,1}^s \ (s = \mathrm{poly}(\kappa))$ 以及标记空间 $\mathcal{L}$ 的伪随机函数。定义：</p>
-<ul>
-<li><p>$\mathsf{labGen}(\kappa)$：对输入 $\kappa$，它运行 $\mathsf{Gen}(\kappa)$ 然后输出 $(sk, pk)$。</p>
-</li>
-<li><p>$\mathsf{localGen}(pk)$：对于每个用户 $i$ 以及公钥作为输入，它在 ${0,1}^s$ 中选取随机种子 $\sigma<em>i$ 然后计算 $pk_i = \mathsf{Enc}</em>{pk}(\underline{\sigma_i})$，其中 $\underline{\sigma_i}$ 是作为 $\mathcal{M}$ 中元素的 $\sigma_i$ 的编码。它输出 $(\sigma_i, pk_i)$。</p>
-</li>
-<li><p>$\mathsf{labEnc}<em>{pk}(\sigma_i, m, \tau)$：对来自用户 $i$ 的一个带有标签 $\tau \in \mathcal{L}$ 的消息 $m \in \mathcal{M}$，它计算 $b = F(\sigma_i, \tau)$ 然后输出标记的密文 $\boldsymbol{c} = (a, c) \in \mathcal{M \times C}$，其中 $a = m - b$ 在 $\mathcal{M}$ 中而 $c = \mathsf{Enc}</em>{pk}(b)$。</p>
-</li>
-<li><p>$\mathsf{labMult}(\boldsymbol{c, c’})$：输入两个标记的密文 $\boldsymbol{c} = (a, c)$ 和 $\boldsymbol{c’} = (a’, c’)$，它计算一个密文下的“乘积” $d = \mathsf{labMult}(\boldsymbol{c, c’})$ 为 $d = \mathsf{Enc}<em>{pk}(a \cdot a’) \odot \mathsf{cMult}(a, c’) \odot \mathsf{cMult}(a’, c)$。容易验证 $\mathsf{Dec}</em>{sk}(d) = m \cdot m’ - b \cdot b’$：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-m \cdot m' &= (a+b)(a'+b')\\
-&= a \cdot a' + a \cdot c' + a' \cdot c + b \cdot b'
-\end{align}</script></li>
-<li><p>$\mathsf{labDec}<em>{sk}(pk_i, pk_j, \tilde{c})$：输入 $\tilde{c}$，它首先从 $\mathsf{Dec}</em>{sk}(pk<em>i)$ 恢复 $\sigma_i$ 和 $\sigma_j$。然后，它对所有 $t = 1,…,n$ 计算 $b_t = F(\sigma_i, \tau_t)$ 和 $b’_t = F(\sigma_j, \tau_t’)$。最后，它计算 $\tilde{b} = \sum^n</em>{t=1} b<em>t \cdot b_t’$ 和 $\tilde{m} = \mathsf{Dec}</em>{sk}(\tilde{c}) + \tilde{b}$。容易验证 $\tilde{m} = \sum^n_{t=1} m_t \cdot m_t’$。</p>
-</li>
-</ul>
-<h1 id="系统概览"><a href="#系统概览" class="headerlink" title="系统概览"></a>系统概览</h1><p><a href="https://yuyingwai.cn/2020/08/09/论文笔记-Linear-Regression-on-Packed-Encrypted-Data-in-the-Two-Server-Model/" target="_blank" rel="noopener">LoPED</a>是基于本篇文章的，因此设定差不多。本文考虑这样的设置，其中训练数据集对于想要训练岭回归模型的实体不是明文可用的。相反，后者可以访问数据的加密副本，因此需要处理密钥的一方的帮助才能了解所需的模型。更准确地说，本文中的协议是为以下各方设计的：</p>
-<ul>
-<li><em>数据拥有者</em>：有 $m$ 个数据拥有者 $DO_1,…,DO_m$；每个 $DO_i$ 都有一个私有的数据集 $\mathcal{D}_i$ ，并且愿意共享其加密后的版本。</li>
-<li><em>机器学习引擎</em>（MLE）：这是希望对通过合并本地数据集 $\mathcal{D}_1,…,\mathcal{D}_m$ 而获得的数据集 $\mathcal{D}$ 运行线性回归算法，但只能访问它们的加密副本的一方。因此，MLE需要加密服务提供商的帮助。</li>
-<li><em>加密服务提供商</em>（CSP）负责初始化系统中使用的加密方案，并与MLE交互以帮助其完成其任务(计算线性回归模型)。CSP管理加密密钥，并且是唯一能够解密的实体。</li>
-</ul>
-<p>本文假设MLE和CSP没有串通，而且所有涉及的各方都是诚实但好奇的。此外，本文假设对于协议中涉及的每一对参与方，都存在一个私有的、经过身份验证的对等信道。特别是，任何两个参与者之间的通信都不能被窃听。</p>
-<p>本文的目标是确保MLE获得模型，而MLE和CSP都不会学习到模型本身所揭示的关于私有数据集 $\mathcal{D}_i$ 的任何其他信息。即使在两个服务器(MLE或CSP)中的一个与一些数据所有者勾结的情况下，它们也不应该了解关于诚实的数据所有者持有的数据的额外信息。为了实现这一目标，本文设计了一个系统，它可以被视为由前面提到的 $m+2$ 方运行的多方协议，并由一系列步骤指定。该系统具有以下两阶段架构：</p>
-<p><strong>阶段1（聚合本地数据集）：</strong>CSP生成密钥对 $(sk,pk)$，保存 $sk$ 以及公开 $pk$；每个 $DO_i$ 用 $pk$ 加密自己的数据集 $\mathcal{D}_i$ 并发送给MLE。MLE使用接收到的密文和同态的特性来获得 $A$ 和 $\boldsymbol{b}$ 的密文。</p>
-<p><strong>阶段2（计算模型）：</strong>MLE盲化 $A$ 和 $\boldsymbol{b}$ 并发送给CSP；后者解密对盲化后的数据解密并运行给定的算法。该算法的输出（“盲化模型”）是一个向量 $\tilde{\boldsymbol{w}}$，CSP把它发送给MLE，后者去盲化后获得 $\boldsymbol{w}^*$。</p>
-<ul>
-<li>MLE选取一个随机可逆矩阵 $R \in \mathrm{GL}(d, \mathcal{M})$ 和随机向量 $\boldsymbol{r} \in \mathcal{M}$，然后使用线性同态加密的性质计算 $C’ = \mathsf{Enc}<em>{pk}(AR)$ 和 $\boldsymbol{d’} = \mathsf{Enc}</em>{pk}(\boldsymbol{b} + A \boldsymbol{r})$。值 $C = AR$ 和 $\boldsymbol{d} = \boldsymbol{b} + A \boldsymbol{r}$ 就是“盲化数据”。</li>
-<li>CSP解密 $C’$ 和 $\boldsymbol{d’}$，然后计算 $\tilde{\boldsymbol{w}} = C^{-1} \boldsymbol{d}$。向量 $\tilde{\boldsymbol{w}}$ 为“盲化模型”，发送回给MLE。</li>
-<li>MLE计算 $\boldsymbol{w}^* = R \tilde{\boldsymbol{w}} - \boldsymbol{r}$，容易验证 $R \tilde{\boldsymbol{w}} - \boldsymbol{r} = R(AR)^{-1}(\boldsymbol{b} + A \boldsymbol{r}) - \boldsymbol{r} = A^{-1} \boldsymbol{b}$。</li>
-</ul>
-<h1 id="协议描述"><a href="#协议描述" class="headerlink" title="协议描述"></a>协议描述</h1><h2 id="阶段1：聚合数据集"><a href="#阶段1：聚合数据集" class="headerlink" title="阶段1：聚合数据集"></a>阶段1：聚合数据集</h2><p>两种情况，第一种情况为 $X$ 和 $\boldsymbol{y}$ 的数据集被水平划分为 $m$ 个数据集，即每个 $DO$ 拥有：</p>
-<script type="math/tex; mode=display">
-\mathcal{D}_k = \{(\boldsymbol{x}_{n_{k-1}+1}, y_{n_{k-1}+1}),...,(\boldsymbol{x}_{n_k}, y_{n_k}) \} \tag{2}</script><p>其中 $k = 1,…,m \ (0 = n_0 &lt; n_1&lt;\cdots&lt;n_m=m)$。这种情况下就是每个 $DO_i$ 对其数据集 $A$ 和 $\boldsymbol{b}$ 的所有项加密发送给MLE，后者进行聚合：</p>
-<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp1.png" alt=""></p>
-<p>第二种情况为每个 $DO$ 拥有 $X$ 和 $\boldsymbol{y}$ 中的某些元素：</p>
-<script type="math/tex; mode=display">
-\mathcal{D}_{k}=\left\{X[i, j]=\boldsymbol{x}_{i}[j] \mid(i, j) \in D_{k}\right\} \cup\left\{\boldsymbol{y}[i]=y_{i} \mid(i, 0) \in D_{k}\right\} \tag{3}</script><p>其中 $D_{k} \subseteq{1, \ldots, n} \times{0,1, \ldots, d}$。这种情况下，要计算矩阵 $A$ 和向量 $\boldsymbol{b}$ 就要把来自两个用户的数据乘在一起（例如一方拥有 $X$ 而另一方拥有 $\boldsymbol{y}$），此时可以用到前面的 $\mathsf{labMult}$：</p>
-<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp2.png" alt=""></p>
-<h2 id="阶段2：计算模型"><a href="#阶段2：计算模型" class="headerlink" title="阶段2：计算模型"></a>阶段2：计算模型</h2><p>在阶段1的最后，MLE知道了 $A$ 和 $\boldsymbol{b}$ 的密文。第3节中已经描述过大致的过程，即MLE先发送盲化后的数据给CSP，后者求解得到盲化后的模型后发送回给MLE，最后MLE去盲化得到模型 $\boldsymbol{w}^*$：</p>
-<p><img src="http://images.yingwai.top/picgo/PPRRwoLHEp3.png" alt=""></p>
-<h2 id="参数的选择"><a href="#参数的选择" class="headerlink" title="参数的选择"></a>参数的选择</h2><p>在 $\Pi_2$ 的最后一步使用了有理数重构从 $\mathbb{Z}_N$ 中计算的 $A \boldsymbol{w} = \boldsymbol{b}$ 的解中恢复 $\boldsymbol{w}^* \in \mathbb{Q}^d$。如果有理数 $t=r/s$ 且 $−R\leq r\leq R, 0&lt;s \leq S$ 以及 $\gcd(s,N)=1$ 在 $\mathbb{Z}_N$ 中表示为 $t’ = rs^{-1} \bmod N$，则拉格朗日-高斯算法在 $2RS &lt;N$ 的情况下唯一地恢复 $r$ 和 $s$。</p>
-<p>由于 $\boldsymbol{w}^* = A^{-1}\boldsymbol{b} = \frac{1}{\mathrm{det}(A)} \mathrm{adj}(A)\boldsymbol{b} \in \mathbb{Q}^d$，为了使得选择的 $N$ 满足前面提到的条件，需要限制 $\mathrm{det}(A)$ 和向量 $\mathrm{adj}(A)\boldsymbol{b}$ 的条目。令 $\alpha = \max {|A |<em>{\infty},| \boldsymbol{b} |</em>{\infty} }$，利用Hadamard不等式，有 $0 &lt; \mathrm{det}(A) \leq \alpha^d$（$A$ 是正定矩阵）和 $| \mathrm{adj}(A)\boldsymbol{b} |_{\infty} \leq d(d-1)^{\frac{d-1}{2}} \alpha^d$。</p>
-<p>对 $X$ 和 $\boldsymbol{y}$ 使用与第二节相同的假设（即 $X$ 和 $\boldsymbol{y}$ 的条目都是 $[-\delta, \delta]$ 中的实数，有最多 $\ell$ 位小数），有 $\alpha \leq 10^{2\ell}(n \delta^2 + \lambda)$。由此得出条件 $2RS &lt; N$ 在以下情况时满足：</p>
-<script type="math/tex; mode=display">
-2d(d-1)^{\frac{d-1}{2}} 10^{4\ell d}(n\delta^2 + \lambda)^{2d} < N \tag{4}</script><h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><p><a href="https://yuyingwai.cn/2020/06/17/论文笔记-SecureML-A-System-for-Scalable-Privacy-Preserving-Machine-Learning/" target="_blank" rel="noopener">SecureML</a>仅使用相加的秘密共享和海狸三元组来设计假设数据集的任意分区的系统。就通信复杂度而言，SecureML在任意划分的情况下比本文的解决方案执行得更好。然而，如果训练数据集是水平划分的，并且 $n \gg d$（例如 $n=Θ(d^{2.5})$）。例如，如果 $d=100, n=105$时，SecureML中的系统只有预处理阶段的200MB，而 $Π_{1,\mathrm{hor}}+Π_2$ 的总成本小于120MB。</p>
-]]></content>
-      <categories>
-        <category>Papers</category>
-      </categories>
-      <tags>
-        <tag>PPML</tag>
-        <tag>HE</tag>
-        <tag>Linear Regression</tag>
       </tags>
   </entry>
   <entry>
@@ -3846,399 +4239,6 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
       </categories>
       <tags>
         <tag>LeetCode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java接口、多态总结</title>
-    <url>/2020/08/24/Java%E6%8E%A5%E5%8F%A3%E3%80%81%E5%A4%9A%E6%80%81%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口是功能的集合，同样可看做是一种数据类型，是比抽象类更为抽象的”类”。<br>接口只描述所应该具备的方法，并没有具体实现，具体的实现由接口的实现类(相当于接口的子类)来完成。这样将功能的定义与实现分离，优化了程序设计。<br>请记住：一切事物均有功能，即一切事物均有接口。</p>
-<p>接口的出现避免了单继承的局限性。父类中定义的事物的基本功能。接口中定义的事物的扩展功能。</p>
-<h3 id="接口的特点"><a href="#接口的特点" class="headerlink" title="接口的特点"></a>接口的特点</h3><ol>
-<li><p>定义一个接口用 <code>interface</code> 关键字：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> 接口名 </span>&#123;</span><br><span class="line">    抽象方法<span class="number">1</span>;</span><br><span class="line">    抽象方法<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>一个类实现一个接口，实现 <code>implements</code> 关键字：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 类名 <span class="keyword">implements</span> 接口名 </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>接口不能直接创建对象</p>
-<p>通过多态的方式，由子类来创建对象，接口多态。</p>
-</li>
-</ol>
-<h3 id="接口中的成员特点"><a href="#接口中的成员特点" class="headerlink" title="接口中的成员特点"></a>接口中的成员特点</h3><ul>
-<li><p>成员变量：</p>
-<p>只能是 <code>final</code> 修饰的常量</p>
-<p>默认修饰符：<code>public static final</code></p>
-</li>
-<li><p>构造方法：</p>
-<p>无</p>
-</li>
-<li><p>成员方法：</p>
-<p>只能是抽象方法</p>
-<p>默认修饰符：<code>public abstract</code></p>
-</li>
-</ul>
-<h3 id="类与类、类与接口、接口与接口之间的关系"><a href="#类与类、类与接口、接口与接口之间的关系" class="headerlink" title="类与类、类与接口、接口与接口之间的关系"></a>类与类、类与接口、接口与接口之间的关系</h3><ul>
-<li><p>类与类：</p>
-<p>继承关系，单继承，可以是多层继承</p>
-</li>
-<li><p>类与接口：</p>
-<p>实现关系，单实现，也可以多实现（因为没有方法冲突的问题）</p>
-</li>
-<li><p>接口与接口：</p>
-<p>继承关系，单继承，也可以是多继承</p>
-</li>
-</ul>
-<p>Java中的类可以继承一个父类的同时，实现多个接口</p>
-<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态是继封装、继承之后，面向对象的第三大特性。</p>
-<p>现实事物经常会体现出多种形态，如学生，学生是人的一种，则一个具体的同学张三既是学生也是人，即出现两种形态。</p>
-<p>Java作为面向对象的语言，同样可以描述一个事物的多种形态。如Student类继承了Person类，一个Student的对象便既是Student，又是Person。</p>
-<p>Java中多态的代码体现在一个子类对象(实现类对象)既可以给这个子类(实现类对象)引用变量赋值，又可以给这个子类(实现类对象)的父类(接口)变量赋值。</p>
-<p>如Student类可以为Person类的子类。那么一个Student对象既可以赋值给一个Student类型的引用，也可以赋值给一个Person类型的引用。</p>
-<p>最终多态体现为父类引用变量可以指向子类对象。</p>
-<p>多态的前提是必须有子父类关系或者类实现接口关系，否则无法完成多态。</p>
-<p>在使用多态后的父类引用变量调用方法时，会调用子类重写后的方法。</p>
-<h3 id="多态使用的前提"><a href="#多态使用的前提" class="headerlink" title="多态使用的前提"></a>多态使用的前提</h3><ol>
-<li>有继承或者实现关系</li>
-<li>要方法重写</li>
-<li>父类引用指向子类对象</li>
-</ol>
-<h3 id="多态的成员访问特点"><a href="#多态的成员访问特点" class="headerlink" title="多态的成员访问特点"></a>多态的成员访问特点</h3><p>方法的运行看右边（子类），其它都看左边（父类）。</p>
-<h3 id="多态的利弊"><a href="#多态的利弊" class="headerlink" title="多态的利弊"></a>多态的利弊</h3><p>好处：提高了程序的扩展性</p>
-<p>弊端：不能访问子类特有的功能</p>
-<h3 id="多态的分类"><a href="#多态的分类" class="headerlink" title="多态的分类"></a>多态的分类</h3><ul>
-<li><p>类的多态</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(“重写父类抽象方法”);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//类的多态使用</span></span><br><span class="line">Fu fu= <span class="keyword">new</span> Zi();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>接口的多态</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">implements</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(“重写接口抽象方法”);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接口的多态使用</span></span><br><span class="line">Fu fu = <span class="keyword">new</span> Zi();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="instanceof-关键字"><a href="#instanceof-关键字" class="headerlink" title="instanceof 关键字"></a><code>instanceof</code> 关键字</h2><p>格式：<code>对象名 instanceof 类名</code></p>
-<p>返回值：<code>true, false</code></p>
-<p>作用：判断指定的对象是否为给定类创建的对象</p>
-]]></content>
-      <categories>
-        <category>Coding</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java构造方法总结</title>
-    <url>/2020/08/24/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<h2 id="this-关键字"><a href="#this-关键字" class="headerlink" title="this 关键字"></a><code>this</code> 关键字</h2><p><code>this</code> 关键字，本类对象的引用</p>
-<ul>
-<li><p><code>this</code> 是在方法中使用的，哪个对象调用了该方法，那么 <code>this</code> 就代表调用该方法的对象引用</p>
-</li>
-<li><p><code>this</code> 什么时候存在的？当创建对象的时候，<code>this</code> 存在的</p>
-</li>
-<li><p><code>this</code> 的作用：用来区别同名的成员变量与局部变量（<code>this.成员变量</code>）</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>用来给类的成员进行初始化操作</p>
-<ul>
-<li><p>格式：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修饰符 类名 (参数列表) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>构造方法的特点：</p>
-<ol>
-<li>方法名与类名想同</li>
-<li>没有返回值，也没有返回值类型，连 <code>void</code> 也没有</li>
-</ol>
-</li>
-<li><p>构造方法什么时候会被调用执行？</p>
-<p>只有在创建对象的时候才可以被调用</p>
-</li>
-</ul>
-<h2 id="super-关键字"><a href="#super-关键字" class="headerlink" title="super 关键字"></a><code>super</code> 关键字</h2><p>指的是父类的存储空间（理解为父类的引用）</p>
-<ul>
-<li><p>调用父类的成员变量：</p>
-<p><code>super.成员变量;</code></p>
-</li>
-<li><p>调用父类的构造方法：</p>
-<p><code>super(参数);</code></p>
-</li>
-<li><p>调用方法的成员方法：</p>
-<p><code>super.成员方法();</code></p>
-</li>
-</ul>
-<h2 id="继承中的构造方法注意事项"><a href="#继承中的构造方法注意事项" class="headerlink" title="继承中的构造方法注意事项"></a>继承中的构造方法注意事项</h2><ol>
-<li><p>如果我们手动给出了构造方法，编译器不会再给我们提供默认的空参数构造方法；</p>
-<p>如果我们没有写任何的构造方法，编译器提供给我们一个空参数构造方法</p>
-</li>
-<li><p>在构造方法中，默认的第一条语句为 <code>super();</code></p>
-<p>它是用来访问父类中的空参数构造方法，进行父类成员的初始化操作</p>
-</li>
-<li><p>当父类中没有空参数构造方法的时候，怎么办？</p>
-<ul>
-<li><p>通过 <code>super(参数);</code> 访问父类有参数的构造方法</p>
-</li>
-<li><p>通过 <code>this(参数);</code> 访问本类中其他构造方法</p>
-<p>注意：<em>本类中的其他构造方法已经能够正常访问父类构造方法</em></p>
-</li>
-</ul>
-</li>
-<li><p><code>super(参数);</code> 与 <code>this(参数);</code> 不能同时在构造方法中存在</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Coding</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java继承、抽象总结</title>
-    <url>/2020/08/24/Java%E7%BB%A7%E6%89%BF%E3%80%81%E6%8A%BD%E8%B1%A1%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><ul>
-<li><p>继承：是指在一个现有类的基础上去构建一个新的类，构建出来的新类被称作子类，现有类被称作父类，子类会自动拥有父类所有。</p>
-</li>
-<li><p>继承的好处：可继承的属性和方法。</p>
-<ul>
-<li>提高了代表的可维护性</li>
-<li>提高了代码的复用性</li>
-<li>让类与类之间产生了继承关系</li>
-</ul>
-</li>
-<li><p>继承的弊端：</p>
-<ul>
-<li>类与类之间的耦合度过高</li>
-</ul>
-</li>
-<li><p>继承特点：</p>
-<ul>
-<li><p>java中类只能够单继承，不能多继承，可以多层继承</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Yy</span> <span class="keyword">extends</span> <span class="title">Object</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fu</span> <span class="keyword">extends</span> <span class="title">Yy</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>所有的类都直接或者间接的继承了 Object类，Object类称为祖宗类</p>
-</li>
-</ul>
-</li>
-<li><p>继承的注意事项：</p>
-<ol>
-<li><p>使用关键字 <code>extends</code> 让类与类之间 产生继承关系</p>
-</li>
-<li><p>父类私有的成员，子类不能继承，因为根本看不到</p>
-</li>
-<li><p>不能为了继承某个功能而随意进行继承操作， 必须要符合 is a 的关系</p>
-<p>苹果 is a 水果</p>
-<p>男人 is a 人</p>
-<p>狗  is a 人 ， 这种情况就不能继承了</p>
-</li>
-</ol>
-</li>
-<li><p>继承中的成员变量关系：</p>
-<ul>
-<li><p>不同名的变量：</p>
-<p>子类直接继承使用</p>
-</li>
-<li><p>同名的变量：</p>
-<p>默认访问的是子类自己的成员变量, 想访问父类中的同名变量，请使用 <code>super.成员变量;</code></p>
-</li>
-</ul>
-</li>
-<li><p>继承中的成员方法关系：</p>
-<ul>
-<li><p>不同名的方法：</p>
-<p>子类直接继承使用</p>
-</li>
-<li><p>同名的方法：</p>
-<p>默认访问的是子类自己的成员方法，想访问父类中的同名方法，请使用 super.成员方法();</p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>super:用来表示当前对象中包含的父类对象空间的引用</p>
-<ul>
-<li><p>调用父类的成员变量：</p>
-<p><code>super.成员变量;</code></p>
-</li>
-<li><p>调用方法的成员方法:</p>
-<p><code>super.成员方法();</code></p>
-</li>
-</ul>
-</li>
-<li><p>方法重写(override)：指在子父类中，出现了方法声明相同的情况，也叫做方法覆盖，方法复写</p>
-<ul>
-<li>方法重写的注意事项：<ol>
-<li>子类的方法声明要与父类相同</li>
-<li>子类要重写方法的方法，方法的权限修饰符不能比父类的更低</li>
-<li>父类私有的方法，子类不能够进行方法重写</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>方法重载(overload)：指 在同一个类中，多个方法名称相同，它们的参数列表不同(个数不同，数据类型不同)</p>
-</li>
-</ul>
-<h1 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h1><ul>
-<li><p>抽象方法： 方法只有声明部分，没有方法体</p>
-</li>
-<li><p>抽象类： 包含抽象方法的类，一定是抽象类</p>
-<p>使用 <code>abstract</code> 修饰的类，是抽象类</p>
-</li>
-<li><p>抽象类的特点：</p>
-<ol>
-<li>抽象类与抽象方法都必须使用 <code>abstract</code> 来修饰</li>
-<li>抽象类不能直接创建对象</li>
-<li>抽象类中可以有抽象方法，也可以没有抽象方法</li>
-<li>抽象类的子类<ul>
-<li>实现了抽象方法的具体类</li>
-<li>抽象类</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>抽象类面试题：</p>
-<ol>
-<li>抽象类中是否可以没有抽象方法？如果可以，那么，该类还定义成抽象类有意义吗？为什么？</li>
-<li>可以没有抽象方法，有意义，不会让其他人直接创建该类对象</li>
-</ol>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Coding</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java的final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块</title>
-    <url>/2020/08/24/Java%E7%9A%84final%E3%80%81static%E3%80%81%E5%8C%BF%E5%90%8D%E5%AF%B9%E8%B1%A1%E3%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E3%80%81%E5%8C%85%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E8%AE%BF%E9%97%AE%E3%80%81%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%9D%97/</url>
-    <content><![CDATA[<hr>
-<a id="more"></a>
-<h2 id="final"><a href="#final" class="headerlink" title="final"></a><code>final</code></h2><p>关键字，最终的意思。</p>
-<ul>
-<li><code>final</code> 修饰的类：最终的类，不能被继承。</li>
-<li><code>final</code> 修饰的变量：相当于是一个常量，在编译生成 .class 文件后，该变量未常量值。</li>
-<li><code>final</code> 修饰的方法：最终的方法，子类不能重写，可以继承过来使用。</li>
-</ul>
-<h2 id="static"><a href="#static" class="headerlink" title="static"></a><code>static</code></h2><p>关键字，静态的意思。</p>
-<p>可以用来修饰类中的成员（成员变量，成员方法）</p>
-<p>注意：也可以用来修饰成员内部类</p>
-<ul>
-<li><p>特点：</p>
-<p>被静态所修饰的成员，会被所有的对象所共享</p>
-<p>被静态所修饰的成员，可以通过类名直接调用，方便</p>
-<ul>
-<li><code>Person.county = &quot;中国&quot;;</code></li>
-<li><code>Person.method();</code></li>
-</ul>
-</li>
-<li><p>注意事项：</p>
-<p>静态的成员，随着类的加载而加载，优先于对象存在</p>
-<p>在静态方法中，没有 <code>this</code> 关键字</p>
-<p>静态方法中，只能调用静态的成员（静态成员变量，静态成员方法）</p>
-</li>
-</ul>
-<p><img src="http://images.yingwai.top/picgo/JavaSE13f2.JPG" alt="静态的共享数据"></p>
-<center>
-    <i>静态的共享数据</i>
-</center>
-
-
-
-<p><img src="http://images.yingwai.top/picgo/JavaSE13f1.JPG" alt="静态的内存图"></p>
-<center>
-    <i>静态的内存图</i>
-</center>
-
-
-
-<h2 id="匿名对象"><a href="#匿名对象" class="headerlink" title="匿名对象"></a>匿名对象</h2><p>一个没有名字的对象。</p>
-<ul>
-<li><p>特点：</p>
-<p>创建匿名对象直接使用，没有对象名</p>
-<p>匿名对象在没有指定其引用变量时，只能使用一次</p>
-<p>匿名对象可以作为方法接收得参数、方法返回值使用</p>
-</li>
-</ul>
-<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><p>在一个类中，定义了一个新类，这个新的类就是内部类。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123; <span class="comment">// 外部类</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123; <span class="comment">// 内部类</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>特点</p>
-<p>内部类可以直接访问外部类的成员，包含私有的成员</p>
-</li>
-</ul>
-<h2 id="包的声明与访问"><a href="#包的声明与访问" class="headerlink" title="包的声明与访问"></a>包的声明与访问</h2><ul>
-<li><p>类中包的声明格式：</p>
-<p><code>package 包名.包名.包名…;</code></p>
-</li>
-<li><p>带有包的类，创建对象格式：<code>包名.类名 变量名 = new 包名.类名();</code></p>
-<p><code>cn.itcast.Demo d = new cn.itcast.Demo();</code></p>
-</li>
-<li><p>导包的格式：</p>
-<p><code>import 包名.类名;</code></p>
-</li>
-</ul>
-<h2 id="权限修饰符"><a href="#权限修饰符" class="headerlink" title="权限修饰符"></a>权限修饰符</h2><p><code>public</code>：公共的</p>
-<p><code>protected</code>：受保护的</p>
-<p><code>default</code>：默认的（可以不写）</p>
-<p><code>private</code>：私有的</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center"><code>public</code></th>
-<th style="text-align:center"><code>protected</code></th>
-<th style="text-align:center"><code>default</code></th>
-<th style="text-align:center"><code>private</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>在当前类中</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center">$\surd$</td>
-</tr>
-<tr>
-<td>同一包中的其他类</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td>不同包中的子类</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td>不同包中的其他类</td>
-<td style="text-align:center">$\surd$</td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>局部代码块：定义在方法中的，用来限制变量的作用范围</p>
-<p>构造代码块：定义在类中方法外，用来给对象中的成员初始化赋值</p>
-<p>静态代码块：定义在类中方法外，用来给类的静态成员初始化赋值</p>
-]]></content>
-      <categories>
-        <category>Coding</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
 </search>
