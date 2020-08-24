@@ -3853,7 +3853,7 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
     <url>/2020/08/24/Java%E6%8E%A5%E5%8F%A3%E3%80%81%E5%A4%9A%E6%80%81%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<hr>
 <a id="more"></a>
-<h1 id="接口、多态总结"><a href="#接口、多态总结" class="headerlink" title="接口、多态总结"></a>接口、多态总结</h1><h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口是功能的集合，同样可看做是一种数据类型，是比抽象类更为抽象的”类”。<br>接口只描述所应该具备的方法，并没有具体实现，具体的实现由接口的实现类(相当于接口的子类)来完成。这样将功能的定义与实现分离，优化了程序设计。<br>请记住：一切事物均有功能，即一切事物均有接口。</p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口是功能的集合，同样可看做是一种数据类型，是比抽象类更为抽象的”类”。<br>接口只描述所应该具备的方法，并没有具体实现，具体的实现由接口的实现类(相当于接口的子类)来完成。这样将功能的定义与实现分离，优化了程序设计。<br>请记住：一切事物均有功能，即一切事物均有接口。</p>
 <p>接口的出现避免了单继承的局限性。父类中定义的事物的基本功能。接口中定义的事物的扩展功能。</p>
 <h3 id="接口的特点"><a href="#接口的特点" class="headerlink" title="接口的特点"></a>接口的特点</h3><ol>
 <li><p>定义一个接口用 <code>interface</code> 关键字：</p>
@@ -3931,7 +3931,7 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
     <url>/2020/08/24/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<hr>
 <a id="more"></a>
-<h1 id="构造方法总结"><a href="#构造方法总结" class="headerlink" title="构造方法总结"></a>构造方法总结</h1><h2 id="this-关键字"><a href="#this-关键字" class="headerlink" title="this 关键字"></a><code>this</code> 关键字</h2><p><code>this</code> 关键字，本类对象的引用</p>
+<h2 id="this-关键字"><a href="#this-关键字" class="headerlink" title="this 关键字"></a><code>this</code> 关键字</h2><p><code>this</code> 关键字，本类对象的引用</p>
 <ul>
 <li><p><code>this</code> 是在方法中使用的，哪个对象调用了该方法，那么 <code>this</code> 就代表调用该方法的对象引用</p>
 </li>
@@ -4120,7 +4120,7 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
     <url>/2020/08/24/Java%E7%9A%84final%E3%80%81static%E3%80%81%E5%8C%BF%E5%90%8D%E5%AF%B9%E8%B1%A1%E3%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E3%80%81%E5%8C%85%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E8%AE%BF%E9%97%AE%E3%80%81%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%9D%97/</url>
     <content><![CDATA[<hr>
 <a id="more"></a>
-<h1 id="final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块"><a href="#final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块" class="headerlink" title="final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块"></a>final、static、匿名对象、内部类、包的声明与访问、访问修饰符以及代码块</h1><h2 id="final"><a href="#final" class="headerlink" title="final"></a><code>final</code></h2><p>关键字，最终的意思。</p>
+<h2 id="final"><a href="#final" class="headerlink" title="final"></a><code>final</code></h2><p>关键字，最终的意思。</p>
 <ul>
 <li><code>final</code> 修饰的类：最终的类，不能被继承。</li>
 <li><code>final</code> 修饰的变量：相当于是一个常量，在编译生成 .class 文件后，该变量未常量值。</li>
