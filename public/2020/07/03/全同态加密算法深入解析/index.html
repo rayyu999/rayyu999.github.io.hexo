@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/jm.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/jm32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/jm16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/jm.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="密码学,HE," />
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="全同态加密算法深入解析">
+<meta property="og:url" content="http://yoursite.com/2020/07/03/%E5%85%A8%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif1.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif2_.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif3.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif4.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif5.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif6.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif7.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif8.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif9.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif10.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif11.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif12.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif13.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif14.jpg">
+<meta property="og:image" content="http://images.yingwai.top/picgo/HEdif15.jpg">
+<meta property="article:published_time" content="2020-07-03T03:14:03.000Z">
+<meta property="article:modified_time" content="2020-08-23T14:33:37.432Z">
+<meta property="article:author" content="yyw">
+<meta property="article:tag" content="密码学">
+<meta property="article:tag" content="HE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/HEdif1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/03/全同态加密算法深入解析/"/>
+
+
+
+
+
+  <title>全同态加密算法深入解析 | Ray's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ray's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/03/%E5%85%A8%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">全同态加密算法深入解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-03T11:14:03+08:00">
+                2020-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study/" itemprop="url" rel="index">
+                    <span itemprop="name">Study</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  25 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<a id="more"></a>
+<p>转自<a href="https://zhuanlan.zhihu.com/p/54484449" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/54484449</a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>同态加密方案提供了一种惊人的能力——能够在不解密的情况下，对密文数据进行计算。这使您无需破坏敏感源数据，同时可以对数据进行处理。</p>
+<p>其中最有影响的一个方案(也是最近一些标准化工作的主题)被称为Fan-Vercauteren (FV)方案(或称为Brakerski-Fan-Vercauteren方案)，我们将在这里深入地进行说明，同时你也可以尝试使用以下实现该方案的算法库：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>URL</th>
+<th>License</th>
+<th>Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HEANN</td>
+<td><a href="https://github.com/kimandrik/HEAAN" target="_blank" rel="noopener">https://github.com/kimandrik/HEAAN</a></td>
+<td>CC  non commercial</td>
+<td>C++</td>
+</tr>
+<tr>
+<td>NFLib</td>
+<td><a href="https://github.com/quarkslab/NFLlib" target="_blank" rel="noopener">https://github.com/quarkslab/NFLlib</a></td>
+<td>GPLv3</td>
+<td>C++</td>
+</tr>
+<tr>
+<td>FV-NFLib</td>
+<td><a href="https://github.com/quarkslab/NFLlib" target="_blank" rel="noopener">https://github.com/quarkslab/NFLlib</a></td>
+<td>GPLv3</td>
+<td>C++</td>
+</tr>
+<tr>
+<td>cuHE</td>
+<td><a href="https://github.com/vernamlab/cuHE" target="_blank" rel="noopener">https://github.com/vernamlab/cuHE</a></td>
+<td>MIT</td>
+<td>CUDA C++</td>
+</tr>
+<tr>
+<td>PALISADE</td>
+<td><a href="https://git.njit.edu/palisade/PALISADE/tree/master" target="_blank" rel="noopener">https://git.njit.edu/palisade/PALISADE/tree/master</a></td>
+<td>Liberal</td>
+<td>C++</td>
+</tr>
+<tr>
+<td>SEAL</td>
+<td><a href="https://www.microsoft.com/en-us/research/project/simple-encrypted-arithmetic-library/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/research/project/simple-encrypted-arithmetic-library/</a></td>
+<td>Microsoft  research only</td>
+<td>C++</td>
+</tr>
+<tr>
+<td>HELib</td>
+<td><a href="https://github.com/shaih/HElib" target="_blank" rel="noopener">https://github.com/shaih/HElib</a></td>
+<td>Apache  2.0</td>
+<td>C++</td>
+</tr>
+<tr>
+<td>jLBC</td>
+<td><a href="http://gas.dia.unisa.it/projects/jlbc/download.html" target="_blank" rel="noopener">http://gas.dia.unisa.it/projects/jlbc/download.html</a></td>
+<td>LGPLv3</td>
+<td>Java</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这些加密方案看起来很复杂，也有一点神秘，但希望本文能让您清楚地了解它们的工作原理和驱动因素。</p>
+<p>这篇文章的整体结构包括</p>
+<ul>
+<li><p>一点点数学介绍</p>
+</li>
+<li><p>加密和解密是如何工作的</p>
+</li>
+<li><p>同态加法和乘法</p>
+</li>
+</ul>
+<h1 id="数学介绍"><a href="#数学介绍" class="headerlink" title="数学介绍"></a>数学介绍</h1><p>这些同态加密方案是基于Ring Learning with Errors问题。本质上，这些方案中的数据在加密时(密文)和未加密时(明文)都以多项式表示。</p>
+<p>这些几乎是学校里每个人都学过的多项式。像</p>
+<script type="math/tex; mode=display">
+4x^2 + 2x + 1</script><p>但有一些区别，第一个是系数都是整数，并且需要 $\bmod t$。假设 $t = 24$，这就像一个$24$小时的时钟，$21$加$6$得到$3$。多项式的所有系数都是这样处理的。</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif1.jpg" alt=""></p>
+<p>或者，我们可以将数字考虑在$-11$到$12$之间，这样我们就可以方便地求负数。注意，这只是一个方便系数——余数为$-1$和余数为$23$(除以$24$时)之间没有区别。</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif2_.jpg" alt=""></p>
+<p>第二点，也是比较棘手的一点，在于这种使用余数的思想不仅适用于多项式的系数，也适用于多项式本身。</p>
+<p>我们定义了一个特殊的多项式，称为多项式模，并且只考虑多项式乘以该多项式模后的余数。FV方案中该多项式模的具体形式为 $x^d+1$，其中对于某些 $n$，有 $d=2n$。为了说明这一点，我们取 $n=4$，因此多项式为 $x^{16}+1$。</p>
+<p>因为我们考虑的是关于模 $x^{16}+1$ 之后的余数，所以我们只需要考虑幂从 $x^0$ 到 $x^{15}$ 的多项式。任何更高次的幂都会因乘以该多项式模而消去。这也可以被理解为，$x^{16} \equiv -1 (\bmod x^{16}+1)$，这意味着 $x^{16}$ 可以被$-1$替换，以将 $x$ 的更高次幂归约到$0$到$15$的范围内。</p>
+<p>所以我们考虑的多项式都是这种形式的</p>
+<script type="math/tex; mode=display">
+\begin{align}
+a_{15}x^{15} &+ a_{14}x^{14} + a_{13}x^{13} + a_{12}x^{12} + a_{11}x^{11} + a_{10}x^{10} + a_{9}x^{9} + a_{8}x^{8}\\
++ &a_{7}x^{7} + a_{6}x^{6} + a_{5}x^{5} + a_{4}x^{4} + a_{3}x^{3} + a_{2}x^{2} + a_{1}x^{1} + a_0
+\end{align}</script><p>其中这16系数(即 $a_i$)中的每一个的范围都是从 $0$ 到 $t-1$。我们可以用系数的环面来说明，如下所示：</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif3.jpg" alt=""></p>
+<p>在这个图中，每个循环表示多项式中 $x$ 的幂次方前的系数的取值范围（包含24个可能值）。绿点代表系数取$0$时所处的位置。这为我们提供了一种很好的方法来可视化多项式，这在我们考虑加密和解密步骤如何工作时将会有所帮助。</p>
+<p>FV加密方案涉及大量的多项式乘法。当我们把 $x$ 的两个幂次方相乘，比如 $2x^{14}$ 和 $x^4$ 时，我们把它们的指数相加，得到 $2x^{18}$。有人可能会假设，求这个多项式关于多项式模的余数可能需要在 $x^{16}$ 处将指数旋转回$0$，得到 $2x^2$，就像上面所示的整数系数那样。如果多项式模是 $x^{16}$，情况就是这样。然而，我们的多项式模是 $x^{16}+1$ - 如上所述，额外的$+1$因子引入了一个符号变化，这有助于进一步干扰乘法的结果。</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif4.jpg" alt=""></p>
+<p>如上图所示，当 $2x^{14}$ 乘以 $x^4$ 后模 <script type="math/tex">x^{16}+1</script> 时，取这个项(由上面的红点表示)，向前旋转环面$4$个幂，然后从$0$处调整系数的值，得到 $22x^2$(或 $−2x^2$，如果我们认为数字是从$-12$到$11$而不是从$0$到$23$时)。</p>
+<p><strong>这种形式的多项式具有非常丰富的结构和许多不错的特性。它们是分圆多项式的子集</strong>。使用其中一个作为多项式模并不是严格必需的，但是这样做会更加方便快速。</p>
+<h1 id="使用环上的多项式加密"><a href="#使用环上的多项式加密" class="headerlink" title="使用环上的多项式加密"></a>使用环上的多项式加密</h1><p>我们已经介绍了FV加密方案中使用的环上的多项式的一些属性，现在我们可以讨论加密和解密的工作原理。首先，我们需要讨论如何生成私钥和公钥，然后讨论如何使用它们进行加密和解密。</p>
+<h2 id="私钥和公钥"><a href="#私钥和公钥" class="headerlink" title="私钥和公钥"></a>私钥和公钥</h2><p>加密采用明文，并使用从私钥派生的公钥将其转换为密文。从明文到密文的转换是通过一种只有在您知道私钥的情况下才容易可逆的方式完成的。</p>
+<p>更具体地说，明文是环上的多项式，其具有多项式模 $x^d+1$，其中 $d = 2^n$，以及系数模 $t$。明文加密后为密文，其是由两个环上的、具有相同多项式模的多项式构成的，但系数模为 $q$，通常 $q$ 远大于 $t$。</p>
+<p>例如，多项式模为 $x^{4096} + 1$，这意味着明文和密文中的多项式都有 $d=4096$ 个系数。明文多项式的系数需要模 $t = 290764801$，密文多项式的系数需要模 $q = 9214347247561474048$ 或更大。</p>
+<p>为了便于说明，我们将使用较小的数字，但希望这些数字能够更好地说明方案的各个步骤中发生了什么。在第一部分中，为了更直观，我们将使用 $d = 16$、$t = 7$ 和 $q = 874$。注意，这些参数是不安全的!!</p>
+<p>对于私钥或密钥，我们用 $s$ 表示，它是我们随机生成的一个系数为 $-1$、$0$ 或 $1$ 的多项式。例如，</p>
+<script type="math/tex; mode=display">
+s = x^{15} - x^{13}  - x^{12}  - x^{11}  - x^{9}  + x^{8}  + x^{6}  - x^{4}  + x^{2}  + x - 1</script><p>接下来，我们从密文空间中随机生成一个多项式(用于生成公钥)，其系数模为 $q$，我们用 $a$ 表示。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+a = 42&x^{15} - 256x^{14} - 393x^{13} - 229x^{12} + 447x^{11} -369x^{10} - 212x^{9} + 107x^8\\
+&+ 52x^7 + 70x^6 - 138x^5 + 322x^4 + 186x^3 - 282x^2 - 60x + 84
+\end{align}</script><p>我们还定义了一个噪音多项式，它是“小”的，因为它是从离散高斯分布中取的一个小系数。这个多项式只在这里使用一次，然后丢弃。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+e = -3x^{15} &+ x^{14} + x^{13} + 7x^{12} - 6x^{11} - 6x^{10} + x^{9} + 4x^8\\
+&- x^6 + 3x^5 -4x^4 + 4x^3 + 4x + 1
+\end{align}</script><p>然后将公钥定义为一对多项式，即 $\mathbf{pk} = ([−as + e]q, a)$，其中多项式都是模多项式模和系数模 $q$ 的。</p>
+<p>对于上面给出的示例，公钥的第一个多项式被构造为</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif5.jpg" alt=""></p>
+<p>其中第一个乘法取多项式 $a$，它的系数 $\bmod q$，然后乘以系数为$-1,0$或$1$的 $s$。由于模上多项式模的多项式的乘法具有“旋转和反射”性质，有效地混合和打乱了 $a$ 的所有系数，并进一步增加了小的噪音。多项式 $a$ 有效地掩盖了公钥中的私钥。</p>
+<p>通过从公钥中找到 $s$ 的方式来破解加密方案，其主要涉及的计算为 $([−as + e]q, a)$。唯一的因素是该方案中包含了噪音——如果 $e$ 为零，则很容易从公钥中计算出 $s$。当 $e$ 足够大，但又不太大时，这是一个难题。</p>
+<p>本文的示例中，私钥可以通过暴力攻击恢复——尝试每个可能的 $s$ (只有$3^{16}=43046721$组合)<em>，</em>然后计算 $as + e$ 来寻找出一个接近公钥的第一项的答案。对于真正的参数，这种暴力攻击的方法是完全不可行的。$3^{4096}$是一个很大的数字，但有更聪明的方法，然后定义给定的一组参数的安全性。</p>
+<h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><p>加密过程看起来有点像公钥生成过程。</p>
+<p>加密明文的过程是将一个系数模为 $t$ 的多项式转换为一对系数模为 $q$ 的多项式。本例中，我们将加密一个非常简单的多项式(称为消息) $- m = 3 + 4x^8 \equiv 3−3x^8$ – 只有两个不为零的系数。</p>
+<p>加密还需要三个小的多项式。两个噪音多项式来自于相同的离散高斯分布(即和公钥中的噪音多项式的取法一样)，另一个多项式我们称之为 $u$，它的系数为$-1$、$0$或$1$，就像私钥一样。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+e_1 = &-5x^{15} - 2x^{14} + 3x^{13} - x^{12} - 4x^{11} + 3x^{10} + x^9 + 4x^8\\
+&+4x^7 + 5x^6 - 4x^5 - 3x^4 - 3x^3 + 2x^2 - 6x +4
+\end{align}</script><script type="math/tex; mode=display">
+\begin{align}
+e_2 = &-7x^{15} + 2x^{14} - 4x^{13} + 5x^{11} + 2x^{10} - x^9 + 4x^8\\
+&-4x^7 - 3x^6 + 2x^5 - 2x^4 + x^3 - 4x^2 - 2x + 2
+\end{align}</script><p>和</p>
+<script type="math/tex; mode=display">
+u = x^{14} + x^{13} + x^{12} - x^8 - x^5 - x^3 + 1</script><p>这些多项式只在加密过程中使用，然后丢弃。</p>
+<p>密文是由两个多项式组成的，通过如下计算得到</p>
+<script type="math/tex; mode=display">
+\mathbf{ct} = ([\mathbf{pk}_0u + e_1 + qm/t]_q, [\mathbf{pk}_1u + e_2]_q)</script><p>请注意消息中的值是在 $\bmod t$ 的范围内，而在我们的示例中，它们被缩放为 $q/t$ (即128)，使它们覆盖 $\bmod q$ 的范围。这是消息被插入到密文时的唯一更改。这些值通过添加到第一项来掩盖，第一项的值是在 $\bmod q$ 的范围内，与随机的噪音没有区别。$u$ 的随机性改变了每次加密中使用的掩码，从而确保相同的明文在每次加密时产生不同的密文。</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif6.jpg" alt=""></p>
+<p>同态加法和乘法之所以有效，是因为消息在密文中以比例来表示。其他项用于掩盖消息，而且可以证明它们是有效的，只有在您知道私钥的情况下才能删除它们。</p>
+<p>使用上面给出的多项式显式地计算密文的第一个元素</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\mathbf{ct}_0 = 217&x^{15} - 53x^{14} + 13x^{13} - 249x^{12} - 392x{11} - 238x^{10} + 252x^9 + 115x^8\\
++5&x^7 +184x^6 -201x^5 -258x^4 -247x^3 +144x^2 +23x +42
+\end{align}</script><p>代入公钥，我们可以看到密文的第一个元素展开为 $\mathbf{ct}_0 =[e_1 + eu – aus + qm / t]_q$。在这个表达式中，前两项是“小”的，与噪音成比例，后两项是“大”的。第一个大项有效地掩盖了第二个大项，即消息。</p>
+<p>密文的第二个元素是这样计算的:</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif7.jpg" alt=""></p>
+<p>代入公钥，我们看到密文的第二个元素展开为 $\mathbf{ct}_1 = [au + e_2]_q$。这说明了解密是如何工作的——如果我们知道 $s$，就可以计算出 $\mathbf{ct}_1 s = [aus + e_2s]_q$，它可以用来消除密文的第一个元素中的非消息大项。</p>
+<p>综上所述，密文可以用公钥、私钥、掩码、噪音和消息表示为</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif8.jpg" alt=""></p>
+<h2 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h2><p>如上所述，解密相对简单。首先，我们计算 $[\mathbf{ct}_0 + \mathbf{ct}_1s]_q$，它将从消息中完全移除掩码。这给我们一个多项式，它可以展开为 $[qm / t + e_1 + eu + e_2s]_q$ -也就是说，缩放后的信息加上一些噪声。因此，只要噪声不太大，我们就可以恢复消息。</p>
+<p>明确地，</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\mathbf{ct}_1s + \mathbf{ct}_0 &= 13x^{15} -2x^{14} + 17x^{13} + 22x^{12} - 32x^{11} - 23x^{10} + 19x^9 - 380x^8\\
+&+9x^7 + 10x^6 -13x^5 -3x^4 -2x^3 -12x^2 +7x +393
+\end{align}</script><p>在这里您可以看到，除了明文的两个非零系数( $x^8$ 和 $x^0$ )之外，所有的系数都小于 $q/t = 128$。如果我们把这个多项式缩放回 $\bmod t$ 范围内的值，那么我们就得到</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{13x^{15}}{128} &- \frac{x^{14}}{64} + \frac{17x^{13}}{128} + \frac{11x^{12}}{64} - \frac{x^{11}}{4} - \frac{23x^{10}}{128} + \frac{19x^{9}}{128} - \frac{95x^{8}}{32}\\
++ &\frac{9x^{7}}{128} + \frac{5x^{6}}{64} - \frac{13x^{5}}{128} - \frac{3x^{4}}{128} - \frac{x^{3}}{64} - \frac{3x^{2}}{32} + \frac{7x}{128} + \frac{393}{128}
+\end{align}</script><p>四舍五入这些系数可以恢复我们的消息 $m = 3 − 3x^8$。</p>
+<p>我们通过将系数四舍五入，来舍入到最接近的整数后得到我们的信息:</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif9.jpg" alt=""></p>
+<center>
+    <i>绿色-噪音变换  粉色-舍入结果</i>
+</center>
+
+
+<p>把它们放在一起，我们通过如下计算来解密密文</p>
+<script type="math/tex; mode=display">
+m' = \left[\left \lfloor \frac{t}{q}[\mathbf{ct}_0+\mathbf{ct}_1s]_q \right \rceil \right]_t</script><p>$\lfloor \rceil$ 表示舍入到最接近的整数(四舍五入)。</p>
+<p>如果系数中噪音太大，那么它们最终会更接近一个与正确整数不同的整数，然后解密会(悄无声息地)失败并产生错误的结果。在上面的示例中，最大的噪音为$13 / 128$，所以仍然有一些空间允许产生更多的噪音，并且能够正确解密。噪音的含量可以通过将 $q / t$ 的比值变大或变小来调节。</p>
+<h1 id="同态操作"><a href="#同态操作" class="headerlink" title="同态操作"></a>同态操作</h1><p>人们对这类密码体制如此感兴趣的一个主要原因是，它们允许同态加法和乘法(来自希腊语<em>homo</em> - same和<em>morphe</em> - shape)。这意味着您可以在数字仍然加密的情况下进行加法和乘法运算，而不必先解密它们。这是一个令人惊叹的功能，有望在数据保护和安全方面构建一个新的黄金标准。</p>
+<h2 id="同态加法"><a href="#同态加法" class="headerlink" title="同态加法"></a>同态加法</h2><p>最简单的情况是两个加密数字的加法。假设我们已经用相同的公钥加密了两个多项式 $m_1$ 和 $m_2$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\mathbf{a} &= ([\mathbf{pk}_0 u_1 + e_1 + qm_1/t]_q, [\mathbf{pk}_1 u_1 + e_2]_q),\\
+\mathbf{b} &= ([\mathbf{pk}_0 u_2 + e_3 + qm_2/t]_q, [\mathbf{pk}_1 u_2 + e_4]_q).
+\end{align}</script><p>注意，我们需要使用两个不同的、小的多项式 $u_1$ 和 $u_2$，以及4个小的噪音多项式 $e_1 \cdot \cdot \cdot e_4$。</p>
+<p>如果我们仅仅是将密文中的元素相加，就会得到一个新的密文</p>
+<script type="math/tex; mode=display">
+\mathbf{a} + \mathbf{b} = ([\mathbf{pk}_0(u_1+u_2) + (e_1+e_3) + q(m_1+m_2)/t]_q, [\mathbf{pk}_1(u_1+u_2) + (e_2+e_4)]_q)</script><p>由于消息仅存在于具有缩放的密文中，所以加法的结果与 $m_1 + m_2$ 加密的形式相同，只是增加了新的噪音：</p>
+<script type="math/tex; mode=display">
+\mathbf{c} = ([\mathbf{pk}_0 (u_3) + (e_5) + q(m_1+m_2)/t]_q, [\mathbf{pk}_1(u_3) + (e_6)]_q)</script><p>近似解密(舍入之前)将是</p>
+<script type="math/tex; mode=display">
+[q(m_1 + m_2)/t + e_5 + eu_3 + e_6s]_q</script><p>这意味着只要新的噪音不是太大，消息 $m_1 + m_2$ 将正确解密。噪音有三种类型：</p>
+<script type="math/tex; mode=display">
+e_5 = e_1 + e_3</script><script type="math/tex; mode=display">
+eu_3 = e(u_1 + u_2)</script><script type="math/tex; mode=display">
+e_6s =(e_2 + e_4)s</script><p>我们担心的是，当这些项变得足够大，以至于噪音多项式中的一个系数大于 $q/(2t)$ 时，解密就会失败，因为解密过程结束时的四舍五入操作会四舍五入到错误的数字。</p>
+<p>如果我们只考虑第一项，那么我们就把来自离散高斯分布的多项式中的系数相加。这意味着，在某些情况下，我们会把一个负系数加到一个正系数上，结果会更接近于零。在其他情况下，系数会有相同的符号，所以结果会更大。我们可以做很多的同态加法，看看噪音是如何随着加法的数量增加而增加的，这是很有指导意义的。系数的分布如下图所示，其中我们添加了1、5和30个噪音多项式(随机地进行了数百次试验)。</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif10.png" alt=""></p>
+<p>当我们添加了30个噪音多项式时，某些系数有可能会大于64，即超过了 $q/t$ 的一半，所以解密不会产生正确的结果。</p>
+<p>另外两项表示不同的情况——第二项是一个噪音多项式乘以一些“小的多项式”(系数为$-1$、$0$或$1$)的总和。这种乘法会产生更大的噪音。一个噪音多项式和一个小的多项式的乘积的系数大约将是随机正负号的噪音多项式系数的2/3rds的总和。这意味着这个噪音与多项式的最高次的平方根 $\sqrt{n}$ 一致。</p>
+<p>对这一项绘制与上面相同的分布可以看出，它比第一项大得多，而且即使对于我们示例中的参数，也存在错误解密的危险，即使只是添加了几个参数。</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif11.png" alt=""></p>
+<p>第三项是类似的——一组噪音多项式之和，乘以一个“小的多项式”。它的噪音分布是这样的：</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif12.jpg" alt=""></p>
+<p>结合起来，我们可以画出这三项的最大系数的增长，作为已经发生的加法数量的函数。这是一个须状图，给出了这些最大值的可变性。(注意噪音的均值接近于零，这是最大系数的幅值分布。)</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif13.jpg" alt=""></p>
+<p>这表明，对于我们所选择的参数，由两个以上加法产生的密文，解码错误的概率很高，而且两次加法失败的概率也很高。这是因为有时最大错误大于$64$，当 $q/t = 128$ 时，会导致不正确的解密，就像这里一样。为了给这样的操作提供更多的空间，我们需要使用更大的 $q/t$ 比值，这可以应对通常由所执行的操作数量引入的噪音量。</p>
+<p>不幸的是，由密文的同态乘法引入的噪音量又要大得多。</p>
+<h2 id="同态乘法"><a href="#同态乘法" class="headerlink" title="同态乘法"></a>同态乘法</h2><p>同态乘法在程序上很简单，但是比加法复杂得多。如上所述，消息以 $qm_1/t$ 的比例出现在密文的第一个元素中。因此，将两个密文的第一个元素相乘，再乘以 $t/q$，就会得到一个带有 $qm_1m_2/t$ 的项——如果我们仍然能够除去掩码项，这个项就可以恢复。</p>
+<p>因此，要理解同态乘法的机制，关键在于了解如何从密文的乘积中去掉掩码项。要做到这一点，我们的想法是把密文看作是私钥 $s$ 的幂次方的一个简单多项式。这是这篇文章中使用多项式的第三种不同的方法，所以它有点令人困惑，但是它是理解同态乘法如何工作的关键。</p>
+<p>我们可以写出解密过程的第一部分，使密文的每个元素都是 $s$ 的多项式的系数：</p>
+<script type="math/tex; mode=display">
+[\mathbf{ct}_0 + \mathbf{ct}_1s^1]_q</script><p>请记住，$\mathbf{ct}$ 和 $s$ 本身就是多项式，所以这个方程是一个多项式乘以一个多项式($s_0$)加上一个多项式乘以另一个多项式，然后所有这些都取多项式模$x^d + 1$ 和系数模 $q$。</p>
+<p>现在，我们在上面看到解密产生了一个与掩码项 $au$ 无关的量。</p>
+<script type="math/tex; mode=display">
+[\mathbf{ct}_0 + \mathbf{ct}_1s^1]_q \rightarrow \frac{q}{t}m + noise</script><p>好了，现在考虑两个密文 $\mathbf{a}$ 和 $\mathbf{b}$，它们被定义为两个消息 $m_1$ 和 $m_2$ 的加密，它们可以被解密：</p>
+<script type="math/tex; mode=display">
+[\mathbf{a}_0 + \mathbf{a}_1 s^1]_q \rightarrow \frac{q}{t}m_1 + n_1\\
+[\mathbf{b}_0 + \mathbf{b}_1 s^1]_q \rightarrow \frac{q}{t}m_2 + n_2</script><p>其中 $n_1$ 和 $n_2$ 表示密文中的噪声。</p>
+<p>如果我们取它们的乘积，我们有：</p>
+<script type="math/tex; mode=display">
+[\mathbf{a}_0 + \mathbf{a}_1 s^1]_q [\mathbf{b}_0 + \mathbf{b}_1 s^1]_q \rightarrow (\frac{q}{t}m_1 + n_1)(\frac{q}{t}m_2 + n_2)</script><p>右边的表达式与计算 $\mathbf{a}$ 和 $\mathbf{b}$ 所用的掩码无关，所以左边也必须与它们无关。</p>
+<p>如果我们把左边展开成 $s$ 的形式(为了方便起见，再乘以 $t/q$)就得到了</p>
+<script type="math/tex; mode=display">
+mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</script><p>其中</p>
+<script type="math/tex; mode=display">
+\mathbf{c}_0 = \left[\frac{t}{q} \mathbf{a}_0 \mathbf{b}_0 \right]_q</script><script type="math/tex; mode=display">
+\mathbf{c}_1 = \left[\frac{t}{q} (\mathbf{a}_1 \mathbf{b}_0 + \mathbf{a}_0 \mathbf{b}_1) \right]_q</script><script type="math/tex; mode=display">
+\mathbf{c}_2 = \left[\frac{t}{q} \mathbf{a}_1 \mathbf{b}_1 \right]_q</script><p>这样做意味着我们可以计算出一个新的密文的组成部分，它比原来的密文多一个元素，并且可以正确地使用密钥 $s$ 的幂次方进行解密。</p>
+<p>解密的形式展开如下：</p>
+<script type="math/tex; mode=display">
+\left[\left \lfloor \frac{t}{q}[\mathbf{ct}_0 s^0 + \mathbf{ct}_1 s^1 + \mathbf{ct}_2 s^2]_q \right \rceil \right]_t</script><p>这只是增加了另一项即多项式乘以多项式的平方。有很多簿记要做，但它只是学校级代数(直到模数部分!)这是解密步骤的概括，它允许我们解密同态乘法的结果。</p>
+<p>要了解这一切是如何显式地工作的，请考虑 $\mathbf{a}$ 和 $\mathbf{b}$ 在加密过程中的展开式</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\mathbf{a} &= [\mathbf{pk}_0 u_1 + e_{11} + qm_1/t, \mathbf{pk}_1 u_1 + e_{12}]\\
+\mathbf{b} &= [\mathbf{pk}_0 u_2 + e_{21} + qm_2/t, \mathbf{pk}_1 u_2 + e_{22}]
+\end{align}</script><p>如果我们展开乘法的定义，同时对结果进行部分解密(即解密到除以 $q/t$ 和整数之前)，那么得到的表达式就很复杂。但是，由于每个密文的组件都是在解密过程中被构造成能够删除掩码项($au_i$)的，所以这个展开的结果完全不依赖于来自公钥的掩码项!!!得到的表达式如下：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+ \mathbf{c}_0 s^0 + \mathbf{c}_1 s^1 + \mathbf{c}_2 s^2 =  &\frac{q}{t}m_1m_2 + e_{22}m_1s + e_{12}m_2s + em_2u_1 + em_1u_2 + e_{21}m_1 + e_{11}m_2\\
+&+ \frac{t}{q}e^2u_1u_2 + \frac{t}{q}e_{12}e_{22}s^2 + \frac{t}{q}e_{22}esu_1 + \frac{t}{q}e_{12}esu_2\\
+&+ \frac{t}{q}e_{12}e_{21}s + \frac{t}{q}e_{11}e_{22}s + \frac{t}{q}e_{21}eu_1 + \frac{t}{q}e_{11}eu_2 + \frac{t}{q}e_{11}e_{21}
+\end{align}</script><p>这里有很多项，但是现在我们已经去掉了掩码，问题是，噪音(除了第一个)与 $q/(2t)$ 的“噪音预算”相比有多大?</p>
+<p>为了感受这一点，我们模拟了大量加密的随机信息的乘法，$d = 16$，$t = 7$，$q = 7168 = 1024 \times t$。各类型噪音的系数大小分布如下图所示。请注意，总的噪音需要大于 $q/(2t) = 512$ 才能导致解密错误。在这些项中，涉及噪音多项式的项、消息和私钥 $e<em>{22}m_1 + e</em>{12}m_2s$ 是最大的贡献者。</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif14.jpg" alt=""></p>
+<p>上图显示，对于这些参数，最大的贡献来自于包含噪音多项式乘以消息多项式和私钥的项。这种噪音的最大系数约为300。这里有两项，其他的项更小。把所有的噪音合并成一个，就得到了乘法结果的总噪音。这些系数的分布如下图所示：</p>
+<p><img src="http://images.yingwai.top/picgo/HEdif15.jpg" alt=""></p>
+<p>这表明没有足够的预算来安全地进行单次乘法，然后解密这些参数的正确结果(无论如何都是不安全的!)——大约1/4000的系数将具有大于512的噪音，导致约1%的解密错误率。</p>
+<p>因此，如果我们将它们视为 $s$ 的多项式，则可以进行密文的乘法，从而在解密时抵消它们自己的掩码项。将它们相乘，并分别跟踪 $s$ 的幂次方的系数和噪音量，以便我们确信它们能够正确解密。</p>
+<h1 id="Relinearisation和其他话题"><a href="#Relinearisation和其他话题" class="headerlink" title="Relinearisation和其他话题"></a>Relinearisation和其他话题</h1><p>上面概述的乘法策略允许我们进行多次乘法，但代价是每次乘法都将密文的大小增加一个多项式。密文在大小上增长可能是一个问题。事实证明，有一些方法可以将密文的大小还原为两个多项式，但代价是增加噪音。这就是所谓的Relinearisation（再线性化），因为你要去掉 $s$ 多项式中的二次项和更高的项。</p>
+<p>另一项使这种加密方案切实可行的重要技术是将多个消息打包到一个明文中，通过并行化提高吞吐量。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>粗略地说，加密是将消息隐藏在一个环上的多项式中，并添加一些噪音。每个密文都包含足够的信息，可以在给定私钥的情况下除去自己的掩码。因为嵌入只涉及到消息的缩放，所以仍然可以对它们执行加法和乘法，并使用一些巧妙的结构来在之后移除掩码。该方案的安全性来自于在不知道私钥的情况下，在噪声存在的情况下很难去除掩码。这个问题的难度导致了一些优秀的安全性能，例如没有已知的量子算法来攻击这些系统。</p>
+<p>如果您已经了解了这些，我们希望您现在能够更好地理解基于Ring Learning with Errors问题的同态加密方案(或者至少是这些方案中的FV方案)的工作原理。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 密码学</a>
+          
+            <a href="/tags/HE/" rel="tag"><i class="fa fa-tag"></i> HE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Privacy-preserving-SVM-on-Outsourced-Genomic-Data-via-Secure-Multi-party-Computation/" rel="next" title="论文笔记 Privacy-preserving SVM on Outsourced Genomic Data via Secure Multi-party Computation">
+                <i class="fa fa-chevron-left"></i> 论文笔记 Privacy-preserving SVM on Outsourced Genomic Data via Secure Multi-party Computation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/06/%E7%BE%A4%E4%B8%8E%E7%8E%AF%E7%9A%84%E6%A6%82%E5%BF%B5/" rel="prev" title="群与环的概念">
+                群与环的概念 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/20200417221334.jpg"
+                alt="yyw" />
+            
+              <p class="site-author-name" itemprop="name">yyw</p>
+              <p class="site-description motion-element" itemprop="description">Do not go gentle into that good night.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学介绍"><span class="nav-number">2.</span> <span class="nav-text">数学介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用环上的多项式加密"><span class="nav-number">3.</span> <span class="nav-text">使用环上的多项式加密</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#私钥和公钥"><span class="nav-number">3.1.</span> <span class="nav-text">私钥和公钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加密"><span class="nav-number">3.2.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解密"><span class="nav-number">3.3.</span> <span class="nav-text">解密</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同态操作"><span class="nav-number">4.</span> <span class="nav-text">同态操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#同态加法"><span class="nav-number">4.1.</span> <span class="nav-text">同态加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同态乘法"><span class="nav-number">4.2.</span> <span class="nav-text">同态乘法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Relinearisation和其他话题"><span class="nav-number">5.</span> <span class="nav-text">Relinearisation和其他话题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">6.</span> <span class="nav-text">结论</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-tree" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yyw</span>
+
+  
+</div>
+
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">87.7k</span>
+  
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
