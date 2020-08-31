@@ -1,13 +1,78 @@
 ---
-title: Java正则表达式以及Date、DateFormat和Calendar类
-date: 2020-08-29 19:54:46
-categories: Coding
+title: Java常用API
+date: 2020-08-31 17:35:36
+categorise: Coding
 tags: Java
 ---
 
----
+----
 
 <!--more-->
+
+
+
+## Object类
+
+Object类是所有类的超类，祖宗类。java仲所有的类都直接或间接地继承这个类
+
+### 方法
+
+```java
+public String toString() // 返回当前对象中的内容, 对于Object类默认操作来说，返回的对象的类型+@+内存地址值
+public boolean equals(Object obj) // 比较两个对象内容是否相同，对于Object类默认操作来说,比较的是地址值
+```
+
+
+
+## String类
+
+字符串类，字符串是常量；它们的值在创建之后不能更改
+
+### 方法
+
+```java
+boolean equals(Object obj) // 判断两个字符串中的内容是否相同
+boolean equalsIgnoreCase(String str)  // 判断两个字符串中的内容是否相同, 忽略大小写
+boolean contains(String str) // 判断该字符串中 是否包含给定的字符串
+boolean startsWith(String str) // 判断该字符串 是否以给定的字符串开头
+boolean endsWith(String str) // 判断该字符串 是否以给定的字符串结尾
+boolean isEmpty() // 判断该字符串的内容是否为空的字符串  ""
+    
+int length() // 获取该字符串的长度
+char charAt(int index) // 获取该字符串中指定位置上的字符 
+String substring(int start) // 从指定位置开始，到末尾结束，截取该字符串，返回新字符串
+String substring(int start,int end) // 从指定位置开始，到指定位置结束，截取该字符串，返回新字符串 
+int indexOf(int ch ) // 获取给定的字符，在该字符串中第一次出现的位置
+int indexOf(String str) // 获取给定的字符串，在该字符串中第一次出现的位置
+int indexOf(int ch,int fromIndex) // 从指定位置开始，获取给定的字符，在该字符
+    
+byte[] getBytes() // 把该字符串 转换成 字节数组
+char[] toCharArray() // 把该字符串 转换成 字符数组
+String replace(char old,char new) // 在该字符串中，将给定的旧字符，用新字符替换
+String replace(String old,String new) // 在该字符串中， 将给定的旧字符串，用新字符串替换
+String trim() // 去除字符串两端空格，中间的不会去除，返回一个新字符串
+String toLowerCase() // 把该字符串转换成 小写字符串 
+String toUpperCase() // 把该字符串转换成 大写字符串
+int indexOf(String str,int fromIndex) // 从指定位置开始，获取给定的字符串，在该字符串中第一次出现的位置
+```
+
+
+
+## StringBuffer/StringBuilder类
+
+### 方法
+
+```java
+public StringBuffer append(String str) // 在原有字符串缓冲区内容基础上，在末尾追加新数据
+public StringBuffer insert(int offset,String str) // 在原有字符串缓冲区内容基础上，在指定位置插入新数据
+public StringBuffer deleteCharAt(int index) // 在原有字符串缓冲区内容基础上，删除指定位置上的字符
+public StringBuffer delete(int start,int end) // 在原有字符串缓冲区内容基础上，删除指定范围内的多个字符
+public StringBuffer replace(int start,int end,String str) // 在原有字符串缓冲区内容基础上，将指定范围内的多个字符 用给定的字符串替换
+    
+public StringBuffer reverse() // 将字符串缓冲区的内容 反转  "abc"----"cba"
+public String substring(int start) // 从指定位置开始，到末尾结束，截取该字符串缓冲区，返回新字符串
+public String substring(int start,int end)  // 从指定位置开始，到指定位置结束，截取该字符串缓冲区，返回新字符串
+```
 
 
 
@@ -132,4 +197,85 @@ public void add(int field,int amount)	// 指定字段增加某值
 public final void set(int field,int value) // 设置指定字段的值
 public final Date getTime()	// 获取该日历对象转成的日期对象
 ```
+
+
+
+## 基本类型包装类
+
+### 8种基本类型对应的包装类
+
+| 基本类型 | 包装类    |
+| -------- | --------- |
+| byte     | Byte      |
+| short    | Short     |
+| int      | Integer   |
+| long     | Long      |
+| float    | Float     |
+| double   | Double    |
+| char     | Character |
+| boolean  | Boolean   |
+
+
+
+### 自动装箱、自动拆箱
+
+* 自动装箱：基本数值转成对象（`int -> Integer`）
+* 自动拆箱：对象转成基本数值（`Integer -> int`）
+
+
+
+### 常用方法
+
+```java
+public int parseInt(String str)		// 把字符串转成基本类型int
+public static String toString(int x)	// 把基本类型int转成字符串
+public static Integer valueOf(int x)	// 把基本类型i字符串转成Integer对象
+public int intValue()	// 以int类型返回该包装类对象的值
+```
+
+
+
+## System类
+
+系统属性信息工具类
+
+### 方法
+
+```java
+public static long currentTimeMillis()	// 获取当前系统时间与1970年01月01日00:00点之间的毫秒差值
+public static void exit(int status)		// 用来结束正在运行的Java程序。参数传入一个数字即可。通常传入0记为正常状态，其他为异常状态
+public static void gc()		// 用来运行JVM中的垃圾回收器，完成内存中垃圾的清除。
+public static String getProperties()	// 用来获取指系统属性信息
+```
+
+
+
+## Arrays类
+
+数组操作工具类
+
+### 方法
+
+```java
+public static void sort()	// 用来对指定数组中的元素进行排序（元素值从小到大进行排序）
+public static String toString()		// 用来返回指定数组元素内容的字符串形式
+public static void binarySearch(要找的元素)	// 在指定数组中，查找给定元素值出现的位置。若没有查询到，返回位置为-插入点-1。要求该数组必须是个有序的数组
+```
+
+
+
+## Math类
+
+数学运算工具类
+
+### 方法
+
+* `abs(int a)`方法,结果都为正数
+* `ceil(int a)`方法，结果为比参数值大的最小整数的double值
+* `floor(int a)`方法，结果为比参数值小的最大整数的double值
+* `max(int a, int b)`方法，返回两个参数值中较大的值
+* `min(int a, int b)`方法，返回两个参数值中较小的值
+* `pow(int a, int p)`方法，返回第一个参数的第二个参数次幂的值
+* `round(int a)`方法，返回参数值四舍五入的结果
+* `random()`方法，产生一个大于等于0.0且小于1.0的double小数
 
