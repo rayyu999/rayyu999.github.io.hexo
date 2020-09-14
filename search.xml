@@ -5156,4 +5156,485 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java IO</title>
+    <url>/2020/09/14/Java-IO/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h2 id="File"><a href="#File" class="headerlink" title="File"></a>File</h2><p>文件和目录路径名的抽象表示形式</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">File</span><span class="params">(String pathname)</span> <span class="comment">// 通过给定的文件或文件夹的路径，来创建对应的File对象</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">File</span><span class="params">(String parent, String child)</span> <span class="comment">// 通过给定的父文件夹路径，与给定的文件名称或目录名称来创建对应的File对象</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">File</span><span class="params">(File parent, String child)</span>	<span class="comment">// 通过给定的File对象的目录路径，与给定的文件夹名称或文件名称来创建对应的File对象</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="路径的分类"><a href="#路径的分类" class="headerlink" title="路径的分类"></a>路径的分类</h3><ul>
+<li><p>绝对路径，带盘符</p>
+<p><code>E:\Workspace\day20_File\abc.txt</code></p>
+</li>
+<li><p>相对路径，不带盘符</p>
+<p><code>day20_File\abc.txt</code></p>
+</li>
+<li><p>注意：当指定一个文件路径的时候，如果采用的是相对路径，默认的目录为项目的根目录</p>
+</li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
+<li><p>```java<br>public boolean createNewFile()    // 创建文件</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  * 返回值为 `true`，说明创建文件成功</span><br><span class="line">  * 返回值为 `false`，说明文件已存在，创建文件失败</span><br><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  public boolean mkdir()	// 创建单层文件夹</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建文件夹成功，返回 <code>true</code></li>
+<li>创建文件夹失败，返回 <code>false</code></li>
+</ul>
+</li>
+<li><p>```java<br>public boolean mkdirs()    // 创建多层文件夹</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="keyword">delete</span>()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除此抽象路径名表示的文件或目录</li>
+<li>如果此路径名表示一个目录，则该目录必须为空才能删除</li>
+</ul>
+</li>
+<li><p>```java<br>public boolean isDirectory()    // 判断是否为文件夹</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">bool</span>ean isFile()	<span class="comment">// 判断是否为文件</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>public boolean exists()    // 判断File对象对应的文件或文件夹是否存在</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">String</span> <span class="title">getAbsolutePath</span><span class="params">()</span>	<span class="comment">// 获取当前File的绝对路径</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>public String getName()    // 获取当前File对象的文件或文件夹名称</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">length</span><span class="params">()</span>	<span class="comment">// 获取当前File对象的文件或文件夹的大小（字节）</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>public File[] listFiles()    // 获取File所代表目录中所有文件或文件夹的绝对路径</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## IO 流</span><br><span class="line"></span><br><span class="line">### IO 流分类</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">|- 字节流</span><br><span class="line">	|- 字节输入流 InputStream 抽象类</span><br><span class="line">		|- FileInputStream 操作文件的字节输入流</span><br><span class="line">    	|- BufferedInputStream 缓冲输入流</span><br><span class="line">    |- 字节输出流 OutputStream 抽象类</span><br><span class="line">    	|- FileOutputStream 操作文件的字节输出流</span><br><span class="line">    	|- BufferedOutputStream 缓冲输出流</span><br><span class="line">|- 字符流</span><br><span class="line">    |- 字符输入流 Reader 抽象类</span><br><span class="line">    	|- InputStreamReader 输入操作的转换流</span><br><span class="line">    		|- FileReader 用来操作文件的字符输入流（简便的流）</span><br><span class="line">    	|- BufferedReader 缓冲字符输入流</span><br><span class="line">    |- 字符输出流 Writer 抽象类</span><br><span class="line">    	|- OutputStreamWriter 输出操作的转换流</span><br><span class="line">    		|- FileWriter 用来操作文件的字符输出流（简便的流）</span><br><span class="line">    	|- BufferedWriter 缓冲字符输出流</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="流的操作规律"><a href="#流的操作规律" class="headerlink" title="流的操作规律"></a>流的操作规律</h3><p>IO流中对象很多，这里对解决问题（处理设备上的数据时）到底该用哪个对象进行了总结：</p>
+<ul>
+<li><p>明确要操作的数据是数据源还是数据目的。</p>
+<p>源：<code>InputStream</code>、<code>Reader</code></p>
+<p>目的：<code>OutputStream</code>、<code>Writer</code></p>
+<p>先根据需求明确要读，还是要写。</p>
+</li>
+<li><p>明确要操作的数据是字节还是文本。</p>
+<p>源：</p>
+<ul>
+<li>字节：<code>InputStream</code></li>
+<li>文本：<code>Reader</code></li>
+</ul>
+<p>目的：</p>
+<ul>
+<li>字节：<code>OutputStream</code></li>
+<li>文本：<code>Writer</code></li>
+</ul>
+<p>已经明确了具体的体系上。</p>
+</li>
+<li><p>明确数据所在的具体设备。</p>
+<p>源设备：</p>
+<ul>
+<li>硬盘：文件，<code>File</code> 开头</li>
+<li>内存：数组，字符串</li>
+<li>键盘：<code>System.in</code></li>
+<li>网络：<code>Socket</code></li>
+</ul>
+<p>目的设备：</p>
+<ul>
+<li>硬盘：文件，<code>File</code> 开头</li>
+<li>内存：数组，字符串</li>
+<li>屏幕：<code>System.out</code></li>
+<li>网络：<code>Socket</code></li>
+</ul>
+<p>完全可以明确具体要使用哪个流对象。</p>
+</li>
+<li><p>明确是否需要额外功能</p>
+<p>额外功能：</p>
+<ul>
+<li>转换流：<code>InputStreamReader</code>、<code>OutputStreamWriter</code></li>
+<li>缓冲区对象：<code>BufferedXXX</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><h4 id="读数据方法"><a href="#读数据方法" class="headerlink" title="读数据方法"></a>读数据方法</h4><ul>
+<li><p>```java<br>read()    // 一次读一个字节或字符的方法</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  <span class="keyword">read</span>(<span class="keyword">byte</span>[]  <span class="keyword">char</span>[])	<span class="comment">// 一次读一个数组数据的方法</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>readLine()    // 一次读一行字符串的方法（BufferedReader类特有方法）</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  readObject()	// 从流中读取对象（ObjectInputStream特有方法）</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="写数据方法"><a href="#写数据方法" class="headerlink" title="写数据方法"></a>写数据方法</h4><ul>
+<li><p>```java<br>write(int)    // 一次写一个字节或字符到文件中</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  <span class="keyword">write</span>(<span class="keyword">byte</span>[] <span class="keyword">char</span>[])	<span class="comment">// 一次写一个数组数据到文件中</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>write(String)    // 一次写一个字符串到文件中</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  writeObject(Object)	// 写对象到流中（ObjectOutputStream类特有方法）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>newLine()    // 写一个换行符号（BufferedWriter类特有方法）</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 向文件中写入数据的过程</span><br><span class="line"></span><br><span class="line">1. 创建输出流对象</span><br><span class="line">2. 写数据到文件</span><br><span class="line">3. 关闭输出流</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 从文件中读数据的过程</span><br><span class="line"></span><br><span class="line">1. 创建输入流对象</span><br><span class="line">2. 从文件中读数据</span><br><span class="line">3. 关闭输入流</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 文件复制的过程</span><br><span class="line"></span><br><span class="line">1. 创建输入流（数据源）</span><br><span class="line">2. 创建输出流（目的地）</span><br><span class="line">3. 从输入流仲读数据</span><br><span class="line">4. 通过输出流，把数据写入目的地</span><br><span class="line">5. 关闭流</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## Properties</span><br><span class="line"></span><br><span class="line">Map 集合中的一种，它是 Hashtable 集合的子集合，它的键与值都是 String 类型，它是唯一能与 IO 流结合使用的集合。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 方法</span><br><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  load(InputStream in)	// 从流所对应的文件中，读数据到集合中</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>load(Reader in)        // 从流所对应的文件中，读数据到集合中</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  store(OutputStream <span class="keyword">out</span>, <span class="keyword">String</span> <span class="keyword">message</span>)	<span class="comment">// 把集合中的数据，写入到流所对应的文件中</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>store(Writer out, String message)    // 把集合中的数据，写入到流所对应的文件中</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 实现文件内容的自动追加</span><br><span class="line"></span><br><span class="line">* 构造方法</span><br><span class="line"></span><br><span class="line">  ```java</span><br><span class="line">  FileOutputStream(File file, boolean append)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FileOutputStream(String fileName, <span class="keyword">boolean</span> append)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FileWriter(File file, <span class="keyword">boolean</span> append)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FileWriter(String fileName, <span class="keyword">boolean</span> append)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="实现文件内容的自动刷新"><a href="#实现文件内容的自动刷新" class="headerlink" title="实现文件内容的自动刷新"></a>实现文件内容的自动刷新</h2><ul>
+<li><p>构造方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PrintStream(OutputStream out, <span class="keyword">boolean</span> autoFlush)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PrintWriter(OutputStream out, <span class="keyword">boolean</span> autoFlush)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PrintWriter(Writer out, <span class="keyword">boolean</span> autoFlush)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Commons-IO"><a href="#Commons-IO" class="headerlink" title="Commons-IO"></a>Commons-IO</h2><h3 id="方法-2"><a href="#方法-2" class="headerlink" title="方法"></a>方法</h3><ul>
+<li><p>```java<br>readFileToString(File file)    // 读取文件内容，并返回一个String</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* ```java</span><br><span class="line">  writeStringToFile(<span class="keyword">File</span> <span class="keyword">file</span>, <span class="keyword">String</span> content)	// 将内容content写入到<span class="keyword">file</span>中</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>```java<br>copyDirectoryToDirectory(File srcDir, File destDir)    // 文件夹复制</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">* ```java</span></span><br><span class="line">  copyFileToDirectory(<span class="keyword">File</span> srcFile, <span class="keyword">File</span> destFile)	<span class="comment">// 文件复制</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java集合框架</title>
+    <url>/2020/09/14/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<p><a href="https://www.runoob.com/java/java-collections.html" target="_blank" rel="noopener">https://www.runoob.com/java/java-collections.html</a></p>
+<hr>
+<a id="more"></a>
+<p>早在 Java 2 中之前，Java 就提供了特设类。比如：Dictionary, Vector, Stack, 和 Properties 这些类用来存储和操作对象组。虽然这些类都非常有用，但是它们缺少一个核心的，统一的主题。由于这个原因，使用 Vector 类的方式和使用 Properties 类的方式有着很大不同。集合框架被设计成要满足以下几个目标。</p>
+<ul>
+<li>该框架必须是高性能的。基本集合（动态数组，链表，树，哈希表）的实现也必须是高效的。</li>
+<li>该框架允许不同类型的集合，以类似的方式工作，具有高度的互操作性。</li>
+<li>对一个集合的扩展和适应必须是简单的。</li>
+</ul>
+<p>为此，整个集合框架就围绕一组标准接口而设计。你可以直接使用这些接口的标准实现，诸如： <strong>LinkedList</strong>, <strong>HashSet</strong>, 和 <strong>TreeSet</strong> 等,除此之外你也可以通过这些接口实现自己的集合。</p>
+<p><img src="http://images.yingwai.top/picgo/java-collf1.gif" alt=""></p>
+<p>从上面的集合框架图可以看到，Java 集合框架主要包括两种类型的容器，一种是集合（Collection），存储一个元素集合，另一种是图（Map），存储键/值对映射。Collection 接口又有 3 种子类型，List、Set 和 Queue，再下面是一些抽象类，最后是具体实现类，常用的有 <a href="https://www.runoob.com/java/java-arraylist.html" target="_blank" rel="noopener">ArrayList</a>、<a href="https://www.runoob.com/java/java-linkedlist.html" target="_blank" rel="noopener">LinkedList</a>、<a href="https://www.runoob.com/java/java-hashset.html" target="_blank" rel="noopener">HashSet</a>、LinkedHashSet、<a href="https://www.runoob.com/java/java-hashmap.html" target="_blank" rel="noopener">HashMap</a>、LinkedHashMap 等等。</p>
+<p>集合框架是一个用来代表和操纵集合的统一架构。所有的集合框架都包含如下内容：</p>
+<ul>
+<li><strong>接口：</strong>是代表集合的抽象数据类型。例如 Collection、List、Set、Map 等。之所以定义多个接口，是为了以不同的方式操作集合对象。</li>
+<li><strong>实现（类）：</strong>是集合接口的具体实现。从本质上讲，它们是可重复使用的数据结构，例如：ArrayList、LinkedList、HashSet、HashMap。</li>
+<li><strong>算法：</strong>是实现集合接口的对象里的方法执行的一些有用的计算，例如：搜索和排序。这些算法被称为多态，那是因为相同的方法可以在相似的接口上有着不同的实现。</li>
+</ul>
+<p>除了集合，该框架也定义了几个 Map 接口和类。Map 里存储的是键/值对。尽管 Map 不是集合，但是它们完全整合在集合中。</p>
+<h2 id="集合框架体系如图所示"><a href="#集合框架体系如图所示" class="headerlink" title="集合框架体系如图所示"></a>集合框架体系如图所示</h2><p><img src="http://images.yingwai.top/picgo/java-collf2.png" alt=""></p>
+<p>Java 集合框架提供了一套性能优良，使用方便的接口和类，java集合框架位于java.util包中， 所以当使用集合框架的时候需要进行导包。</p>
+<hr>
+<h1 id="集合接口"><a href="#集合接口" class="headerlink" title="集合接口"></a>集合接口</h1><p>集合框架定义了一些接口。本节提供了每个接口的概述：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>接口描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Collection 接口<br />Collection 是最基本的集合接口，一个 Collection 代表一组 Object，即 Collection 的元素, Java不提供直接继承自Collection的类，只提供继承于的子接口(如List和set)。<br />Collection 接口存储一组不唯一，无序的对象。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>List 接口<br />List接口是一个有序的 Collection，使用此接口能够精确的控制每个元素插入的位置，能够通过索引(元素在List中位置，类似于数组的下标)来访问List中的元素，第一个元素的索引为 0，而且允许有相同的元素。<br />List 接口存储一组不唯一，有序（插入顺序）的对象。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Set<br />Set 具有与 Collection 完全一样的接口，只是行为上不同，Set 不保存重复的元素。<br />Set 接口存储一组唯一，无序的对象。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SortedSet<br />继承于Set保存有序的集合。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Map<br />Map 接口存储一组键值对象，提供key（键）到value（值）的映射。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Map.Entry<br />描述在一个Map中的一个元素（键/值对）。是一个Map的内部类。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>SortedMap<br />继承于 Map，使 Key 保持在升序排列。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Enumeration<br />这是一个传统的接口和定义的方法，通过它可以枚举（一次获得一个）对象集合中的元素。这个传统接口已被迭代器取代。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Set和List的区别"><a href="#Set和List的区别" class="headerlink" title="Set和List的区别"></a>Set和List的区别</h2><ol>
+<li>Set 接口实例存储的是无序的，不重复的数据。List 接口实例存储的是有序的，可以重复的元素。</li>
+<li>Set检索效率低下，删除和插入效率高，插入和删除不会引起元素位置改变 <strong>&lt;实现类有HashSet,TreeSet&gt;</strong>。</li>
+<li>List和数组类似，可以动态增长，根据实际存储的数据的长度自动增长List的长度。查找元素效率高，插入删除效率低，因为会引起其他元素位置改变 <strong>&lt;实现类有ArrayList,LinkedList,Vector&gt;</strong> 。</li>
+</ol>
+<hr>
+<h1 id="集合实现类（集合类）"><a href="#集合实现类（集合类）" class="headerlink" title="集合实现类（集合类）"></a>集合实现类（集合类）</h1><p>Java提供了一套实现了Collection接口的标准集合类。其中一些是具体类，这些类可以直接拿来使用，而另外一些是抽象类，提供了接口的部分实现。</p>
+<p>标准集合类汇总于下表：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>类描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>AbstractCollection</strong> <br />实现了大部分的集合接口。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>AbstractList</strong> <br />继承于AbstractCollection 并且实现了大部分List接口。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>AbstractSequentialList</strong> <br />继承于 AbstractList ，提供了对数据元素的链式访问而不是随机访问。</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://www.runoob.com/java/java-linkedlist.html" target="_blank" rel="noopener">LinkedList</a><br />该类实现了List接口，允许有null（空）元素。主要用于创建链表数据结构，该类没有同步方法，如果多个线程同时访问一个List，则必须自己实现访问同步，解决方法就是在创建List时候构造一个同步的List。例如：<br /><code>List list=Collections.synchronizedList(newLinkedList(...));</code><br />LinkedList 查找效率低。</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://www.runoob.com/java/java-arraylist.html" target="_blank" rel="noopener">ArrayList<br /></a>该类也是实现了List的接口，实现了可变大小的数组，随机访问和遍历元素时，提供更好的性能。该类也是非同步的,在多线程的情况下不要使用。ArrayList 增长当前长度的50%，插入删除效率低。</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>AbstractSet</strong> <br />继承于AbstractCollection 并且实现了大部分Set接口。</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://www.runoob.com/java/java-hashset.html" target="_blank" rel="noopener">HashSet</a><br />该类实现了Set接口，不允许出现重复元素，不保证集合中元素的顺序，允许包含值为null的元素，但最多只能一个。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>LinkedHashSet<br />具有可预知迭代顺序的 Set 接口的哈希表和链接列表实现。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>TreeSet<br />该类实现了Set接口，可以实现排序等功能。</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>AbstractMap</strong> <br />实现了大部分的Map接口。</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://www.runoob.com/java/java-hashmap.html" target="_blank" rel="noopener">HashMap</a><br />HashMap 是一个散列表，它存储的内容是键值对(key-value)映射。该类实现了Map接口，根据键的HashCode值存储数据，具有很快的访问速度，最多允许一条记录的键为null，不支持线程同步。</td>
+</tr>
+<tr>
+<td>12</td>
+<td>TreeMap<br />继承了AbstractMap，并且使用一颗树。</td>
+</tr>
+<tr>
+<td>13</td>
+<td>WeakHashMap<br />继承AbstractMap类，使用弱密钥的哈希表。</td>
+</tr>
+<tr>
+<td>14</td>
+<td>LinkedHashMap<br />继承于HashMap，使用元素的自然顺序对元素进行排序。</td>
+</tr>
+<tr>
+<td>15</td>
+<td>IdentityHashMap<br />继承AbstractMap类，比较文档时使用引用相等。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在前面的教程中已经讨论通过java.util包中定义的类，如下所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>类描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Vector<br />该类和ArrayList非常相似，但是该类是同步的，可以用在多线程的情况，该类允许设置默认的增长长度，默认扩容方式为原来的2倍。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Stack<br />栈是Vector的一个子类，它实现了一个标准的后进先出的栈。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Dictionary<br />Dictionary 类是一个抽象类，用来存储键/值对，作用和Map类相似。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Hashtable<br />Hashtable 是 Dictionary(字典) 类的子类，位于 java.util 包中。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Properties<br />Properties 继承于 Hashtable，表示一个持久的属性集，属性列表中每个键及其对应值都是一个字符串。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>BitSet<br />一个Bitset类创建一种特殊类型的数组来保存位值。BitSet中数组大小会随需要增加。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h1 id="集合算法"><a href="#集合算法" class="headerlink" title="集合算法"></a>集合算法</h1><p>集合框架定义了几种算法，可用于集合和映射。这些算法被定义为集合类的静态方法。</p>
+<p>在尝试比较不兼容的类型时，一些方法能够抛出 ClassCastException异常。当试图修改一个不可修改的集合时，抛出UnsupportedOperationException异常。</p>
+<p>集合定义三个静态的变量：EMPTY_SET，EMPTY_LIST，EMPTY_MAP的。这些变量都不可改变。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>算法描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Collection Algorithms<br />这里是一个列表中的所有算法实现。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h1 id="如何使用迭代器"><a href="#如何使用迭代器" class="headerlink" title="如何使用迭代器"></a>如何使用迭代器</h1><p>通常情况下，你会希望遍历一个集合中的元素。例如，显示集合中的每个元素。</p>
+<p>一般遍历数组都是采用for循环或者增强for，这两个方法也可以用在集合框架，但是还有一种方法是采用迭代器遍历集合框架，它是一个对象，实现了<a href="https://www.runoob.com/java/java-iterator.html" target="_blank" rel="noopener">Iterator</a> 接口或 ListIterator接口。</p>
+<p>迭代器，使你能够通过循环来得到或删除集合的元素。ListIterator 继承了 Iterator，以允许双向遍历列表和修改元素。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>迭代器方法描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://www.runoob.com/java/java-iterator.html" target="_blank" rel="noopener">使用 Java Iterator</a><br />这里通过实例列出 Iterator 和 ListIterator 接口提供的所有方法。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="遍历-ArrayList"><a href="#遍历-ArrayList" class="headerlink" title="遍历 ArrayList"></a>遍历 ArrayList</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*; </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">        List&lt;String&gt; list=<span class="keyword">new</span> ArrayList&lt;String&gt;(); </span><br><span class="line">        list.add(<span class="string">"Hello"</span>); </span><br><span class="line">        list.add(<span class="string">"World"</span>); </span><br><span class="line">        list.add(<span class="string">"HAHAHAHA"</span>); </span><br><span class="line">        <span class="comment">//第一种遍历方法使用 For-Each 遍历 List </span></span><br><span class="line">        <span class="keyword">for</span> (String str : list) &#123; <span class="comment">//也可以改写 for(int i=0;i&lt;list.size();i++) 这种形式 </span></span><br><span class="line">            System.out.println(str); </span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第二种遍历，把链表变为数组相关的内容进行遍历 </span></span><br><span class="line">        String[] strArray=<span class="keyword">new</span> String[list.size()]; </span><br><span class="line">        list.toArray(strArray); </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;strArray.length;i++) <span class="comment">//这里也可以改写为 for(String str:strArray) 这种形式 </span></span><br><span class="line">        &#123; </span><br><span class="line">            System.out.println(strArray[i]); </span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第三种遍历 使用迭代器进行相关遍历 </span></span><br><span class="line">        </span><br><span class="line">        Iterator&lt;String&gt; ite=list.iterator(); </span><br><span class="line">        <span class="keyword">while</span>(ite.hasNext())<span class="comment">//判断下一个元素之后有值 </span></span><br><span class="line">        &#123; </span><br><span class="line">            System.out.println(ite.next()); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong></p>
+<p>三种方法都是用来遍历ArrayList集合，第三种方法是采用迭代器的方法，该方法可以不用担心在遍历的过程中会超出集合的长度。</p>
+<h2 id="遍历-Map"><a href="#遍历-Map" class="headerlink" title="遍历 Map"></a>遍历 Map</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*; </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">        Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;(); </span><br><span class="line">        map.put(<span class="string">"1"</span>, <span class="string">"value1"</span>); </span><br><span class="line">        map.put(<span class="string">"2"</span>, <span class="string">"value2"</span>); </span><br><span class="line">        map.put(<span class="string">"3"</span>, <span class="string">"value3"</span>); <span class="comment">//第一种：普遍使用，二次取值 </span></span><br><span class="line">        System.out.println(<span class="string">"通过Map.keySet遍历key和value："</span>); </span><br><span class="line">        <span class="keyword">for</span> (String key : map.keySet()) &#123; </span><br><span class="line">            System.out.println(<span class="string">"key= "</span>+ key + <span class="string">" and value= "</span> + map.get(key)); </span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第二种 </span></span><br><span class="line">        System.out.println(<span class="string">"通过Map.entrySet使用iterator遍历key和value："</span>); </span><br><span class="line">        Iterator&lt;Map.Entry&lt;String, String&gt;&gt; it = map.entrySet().iterator(); </span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123; </span><br><span class="line">            Map.Entry&lt;String, String&gt; entry = it.next(); </span><br><span class="line">            System.out.println(<span class="string">"key= "</span> + entry.getKey() + <span class="string">" and value= "</span> + entry.getValue()); </span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第三种：推荐，尤其是容量大时 </span></span><br><span class="line">        System.out.println(<span class="string">"通过Map.entrySet遍历key和value"</span>); </span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, String&gt; entry : map.entrySet()) &#123; </span><br><span class="line">            System.out.println(<span class="string">"key= "</span> + entry.getKey() + <span class="string">" and value= "</span> + entry.getValue()); </span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第四种 </span></span><br><span class="line">        System.out.println(<span class="string">"通过Map.values()遍历所有的value，但不能遍历key"</span>); </span><br><span class="line">        <span class="keyword">for</span> (String v : map.values()) &#123; </span><br><span class="line">            System.out.println(<span class="string">"value= "</span> + v); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="如何使用比较器"><a href="#如何使用比较器" class="headerlink" title="如何使用比较器"></a>如何使用比较器</h1><p>TreeSet和TreeMap的按照排序顺序来存储元素. 然而，这是通过比较器来精确定义按照什么样的排序顺序。</p>
+<p>这个接口可以让我们以不同的方式来排序一个集合。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>比较器方法描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>使用 Java Comparator<br />这里通过实例列出Comparator接口提供的所有方法</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Java集合框架为程序员提供了预先包装的数据结构和算法来操纵他们。</p>
+<p>集合是一个对象，可容纳其他对象的引用。</p>
+<p>集合接口声明对每一种类型的集合可以执行的操作。集合框架的类和接口均在java.util包中。</p>
+<p>任何对象加入集合类后，自动转变为Object类型，所以</p>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java异常</title>
+    <url>/2020/09/14/Java%E5%BC%82%E5%B8%B8/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>就是程序中出现的不正常现象（错误与异常）</p>
+<ul>
+<li><p>异常的继承体系：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Throwable: 它是所有错误与异常的超类（祖宗类）</span><br><span class="line">		|- Error 错误，修改java源代码</span><br><span class="line">		|- Exception 编译期异常, javac.exe进行编译的时候报错</span><br><span class="line">			|- RuntimeException 运行期异常, java出现运行过程中出现的问题</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="异常处理的两种方式"><a href="#异常处理的两种方式" class="headerlink" title="异常处理的两种方式"></a>异常处理的两种方式</h2><ol>
+<li><p>出现问题，自己解决 <code>try...catch...finally</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    可能出现异常的代码</span><br><span class="line">&#125; <span class="keyword">catch</span>(异常类名 对象名) &#123;</span><br><span class="line">    异常处理代码</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    异常操作中一定要执行的代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>出现问题，别人解决 <code>throws</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">格式:</span><br><span class="line">修饰符 返回值类型 方法名(参数) <span class="keyword">throws</span> 异常类名<span class="number">1</span>, 异常类名<span class="number">2</span>,...&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="异常分类"><a href="#异常分类" class="headerlink" title="异常分类"></a>异常分类</h2><p>异常的根类是 Throwable，其下有两个子类：Error 与 Exception，平常所说的异常指 Exception。</p>
+<ul>
+<li>严重错误 Error，无法通过处理的错误</li>
+<li>编译时异常 Exception，编译时无法通过。如日期格式化异常</li>
+<li>运行时异常 RuntimeException，是 Exception 的子类，运行时可能会报错，可以不处理。如空指针异常</li>
+</ul>
+<h2 id="异常基本操作"><a href="#异常基本操作" class="headerlink" title="异常基本操作"></a>异常基本操作</h2><ul>
+<li><p>创建异常对象</p>
+</li>
+<li><p>抛出异常</p>
+</li>
+<li><p>处理异常：</p>
+<ul>
+<li><p>捕获处理，将异常获取，使用 <code>try / catch</code> 做分支处理</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    需要检测的异常</span><br><span class="line">&#125; <span class="keyword">catch</span>(异常对象) &#123;</span><br><span class="line">    通常我们只使用一个方法：printStackTrace 打印异常信息</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>声明抛出处理，出现异常后不处理，声明抛出给调用者处理。</p>
+<p>方法声明加上 <code>throws 异常类名</code></p>
+</li>
+</ul>
+</li>
+<li><p>注意：异常的处理，指处理异常的一种可能性，即有了异常处理的代码，不一定会产生异常。如果没有产生异常，则代码正常执行，如果产生了异常，则中断当前执行代码，执行异常处理代码。</p>
+</li>
+</ul>
+<h2 id="异常注意事项"><a href="#异常注意事项" class="headerlink" title="异常注意事项"></a>异常注意事项</h2><ul>
+<li><p>多异常处理</p>
+<ul>
+<li><p>捕获处理：</p>
+<ol>
+<li>多个异常可以分别处理</li>
+<li>多个异常一次捕获多次处理</li>
+<li>多个异常一次捕获，采用同一种方式处理</li>
+</ol>
+</li>
+<li><p>声明抛出异常：</p>
+<p>声明上使用，一次声明多个异常</p>
+</li>
+</ul>
+</li>
+<li><p>运行时异常被抛出可以不处理。即不捕获也不声明抛出</p>
+</li>
+<li><p>如果父类抛出了多个异常，子类覆盖父类方法时，只能抛出相同的异常或者是他的子集</p>
+</li>
+<li><p>父类方法没有抛出异常，子类覆盖父类该方法时也不可抛出异常。此时子类产生该异常，只能捕获处理，不能声明抛出</p>
+</li>
+<li><p>当多异常处理时，捕获处理，前边的类不能是后面类的父亲</p>
+</li>
+</ul>
+<h2 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h2><p>如果Java没有提供你需要的异常，则可以自定义异常类。</p>
+<p>定义方法：编译时异常继承 Exception，运行时异常继承 RuntimeException。</p>
+]]></content>
+      <categories>
+        <category>Coding</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
 </search>
