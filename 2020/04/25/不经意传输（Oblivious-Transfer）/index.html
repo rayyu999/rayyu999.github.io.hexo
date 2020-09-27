@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  919 字
+                  924 字
                 </span>
               
 
@@ -418,8 +418,8 @@
 <a id="more"></a>
 <p>​        例如A是机密的出售者，S列举了很多问题，意欲出售各个问题的答案，R想买其中一个问题的答案，但又不想让A知道自己买的是哪个问题的答案。</p>
 <h2 id="1-out-of-2-OT"><a href="#1-out-of-2-OT" class="headerlink" title="1-out-of-2 OT"></a>1-out-of-2 OT</h2><p>OT最早在1981年被 Michael O. Rabin提出，在Rabin的OT协议中，发送者S发送一个信息m给接收者R，接收者R以1/2的概率接受信息m。所以在协议交互的结束的时候，S并不知道R是否接受了消息。该方案是基于RSA加密体系构造的。</p>
-<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m<em>0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m</em>{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
-<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b<em>0$ 和 $b_1$，而R只能选择接受其中一个比特 $b</em>{\theta}$。协议要保证S和R的安全，即：</p>
+<p>1985年S. Even, O. Goldreich, and A. Lempel提出了1-out-2 OT,在新的方案中S每次发送2个信息 $m_0$ 和 $m_1$，而R每次输入一个选择 $b$。当协议结束的时候，S无法获得关于 $b$ 的任何有价值的信息，而R只能获得 $m_b$ ，对于 $m_{1-b}$ ，R也一无所知。<br><img src="http://images.yingwai.top/picgo/OTf1.png" alt=""></p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>S要传送两条信息，不妨设为两个比特 $b_0$ 和 $b_1$，而R只能选择接受其中一个比特 $b_{\theta}$。协议要保证S和R的安全，即：</p>
 <ul>
 <li>S不能知道任何关于 $\theta$ 的信息；</li>
 <li>R不能知道任何关于 $b_{1-\theta}$ 的信息。</li>
@@ -436,27 +436,27 @@
 <p>​                                <script type="math/tex">v =x_{\theta}+E_{pk}(r)</script></p>
 </li>
 <li><p>S在接收到 $v$ 之后，进行如下计算：</p>
-<p>​                                $r<em>{0}=D</em>{s k}\left(v-x<em>{0}\right)$<br>​                                $r</em>{1}=D<em>{s k}\left(v-x</em>{1}\right)$</p>
+<p>​                                $r_{0}=D_{s k}\left(v-x_{0}\right)$<br>​                                $r_{1}=D_{s k}\left(v-x_{1}\right)$</p>
 </li>
 <li><p>S进行如下计算：</p>
-<p>​                                $b<em>{0}^{\prime}=b</em>{0}+r<em>{0}$<br>​                                $b</em>{1}^{\prime}=b<em>{1}+r</em>{1}$</p>
+<p>​                                $b_{0}^{\prime}=b_{0}+r_{0}$<br>​                                $b_{1}^{\prime}=b_{1}+r_{1}$</p>
 <p>并将 $b’_0$ 和 $b’_1$ 传送给R；</p>
 </li>
 <li><p>接收到 $b’_0$ 和 $b’_1$ 后，R进行如下计算：</p>
-<p>​                                $b<em>\theta = b’</em>\theta - r$</p>
+<p>​                                $b_\theta = b’_\theta - r$</p>
 </li>
 </ol>
 <h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>进行如下推导：</p>
-<p>​                                $b<em>{\theta}^{\prime}-r=b</em>{\theta}+r<em>{\theta}-r=b</em>{\theta}+D<em>{s k}\left(v-x</em>{\theta}\right)-r$</p>
+<p>​                                $b_{\theta}^{\prime}-r=b_{\theta}+r_{\theta}-r=b_{\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
 <p>而</p>
-<p>​                        $D<em>{s k}(v-x</em>\theta)=D<em>{s k}\left(x</em>\theta+E<em>{p k}(r)-x</em>{\theta}\right)=D<em>{s k}\left(E</em>{p k}(r)\right)=r$</p>
+<p>​                        $D_{s k}(v-x_\theta)=D_{s k}\left(x_\theta+E_{p k}(r)-x_{\theta}\right)=D_{s k}\left(E_{p k}(r)\right)=r$</p>
 <p>因此可得</p>
-<p>​                                            $b’<em>\theta - r = b</em>\theta$</p>
-<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b<em>{1-\theta}$。R得到 $b’</em>\theta$ 和 $b’<em>{1-\theta}$ 之后，由协议可知R可以正确计算 $b’</em>\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
-<p>​                        $b<em>{1-\theta}^{\prime}-r=b</em>{1-\theta}+D<em>{s k}\left(v-x</em>{\theta}\right)-r$</p>
+<p>​                                            $b’_\theta - r = b_\theta$</p>
+<h3 id="对于S的安全性"><a href="#对于S的安全性" class="headerlink" title="对于S的安全性"></a>对于S的安全性</h3><p>对于S来说，它的安全性要求R不能推断出 $b_{1-\theta}$。R得到 $b’_\theta$ 和 $b’_{1-\theta}$ 之后，由协议可知R可以正确计算 $b’_\theta$ ，下面证明R不能计算出 $b_{1-\theta}$。</p>
+<p>​                        $b_{1-\theta}^{\prime}-r=b_{1-\theta}+D_{s k}\left(v-x_{\theta}\right)-r$</p>
 <p>而</p>
-<p>​                    $D<em>{s k}\left(v-x</em>{\theta}\right)=D<em>{s k}\left(x</em>{1-\theta}+E<em>{p k}(r)-x</em>{\theta}\right) \neq r$</p>
-<p>而且根据加密的特性，$D<em>{s k}\left(x</em>{1-\theta}+E<em>{p k}(r)-x</em>{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
+<p>​                    $D_{s k}\left(v-x_{\theta}\right)=D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right) \neq r$</p>
+<p>而且根据加密的特性，$D_{s k}\left(x_{1-\theta}+E_{p k}(r)-x_{\theta}\right)-r$ 与随机数是不可区分的，所以 $b’_{1-\theta}-r$ 与随机数是不可区分的。因此协议对S是安全的。</p>
 <h3 id="对于R的安全性"><a href="#对于R的安全性" class="headerlink" title="对于R的安全性"></a>对于R的安全性</h3><p>R的安全性要求S不能获得关于 $\theta$ 任何有价值的信息。</p>
 <p>因为 $r$ 是随机数，所以 $E_{pk}(r)$ 与随机数是不可区分的。因此 $v$ 与随机数是不可区分的，所以S不能从 $v$ 获得关于 $\theta$ 有价值的信息。</p>
 
@@ -686,7 +686,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">101.1k</span>
+    <span title="Site words total count">101.3k</span>
   
 
 <!--

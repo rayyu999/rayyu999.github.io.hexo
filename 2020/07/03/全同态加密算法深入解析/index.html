@@ -667,7 +667,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
 &+ \frac{t}{q}e^2u_1u_2 + \frac{t}{q}e_{12}e_{22}s^2 + \frac{t}{q}e_{22}esu_1 + \frac{t}{q}e_{12}esu_2\\
 &+ \frac{t}{q}e_{12}e_{21}s + \frac{t}{q}e_{11}e_{22}s + \frac{t}{q}e_{21}eu_1 + \frac{t}{q}e_{11}eu_2 + \frac{t}{q}e_{11}e_{21}
 \end{align}</script><p>这里有很多项，但是现在我们已经去掉了掩码，问题是，噪音(除了第一个)与 $q/(2t)$ 的“噪音预算”相比有多大?</p>
-<p>为了感受这一点，我们模拟了大量加密的随机信息的乘法，$d = 16$，$t = 7$，$q = 7168 = 1024 \times t$。各类型噪音的系数大小分布如下图所示。请注意，总的噪音需要大于 $q/(2t) = 512$ 才能导致解密错误。在这些项中，涉及噪音多项式的项、消息和私钥 $e<em>{22}m_1 + e</em>{12}m_2s$ 是最大的贡献者。</p>
+<p>为了感受这一点，我们模拟了大量加密的随机信息的乘法，$d = 16$，$t = 7$，$q = 7168 = 1024 \times t$。各类型噪音的系数大小分布如下图所示。请注意，总的噪音需要大于 $q/(2t) = 512$ 才能导致解密错误。在这些项中，涉及噪音多项式的项、消息和私钥 $e_{22}m_1 + e_{12}m_2s$ 是最大的贡献者。</p>
 <p><img src="http://images.yingwai.top/picgo/HEdif14.jpg" alt=""></p>
 <p>上图显示，对于这些参数，最大的贡献来自于包含噪音多项式乘以消息多项式和私钥的项。这种噪音的最大系数约为300。这里有两项，其他的项更小。把所有的噪音合并成一个，就得到了乘法结果的总噪音。这些系数的分布如下图所示：</p>
 <p><img src="http://images.yingwai.top/picgo/HEdif15.jpg" alt=""></p>
@@ -904,7 +904,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">101.1k</span>
+    <span title="Site words total count">101.3k</span>
   
 
 <!--

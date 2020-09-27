@@ -424,28 +424,28 @@
 <p><img src="http://images.yingwai.top/picgo/emkhef1.png" alt=""></p>
 <h1 id="BACKGROUND"><a href="#BACKGROUND" class="headerlink" title="BACKGROUND"></a>BACKGROUND</h1><h2 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h2><p>除非另有说明，否则所有对数都以 $2$ 为底。我们用粗体表示向量，例如$\mathbf{a}$，用大写粗体表示矩阵，例如 $\mathbf{A}$。本文用 $\langle \mathbf{u}, \mathbf{v} \rangle$ 表示两个向量 $\mathbf{u}, \mathbf{v}$ 的通常点积。对于实数 $r$，$\lfloor r \rceil$ 表示最表示最接近 $r$ 的整数，在平局的情况下向上舍入。本文用 $x \leftarrow D$ 表示按分布 $D$ 抽样的 $x$。对于有限集 $S$，$U(S)$ 表示 $S$ 上的均匀分布。本文用 $\lambda$ 表示安全参数：所有已知的对作用域内的密码方案的有效攻击都应该采用 $\Omega(2^\lambda)$ 位运算。</p>
 <h2 id="多密钥同态加密"><a href="#多密钥同态加密" class="headerlink" title="多密钥同态加密"></a>多密钥同态加密</h2><p>多密钥同态加密是一种密码系统，它允许我们对可能在不同密钥下加密的密文评估算术电路。</p>
-<p>设 $\mathcal{M}$ 是具有算术结构的消息空间。MKHE方案MKHE由五个PPT算法($\mathsf{Setup}, \mathsf{KeyGen}, \mathsf{Enc}, \mathsf{Dec}, \mathsf{Eval}$)组成。本文假设每个参与方都有对其公钥和私钥的引用(索引)。多密钥密文隐式包含<em>有序</em>集合 $T = {id<em>1, …, id_k}$ 相关联的引用。例如，新的密文 $\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk}</em>{id})$ 对应于单个元素集合 $T = {id}$，但是随着来自不同方的密文之间的计算的进行，参考集合的大小变得更大。</p>
+<p>设 $\mathcal{M}$ 是具有算术结构的消息空间。MKHE方案MKHE由五个PPT算法($\mathsf{Setup}, \mathsf{KeyGen}, \mathsf{Enc}, \mathsf{Dec}, \mathsf{Eval}$)组成。本文假设每个参与方都有对其公钥和私钥的引用(索引)。多密钥密文隐式包含<em>有序</em>集合 $T = \{id_1, …, id_k\}$ 相关联的引用。例如，新的密文 $\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk}_{id})$ 对应于单个元素集合 $T = \{id\}$，但是随着来自不同方的密文之间的计算的进行，参考集合的大小变得更大。</p>
 <ul>
 <li><p><strong>初始化</strong>：$pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$。将安全参数作为输入并返回公共参数化。本文假设所有其他算法都隐含地将 $pp$ 作为输入。</p>
 </li>
 <li><p><strong>密钥生成</strong>：$(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$。输出一对私钥和公钥。</p>
 </li>
-<li><p><strong>加密</strong>：$\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk})$。加密明文 $\mu \in \mathcal{M}$ 并输出密文 $\mathsf{ct} \in {0,1 }^*$。</p>
+<li><p><strong>加密</strong>：$\mathsf{ct} \leftarrow \mathsf{MKHE.Enc}(\mu; \mathsf{pk})$。加密明文 $\mu \in \mathcal{M}$ 并输出密文 $\mathsf{ct} \in \{0,1 \}^*$。</p>
 </li>
-<li><p><strong>解密</strong>：$\mu \leftarrow \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; {\mathsf{sk}<em>{id}}</em>{id \in T})$。给定具有对应密钥序列的密文 $\overline{\mathsf{ct}}$，输出明文 $\mu$。</p>
+<li><p><strong>解密</strong>：$\mu \leftarrow \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; \{\mathsf{sk}_{id}\}_{id \in T})$。给定具有对应密钥序列的密文 $\overline{\mathsf{ct}}$，输出明文 $\mu$。</p>
 </li>
 <li><p><strong>同态评估</strong>：</p>
 <script type="math/tex; mode=display">
-\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,...,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})</script><p>给定电路 $\mathcal{C}$，多密钥密文的元组 $(\overline{\mathsf{ct}}<em>1,…,\overline{\mathsf{ct}}_l)$ 和对应的一组公钥 ${\mathsf{pk}</em>{id}}_{id \in T}$，输出密文 $\overline{\mathsf{ct}}$。它的参考集是输入密文 $\overline{\mathsf{ct}}_j, 1 \leq j \leq l$ 的联合 $T = T_1 \cup \cdots \cup T_l$。</p>
+\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,...,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})</script><p>给定电路 $\mathcal{C}$，多密钥密文的元组 $(\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l)$ 和对应的一组公钥 $\{\mathsf{pk}_{id}\}_{id \in T}$，输出密文 $\overline{\mathsf{ct}}$。它的参考集是输入密文 $\overline{\mathsf{ct}}_j, 1 \leq j \leq l$ 的联合 $T = T_1 \cup \cdots \cup T_l$。</p>
 </li>
 </ul>
-<p><strong>语义安全。</strong>对于任意两条消息 $\mu_0, \mu_1 \in \mathcal{M}, \ \ i = 0, 1$ 的分布 ${\mathsf{MKHE.Enc}(\mu_i; \mathsf{pk}) }$ 在 $pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$ 和 $(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$ 的计算上应该是不可区分的。</p>
+<p><strong>语义安全。</strong>对于任意两条消息 $\mu_0, \mu_1 \in \mathcal{M}, \ \ i = 0, 1$ 的分布 $\{\mathsf{MKHE.Enc}(\mu_i; \mathsf{pk}) \}$ 在 $pp \leftarrow \mathsf{MKHE.Setup}(1^\lambda)$ 和 $(\mathsf{sk}, \mathsf{pk}) \leftarrow \mathsf{MKHE.KeyGen}(pp)$ 的计算上应该是不可区分的。</p>
 <p><strong>正确性和紧凑性。</strong>如果与 $k$ 方相关的密文的大小受固定多项式 ${\rm poly}(\cdot, \cdot)$ 的 ${\rm poly}(\lambda, k)$ 的限制，则MKHE方案是紧致的。</p>
-<p>对于 $1 \leq j \leq l$，设 $\overline{\mathsf{ct}}<em>j$ 为密文(参考集合 $T_j$)，使得 $\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}_j; {\mathsf{sk}</em>{id}}<em>{id \in T} = \mu_j$。设 $\mathcal{C} : \mathcal{M}^l \rightarrow \mathcal{M}$ 为电路，$\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l),{\mathsf{pk}</em>{id}}_{id \in T})$，其中 $T = T_1 \cup \cdots \cup T_l$。然后，</p>
+<p>对于 $1 \leq j \leq l$，设 $\overline{\mathsf{ct}}_j$ 为密文(参考集合 $T_j$)，使得 $\mathsf{MKHE.Dec}(\overline{\mathsf{ct}}_j; \{\mathsf{sk}_{id}\}_{id \in T} = \mu_j$。设 $\mathcal{C} : \mathcal{M}^l \rightarrow \mathcal{M}$ 为电路，$\overline{\mathsf{ct}} \leftarrow \mathsf{MKHE.Eval}(\mathcal{C}, (\overline{\mathsf{ct}}_1,…,\overline{\mathsf{ct}}_l),\{\mathsf{pk}_{id}\}_{id \in T})$，其中 $T = T_1 \cup \cdots \cup T_l$。然后，</p>
 <script type="math/tex; mode=display">
 \mathsf{MKHE.Dec}(\overline{\mathsf{ct}}; \{\mathsf{sk}_{id}\}_{id \in T} = \mathcal{C}(\mu_1,...,\mu_l) \tag{1}</script><p>以压倒性的可能性。对于近似算术[16]，可以用类似于CKKS格式的近似相等来代替(1)的相等。</p>
 <h2 id="环上容错学习"><a href="#环上容错学习" class="headerlink" title="环上容错学习"></a>环上容错学习</h2><p>在整篇文章中，作者假设 $n$ 是2的幂整数，并且 $R=\mathbb{Z}[X]/(X^n+1)$。对于 $R$ 的模为整数 $q$ 的剩余环，本文记作 $R_q=R/(q·R)$。带参数 $(n,q,\chi,\psi)$ 的环学习假设是给定任意多项式数目的形式的样本 $(a_i,b_i=s \cdot a_i+e_i) \in R^2_q$，其中 $a_i$ 在 $R_q$ 中是一致随机的，$s$ 选自 $R_q$ 上的密钥分布 $\chi$，$e_i$ 取自 $R$ 上的误差分布 $\psi$，$b_i$ 是 $R_q$ 中的均匀随机元素、在计算上是不可区分的。</p>
-<h2 id="小工具分解"><a href="#小工具分解" class="headerlink" title="小工具分解"></a>小工具分解</h2><p>设 $\mathbf{g}=(g<em>i) \in \mathbb{Z}^d$ 为小工具向量，$q$ 为整数。小工具分解，由 $\mathbf{g}^{-1}$ 表示，是从 $R_q$ 到 $R^d$ 的函数，它将元素 $a \in R_q$ 转换成<em>小</em>多项式向量 $u=(u_0,…,u</em>{d−1})\in R^d$ ，使得 $a = \sum^{d-1}_{i=0} g_i \cdot u_i \pmod{q}$。</p>
+<h2 id="小工具分解"><a href="#小工具分解" class="headerlink" title="小工具分解"></a>小工具分解</h2><p>设 $\mathbf{g}=(g_i) \in \mathbb{Z}^d$ 为小工具向量，$q$ 为整数。小工具分解，由 $\mathbf{g}^{-1}$ 表示，是从 $R_q$ 到 $R^d$ 的函数，它将元素 $a \in R_q$ 转换成<em>小</em>多项式向量 $u=(u_0,…,u_{d−1})\in R^d$ ，使得 $a = \sum^{d-1}_{i=0} g_i \cdot u_i \pmod{q}$。</p>
 <p>小工具分解技术被广泛应用于HE方案的构建中。例如，非线性电路的同态评估是基于密钥切换技术的，并且大多数HE方案利用各种小工具分解方法来控制噪声增长。文献中已经提出了各种分解方法，如位分解[6，7]、基分解[17，21]和基于RNS的分解[4，30]。本文的实现利用了RNS友好的分解来提高效率。</p>
 <h1 id="本文的构造"><a href="#本文的构造" class="headerlink" title="本文的构造"></a>本文的构造</h1><h2 id="基本方案"><a href="#基本方案" class="headerlink" title="基本方案"></a>基本方案</h2><ul>
 <li>$\mathsf{Setup}(1^\lambda)$：对于给定的安全参数 $\lambda$，设置RLWE维数 $n$、密文模数 $q$、密钥分布 $\chi$ 和R上的误差分布 $\psi$。生成随机向量 $\mathbf{a} \leftarrow U(R^d_q)$。返回公共参数 $pp=(n, q, \chi, \psi, \mathbf{a})$。</li>
@@ -694,7 +694,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">101.1k</span>
+    <span title="Site words total count">101.3k</span>
   
 
 <!--

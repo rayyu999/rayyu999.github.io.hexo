@@ -521,9 +521,9 @@ Sim(u, u') = \frac{\sum^n_{i=1}(r_{ui}-\bar{r}_u)(r_{u'i}-\bar{r}_{u'})}{\sqrt{\
 <h2 id="基于新的相似度函数确定邻域"><a href="#基于新的相似度函数确定邻域" class="headerlink" title="基于新的相似度函数确定邻域"></a>基于新的相似度函数确定邻域</h2><p>在此阶段，将前一阶段得到的聚类相似度(基于人口统计属性)和CF相似度合并到一个新的相似度函数中，以缓解冷启动问题。因为在用户最近加入系统的情况下，新的相似性函数并不完全依赖于user-item矩阵。通过该函数可以得到相似度。相似度函数(Hsim)通过簇内相似度(ClusSim)和基于CF的相似度(Sim)的加权和计算如下(5)：</p>
 <script type="math/tex; mode=display">
 Hsim(u,u')=(1-\alpha) \times Sim(u,u') + \alpha \times clusSim(u,u') \tag{5}</script><p>在利用上述公式计算客户之间的相似度后，选择与目标客户相似度最高的K个客户作为该客户的邻居。</p>
-<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r<em>{u’,i})$，预测用户$u$对于项目$i$，$(r</em>{u,i})$的得分如下：</p>
+<h2 id="提供推荐"><a href="#提供推荐" class="headerlink" title="提供推荐"></a>提供推荐</h2><p>在识别前一阶段目标客户的邻居后，通过计算这些邻居给出的得分的加权平均，预测目标客户的偏好。基于公式(6)，利用邻居得分的加权平均值$(r_{u’,i})$，预测用户$u$对于项目$i$，$(r_{u,i})$的得分如下：</p>
 <script type="math/tex; mode=display">
-r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r<em>{u’,i})$越相似，将以更高的加权比率用于预测$(r</em>{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
+r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script><p>$U$表示评价项目$i$的用户$u$的邻居。用户$u$和$u’$，$(r_{u’,i})$越相似，将以更高的加权比率用于预测$(r_{u,i})$。最后，将预测评分最高的$N$个项目推荐给目标用户。</p>
 <h1 id="评估提出的推荐方法"><a href="#评估提出的推荐方法" class="headerlink" title="评估提出的推荐方法"></a>评估提出的推荐方法</h1><p>为了评估结果，将使用的数据集分为训练集和测试集。训练数据用于推荐系统，测试数据用于评估系统结果的准确性。训练数据涵盖2015年1月25日至11月16日期间，包括2015年11月16日至2016年1月21日期间交易的测试数据。</p>
 <p><img src="http://images.yingwai.top/picgo/dert4.png" alt=""></p>
 <center>
@@ -797,7 +797,7 @@ r_{u,i} = \frac{1}{n} \sum_{u' \in U} Hsim(u,u') \times r_{u',i} \tag{6}</script
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">101.1k</span>
+    <span title="Site words total count">101.3k</span>
   
 
 <!--
