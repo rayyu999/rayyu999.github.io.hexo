@@ -448,30 +448,30 @@
 <p>本文通过可以使用任何标准安全MPC协议实现的功能 $\mathcal{F}_{\rm setup}$ 来建立密钥设置模型。</p>
 <h3 id="共享语义"><a href="#共享语义" class="headerlink" title="共享语义"></a>共享语义</h3><p>在本节中，将解释本工作中使用的秘密共享的两种变体。这两个变体都在算术（$\mathbb{Z}_{2^l}$）和布尔环（$\mathbb{Z}_{2^1}$）上运行。</p>
 <p>$[\cdot]$-共享：如果 $P_1$ 和 $P_2$ 分别持有份额 $v_1$ 和 $v_2$，使得 $v=v_1+v_2$，则称值 $v$ 在$P_1,P_2$之间是 $[\cdot]$-共享的。用 $[\cdot]_{P_i}$ 表示 $P_i, i∈\{1,2\}$的 $[\cdot]$-份额。</p>
-<p>$[![\cdot]!]$-共享：值 $v$ 在 $P_0, P_1, P_2$ 之间是$[![\cdot]!]$-共享的，如果</p>
+<p>$[\![\cdot]\!]$-共享：值 $v$ 在 $P_0, P_1, P_2$ 之间是$[\![\cdot]\!]$-共享的，如果</p>
 <ul>
 <li>存在值 $\lambda_v, m_v$ 使得 $v=m_v - \lambda_v$；</li>
 <li>$P_0$ 持有 $\lambda_{v,1}$ 和 $\lambda_{v,2}$ 使得 $\lambda_{v} = \lambda_{v,1} + \lambda_{v,2}$；</li>
 <li>$P_1$ 和 $P_2$ 分别持有 $(m_v, \lambda_{v,1})$ 和 $(m_v, \lambda_{v,1})$。</li>
 </ul>
-<p>本文将各方的$[![\cdot]!]$-共享表示为$[![v]!]_{P_0} = (\lambda_{v,1}, \lambda_{v,2}), [![v]!]_{P_1} = (m_v, \lambda_{v,1}) $和 $[![v]!]_{P_2} = (m_v, \lambda_{v,2})$。用$[![v]!] = (m_v, [\lambda_{v}])$表示 $v$ 的$[![\cdot]!]$-共享份额。</p>
+<p>本文将各方的$[\![\cdot]\!]$-共享表示为$[\![v]\!]_{P_0} = (\lambda_{v,1}, \lambda_{v,2}), [\![v]\!]_{P_1} = (m_v, \lambda_{v,1}) $和 $[\![v]\!]_{P_2} = (m_v, \lambda_{v,2})$。用$[\![v]\!] = (m_v, [\lambda_{v}])$表示 $v$ 的$[\![\cdot]\!]$-共享份额。</p>
 <h3 id="秘密共享方案的线性"><a href="#秘密共享方案的线性" class="headerlink" title="秘密共享方案的线性"></a>秘密共享方案的线性</h3><p>给定 $x,y \in \mathbb{Z}_{2^l}$ 和公共常数 $c_1, c_2 \in \mathbb{Z}_{2^l}$的$[\cdot]$-共享，各方可以局部计算 $[c_1x+c_2y]$：</p>
-<script type="math/tex; mode=display">[c_1x+c_2y]=(c_1x_1+c_2y_1, c_1x_2+c_2y_2)=c_1[x]+c_2[y]</script><p>很容易看出线性关系也扩展到$[![\cdot]!]$-共享。线性属性使各方能够<strong>本地</strong>执行与公共常量的加法和乘法等操作。</p>
+<script type="math/tex; mode=display">[c_1x+c_2y]=(c_1x_1+c_2y_1, c_1x_2+c_2y_2)=c_1[x]+c_2[y]</script><p>很容易看出线性关系也扩展到$[\![\cdot]\!]$-共享。线性属性使各方能够<strong>本地</strong>执行与公共常量的加法和乘法等操作。</p>
 <h2 id="3PC协议"><a href="#3PC协议" class="headerlink" title="3PC协议"></a>3PC协议</h2><h3 id="半诚实下的3PC"><a href="#半诚实下的3PC" class="headerlink" title="半诚实下的3PC"></a>半诚实下的3PC</h3><p>协议 $\prod ^{\rm s}_{\rm 3pc}$ 由三个步骤组成—输入共享、电路评估以及输出重构。所有阶段（重构输出除外）都分为离线和在线阶段，其中独立于实际输入的步骤可以在脱机阶段执行。</p>
-<h4 id="输入共享"><a href="#输入共享" class="headerlink" title="输入共享"></a>输入共享</h4><p>在共享输入阶段，每一方都为自己的输入生成一个随机的$[![\cdot]!]$-共享。以下是初始共享协议 $\prod^{\rm s}_{\rm Sh}$：</p>
+<h4 id="输入共享"><a href="#输入共享" class="headerlink" title="输入共享"></a>输入共享</h4><p>在共享输入阶段，每一方都为自己的输入生成一个随机的$[\![\cdot]\!]$-共享。以下是初始共享协议 $\prod^{\rm s}_{\rm Sh}$：</p>
 <hr>
 <p><strong>Offline:</strong></p>
 <ul>
-<li>If $P_i = P_0$, parties $P_0, P_j$ for $j \in \{1, 2\}$ locally sample a random $\lambda_{x,j} \in \mathbb{Z}_{2^l}$. Moreover, $P_i$ sets $[![x]!]_{P_i} = (\lambda_{x,1}, \lambda_{x,2})$.</li>
+<li>If $P_i = P_0$, parties $P_0, P_j$ for $j \in \{1, 2\}$ locally sample a random $\lambda_{x,j} \in \mathbb{Z}_{2^l}$. Moreover, $P_i$ sets $[\![x]\!]_{P_i} = (\lambda_{x,1}, \lambda_{x,2})$.</li>
 <li>If $P_i = P_1$, parties $P_0, P_1$ sample a random $\lambda_{x,1} \in \mathbb{Z}_{2^l}$ while all the parties in $\mathcal{P}$ sample a random $\lambda_{x,2} \in \mathbb{Z}_{2^l}$.</li>
 <li>If $P_i = P_2$, parties $P_0, P_2$ sample a random $\lambda_{x,2} \in \mathbb{Z}_{2^l}$ while all the parties in $\mathcal{P}$ sample a random $\lambda_{x,1} \in \mathbb{Z}_{2^l}$.</li>
 </ul>
 <p><strong>Online:</strong></p>
-<p>​        $P_i$ computes $\lambda_x = \lambda_{x,1} + \lambda_{x,2}$ and sends $m_x = x + \lambda_x$ to every $P_j$ for $j \in \{1,2\}$ who then sets $[![x]!]_{P_j} = (m_x, \lambda_{x,j})$.</p>
+<p>​        $P_i$ computes $\lambda_x = \lambda_{x,1} + \lambda_{x,2}$ and sends $m_x = x + \lambda_x$ to every $P_j$ for $j \in \{1,2\}$ who then sets $[\![x]\!]_{P_j} = (m_x, \lambda_{x,j})$.</p>
 <hr>
-<p>在离线阶段根据输入方的序号，使用不同的初始化手段，生成了 $P_0$ 的份额 $[![x]!]_{P_0}=(\lambda_{x,1}, \lambda_{x,2})$，而不用任何交互（因为随机数都是使用服务器两两之间的公共随机源生成的，可以理解为编程语言中把同样的随机种子输入到random函数——只要随机种子一样生成的随机数序列就一样）。</p>
-<h4 id="电路评估"><a href="#电路评估" class="headerlink" title="电路评估"></a>电路评估</h4><p>在电路评估阶段，各方以$[![\cdot]!]$-共享的方式评估 ckt。以拓扑顺序评估 ckt 中的每个门 $g$：给定 $g$ 的输入，各方为 $g$ 的输出生成$[![\cdot]!]$-共享。</p>
-<h5 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h5><p>如果 $g$ 是加法门 $(w_x,w_y,w_z)$，可以利用$[![\cdot]!]$-共享的线性在本地完成。以下是加法协议 $\prod_{\rm Add} (w_x, w_y, w_z)$：</p>
+<p>在离线阶段根据输入方的序号，使用不同的初始化手段，生成了 $P_0$ 的份额 $[\![x]\!]_{P_0}=(\lambda_{x,1}, \lambda_{x,2})$，而不用任何交互（因为随机数都是使用服务器两两之间的公共随机源生成的，可以理解为编程语言中把同样的随机种子输入到random函数——只要随机种子一样生成的随机数序列就一样）。</p>
+<h4 id="电路评估"><a href="#电路评估" class="headerlink" title="电路评估"></a>电路评估</h4><p>在电路评估阶段，各方以$[\![\cdot]\!]$-共享的方式评估 ckt。以拓扑顺序评估 ckt 中的每个门 $g$：给定 $g$ 的输入，各方为 $g$ 的输出生成$[\![\cdot]\!]$-共享。</p>
+<h5 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h5><p>如果 $g$ 是加法门 $(w_x,w_y,w_z)$，可以利用$[\![\cdot]\!]$-共享的线性在本地完成。以下是加法协议 $\prod_{\rm Add} (w_x, w_y, w_z)$：</p>
 <hr>
 <p><strong>Offline:</strong></p>
 <p>​        $P_0, P_1$ set $\lambda_{z,1} = \lambda_{x,1} + \lambda_{y,1}$, while $P_0, P_2$ set $\lambda_{z,2} = \lambda_{x,2} + \lambda_{y,2}$.</p>
@@ -493,7 +493,7 @@
 </ul>
 <hr>
 <p>将上面的公式相加一下即可验证其正确性。</p>
-<h4 id="输出重构"><a href="#输出重构" class="headerlink" title="输出重构"></a>输出重构</h4><p>在输出重构阶段，各方重构$[![\cdot]!]$-共享电路输出。为了重构 $[![y]!]$，可以观察到每个 $P_i$ 缺失的份额都在另外两方手里。因此另外两方的其中一方将缺失的份额发送给 $P_i$ 后，通过计算 $y = m_y - \lambda_{y,1} - \lambda_{y,2}$ 即可重构输出 $y$，将其称为重构协议 $\prod ^{\rm s}_{\rm Rec}([![y]!], \mathcal{P})$。</p>
+<h4 id="输出重构"><a href="#输出重构" class="headerlink" title="输出重构"></a>输出重构</h4><p>在输出重构阶段，各方重构$[\![\cdot]\!]$-共享电路输出。为了重构 $[\![y]\!]$，可以观察到每个 $P_i$ 缺失的份额都在另外两方手里。因此另外两方的其中一方将缺失的份额发送给 $P_i$ 后，通过计算 $y = m_y - \lambda_{y,1} - \lambda_{y,2}$ 即可重构输出 $y$，将其称为重构协议 $\prod ^{\rm s}_{\rm Rec}([\![y]\!], \mathcal{P})$。</p>
 <p>把上面三个阶段总结起来，有以下的协议 $\prod ^{\rm s}_{\rm 3pc}$：</p>
 <hr>
 <p><strong>Pre-processing (Offline Phase):</strong></p>
@@ -505,12 +505,12 @@
 <ul>
 <li><em>Sharing Circuit-input Values:</em> For $j = 1, …,l$, corresponding to the circuit-input $x_j$, parties execute the online steps of the instance $\prod ^{\rm s}_{\rm Sh}(P_i, x_j)$, where $P_i$ is the party designated to provide $x_j$.</li>
 <li><em>Gate Evaluation:</em> For each gate in $g$ in ckt in the topological order, $P_1, P_2$ execute the online steps of the instance $\prod ^{\rm s}_{\rm Mul}(w_{xj},w_{yj},w_{zj})$ if $g$ is the $j$th multiplication gate where $j \in \{1,…,\rm M\}$ or respectively offline steps of the instance $\prod _{\rm Add}(w_{xj}, w_{yj}, w_{zj})$ if $g$ is the $j$th addition gate where $j \in \{1,…,\rm A\}$.</li>
-<li><em>Output Reconstruction:</em> Let $[![y_1]!],…,[![y_\rm O]!]$ be the shared function outputs. The parties in $\mathcal{P}$ reconstruct $y_j$ for $j = 1,…,\rm O$ by executing $\prod ^{\rm s}_{\rm Rec}([![y_j]!], \mathcal{P})$.</li>
+<li><em>Output Reconstruction:</em> Let $[\![y_1]\!],…,[\![y_\rm O]\!]$ be the shared function outputs. The parties in $\mathcal{P}$ reconstruct $y_j$ for $j = 1,…,\rm O$ by executing $\prod ^{\rm s}_{\rm Rec}([\![y_j]\!], \mathcal{P})$.</li>
 </ul>
 <hr>
 <h3 id="恶意下的3PC"><a href="#恶意下的3PC" class="headerlink" title="恶意下的3PC"></a>恶意下的3PC</h3><p>跟半诚实设置下的一样，恶意设置下的3PC协议 $\prod ^{\rm m}_{\rm 3pc}$ 也由输入共享、电路评估和输出重构三个部分组成。</p>
-<h4 id="输入共享和输出重构"><a href="#输入共享和输出重构" class="headerlink" title="输入共享和输出重构"></a>输入共享和输出重构</h4><p>在恶意的设置下，要保证服务器之间的共享份额是一致的。在 $\prod ^{\rm s}_{\rm Sh}$ 中，$\lambda$ 的共享是一致的，因为它不需要交互就可以生成。但如果一个腐败的 $P_0$ 拥有 $x$ 并且想制造一个不一致的 $[![x]!]$-共享，它可以分别发送两个不一样的 $m_x$ 给 $P_1$ 和 $P_2$。为了检查这种情况的发生，$P_1$ 和 $P_2$ 交换 $H(m_x)$ 并在不一致的时候中止。</p>
-<p>令 $[![y]!]$ 为一个待重构的一致的共享，$[![y]!]_{P_0} = (\lambda_{y,1}, \lambda_{y,2})$、$[![y]!]_{P_1} = (m’_{y}, \lambda_{y,1})$ 和 $[![y]!]_{P_2} = (m’’_{y}, \lambda_{y,2})$ 分别为三个服务器的份额。协议 $\prod ^{\rm m}_{\rm Rec}([![y]!], \mathcal{P})$ 允许每一个诚实方输出 $y$ 或 $\perp$：</p>
+<h4 id="输入共享和输出重构"><a href="#输入共享和输出重构" class="headerlink" title="输入共享和输出重构"></a>输入共享和输出重构</h4><p>在恶意的设置下，要保证服务器之间的共享份额是一致的。在 $\prod ^{\rm s}_{\rm Sh}$ 中，$\lambda$ 的共享是一致的，因为它不需要交互就可以生成。但如果一个腐败的 $P_0$ 拥有 $x$ 并且想制造一个不一致的 $[\![x]\!]$-共享，它可以分别发送两个不一样的 $m_x$ 给 $P_1$ 和 $P_2$。为了检查这种情况的发生，$P_1$ 和 $P_2$ 交换 $H(m_x)$ 并在不一致的时候中止。</p>
+<p>令 $[\![y]\!]$ 为一个待重构的一致的共享，$[\![y]\!]_{P_0} = (\lambda_{y,1}, \lambda_{y,2})$、$[\![y]\!]_{P_1} = (m’_{y}, \lambda_{y,1})$ 和 $[\![y]\!]_{P_2} = (m’’_{y}, \lambda_{y,2})$ 分别为三个服务器的份额。协议 $\prod ^{\rm m}_{\rm Rec}([\![y]\!], \mathcal{P})$ 允许每一个诚实方输出 $y$ 或 $\perp$：</p>
 <hr>
 <p><strong>Online:</strong></p>
 <ul>
@@ -540,19 +540,19 @@ m^{\star}_z &= -m^{\star}_x \lambda_y - m^{\star}_y \lambda_x +\lambda_z + 2\gam
 <li>腐败的 $P_0$ 可以不正确地共享 $\gamma_{xy}$</li>
 <li>腐败的 $P_1$ 或 $P_2$ 可以发送错误的 $\chi$ 的 $[\cdot]$-共享给 $P_0$</li>
 </ul>
-<p>为了解决这些问题，$P_0$ 一旦获得 $\chi$，就用下面的方式计算 $a = \delta_x - \lambda_x$、$b = \delta_y - \lambda_y$ 和 $c = (\delta_z + \delta_x \delta_y) - \chi$ 的 $[![\cdot]!]$-共享：</p>
+<p>为了解决这些问题，$P_0$ 一旦获得 $\chi$，就用下面的方式计算 $a = \delta_x - \lambda_x$、$b = \delta_y - \lambda_y$ 和 $c = (\delta_z + \delta_x \delta_y) - \chi$ 的 $[\![\cdot]\!]$-共享：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 [\![a]\!]_{P_0} &= (\lambda_{x,1}, \lambda_{x,2}), & [\![b]\!]_{P_0} &= (\lambda_{y,1}, \lambda_{y,2}), & [\![c]\!]_{P_0} &= (\chi_{1}, \chi_{2})\\
  [\![a]\!]_{P_1} &= (\delta_x, \lambda_{x,1}), & [\![b]\!]_{P_1} &= (\delta_y, \lambda_{y,1}), & [\![c]\!]_{P_1} &= (\delta_z + \delta_x \delta_y, \chi_{1})\\
  [\![a]\!]_{P_2} &= (\delta_x, \lambda_{x,2}), & [\![b]\!]_{P_2} &= (\delta_y, \lambda_{y,2}), & [\![c]\!]_{P_2} &= (\delta_z + \delta_x \delta_y, \chi_{2})
-\end{align*}</script><p>现在 $([![a]!], [![b]!], [![c]!])$ 是一个乘法三元组 $(c=ab)$，当且仅当 $P_0$ 正确分享了 $\gamma_{xy}$（当它腐败时）以及重构的 $\chi$ 是正确的（当 $P_1,P_2$ 其中之一腐败时），因为：</p>
+\end{align*}</script><p>现在 $([\![a]\!], [\![b]\!], [\![c]\!])$ 是一个乘法三元组 $(c=ab)$，当且仅当 $P_0$ 正确分享了 $\gamma_{xy}$（当它腐败时）以及重构的 $\chi$ 是正确的（当 $P_1,P_2$ 其中之一腐败时），因为：</p>
 <script type="math/tex; mode=display">
 \begin{align}
 ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda_x \lambda_y - \delta_x \lambda_y - \delta_y \lambda_x \\
  &= (\delta_x \delta_y + \delta_z) - (\delta_x \lambda_y + \delta_y \lambda_x + \delta_z - \gamma_{xy}) \\
   &= (\delta_x \delta_y + \delta_z) - \chi = c
-\end{align}</script><p>然后作者给出了一个检查乘法三元组是否正确的协议，这里需要用到另一个有效的乘法三元组 $([![d]!], [![e]!], [![f]!])$，它们满足以下条件：</p>
+\end{align}</script><p>然后作者给出了一个检查乘法三元组是否正确的协议，这里需要用到另一个有效的乘法三元组 $([\![d]\!], [\![e]\!], [\![f]\!])$，它们满足以下条件：</p>
 <ul>
 <li>$d, e, f$ 都是随机且私密的</li>
 <li>$f = d e$</li>
@@ -562,10 +562,10 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <p>用  $\prod _{\rm trip}$ 表示该功能的实例化，下面是作者给出检查有效性的协议 $\prod _{\rm prc}$：</p>
 <hr>
 <ul>
-<li>Parties locally compute $[![\rho]!] = [![a]!] - [![d]!]$ and $[![\sigma]!] = [![b]!] - [![e]!]$.</li>
-<li>Parties reconstruct $\rho$ and $\sigma$ by executing $\prod ^{\rm m}_{\rm Rec}([![\rho]!], \mathcal{P})$ and $\prod ^{\rm m}_{\rm Rec}([![\sigma]!], \mathcal{P})$ respectively.</li>
-<li>Parties locally compute $[![\tau]!] = [![c]!] - [![f]!] - \sigma [![d]!] - \rho [![e]!] - \sigma \rho$.</li>
-<li>Parties reconstruct $\tau$ by executing $\prod ^{\rm m}_{\rm Rec}([![\tau]!], \mathcal{P})$ and output $\perp$, if $\tau \neq 0$.</li>
+<li>Parties locally compute $[\![\rho]\!] = [\![a]\!] - [\![d]\!]$ and $[\![\sigma]\!] = [\![b]\!] - [\![e]\!]$.</li>
+<li>Parties reconstruct $\rho$ and $\sigma$ by executing $\prod ^{\rm m}_{\rm Rec}([\![\rho]\!], \mathcal{P})$ and $\prod ^{\rm m}_{\rm Rec}([\![\sigma]\!], \mathcal{P})$ respectively.</li>
+<li>Parties locally compute $[\![\tau]\!] = [\![c]\!] - [\![f]\!] - \sigma [\![d]\!] - \rho [\![e]\!] - \sigma \rho$.</li>
+<li>Parties reconstruct $\tau$ by executing $\prod ^{\rm m}_{\rm Rec}([\![\tau]\!], \mathcal{P})$ and output $\perp$, if $\tau \neq 0$.</li>
 </ul>
 <hr>
 <p>协议 $\prod _{\rm prc}$ 需要两对秘密共享三元组 $(a, b, c)$ 和 $(d, e, f)$，验证前一个三元组是否满足 $c = a b$：</p>
@@ -579,11 +579,11 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <p><strong>Offline:</strong></p>
 <ul>
 <li>Parties $P_0, P_1$ locally sample random $\lambda_{z,1}, \gamma_{xy,1} \in \mathbb{Z}_{2^l}$, while $P_0, P_2$<br>locally sample a random $\lambda_{z,2}$. $P_0$ locally computes $\gamma_{xy}= \lambda_x \lambda_y$ and<br>sends $\gamma_{xy,2} = \gamma_{xy} - \gamma_{xy,1}$ to $P_2$.</li>
-<li>Parties execute $\prod _{\rm trip}$ to generate a triple $([![d]!], [![e]!], [![f]!])$.</li>
+<li>Parties execute $\prod _{\rm trip}$ to generate a triple $([\![d]\!], [\![e]\!], [\![f]\!])$.</li>
 <li>Parties $P_1, P_2$ locally sample random $\delta_x, \delta_y, \delta_z \in \mathbb{Z}_{2^l}$ and compute<br>$[\delta_z]$ non-interactively.</li>
 <li>$P_i$ for $i \in \{1, 2\}$ computes $[\chi]_{P_i} = \delta_x[\lambda_y]_{P_i} + \delta_y[\lambda_x]_{P_i} + [\delta_z]_{P_i} − [\gamma_{xy}]_{P_i}$ and sends $[\chi]_{P_i}$ to $P_0$, who computes $\chi$.</li>
-<li>Parties locally compute the $[![\cdot]!]$-shares of the values $a = \delta_x - \lambda_x$, $b = \delta_y - \lambda_y$ and $b = (\delta_z + \delta_x \delta_y) - \chi$, as described in the text.</li>
-<li>Parties execute $\prod _{\rm prc}$ on $([![a]!], [![b]!], [![c]!])$ and $([![d]!], [![e]!], [![f]!])$.</li>
+<li>Parties locally compute the $[\![\cdot]\!]$-shares of the values $a = \delta_x - \lambda_x$, $b = \delta_y - \lambda_y$ and $b = (\delta_z + \delta_x \delta_y) - \chi$, as described in the text.</li>
+<li>Parties execute $\prod _{\rm prc}$ on $([\![a]\!], [\![b]\!], [\![c]\!])$ and $([\![d]\!], [\![e]\!], [\![f]\!])$.</li>
 </ul>
 <p><strong>Online:</strong></p>
 <ul>
@@ -618,10 +618,10 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <li>Parties reconstruct the value $y$ using missing share that matches with the agreed upon commitment.</li>
 </ul>
 <hr>
-<p>当没有广播频道的时候，一个非常棘手的问题就会存在：一个腐败的 $P_0$ 可以发送不同的信号给 $P_1$ 和 $P_2$（一个为 abort 而另一个为 continue），以上的重构协议 $\prod_{\rm fRec}([![y]!], \mathcal{P})$ 解决了这个问题。在离线阶段 $P_0$ 和 $P_1$ 共同计算出一个关于 $r_1$ 的承诺发送给 $P_2$，同样地 $P_0$ 和 $P_2$ 共同计算出一个关于 $r_2$ 的承诺发送给 $P_1$。这两个承诺就可以确保 $P_1$ 跟 $P_2$ 可以验证它们收到的来自 $P_0$ 的信号是否一致：例如当 $P_1$ 收到 abort 而 $P_2$ 收到 continue，在它们交换信息时，$P_1$ 就可以利用收到的 $o_2$ 证明自己收到了 abort 信号，反过来也是一样的。同时还解决了一个问题，就是当一个腐败的 $P_1$ 收到了 $P_0$ 发送的 continue 信号，但它不能在与 $P_2$ 交换信息时宣称自己收到了 abort 信号，因为它没有 $o_2$，因此无法证明，对于 $P_2$ 腐败的情况也是一样的。</p>
+<p>当没有广播频道的时候，一个非常棘手的问题就会存在：一个腐败的 $P_0$ 可以发送不同的信号给 $P_1$ 和 $P_2$（一个为 abort 而另一个为 continue），以上的重构协议 $\prod_{\rm fRec}([\![y]\!], \mathcal{P})$ 解决了这个问题。在离线阶段 $P_0$ 和 $P_1$ 共同计算出一个关于 $r_1$ 的承诺发送给 $P_2$，同样地 $P_0$ 和 $P_2$ 共同计算出一个关于 $r_2$ 的承诺发送给 $P_1$。这两个承诺就可以确保 $P_1$ 跟 $P_2$ 可以验证它们收到的来自 $P_0$ 的信号是否一致：例如当 $P_1$ 收到 abort 而 $P_2$ 收到 continue，在它们交换信息时，$P_1$ 就可以利用收到的 $o_2$ 证明自己收到了 abort 信号，反过来也是一样的。同时还解决了一个问题，就是当一个腐败的 $P_1$ 收到了 $P_0$ 发送的 continue 信号，但它不能在与 $P_2$ 交换信息时宣称自己收到了 abort 信号，因为它没有 $o_2$，因此无法证明，对于 $P_2$ 腐败的情况也是一样的。</p>
 <p>这里的承诺方案可以通过一个哈希函数来实现，例如：$(c, o) = (\mathcal{H}(x||r),x||r) = Com(x;r)$</p>
 <h2 id="隐私保护机器学习"><a href="#隐私保护机器学习" class="headerlink" title="隐私保护机器学习"></a>隐私保护机器学习</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>对于每一个预测函数，模型拥有者 $\rm M$ 拥有一个训练好的参数向量，想为拥有一个查询向量的客户 $\rm C$ 提供预测服务。在服务器辅助设置中，$\rm M$ 和 $\rm C$ 以共享方式将各自的输入外包给三个不受信任但非合谋的服务器 $\{P_0, P_1, P_2\}$，这些服务器通过为本文的3PC协议开发的技术以共享方式执行计算，并将输出单独重构到客户端。客户只能知道输出，除此之外什么也不知道。</p>
-<h3 id="对于ML的协议"><a href="#对于ML的协议" class="headerlink" title="对于ML的协议"></a>对于ML的协议</h3><h4 id="安全向量点积"><a href="#安全向量点积" class="headerlink" title="安全向量点积"></a>安全向量点积</h4><p>对于向量的 $[\cdot]$-共享和 $[![\cdot]!]$-共享，就是对应每个维度的值进行$[\cdot]$-共享和 $[![\cdot]!]$-共享，容易知道对于向量来说两种共享仍然是线性的。对于两个 $d$ 维向量的点积，不考虑效率的情况下可以执行 $d$ 次 $\prod ^{\rm s}_{\rm Mul}$协议，再对这 $d$ 次执行的结果简单进行相加，各方就可以得到它们的份额。在这里作者给出一个更高效率的向量点积协议 $\prod ^{\rm s}_{\rm dp}$：</p>
+<h3 id="对于ML的协议"><a href="#对于ML的协议" class="headerlink" title="对于ML的协议"></a>对于ML的协议</h3><h4 id="安全向量点积"><a href="#安全向量点积" class="headerlink" title="安全向量点积"></a>安全向量点积</h4><p>对于向量的 $[\cdot]$-共享和 $[\![\cdot]\!]$-共享，就是对应每个维度的值进行$[\cdot]$-共享和 $[\![\cdot]\!]$-共享，容易知道对于向量来说两种共享仍然是线性的。对于两个 $d$ 维向量的点积，不考虑效率的情况下可以执行 $d$ 次 $\prod ^{\rm s}_{\rm Mul}$协议，再对这 $d$ 次执行的结果简单进行相加，各方就可以得到它们的份额。在这里作者给出一个更高效率的向量点积协议 $\prod ^{\rm s}_{\rm dp}$：</p>
 <hr>
 <p><strong>Offline:</strong></p>
 <p>​        $P_0, P_1$ sample random $\lambda_{u,1}, \gamma_{pq,1} \in \mathbb{Z}_{2^l}$, while $P_0, P_2$ sample random $\lambda_{u,2} \in \mathbb{Z}_{2^l}$. $P_0$ locally computes $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$, sets $\gamma_{pq,2} = \gamma_{pq} - \gamma_{pq,1}$ and sends $\gamma_{pq,2}$ to $P_2$.</p>
@@ -633,36 +633,36 @@ ab &= (\delta_x - \lambda_x)(\delta_y - \lambda_y) = \delta_x \delta_y + \lambda
 <hr>
 <p>上面的协议的离线阶段中，$P_0$ 仅仅共享了 $\gamma_{pq} = \vec{\lambda_p} \odot \vec{\lambda_q}$ 而不是每一个 $\lambda_{p_i} \lambda_{q_i}$；在在线阶段，$P_1, P_2$ 直接计算 $[m_u]$（其中 $u = \vec{p} \odot \vec{q}$）而不是每一个 $m_{p_i q_i}$。</p>
 <p>接下来作者还对恶意设置下的点积进行了讨论：由于在乘法协议中引入了对恶意对手的额外检查，所以上面针对半诚实协议所作的优化是不适用的。对两个 $d$ 维向量的点积，只能 $d$ 次调用协议 $\prod ^{\rm m}_{\rm Mul}$。不过作者还是对在线阶段的开销进行了改进：在在线阶段 $P_1$ 并行地发送 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 给 $P_0$，而 $P_2$ 则发送对应的哈希值给 $P_0$。$P_0$ 收到这些值后进行验证，若一致则将它们“结合”所有的 $m^{\star}_{p_i q_i}$ 然后发送一个单独的 $m^\star_u$ 的哈希值给 $P_1, P_2$，最后 $P_1, P_2$ 在本地验证是否与 $m_u - \sum^d_{j=1}(m_{p_j}m_{q_j} - \delta_{u_j})$。这样做的话就节省了在线阶段的开销，不用每个 $m^{\star}_{p_i}, m^{\star}_{q_i}$ 都发送一次。</p>
-<h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[![u]!], [![v]!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 ${\rm msb}(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[![a]!]$ 的情况下生成 ${\rm msb}(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
+<h4 id="安全比较"><a href="#安全比较" class="headerlink" title="安全比较"></a>安全比较</h4><p>给定算术共享 $[\![u]\!], [\![v]\!]$，各方希望验证 $u$ 是否小于 $v$，等同于验证 $a$ 是否小于 $0$（其中 $a = u - v$），在定点表示中可以通过检查 ${\rm msb}(a)$ 来完成（二进制补码中第一位为符号位）。于是可以把在给定算术共享 $[\![a]\!]$ 的情况下生成 ${\rm msb}(a)$ 的布尔共享作为目标，在这里作者利用了秘密共享方案中的不对称性，放弃了 <em>SecureML</em>[48]和 <em>ABY3</em>[46]中的昂贵协议。</p>
 <hr>
 <p><strong>Offline:</strong></p>
-<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[![p]!]^{\rm B}_{P_0} = (0,0)$, $[![p]!]^{\rm B}_{P_1} = (p,0)$ and $[![p]!]^{\rm B}_{P_2} = (p,0)$.</p>
+<p>​        $P_1, P_2$ together sample a random $r, r’ \in \mathbb{Z}_{2^l}$ and set $p= \rm{msb}$$(r)$. Parties non-interactively generate Boolean share of $p$ as $[\![p]\!]^{\rm B}_{P_0} = (0,0)$, $[\![p]\!]^{\rm B}_{P_1} = (p,0)$ and $[\![p]\!]^{\rm B}_{P_2} = (p,0)$.</p>
 <p><strong>Online:</strong></p>
 <p>​        $P_1$ set $[a]_{P_1}=m_a - \lambda_{a,1}$, $P_2$ set $[a]_{P_2}=- \lambda_{a,2}$.</p>
 <ul>
 <li>$P_1$ sends $[ra]_{P_1} = r[a]_{P_1} + r’$ to $P_0$, while $P_2$ sends $[ra]_{P_2} = r[a]_{P_1} - r’$ to $P_0$, who adds them to obtain $ra$.</li>
-<li>$P_0$ executes $\prod^{\rm s}_{\rm Sh}(P_0, q)$ over $\mathbb{Z}_{2^1}$ to generate $[![q]!]^{\rm B}$ where $q = {\rm msb}(ra)$.</li>
-<li>Parties locally compute $[![\mbox{msb}(a)]!]^{\rm B} = [![p]!]^{\rm B} \oplus [![q]!]^{\rm B}$.</li>
+<li>$P_0$ executes $\prod^{\rm s}_{\rm Sh}(P_0, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$.</li>
+<li>Parties locally compute $[\![\mbox{msb}(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
 </ul>
 <hr>
-<p>上面的协议用 $\prod ^{\rm s}_{\rm BitExt}([![a]!], \mathcal{P})$ 表示。这里上面用到了一个随机数 $r$ 来对 $a$ 的值进行盲化，并且可以注意到 ${\rm sign}(a \cdot r) = {\rm sign}(a) \oplus {\rm sign}(r)$，所以 $r$ 不会对生成共享份额造成影响且使得三者都不能从这个过程中知道关于 $a$ 的信息。</p>
-<p>对于恶意的情况，就不能仅仅依靠 $P_0$ 来生成 $[![{\rm msb}(ra)]!]^{\rm B}$，下面给出了修改后的协议 $\prod ^{\rm m}_{\rm BitExt}([![a]!], \mathcal{P})$：</p>
+<p>上面的协议用 $\prod ^{\rm s}_{\rm BitExt}([\![a]\!], \mathcal{P})$ 表示。这里上面用到了一个随机数 $r$ 来对 $a$ 的值进行盲化，并且可以注意到 ${\rm sign}(a \cdot r) = {\rm sign}(a) \oplus {\rm sign}(r)$，所以 $r$ 不会对生成共享份额造成影响且使得三者都不能从这个过程中知道关于 $a$ 的信息。</p>
+<p>对于恶意的情况，就不能仅仅依靠 $P_0$ 来生成 $[\![{\rm msb}(ra)]\!]^{\rm B}$，下面给出了修改后的协议 $\prod ^{\rm m}_{\rm BitExt}([\![a]\!], \mathcal{P})$：</p>
 <hr>
 <p><strong>Offline:</strong></p>
 <p>​        $P_1, P_2$ sample a random $r_1 \in \mathbb{Z}_{2^l}$ and set $p_1 = {\rm msb}(r_1)$ while $P_0, P_2$ sample a random $r_2 \in \mathbb{Z}_{2^l}$ and set $p_2 = {\rm msb}(r_2)$.</p>
 <ul>
-<li>Parties non-interactively generate $[![\cdot]!]$-shares of $r_1$ as $[![r_1]!]_{P_0}=(0,0)$, $[![r_1]!]_{P_1}=(r_1,0)$ and $[![r_1]!]_{P_2}=(r_1,0)$.</li>
-<li>Parties non-interactively generate $[![\cdot]!]$-shares of $r_1$ as $[![r_2]!]_{P_0}=(0,-r_2)$, $[![r_1]!]_{P_1}=(0,0)$ and $[![r_1]!]_{P_2}=(0,-r_2)$.</li>
-<li>Parties execute $\prod^{\rm m}_{\rm Mul}$ on $r_1$ and $r_2$ to generate $[![r]!] = [![r_1 r_2]!]$.</li>
-<li>Parties non-interactively generate Boolean shares of $p_1$ as $[![p_1]!]^{\rm B}_{P_0}=(0,0)$, $[![p_1]!]^{\rm B}_{P_1}=(p_1,0)$ and $[![p_1]!]^{\rm B}_{P_2}=(p_1,0)$.</li>
-<li>Parties non-interactively generate Boolean shares of $p_2$ as $[![p_2]!]^{\rm B}_{P_0}=(0,p_2)$, $[![p_2]!]^{\rm B}_{P_1}=(0,0)$ and $[![p_2]!]^{\rm B}_{P_2}=(0,p_2)$.</li>
-<li>Parties locally compute $[![p]!]^{\rm B}=[![p_1]!]^{\rm B} \oplus [![p_2]!]^{\rm B}$.</li>
+<li>Parties non-interactively generate $[\![\cdot]\!]$-shares of $r_1$ as $[\![r_1]\!]_{P_0}=(0,0)$, $[\![r_1]\!]_{P_1}=(r_1,0)$ and $[\![r_1]\!]_{P_2}=(r_1,0)$.</li>
+<li>Parties non-interactively generate $[\![\cdot]\!]$-shares of $r_1$ as $[\![r_2]\!]_{P_0}=(0,-r_2)$, $[\![r_1]\!]_{P_1}=(0,0)$ and $[\![r_1]\!]_{P_2}=(0,-r_2)$.</li>
+<li>Parties execute $\prod^{\rm m}_{\rm Mul}$ on $r_1$ and $r_2$ to generate $[\![r]\!] = [\![r_1 r_2]\!]$.</li>
+<li>Parties non-interactively generate Boolean shares of $p_1$ as $[\![p_1]\!]^{\rm B}_{P_0}=(0,0)$, $[\![p_1]\!]^{\rm B}_{P_1}=(p_1,0)$ and $[\![p_1]\!]^{\rm B}_{P_2}=(p_1,0)$.</li>
+<li>Parties non-interactively generate Boolean shares of $p_2$ as $[\![p_2]\!]^{\rm B}_{P_0}=(0,p_2)$, $[\![p_2]\!]^{\rm B}_{P_1}=(0,0)$ and $[\![p_2]\!]^{\rm B}_{P_2}=(0,p_2)$.</li>
+<li>Parties locally compute $[\![p]\!]^{\rm B}=[\![p_1]\!]^{\rm B} \oplus [\![p_2]\!]^{\rm B}$.</li>
 </ul>
 <p><strong>Online:</strong></p>
 <ul>
-<li>Parties execute $\prod ^{\rm m}_{\rm Mul}$ on $[![r]!]$ and $[![a]!]$ to generate $[![ra]!]$ followed by enabling $P_0, P_1$ to reconstruct $ra$ (this is done by slightly modifying the protocol $\prod ^{\rm m}_{\rm Rec}$ ).</li>
-<li>$P_1$ executes $\prod ^{\rm m}_{\rm Sh}(P_1, q)$ over $\mathbb{Z}_{2^1}$ to generate $[![q]!]^{\rm B}$ where $q = {\rm msb}(ra)$. In parallel, $P_0$ locally computes $m_q$ and sends ${\rm H}(m_q)$ to $P_2$, who abort if the value mismatches with the hash of the value $m_q$ received from $P_1$ as part of $\prod ^{\rm m}_{\rm Sh}(P_1, q)$.</li>
-<li>Parties locally compute $[![{\rm msb}(a)]!]^{\rm B} = [![p]!]^{\rm B} \oplus [![q]!]^{\rm B}$.</li>
+<li>Parties execute $\prod ^{\rm m}_{\rm Mul}$ on $[\![r]\!]$ and $[\![a]\!]$ to generate $[\![ra]\!]$ followed by enabling $P_0, P_1$ to reconstruct $ra$ (this is done by slightly modifying the protocol $\prod ^{\rm m}_{\rm Rec}$ ).</li>
+<li>$P_1$ executes $\prod ^{\rm m}_{\rm Sh}(P_1, q)$ over $\mathbb{Z}_{2^1}$ to generate $[\![q]\!]^{\rm B}$ where $q = {\rm msb}(ra)$. In parallel, $P_0$ locally computes $m_q$ and sends ${\rm H}(m_q)$ to $P_2$, who abort if the value mismatches with the hash of the value $m_q$ received from $P_1$ as part of $\prod ^{\rm m}_{\rm Sh}(P_1, q)$.</li>
+<li>Parties locally compute $[\![{\rm msb}(a)]\!]^{\rm B} = [\![p]\!]^{\rm B} \oplus [\![q]\!]^{\rm B}$.</li>
 </ul>
 <hr>
 <h4 id="ML预测函数"><a href="#ML预测函数" class="headerlink" title="ML预测函数"></a>ML预测函数</h4><ul>
