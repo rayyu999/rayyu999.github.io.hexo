@@ -79,16 +79,14 @@
 
 
 
-<meta name="description" content="安全的定义与不可区分性首先，一个交互式系统，也就是一个对话，它的「零知识」需要证明。毕竟，现代密码学是建立在严格的形式化系统之上。在证明之前，还需要明确「安全假设」到底有哪些。所谓安全假设，比如我们说一个系统的权限隔离做得无比精确，每一个用户只能看到被授权的信息，但是这基于一个安全假设：管理员账号没有被破解。又比如在手机银行软件里，只能通过短信认证码，才能完成转账功能，这也基于一个安全假设：你的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模拟">
 <meta property="og:url" content="http://yoursite.com/2020/11/11/%E6%A8%A1%E6%8B%9F/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="og:description" content="安全的定义与不可区分性首先，一个交互式系统，也就是一个对话，它的「零知识」需要证明。毕竟，现代密码学是建立在严格的形式化系统之上。在证明之前，还需要明确「安全假设」到底有哪些。所谓安全假设，比如我们说一个系统的权限隔离做得无比精确，每一个用户只能看到被授权的信息，但是这基于一个安全假设：管理员账号没有被破解。又比如在手机银行软件里，只能通过短信认证码，才能完成转账功能，这也基于一个安全假设：你的">
 <meta property="og:image" content="http://images.yingwai.top/picgo/06_215306444.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/06_45725844.png">
 <meta property="article:published_time" content="2020-11-11T13:58:01.000Z">
-<meta property="article:modified_time" content="2020-11-11T13:58:53.175Z">
+<meta property="article:modified_time" content="2020-11-11T14:08:37.178Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="密码学">
 <meta name="twitter:card" content="summary">
@@ -414,7 +412,8 @@
       
 
       
-        <a id="more"></a>
+        <hr>
+<a id="more"></a>
 <h1 id="安全的定义与不可区分性"><a href="#安全的定义与不可区分性" class="headerlink" title="安全的定义与不可区分性"></a>安全的定义与不可区分性</h1><p>首先，一个交互式系统，也就是一个对话，它的「零知识」需要证明。毕竟，现代密码学是建立在严格的形式化系统之上。在证明之前，还需要明确「安全假设」到底有哪些。所谓安全假设，比如我们说一个系统的权限隔离做得无比精确，每一个用户只能看到被授权的信息，但是这基于一个安全假设：管理员账号没有被破解。又比如在手机银行软件里，只能通过短信认证码，才能完成转账功能，这也基于一个安全假设：你的手机 SIM 卡没有被克隆。如果我们深入地分析每一个我们感觉安全的系统，都存在大量的似乎不那么稳固的安全假设。比特币私钥安全吗？比特币账户的安全假设也不少：首先你的助记词不能让别人知道，手机钱包里私钥保存加密算法足够强，密钥派生算法正规，你不能忘记助记词，等等等。</p>
 <p>脱离安全假设来谈安全都是在耍流氓。一切安全都有前提的。只有经过数学证明之后，大家才能够确信这个 算法/方案 的安全性基于一些<strong>非常明确</strong>的「安全假设」。</p>
 <p>在证明之前，还缺少一个东西，那就是「安全定义」。在多数人的认知系统中，安全就是一个框，什么都可以往里装。大家应该好好提醒下自己，当谈论安全二字的时候，有没有想过到底什么是安全？怎么算安全？</p>
