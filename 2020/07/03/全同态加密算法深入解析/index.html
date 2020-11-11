@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/HEdif14.jpg">
 <meta property="og:image" content="http://images.yingwai.top/picgo/HEdif15.jpg">
 <meta property="article:published_time" content="2020-07-03T03:14:03.000Z">
-<meta property="article:modified_time" content="2020-08-23T14:33:37.432Z">
+<meta property="article:modified_time" content="2020-10-09T07:49:22.000Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="HE">
@@ -542,11 +542,11 @@ a = 42&x^{15} - 256x^{14} - 393x^{13} - 229x^{12} + 447x^{11} -369x^{10} - 212x^
 \begin{align}
 e = -3x^{15} &+ x^{14} + x^{13} + 7x^{12} - 6x^{11} - 6x^{10} + x^{9} + 4x^8\\
 &- x^6 + 3x^5 -4x^4 + 4x^3 + 4x + 1
-\end{align}</script><p>然后将公钥定义为一对多项式，即 $\mathbf{pk} = ([−as + e]q, a)$，其中多项式都是模多项式模和系数模 $q$ 的。</p>
+\end{align}</script><p>然后将公钥定义为一对多项式，即 $\mathbf{pk} = ([−as + e]_q, a)$，其中多项式都是模多项式模和系数模 $q$ 的。</p>
 <p>对于上面给出的示例，公钥的第一个多项式被构造为</p>
 <p><img src="http://images.yingwai.top/picgo/HEdif5.jpg" alt=""></p>
 <p>其中第一个乘法取多项式 $a$，它的系数 $\bmod q$，然后乘以系数为$-1,0$或$1$的 $s$。由于模上多项式模的多项式的乘法具有“旋转和反射”性质，有效地混合和打乱了 $a$ 的所有系数，并进一步增加了小的噪音。多项式 $a$ 有效地掩盖了公钥中的私钥。</p>
-<p>通过从公钥中找到 $s$ 的方式来破解加密方案，其主要涉及的计算为 $([−as + e]q, a)$。唯一的因素是该方案中包含了噪音——如果 $e$ 为零，则很容易从公钥中计算出 $s$。当 $e$ 足够大，但又不太大时，这是一个难题。</p>
+<p>通过从公钥中找到 $s$ 的方式来破解加密方案，其主要涉及的计算为 $([−as + e]_q, a)$。唯一的因素是该方案中包含了噪音——如果 $e$ 为零，则很容易从公钥中计算出 $s$。当 $e$ 足够大，但又不太大时，这是一个难题。</p>
 <p>本文的示例中，私钥可以通过暴力攻击恢复——尝试每个可能的 $s$ (只有$3^{16}=43046721$组合)<em>，</em>然后计算 $as + e$ 来寻找出一个接近公钥的第一项的答案。对于真正的参数，这种暴力攻击的方法是完全不可行的。$3^{4096}$是一个很大的数字，但有更聪明的方法，然后定义给定的一组参数的安全性。</p>
 <h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><p>加密过程看起来有点像公钥生成过程。</p>
 <p>加密明文的过程是将一个系数模为 $t$ 的多项式转换为一对系数模为 $q$ 的多项式。本例中，我们将加密一个非常简单的多项式(称为消息) $- m = 3 + 4x^8 \equiv 3−3x^8$ – 只有两个不为零的系数。</p>
@@ -805,7 +805,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -904,7 +904,7 @@ mult(\mathbf{a}, \mathbf{b}) = \mathbf{c}_0 + \mathbf{c}_1s + \mathbf{c}_2 s^2</
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">101.3k</span>
+    <span title="Site words total count">108.8k</span>
   
 
 <!--

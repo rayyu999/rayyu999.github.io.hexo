@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/jm.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/jm32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/jm16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/jm.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Tong Li, Jin Li, Xiaofeng Chen, Zheli Liu, Wenjing Lou, and Y. Thomas Hou TDSC 2020 https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;document&#x2F;8981947">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记 NPMML: A Framework for Non-interactive Privacy-preserving Multi-party Machine Learning">
+<meta property="og:url" content="http://yoursite.com/2020/11/11/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-NPMML-A-Framework-for-Non-interactive-Privacy-preserving-Multi-party-Machine-Learning/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="Tong Li, Jin Li, Xiaofeng Chen, Zheli Liu, Wenjing Lou, and Y. Thomas Hou TDSC 2020 https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;document&#x2F;8981947">
+<meta property="og:image" content="http://images.yingwai.top/picgo/Snipaste_2020-11-10_15-30-28.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-12-52.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-49-00.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-09.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-22.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-36.png">
+<meta property="article:published_time" content="2020-11-11T13:59:55.000Z">
+<meta property="article:modified_time" content="2020-11-11T14:04:24.040Z">
+<meta property="article:author" content="yyw">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/Snipaste_2020-11-10_15-30-28.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/11/论文笔记-NPMML-A-Framework-for-Non-interactive-Privacy-preserving-Multi-party-Machine-Learning/"/>
+
+
+
+
+
+  <title>论文笔记 NPMML: A Framework for Non-interactive Privacy-preserving Multi-party Machine Learning | Ray's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ray's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/11/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-NPMML-A-Framework-for-Non-interactive-Privacy-preserving-Multi-party-Machine-Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">论文笔记 NPMML: A Framework for Non-interactive Privacy-preserving Multi-party Machine Learning</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-11T21:59:55+08:00">
+                2020-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  21 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>Tong Li, Jin Li, Xiaofeng Chen, Zheli Liu, Wenjing Lou, and Y. Thomas Hou</em></p>
+<p><a href="https://dblp.uni-trier.de/db/journals/tdsc/tdsc17.html" target="_blank" rel="noopener">TDSC 2020</a></p>
+<p><a href="https://ieeexplore.ieee.org/document/8981947" target="_blank" rel="noopener">https://ieeexplore.ieee.org/document/8981947</a></p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>近十年来，深度学习技术被广泛用于建立人工智能应用程序，这使得许多数据分析任务取得了成功，如风险评估、医学预测和人脸识别。由于深度学习的有效性与可用的数据量成正比，大规模收集海量数据至关重要。考虑到隐私和安全问题通常会阻止数据所有者提供敏感数据用于培训，研究人员提出了几种技术来在包含多方的机器学习系统中为数据提供隐私保证。然而，所有这些工作都在培训过程中引起了数据所有者之间的频繁交互，从而导致数据所有者付出了高昂的通信成本。为此，本文提出了一种新的服务器辅助框架，称为非交互式隐私保护多方机器学习(NPMML)，该框架支持安全的机器学习任务，无需数据所有者的参与。NPMML框架显著降低了数据所有者在多方机器学习中的通信开销。此外，我们还设计了一个基于NPMML的多层神经网络的具体结构。最后，通过原型实现对NPMML的性能进行了评估。实验结果表明，NPMML对数据拥有者来说是一种高效的通信方式。</p>
+<h1 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h1><p>作者探索了一种新的多方隐私保护机器学习任务框架。对于他们来说有两个挑战：第一个挑战是，大多数机器学习算法，例如神经网络，要求数据所有者迭代地改进其明文数据集的中间结果。如果训练者直接更新加密版本的数据集的中间结果，则最终模型的输出将带有更差的最终结果。因此，中间结果的传递不可避免地会导致频繁的互动。或者，第二个挑战是缺乏有效的密码技术来构建上述非交互框架中的安全协议。尽管完全同态加密(FHE)可以实现机器学习任务的安全计算，但它们仍然会带来相当大的计算开销。</p>
+<p>上述两个挑战促使作者探索如何以有效沟通的方式管理隐私保护学习问题。为此，本文提出了一个新的框架，称为非交互式隐私保护多方机器学习(NPMML)，它支持安全的机器学习任务，而不需要数据所有者的参与。</p>
+<ul>
+<li><strong>非交互式框架。</strong>本文提出了NPMML的框架。这个框架是服务器辅助的，它使训练者能够在加密数据上训练机器学习模型，而无需与数据所有者进行在线交互。与交互式学习系统相比，使用NPMML的多方学习系统为数据所有者带来了更少的通信开销。</li>
+<li><strong>隐私保护训练协议。</strong>基于NPMML框架，给出了训练多层神经网络的具体结构。在构建过程中，本文设计了一种新的训练协议来保护训练结果的私密性，并设计了一种加密方法来保护训练数据的私密性。这些组件共同保证了<ol>
+<li>数据所有者在上传加密数据后不必维护在线训练；</li>
+<li>训练者可以使用加密数据迭代更新神经网络模型，最终得到训练良好的模型。</li>
+</ol>
+</li>
+<li><strong>实现。</strong>作者实现了一个NPMML原型，并对其性能进行了评估。实验结果表明，NPMML对数据拥有者和训练者都具有良好的通信效率。</li>
+</ul>
+<h1 id="NPMML框架"><a href="#NPMML框架" class="headerlink" title="NPMML框架"></a>NPMML框架</h1><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>在NPMML系统中主要有三个实体，包括数据所有者、训练者和称为加密服务提供商（CSP）的辅助第三方。该系统具有数据采集、机器学习算法等机器学习任务的基本功能。</p>
+<ul>
+<li><em>数据所有者</em>：在NPMML系统中，数据所有者是一个持有一组数据的实体，它希望为机器学习任务提供数据，而不需要稍后的学习结果。为了保护隐私，所有者需要将数据加密到受保护的版本。因此，在上传数据后，所有者应该离线，不参加培训。</li>
+<li><em>CSP</em>：设计NPMML的一个挑战是，大多数学习任务都要求数据所有者在每次学习迭代中计算并提交他们的明文数据集的中间结果。为了将数据所有者从这类在线任务中解脱出来，本文引入了一个不可信的辅助服务器，该服务器在训练期间承担一些必要的密码操作。它的职责包括发布公共参数，向数据所有者发布加密密钥，以及在学习任务上进行合作。称这个实体为CSP。</li>
+<li><em>训练者</em>：与数据所有者不同的是，训练者没有数据，而是试图在从数据所有者那里收集的训练数据上构建机器学习模型。在接收到足够的加密数据后，训练者可以使用CSP运行训练协议，就像在明文数据上执行学习算法一样。该协议持续了许多次迭代，训练者最终将获得良好的模型。考虑到这个模型可能具有商业价值，训练者不会与CSP合谋，也不愿将模型透露给其他人。</li>
+</ul>
+<h2 id="威胁模型"><a href="#威胁模型" class="headerlink" title="威胁模型"></a>威胁模型</h2><p>在NPMML中，外部窃听者或受攻击的内部实体可能是敌手。</p>
+<p>通常情况下，公共环境中的敌手被认为是诚实但好奇的。也就是说，这些攻击者将遵循学习系统的协议，但也会试图根据其所拥有的信息确定尽可能多的秘密信息。然而，有时比外部对手更强大的机器学习任务的参与者可能会主动篡改一些中间消息，以泄露他人的敏感信息。因此，本文主要考虑三类互不勾结的内部对手：</p>
+<ol>
+<li>尝试从加密的训练数据中检索敏感信息的在线训练者；</li>
+<li>一个诚实但好奇的CSP，试图从加密的训练数据和训练的分类器模型中检索敏感信息；</li>
+<li>一个诚实但好奇的数据所有者，试图从不属于他/她的加密训练数据中检索敏感信息，以及训练好的分类器模型。</li>
+</ol>
+<h1 id="一种多层感知结构"><a href="#一种多层感知结构" class="headerlink" title="一种多层感知结构"></a>一种多层感知结构</h1><p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_15-30-28.png" alt=""></p>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>本文构建了一个三层感知方案。基于本文提出的系统架构，这些步骤应该包括<em>初始化</em>、<em>数据收集</em>和<em>隐私保护测试</em>。简要概述如下所示。</p>
+<ul>
+<li><em>初始化</em>：在初始化过程中，公共参数由CSP生成。CSP还为每个所有者的数据加密生成密钥对。</li>
+<li><em>数据收集</em>：在将数据上传到训练者之前，每个数据所有者使用其密钥对将一组数据加密为密文版本。训练者收集这些密文作为训练数据。</li>
+<li><em>隐私保护训练</em>：在训练期间，本文的协议在训练员和CSP之间一轮接一轮地执行。在每次学习迭代中，训练器与CSP进行通信，以使用SGD算法更新当前模型。最后，训练者在明文中得到分类器模型。</li>
+</ul>
+<h2 id="加密数据"><a href="#加密数据" class="headerlink" title="加密数据"></a>加密数据</h2><p>通常来讲，如果数据所有者简单地使用没有特定结构的加密方案将数据记录加密成密文，训练者几乎不能利用该加密记录进行训练操作，包括转发神经网络和计算SGD算法的导数。为了扭转这种情况，本文设计了一种加密数据集中每条记录的方法。</p>
+<p><strong>加密。</strong>本文选择一次性掩码结构和公钥加密方案 $\mathcal{PKE} = \{Gen,Enc,Dec\}$ 来生成由两部分组成的密文，这两部分分别由训练者和CSP使用。考虑到本文的NPMML将面临主动敌手(即主动训练者)的威胁，作者采用了CCA-2安全公钥加密方案(如RSA-PKCS#1)。为方便起见，本文将数据记录表示为向量形式，这样具有特征的记录可以表示为 $a$ 维向量 $\mathbf{x}$。</p>
+<p>具体地说，向数据所有者发放模数为 $n$ 的 $\mathcal{PKE}$ 的公钥 $pk$。当数据所有者需要上传向量 $\mathbf{x}$ 以及对应的标签 $y$ 时，他/她将</p>
+<ol>
+<li>选择掩码对，即随机非奇异整数矩阵 $\mathbf{A} \in \mathbb{Z}^{a \times a}_n$ 及其逆矩阵 $\mathbf{A}^{-1} \in \mathbb{Z}^{a \times a}$，设置 $\mathbf{z}^{(1)} \leftarrow \mathbf{A}$；</li>
+<li>将掩码后的向量加密以及填充后得到 $\mathbf{z}^{(2)} \leftarrow \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$；</li>
+<li>输出结果，即元组 $\mathbf{z} \leftarrow \mathbf{z}^{(1)} | \mathbf{z}^{(2)}$。</li>
+</ol>
+<p>这里，本文将矩阵(或向量)的每个元素的加密表示为矩阵(或向量)的加密。例如，如果 $a \times b$ 矩阵是 $\mathbf{M} = \{m_{kj} \} (1 \leq k \leq a, 1 \leq j \leq b)$，则 $\mathbf{M}$ 的加密表示一组元素 $\{m_{kj}\} (1 \leq k \leq a, 1 \leq j \leq b)$ 的加密。</p>
+<p>该方案中的大多数运算都使用浮点数，这些浮点数不能在本文选择的密码体制(如 $\mathcal{PKE}$ 和Paillier密码体制)的密文上计算。因此，浮点数应该转换为以 $\mathbb{Z}_n$ 为单位的整数，其中 $n$ 是所采用的密码系统的模数。本文用IEEE754双精度浮点数表示实数，精度为 $52$ 位，并采用了[7]中的转换方法，即将浮点数乘以预先商量好的公共数 $l$。此外，在明文空间中，负数可以表示为大的正数。为了正确地处理负数，必须确保 $\log_2n &gt; 6\log_2l$，因为本文中明文上的最大正数的大小小于 $6\log_2l$ 位。通常，明文空间非常大，而 $l$ 保持较小。</p>
+<p>请注意，一次性掩码 $\mathbf{A}^{-1}$ 仅用于向量 $\mathbf{x}$，且与 $\mathbf{x}$ 无关，因此这两个部分中的至少一个不会泄露 $\mathbf{x}$ 的信息。在训练者看来，尽管它能够得到这两个部分，但如果没有可用于解密填充的可用密钥 $sk$，$\mathbf{x}$ 仍然不能被揭示。或者，只要CSP仅从训练者接收 $\mathbf{z}^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$，它也不能恢复 $\mathbf{x}$ 的明文。</p>
+<h2 id="初始化和收集数据"><a href="#初始化和收集数据" class="headerlink" title="初始化和收集数据"></a>初始化和收集数据</h2><p>初始化步骤和数据收集步骤是运行训练方案的前提。本文将每个所有者表示为 $\mathcal{O}$，每个训练者表示为 $\mathcal{T}$，密码服务提供商表示为 $\mathcal{CSP}$。</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>如上所述，在该系统中应用了具有安全参数 $\lambda$ 的公钥加密方案 $\mathcal{PKE} = \{Gen,Enc,Dec\}$。初始化步骤按如下方式执行。</p>
+<ol>
+<li>对于每个 $\mathcal{O}$，$\mathcal{CSP}$ 运行 $Gen(1^\lambda)$ 以生成密钥对 $\langle pk, sk \rangle$；</li>
+<li>$\mathcal{CSP}$ 将公钥发布给每个 $\mathcal{O}$；</li>
+<li>每个 $\mathcal{T}$ 为其自身生成Paillier密钥对 $\langle pk_p, sk_p \rangle$，并将 $pk_p$(包含其模数 $n$，$|n|=\lambda$)公开。</li>
+</ol>
+<h3 id="收集数据"><a href="#收集数据" class="headerlink" title="收集数据"></a>收集数据</h3><p>为保护数据隐私，每个数据所有者应对其数据集中的每条记录进行加密。本文在算法2中给出了所有者加密操作的一个例子。</p>
+<p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-12-52.png" alt=""></p>
+<p>在加密了 $\{ \{\mathbf{x}_1, y_1 \},…,\{\mathbf{x}_m, y_m \} \}$ 后，数据所有者通过一个安全协议（可以被视为没有窃听者的安全通道）将 $\{ \{\mathbf{z}_1, y_1 \},…,\{\mathbf{z}_m, y_m \} \}$ 发送给一个训练者。因此，在开始训练之前，训练者已经收集了该加密数据集作为训练数据集的一部分。</p>
+<h2 id="隐私保护训练协议"><a href="#隐私保护训练协议" class="headerlink" title="隐私保护训练协议"></a>隐私保护训练协议</h2><p>隐私保护训练协议是NPMML三层感知框架的核心组成部分。通过执行该协议，训练者可以根据训练数据对其模型进行文字更新，最终得到训练好的模型。</p>
+<p>根据SGD算法，该协议应该允许训练者在每次学习迭代中对一批训练数据计算当前模型的更新，即误差函数的梯度。然而，使用适当的秘密密钥 $sk$，数据集中的任何加密记录 $\mathbf{z} =  \mathbf{A} | \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 不能被训练者本身直接利用。此外，如果训练者试图与CSP合作处理这样的记录 $\mathbf{z}$，它将遭遇另一个严重的隐私问题。也就是说，清晰的通信会将一些中间模型以及训练数据暴露给不可信的CSP。</p>
+<p>在这种情况下，作者设计训练协议的诀窍是，训练者将当前模型的一些消息加密为令牌，然后提交这些令牌来请求CSP的服务。因此，CSP能够以保护隐私的方式完成<em>梯度计算</em>的操作。</p>
+<p>然后，本文展示了 $\mathcal{CSP}$ 和持有从所有者 $\mathcal{O}$ 收集的加密数据集的单个训练者 $\mathcal{T}$ 之间的协议的细节。该协议可以很容易地扩展以支持多个所有者和训练者。</p>
+<p>在第一次学习迭代开始之前，$\mathcal{T}$ 已经从 $\mathcal{O}$ 收集了 $m$ 大小的加密训练集 $\{ \{\mathbf{z}_1, y_1 \},…,\{\mathbf{z}_m, y_m \} \}$，并且初始化了神经网络模型 $\Theta_0 = \{\mathbf{W}^{(h)}_0, \mathbf{W}^{(o)}_0 \}$，其中每个元素 $w^{(o)}_{i,j}$ 和 $w^{(h)}_{j,k}$ 可以从 $\mathbb{R}$ 随机采样。在本文的训练协议的学习迭代之后，$\mathcal{T}$ 利用加密数据集的一系列批次来更新当前模型。如算法3所示，每次学习迭代主要包括三个步骤：<em>生成请求</em>、<em>计算梯度</em>和<em>更新模型</em>。</p>
+<p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-49-00.png" alt=""></p>
+<h3 id="生成请求"><a href="#生成请求" class="headerlink" title="生成请求"></a>生成请求</h3><p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-09.png" alt=""></p>
+<p>在每次迭代开始时，$\mathcal{T}$ 选择加密训练集的随机大小为 $s$ 的批次 $S_t$。然后，$\mathcal{T}$ 使用该批和加密方案 $\mathcal{PKE}$ 和 $\mathcal{P}$ 对部分当前模型 $\Theta_{t-1}$ 进行盲处理。为了处理 $S_t$ 中的每个数据记录 $\{\mathbf{z},y\}$，$\mathcal{T}$ 秘密地保存掩码 $\mathbf{z^{(1)}} = \mathbf{A}$，并将填充 $\mathbf{z}^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 视为 $\tau^{(1)}$。$\tau^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 用于使 $\mathcal{CSP}$ 能够在不知道 $\mathbf{x}$ 和 $\mathbf{W}^{(h)}_{t-1}$ 的情况下将 $\mathbf{x}$ 前向传播到隐藏层。注意，$\mathbf{W}^{(h)}_{t-1}$ 通过乘以 $l$ 被转换为整数，$\mathbf{x}$ 也是。其余部分 $\tau^{(3)} = \mathcal{E}(\mathbf{y})$ 是标签的Paillier密文。向量 $\mathbf{y}$ 是 $y$ 的独热格式，并且在加密之前将通过乘以 $l^2$ 将其转换为整数向量。事实上，对于Paillier密码体制，整数不会以可以忽略的概率 $(1-\frac{1}{p})(1-\frac{1}{q})$ 出现在 $\mathbb{Z}^<em>_n \simeq \mathbb{Z}^</em>_p \times \mathbb{Z}^<em>_q$ 中，其中 $p$ 和 $q$ 是不公开的素数。因此，为方便起见，可以将Paillier明文空间 $\mathbb{Z}^</em>_n$ 近似地视为 $\mathbb{Z}_n$。所有的 $\tau^{(1)} | \tau^{(2)} | \tau^{(3)}$ 组成一个大小为 $s$ 的集合 $\tau_1$，它与 $S_t$ 一一对应。</p>
+<p>分离部分 $\tau_2 = \mathcal{E}(\mathbf{W}^{(o)}_{t-1})$ 和 $\tau_3 = \mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}_t$ 用于使 $\mathcal{CSP}$ 能够安全地转发输出层并计算偏导数。输出层权重 $\mathbf{W}^{(o)}_{t-1}$ 也应在盲化之前通过乘以 $l$ 转换为整数矩阵。注意，掩蔽 $\mathbf{W}^{(o)}_{t-1}$ 的随机选择的掩码 $\mathbf{B}_t$ 是一次性的，使得其仅用于当前学习迭代。$\mathcal{T}$ 需要秘密存储 $\mathbf{B}_t$，直到此迭代结束。</p>
+<p>然后，$\mathcal{T}$ 向 $\mathcal{CSP}$ 发送请求 $Req = \{\tau_1, \tau_2, \tau_3\}$ 进行训练。</p>
+<h3 id="计算梯度"><a href="#计算梯度" class="headerlink" title="计算梯度"></a>计算梯度</h3><p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-22.png" alt=""></p>
+<p>$\mathcal{CSP}$ 收到请求后，对 $Req$ 中包含受保护内容执行反向传播和求偏导操作。与基于明文数据的SGD算法不同，这里的中间结果是一种特殊的形式。</p>
+<p>当按 $\tau_1$ 中的每个元素进行神经网络前向传播时，$\mathcal{CSP}$ 尝试获得作为Sigmoid函数的输入的向量 $\mathbf{u} = (u_1, …,u_b)$，以便通过计算 $(f(u_1),f(u_2),…,f(u_b))$ 来得到隐藏层 $\mathbf{h}$。中间结果 $\mathbf{u}$ 由 $\mathbf{W}’^{(h)} \cdot \mathbf{x}’$(等于 $\mathbf{W}^{(h)}_{t-1} \cdot \mathbf{A} \cdot \mathbf{A}^{-1} \cdot \mathbf{x} = \mathbf{W}^{(h)}_{t-1} \cdot \mathbf{x}$)计算得到，因此，$\mathbf{u}$ 可以用 $l^2$ 恢复为浮点向量，$\mathbf{h}$ 可以用 $l$ 转换成整数向量。在不直接知道 $\mathbf{W}^{(o)}_{t-1}$ 的情况下，$\mathcal{CSP}$ 只能通过计算 $\tau_2 \odot \mathbf{h}$ 来获得一个特殊向量 $\mathbf{o}’$。实际上 $\mathbf{o}’$ 是Paillier加密的密文 $\mathcal{E}(\mathbf{o})$。</p>
+<p>根据3中所示的基于 $L^2$ 范数的损失函数 $E$，3层感知中的偏导数可描述如下：</p>
+<script type="math/tex; mode=display">
+\frac{\partial E}{\partial w^{(o)}_{i,j}} = -(y_i - o_i) h_j \tag{2}</script><script type="math/tex; mode=display">
+\frac{\partial E}{\partial w^{(h)}_{i,j}} = -h_j(1 - h_j) x_k \sum^c_{i=1}[(y_i - o_i)w^{(o)}_{i,j}] \tag{3}</script><p>然后，$\mathcal{CSP}$ 的任务是根据元素 $\tau^{(1)} | \tau^{(2)} | \tau^{(3)}$ 计算偏导数。输出层的偏导数矩阵 $\delta_1 \in \mathbb{Z}^{c \times b}_{n^2}$ 很容易通过计算 $(\mathbf{o’} \ominus \tau^{(2)}) \odot \mathbf{h}^T$。$\delta_1$ 实际内容为 $\delta^{(1)} = (\mathbf{o’} \ominus \tau^{(2)}) \odot \mathbf{h}^T = \mathcal{E}(- (\mathbf{y}-\mathbf{o})) \odot \mathbf{h}^T = \mathcal{E}(-(\mathbf{y}-\mathbf{o}) \cdot \mathbf{h}^T) = \mathcal{E}(\mathbf{D}^{(o)})$。隐藏层的加密偏导数矩阵很难直接生成。计算这个矩阵的一种直接方法是将方程(3)分成两个因子：$-h_j(1 - h_j) x_k$ 和 $\sum^c_{i=1}[(y_i - o_i)w^{(o)}_{i,j}]$。不幸的是，泄露后一个因素将破坏输出层 $\mathbf{o}$ 的保密性，并进一步导致 $\mathbf{x}$ 的泄漏。任何实体都不能泄露向量 $\mathbf{o}$，因为</p>
+<ol>
+<li>如果 $\mathcal{T}$ 持有 $o_i$，则将分别从公式(2)和方程(3)中推导出 $h_j$ 和 $x_k$；</li>
+<li>如果 $\mathcal{CSP}$ 持有 $o_i$，则它将通过计算公式(2)来获得 $\frac{\partial E}{\partial w^{(o)}_{i,j}}$。</li>
+</ol>
+<p>如果密文矩阵 $(\tau^{(2)} \ominus \mathbf{o’}) \odot \tau_3$ 表示矩阵的Paillier密文（第 $(j,k)$ 个元素为 $\sum^c_{i=1}[(y_i - o_i) w^{(o)}_{i,j}]$）被发送回给 $\mathcal{T}$，当 $b&gt;c$ 时，$\mathcal{T}$ 可以通过解线性方程组来提取 $\mathbf{o}$。为了扭转这种情况，作者引入了 $\gamma \in \mathbb{Z}_n$ 作为盲化因子对 $\delta^{(2)}$ 和 $\delta^{(3)}$ 进行盲化。为方便起见，作者设置了一个向量 $\mathbf{v} = (v_1, …,v_b)$，使得每个 $v_j = -h_j(1-h_j)$，其中 $1 \leq j \leq b$，且其整数版本是 $v$ 的 $l$ 倍(可能存在截断误差)。</p>
+<p>所有的 $\delta^{(1)} | \delta^{(2)} | \delta^{(3)}$ 构成另一个大小为 $s$ 的集合 $Res$，它与 $\tau_1$ 一一对应，$\mathcal{CSP}$ 将 $Res$ 返回给 $\mathcal{T}$。$\delta^{(2)}$ 和 $\delta^{(3)}$ 的内容实际上是 $\delta^{(2)} = \mathcal{E}(\gamma^{-1} \cdot \mathbf{v} \cdot (\mathbf{x’})^T)$ 和 $\delta^{(3)} = \gamma \odot ((\tau^{(2)} \ominus \mathbf{o’})^T \odot \tau_3)$$=\gamma \odot \mathcal{E}((\mathbf{y} - \mathbf{o})^T) \odot (\mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}) = \mathcal{E}(\gamma \cdot (\mathbf{y} - \mathbf{o})^T \cdot (\mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}))$。</p>
+<h3 id="更新模型"><a href="#更新模型" class="headerlink" title="更新模型"></a>更新模型</h3><p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-36.png" alt=""></p>
+<p>对于大小为 $s$ 的集合 $Res$ 中的每个元素，$\mathcal{T}$ 将恢复两个导数矩阵 $\mathbf{D}^{(h)}$ 和$\mathbf{D}^{(o)}$。注意，$\mathbf{D}^{(o)}$ 被因子 $l^2$ 恢复为浮点矩阵，而 $\mathbf{D}^{(h)}$ 被因子 $l^5$ 恢复为浮点矩阵。</p>
+<p>导数矩阵的正确性很容易推导出来。$\mathcal{D}(\delta^{(1)}) = \mathbf{D}^{(o)}$ 是显而易见的。矩阵 $\mathbf{D}^{(1)}$ 为 $\mathcal{D}(\delta^{(2)}) \cdot \mathbf{A}^T = \gamma^{-1} \cdot \mathbf{v} \cdot \mathbf{x}^T \cdot (\mathbf{A^{-1}}) \cdot \mathbf{A}^T = \gamma^{-1} \cdot \mathbf{v} \cdot \mathbf{x}^T$ 其中第 $(j，k)$ 个元素为 $(v_j \cdot x_k) \cdot \gamma^{-1}$。矩阵 $\mathbf{D}^{(2)}$ 为 $\mathcal{D}(\delta^{(3)}) \cdot \mathbf{B}_t = \gamma \cdot (\mathbf{y} - \mathbf{o})^T \cdot \mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}_t \cdot \mathbf{B}_t = \gamma \cdot (\mathbf{y} - \mathbf{o})^T \cdot \mathbf{W}^{(o)}_{t-1}$ 其中第 $j$ 个元素为 $\gamma \cdot \sum^c_{i=1}[(y_i - o_i)w^{(o)}_{i,j}]$。因此，$\mathbf{D}^{(h)}$ 的第 $(j，k)$ 个元素是 $d^{(1)}_{j,k} \cdot d^{(2)}_j = y_jx_k \sum^c_{i=1}[(y_j - o_i)w^{(o)}_{i,j}]$，它是 $d^{(h)}_{j,k} = \frac{\partial E}{\partial w^{(h)}_{j,k}}$ 的整数形式。</p>
+<p>当前迭代中的梯度 $\{\mathbf{G}^{(h)}, \mathbf{G}^{(o)} \}$ 是由所有导数矩阵的集合计算的。</p>
+<p>一旦达到最大迭代次数，训练协议将被终止，训练好的神经网络模型 $\Theta_r$ 由 $\{\mathbf{W}^{(h)}_r, \mathbf{W}^{(o)}_r \}$ 组成。</p>
+<h3 id="截断误差"><a href="#截断误差" class="headerlink" title="截断误差"></a>截断误差</h3><p>如数据加密的章节所述，在 $\mathbb{Z}_n$ 中，浮点数和整数之间的转换是通过使用预先确定的公共数 $l$ 来实现的。乘/除以 $l$ 的次数由 $\mathbb{Z}_n$ 中的乘法次数决定。用一个简单的例子来说明这种情况：设 $Y$ 是两个整数 $X_1$ 和 $X_2$ 的乘积，每个整数是浮点数的 $l$ 倍。要将 $Y$ 恢复为浮点数，应选择 $l^2$ 作为除数。这一规则使得在本文的协议中可以转换为整数的最小值不小于 $l^{-1}$。设浮点数的精度为 $\alpha$ 位。只要 $2^{\alpha} / l &lt; 1$，转换就可以尽可能多地保留浮点数的有效位。</p>
+<p>因此，唯一额外的误差源是算法3中浮点乘法之后的 $\mathbf{v}$ 转换。在这样的转换中，由于减小了模数大小，$l$ 只使用了一次，这可能会引入截断错误。本文的截断操作的实际效果如第7节所示。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/11/%E6%A8%A1%E6%8B%9F/" rel="next" title="模拟">
+                <i class="fa fa-chevron-left"></i> 模拟
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/20200417221334.jpg"
+                alt="yyw" />
+            
+              <p class="site-author-name" itemprop="name">yyw</p>
+              <p class="site-description motion-element" itemprop="description">Do not go gentle into that good night.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贡献"><span class="nav-number">2.</span> <span class="nav-text">贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NPMML框架"><span class="nav-number">3.</span> <span class="nav-text">NPMML框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构"><span class="nav-number">3.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#威胁模型"><span class="nav-number">3.2.</span> <span class="nav-text">威胁模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一种多层感知结构"><span class="nav-number">4.</span> <span class="nav-text">一种多层感知结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概览"><span class="nav-number">4.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加密数据"><span class="nav-number">4.2.</span> <span class="nav-text">加密数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化和收集数据"><span class="nav-number">4.3.</span> <span class="nav-text">初始化和收集数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">4.3.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收集数据"><span class="nav-number">4.3.2.</span> <span class="nav-text">收集数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐私保护训练协议"><span class="nav-number">4.4.</span> <span class="nav-text">隐私保护训练协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成请求"><span class="nav-number">4.4.1.</span> <span class="nav-text">生成请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算梯度"><span class="nav-number">4.4.2.</span> <span class="nav-text">计算梯度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新模型"><span class="nav-number">4.4.3.</span> <span class="nav-text">更新模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#截断误差"><span class="nav-number">4.4.4.</span> <span class="nav-text">截断误差</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-tree" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yyw</span>
+
+  
+</div>
+
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">108.8k</span>
+  
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
