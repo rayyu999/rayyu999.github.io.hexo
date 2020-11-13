@@ -540,9 +540,9 @@ rating:
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
-  enable: false
-  app_id: HQznTAQvW7mu6UPvQBjICkCs-gzGzoHsz
-  app_key: mgyPtm047h69cAgnzC5gPoCU
+  enable: true
+  app_id: MBnx5KMN6Xa38rtMNPzvIQ32-gzGzoHsz
+  app_key: FKAkDtnA4nrgcfOo5c8Xnwjh
 
 # Another tool to show number of visitors to each article.
 # visit https://console.firebase.google.com/u/0/ to get apiKey and projectId
@@ -568,7 +568,7 @@ busuanzi_count:
   site_pv_header: 本站总访问量
   site_pv_footer: 次
   # custom pv span for one page only
-  page_pv: trues
+  page_pv: false
   page_pv_header: <i class="fa fa-eye"></i>
   page_pv_footer: 
 

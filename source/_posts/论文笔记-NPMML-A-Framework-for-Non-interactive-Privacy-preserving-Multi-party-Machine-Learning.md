@@ -15,6 +15,8 @@ https://ieeexplore.ieee.org/document/8981947
 
 <!--more-->
 
+![](http://images.yingwai.top/picgo/NPMML.png)
+
 # 摘要
 
 近十年来，深度学习技术被广泛用于建立人工智能应用程序，这使得许多数据分析任务取得了成功，如风险评估、医学预测和人脸识别。由于深度学习的有效性与可用的数据量成正比，大规模收集海量数据至关重要。考虑到隐私和安全问题通常会阻止数据所有者提供敏感数据用于培训，研究人员提出了几种技术来在包含多方的机器学习系统中为数据提供隐私保证。然而，所有这些工作都在培训过程中引起了数据所有者之间的频繁交互，从而导致数据所有者付出了高昂的通信成本。为此，本文提出了一种新的服务器辅助框架，称为非交互式隐私保护多方机器学习(NPMML)，该框架支持安全的机器学习任务，无需数据所有者的参与。NPMML框架显著降低了数据所有者在多方机器学习中的通信开销。此外，我们还设计了一个基于NPMML的多层神经网络的具体结构。最后，通过原型实现对NPMML的性能进行了评估。实验结果表明，NPMML对数据拥有者来说是一种高效的通信方式。
@@ -87,7 +89,7 @@ https://ieeexplore.ieee.org/document/8981947
 
 1. 选择掩码对，即随机非奇异整数矩阵 $\mathbf{A} \in \mathbb{Z}^{a \times a}_n$ 及其逆矩阵 $\mathbf{A}^{-1} \in \mathbb{Z}^{a \times a}$，设置 $\mathbf{z}^{(1)} \leftarrow \mathbf{A}$；
 2. 将掩码后的向量加密以及填充后得到 $\mathbf{z}^{(2)} \leftarrow \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$；
-3. 输出结果，即元组 $\mathbf{z} \leftarrow \mathbf{z}^{(1)} \| \mathbf{z}^{(2)}$。
+3. 输出结果，即元组 $\mathbf{z} \leftarrow \mathbf{z}^{(1)} || \mathbf{z}^{(2)}$。
 
 这里，本文将矩阵(或向量)的每个元素的加密表示为矩阵(或向量)的加密。例如，如果 $a \times b$ 矩阵是 $\mathbf{M} = \{m_{kj} \} (1 \leq k \leq a, 1 \leq j \leq b)$，则 $\mathbf{M}$ 的加密表示一组元素 $\{m_{kj}\} (1 \leq k \leq a, 1 \leq j \leq b)$ 的加密。
 
@@ -123,7 +125,7 @@ https://ieeexplore.ieee.org/document/8981947
 
 隐私保护训练协议是NPMML三层感知框架的核心组成部分。通过执行该协议，训练者可以根据训练数据对其模型进行文字更新，最终得到训练好的模型。
 
-根据SGD算法，该协议应该允许训练者在每次学习迭代中对一批训练数据计算当前模型的更新，即误差函数的梯度。然而，使用适当的秘密密钥 $sk$，数据集中的任何加密记录 $\mathbf{z} =  \mathbf{A} \| \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 不能被训练者本身直接利用。此外，如果训练者试图与CSP合作处理这样的记录 $\mathbf{z}$，它将遭遇另一个严重的隐私问题。也就是说，清晰的通信会将一些中间模型以及训练数据暴露给不可信的CSP。
+根据SGD算法，该协议应该允许训练者在每次学习迭代中对一批训练数据计算当前模型的更新，即误差函数的梯度。然而，使用适当的秘密密钥 $sk$，数据集中的任何加密记录 $\mathbf{z} =  \mathbf{A} || \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 不能被训练者本身直接利用。此外，如果训练者试图与CSP合作处理这样的记录 $\mathbf{z}$，它将遭遇另一个严重的隐私问题。也就是说，清晰的通信会将一些中间模型以及训练数据暴露给不可信的CSP。
 
 在这种情况下，作者设计训练协议的诀窍是，训练者将当前模型的一些消息加密为令牌，然后提交这些令牌来请求CSP的服务。因此，CSP能够以保护隐私的方式完成*梯度计算*的操作。
 
@@ -139,7 +141,7 @@ https://ieeexplore.ieee.org/document/8981947
 
 ![](http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-09.png)
 
-在每次迭代开始时，$\mathcal{T}$ 选择加密训练集的随机大小为 $s$ 的批次 $S_t$。然后，$\mathcal{T}$ 使用该批和加密方案 $\mathcal{PKE}$ 和 $\mathcal{P}$ 对部分当前模型 $\Theta_{t-1}$ 进行盲处理。为了处理 $S_t$ 中的每个数据记录 $\{\mathbf{z},y\}$，$\mathcal{T}$ 秘密地保存掩码 $\mathbf{z^{(1)}} = \mathbf{A}$，并将填充 $\mathbf{z}^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 视为 $\tau^{(1)}$。$\tau^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 用于使 $\mathcal{CSP}$ 能够在不知道 $\mathbf{x}$ 和 $\mathbf{W}^{(h)}_{t-1}$ 的情况下将 $\mathbf{x}$ 前向传播到隐藏层。注意，$\mathbf{W}^{(h)}_{t-1}$ 通过乘以 $l$ 被转换为整数，$\mathbf{x}$ 也是。其余部分 $\tau^{(3)} = \mathcal{E}(\mathbf{y})$ 是标签的Paillier密文。向量 $\mathbf{y}$ 是 $y$ 的独热格式，并且在加密之前将通过乘以 $l^2$ 将其转换为整数向量。事实上，对于Paillier密码体制，整数不会以可以忽略的概率 $(1-\frac{1}{p})(1-\frac{1}{q})$ 出现在 $\mathbb{Z}^*_n \simeq \mathbb{Z}^*_p \times \mathbb{Z}^*_q$ 中，其中 $p$ 和 $q$ 是不公开的素数。因此，为方便起见，可以将Paillier明文空间 $\mathbb{Z}^*_n$ 近似地视为 $\mathbb{Z}_n$。所有的 $\tau^{(1)} \| \tau^{(2)} \| \tau^{(3)}$ 组成一个大小为 $s$ 的集合 $\tau_1$，它与 $S_t$ 一一对应。
+在每次迭代开始时，$\mathcal{T}$ 选择加密训练集的随机大小为 $s$ 的批次 $S_t$。然后，$\mathcal{T}$ 使用该批和加密方案 $\mathcal{PKE}$ 和 $\mathcal{P}$ 对部分当前模型 $\Theta_{t-1}$ 进行盲处理。为了处理 $S_t$ 中的每个数据记录 $\{\mathbf{z},y\}$，$\mathcal{T}$ 秘密地保存掩码 $\mathbf{z^{(1)}} = \mathbf{A}$，并将填充 $\mathbf{z}^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 视为 $\tau^{(1)}$。$\tau^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 用于使 $\mathcal{CSP}$ 能够在不知道 $\mathbf{x}$ 和 $\mathbf{W}^{(h)}_{t-1}$ 的情况下将 $\mathbf{x}$ 前向传播到隐藏层。注意，$\mathbf{W}^{(h)}_{t-1}$ 通过乘以 $l$ 被转换为整数，$\mathbf{x}$ 也是。其余部分 $\tau^{(3)} = \mathcal{E}(\mathbf{y})$ 是标签的Paillier密文。向量 $\mathbf{y}$ 是 $y$ 的独热格式，并且在加密之前将通过乘以 $l^2$ 将其转换为整数向量。事实上，对于Paillier密码体制，整数不会以可以忽略的概率 $(1-\frac{1}{p})(1-\frac{1}{q})$ 出现在 $\mathbb{Z}^*_n \simeq \mathbb{Z}^*_p \times \mathbb{Z}^*_q$ 中，其中 $p$ 和 $q$ 是不公开的素数。因此，为方便起见，可以将Paillier明文空间 $\mathbb{Z}^*_n$ 近似地视为 $\mathbb{Z}_n$。所有的 $\tau^{(1)} || \tau^{(2)} || \tau^{(3)}$ 组成一个大小为 $s$ 的集合 $\tau_1$，它与 $S_t$ 一一对应。
 
 分离部分 $\tau_2 = \mathcal{E}(\mathbf{W}^{(o)}_{t-1})$ 和 $\tau_3 = \mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}_t$ 用于使 $\mathcal{CSP}$ 能够安全地转发输出层并计算偏导数。输出层权重 $\mathbf{W}^{(o)}_{t-1}$ 也应在盲化之前通过乘以 $l$ 转换为整数矩阵。注意，掩蔽 $\mathbf{W}^{(o)}_{t-1}$ 的随机选择的掩码 $\mathbf{B}_t$ 是一次性的，使得其仅用于当前学习迭代。$\mathcal{T}$ 需要秘密存储 $\mathbf{B}_t$，直到此迭代结束。
 
@@ -171,7 +173,7 @@ $$
 
 如果密文矩阵 $(\tau^{(2)} \ominus \mathbf{o'}) \odot \tau_3$ 表示矩阵的Paillier密文（第 $(j,k)$ 个元素为 $\sum^c_{i=1}[(y_i - o_i) w^{(o)}_{i,j}]$）被发送回给 $\mathcal{T}$，当 $b>c$ 时，$\mathcal{T}$ 可以通过解线性方程组来提取 $\mathbf{o}$。为了扭转这种情况，作者引入了 $\gamma \in \mathbb{Z}_n$ 作为盲化因子对 $\delta^{(2)}$ 和 $\delta^{(3)}$ 进行盲化。为方便起见，作者设置了一个向量 $\mathbf{v} = (v_1, ...,v_b)$，使得每个 $v_j = -h_j(1-h_j)$，其中 $1 \leq j \leq b$，且其整数版本是 $v$ 的 $l$ 倍(可能存在截断误差)。
 
-所有的 $\delta^{(1)} \| \delta^{(2)} \| \delta^{(3)}$ 构成另一个大小为 $s$ 的集合 $Res$，它与 $\tau_1$ 一一对应，$\mathcal{CSP}$ 将 $Res$ 返回给 $\mathcal{T}$。$\delta^{(2)}$ 和 $\delta^{(3)}$ 的内容实际上是 $\delta^{(2)} = \mathcal{E}(\gamma^{-1} \cdot \mathbf{v} \cdot (\mathbf{x'})^T)$ 和 $\delta^{(3)} = \gamma \odot ((\tau^{(2)} \ominus \mathbf{o'})^T \odot \tau_3)$$=\gamma \odot \mathcal{E}((\mathbf{y} - \mathbf{o})^T) \odot (\mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}) = \mathcal{E}(\gamma \cdot (\mathbf{y} - \mathbf{o})^T \cdot (\mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}))$。
+所有的 $\delta^{(1)} || \delta^{(2)} || \delta^{(3)}$ 构成另一个大小为 $s$ 的集合 $Res$，它与 $\tau_1$ 一一对应，$\mathcal{CSP}$ 将 $Res$ 返回给 $\mathcal{T}$。$\delta^{(2)}$ 和 $\delta^{(3)}$ 的内容实际上是 $\delta^{(2)} = \mathcal{E}(\gamma^{-1} \cdot \mathbf{v} \cdot (\mathbf{x'})^T)$ 和 $\delta^{(3)} = \gamma \odot ((\tau^{(2)} \ominus \mathbf{o'})^T \odot \tau_3)$$=\gamma \odot \mathcal{E}((\mathbf{y} - \mathbf{o})^T) \odot (\mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}) = \mathcal{E}(\gamma \cdot (\mathbf{y} - \mathbf{o})^T \cdot (\mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}))$。
 
 
 

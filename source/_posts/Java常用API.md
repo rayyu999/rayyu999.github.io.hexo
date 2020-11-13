@@ -1,7 +1,7 @@
 ---
 title: Java常用API
 date: 2020-08-31 17:35:36
-categorise: Coding
+categories: Coding
 tags: Java
 ---
 
