@@ -4,7 +4,7 @@ title: >-
   Machine Learning
 date: 2020-11-11 21:59:55
 categories: Papers
-tags: [MPC, PPML]
+tags: [MPC, PPML, Neural Network]
 ---
 
 *Tong Li, Jin Li, Xiaofeng Chen, Zheli Liu, Wenjing Lou, and Y. Thomas Hou*
