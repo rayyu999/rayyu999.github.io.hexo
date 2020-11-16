@@ -2,7 +2,7 @@
 title: The 1st BIU Winter School--SECURE COMPUTATION AND EFFICIENCY 笔记
 date: 2020-11-16 23:22:51
 categories: Study
-tags: [MPC, Garbled Circuit, HE, Oblivious Transfer, GMW, BGW, Zero Knowledge Proof]
+tags: [MPC, Garbled Circuit, HE, Oblivious Transfer, GMW, BGW, Zero Knowledge Proof, 密码学]
 ---
 
 https://cyber.biu.ac.il/event/the-1st-biu-winter-school/
