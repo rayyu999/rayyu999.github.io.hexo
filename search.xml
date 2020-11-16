@@ -5810,7 +5810,7 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
 <p>在第一次学习迭代开始之前，$\mathcal{T}$ 已经从 $\mathcal{O}$ 收集了 $m$ 大小的加密训练集 $\{ \{\mathbf{z}_1, y_1 \},…,\{\mathbf{z}_m, y_m \} \}$，并且初始化了神经网络模型 $\Theta_0 = \{\mathbf{W}^{(h)}_0, \mathbf{W}^{(o)}_0 \}$，其中每个元素 $w^{(o)}_{i,j}$ 和 $w^{(h)}_{j,k}$ 可以从 $\mathbb{R}$ 随机采样。在本文的训练协议的学习迭代之后，$\mathcal{T}$ 利用加密数据集的一系列批次来更新当前模型。如算法3所示，每次学习迭代主要包括三个步骤：<em>生成请求</em>、<em>计算梯度</em>和<em>更新模型</em>。</p>
 <p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-49-00.png" alt=""></p>
 <h3 id="生成请求"><a href="#生成请求" class="headerlink" title="生成请求"></a>生成请求</h3><p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-09.png" alt=""></p>
-<p>在每次迭代开始时，$\mathcal{T}$ 选择加密训练集的随机大小为 $s$ 的批次 $S_t$。然后，$\mathcal{T}$ 使用该批和加密方案 $\mathcal{PKE}$ 和 $\mathcal{P}$ 对部分当前模型 $\Theta_{t-1}$ 进行盲处理。为了处理 $S_t$ 中的每个数据记录 $\{\mathbf{z},y\}$，$\mathcal{T}$ 秘密地保存掩码 $\mathbf{z^{(1)}} = \mathbf{A}$，并将填充 $\mathbf{z}^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 视为 $\tau^{(1)}$。$\tau^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 用于使 $\mathcal{CSP}$ 能够在不知道 $\mathbf{x}$ 和 $\mathbf{W}^{(h)}_{t-1}$ 的情况下将 $\mathbf{x}$ 前向传播到隐藏层。注意，$\mathbf{W}^{(h)}_{t-1}$ 通过乘以 $l$ 被转换为整数，$\mathbf{x}$ 也是。其余部分 $\tau^{(3)} = \mathcal{E}(\mathbf{y})$ 是标签的Paillier密文。向量 $\mathbf{y}$ 是 $y$ 的独热格式，并且在加密之前将通过乘以 $l^2$ 将其转换为整数向量。事实上，对于Paillier密码体制，整数不会以可以忽略的概率 $(1-\frac{1}{p})(1-\frac{1}{q})$ 出现在 $\mathbb{Z}^<em>_n \simeq \mathbb{Z}^</em>_p \times \mathbb{Z}^<em>_q$ 中，其中 $p$ 和 $q$ 是不公开的素数。因此，为方便起见，可以将Paillier明文空间 $\mathbb{Z}^</em>_n$ 近似地视为 $\mathbb{Z}_n$。所有的 $\tau^{(1)} || \tau^{(2)} || \tau^{(3)}$ 组成一个大小为 $s$ 的集合 $\tau_1$，它与 $S_t$ 一一对应。</p>
+<p>在每次迭代开始时，$\mathcal{T}$ 选择加密训练集的随机大小为 $s$ 的批次 $S_t$。然后，$\mathcal{T}$ 使用该批和加密方案 $\mathcal{PKE}$ 和 $\mathcal{P}$ 对部分当前模型 $\Theta_{t-1}$ 进行盲化处理。为了处理 $S_t$ 中的每个数据记录 $\{\mathbf{z},y\}$，$\mathcal{T}$ 秘密地保存掩码 $\mathbf{z^{(1)}} = \mathbf{A}$，并将填充 $\mathbf{z}^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{A}^{-1} \cdot \mathbf{x})$ 视为 $\tau^{(1)}$。$\tau^{(2)} = \mathcal{PKE}.Enc_{pk}(\mathbf{W}^{(h)}_{t-1} \cdot \mathbf{A})$ 用于使 $\mathcal{CSP}$ 能够在不知道 $\mathbf{x}$ 和 $\mathbf{W}^{(h)}_{t-1}$ 的情况下将 $\mathbf{x}$ 前向传播到隐藏层。注意，$\mathbf{W}^{(h)}_{t-1}$ 通过乘以 $l$ 被转换为整数，$\mathbf{x}$ 也是。其余部分 $\tau^{(3)} = \mathcal{E}(\mathbf{y})$ 是标签的Paillier密文。向量 $\mathbf{y}$ 是 $y$ 的独热格式，并且在加密之前将通过乘以 $l^2$ 将其转换为整数向量。事实上，对于Paillier密码体制，整数不会以可以忽略的概率 $(1-\frac{1}{p})(1-\frac{1}{q})$ 出现在 $\mathbb{Z}^<em>_n \simeq \mathbb{Z}^</em>_p \times \mathbb{Z}^<em>_q$ 中，其中 $p$ 和 $q$ 是不公开的素数。因此，为方便起见，可以将Paillier明文空间 $\mathbb{Z}^</em>_n$ 近似地视为 $\mathbb{Z}_n$。所有的 $\tau^{(1)} || \tau^{(2)} || \tau^{(3)}$ 组成一个大小为 $s$ 的集合 $\tau_1$，它与 $S_t$ 一一对应。</p>
 <p>分离部分 $\tau_2 = \mathcal{E}(\mathbf{W}^{(o)}_{t-1})$ 和 $\tau_3 = \mathbf{W}^{(o)}_{t-1} \cdot \mathbf{B}^{-1}_t$ 用于使 $\mathcal{CSP}$ 能够安全地转发输出层并计算偏导数。输出层权重 $\mathbf{W}^{(o)}_{t-1}$ 也应在盲化之前通过乘以 $l$ 转换为整数矩阵。注意，掩蔽 $\mathbf{W}^{(o)}_{t-1}$ 的随机选择的掩码 $\mathbf{B}_t$ 是一次性的，使得其仅用于当前学习迭代。$\mathcal{T}$ 需要秘密存储 $\mathbf{B}_t$，直到此迭代结束。</p>
 <p>然后，$\mathcal{T}$ 向 $\mathcal{CSP}$ 发送请求 $Req = \{\tau_1, \tau_2, \tau_3\}$ 进行训练。</p>
 <h3 id="计算梯度"><a href="#计算梯度" class="headerlink" title="计算梯度"></a>计算梯度</h3><p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-10_16-51-22.png" alt=""></p>
@@ -5821,7 +5821,7 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
 \frac{\partial E}{\partial w^{(o)}_{i,j}} = -(y_i - o_i) h_j \tag{2}</script><script type="math/tex; mode=display">
 \frac{\partial E}{\partial w^{(h)}_{i,j}} = -h_j(1 - h_j) x_k \sum^c_{i=1}[(y_i - o_i)w^{(o)}_{i,j}] \tag{3}</script><p>然后，$\mathcal{CSP}$ 的任务是根据元素 $\tau^{(1)} | \tau^{(2)} | \tau^{(3)}$ 计算偏导数。输出层的偏导数矩阵 $\delta_1 \in \mathbb{Z}^{c \times b}_{n^2}$ 很容易通过计算 $(\mathbf{o’} \ominus \tau^{(2)}) \odot \mathbf{h}^T$。$\delta_1$ 实际内容为 $\delta^{(1)} = (\mathbf{o’} \ominus \tau^{(2)}) \odot \mathbf{h}^T = \mathcal{E}(- (\mathbf{y}-\mathbf{o})) \odot \mathbf{h}^T = \mathcal{E}(-(\mathbf{y}-\mathbf{o}) \cdot \mathbf{h}^T) = \mathcal{E}(\mathbf{D}^{(o)})$。隐藏层的加密偏导数矩阵很难直接生成。计算这个矩阵的一种直接方法是将方程(3)分成两个因子：$-h_j(1 - h_j) x_k$ 和 $\sum^c_{i=1}[(y_i - o_i)w^{(o)}_{i,j}]$。不幸的是，泄露后一个因素将破坏输出层 $\mathbf{o}$ 的保密性，并进一步导致 $\mathbf{x}$ 的泄漏。任何实体都不能泄露向量 $\mathbf{o}$，因为</p>
 <ol>
-<li>如果 $\mathcal{T}$ 持有 $o_i$，则将分别从公式(2)和方程(3)中推导出 $h_j$ 和 $x_k$；</li>
+<li>如果 $\mathcal{T}$ 持有 $o_i$，则将分别从公式(2)和公式(3)中推导出 $h_j$ 和 $x_k$；</li>
 <li>如果 $\mathcal{CSP}$ 持有 $o_i$，则它将通过计算公式(2)来获得 $\frac{\partial E}{\partial w^{(o)}_{i,j}}$。</li>
 </ol>
 <p>如果密文矩阵 $(\tau^{(2)} \ominus \mathbf{o’}) \odot \tau_3$ 表示矩阵的Paillier密文（第 $(j,k)$ 个元素为 $\sum^c_{i=1}[(y_i - o_i) w^{(o)}_{i,j}]$）被发送回给 $\mathcal{T}$，当 $b&gt;c$ 时，$\mathcal{T}$ 可以通过解线性方程组来提取 $\mathbf{o}$。为了扭转这种情况，作者引入了 $\gamma \in \mathbb{Z}_n$ 作为盲化因子对 $\delta^{(2)}$ 和 $\delta^{(3)}$ 进行盲化。为方便起见，作者设置了一个向量 $\mathbf{v} = (v_1, …,v_b)$，使得每个 $v_j = -h_j(1-h_j)$，其中 $1 \leq j \leq b$，且其整数版本是 $v$ 的 $l$ 倍(可能存在截断误差)。</p>
@@ -5900,6 +5900,653 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
       </categories>
       <tags>
         <tag>密码学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The 1st BIU Winter School--SECURE COMPUTATION AND EFFICIENCY 笔记</title>
+    <url>/2020/11/16/The-1st-BIU-Winter-School-SECURE-COMPUTATION-AND-EFFICIENCY-%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p><a href="https://cyber.biu.ac.il/event/the-1st-biu-winter-school/" target="_blank" rel="noopener">https://cyber.biu.ac.il/event/the-1st-biu-winter-school/</a></p>
+<a id="more"></a>
+<h2 id="背景和定义"><a href="#背景和定义" class="headerlink" title="背景和定义"></a>背景和定义</h2><h3 id="真实案例"><a href="#真实案例" class="headerlink" title="真实案例"></a>真实案例</h3><ul>
+<li>一个非盈利组织收到美国政府的联系，正在做一份刑事司法的研究。</li>
+<li>该组织向美国移民当局索要在纽约市被捕的外国人的 “外国人登记号码 “清单。<ul>
+<li>来看哪些人在名单上</li>
+</ul>
+</li>
+<li>考虑到隐私问题，双方都不能交出名单</li>
+</ul>
+<p>这就是安全的交集操作。</p>
+<h3 id="安全多方计算"><a href="#安全多方计算" class="headerlink" title="安全多方计算"></a>安全多方计算</h3><ul>
+<li>拥有隐私输入的多方</li>
+<li>各方希望根据他们的输入计算出一个函数，来保留某些安全性</li>
+<li>即使有部分参与方恶意攻击协议，也必须保证这个性质</li>
+<li>可以对任何加密任务进行建模</li>
+</ul>
+<h4 id="安全要求"><a href="#安全要求" class="headerlink" title="安全要求"></a>安全要求</h4><p>考虑一次（有秘密出价的）安全的拍卖过程：</p>
+<ul>
+<li>敌手可能想要知道所有各方的出价——为了防止这种情况发生，要求保密性；</li>
+<li>敌手可能想要用低价而不是高价赢得拍卖——要求正确性；</li>
+<li>敌手还可能想要保证它总是出价最高——要求输入的独立性；</li>
+<li>敌手可能想要在它出价不是最高时终止执行拍卖——要求公平性。</li>
+</ul>
+<h4 id="一般安全性"><a href="#一般安全性" class="headerlink" title="一般安全性"></a>一般安全性</h4><ul>
+<li><strong>保密性</strong>：只有输出被揭露</li>
+<li><strong>正确性</strong>：该函数的计算是正确的</li>
+<li><strong>输入独立性</strong>：各方不能根据其它方的输入来选择它们自己的输入</li>
+<li><strong>公平性</strong>：如果一方收到输出，那么其它所有方也会收到输出</li>
+<li><strong>保证输出送达</strong></li>
+</ul>
+<h4 id="定义安全"><a href="#定义安全" class="headerlink" title="定义安全"></a>定义安全</h4><p><strong>选择1：对每个特定的问题进行安全考虑的分析</strong></p>
+<ul>
+<li>拍卖：上面有提到</li>
+<li><p>选举：只需要保密性、正确性和公平性</p>
+</li>
+<li><p><strong>问题</strong>：</p>
+<ul>
+<li>我们如何知道覆盖了所有的考虑？</li>
+<li>定义取决于应用，需要为每个任务重新定义</li>
+</ul>
+</li>
+</ul>
+<p><strong>选择2：涵盖所有安全计算任务的通用定义</strong></p>
+<ul>
+<li>这种定义的性质<ul>
+<li>定义了良好的敌手模型</li>
+<li>定义了良好的执行设定</li>
+<li>安全保证明确、简单易懂</li>
+</ul>
+</li>
+</ul>
+<h5 id="敌手建模"><a href="#敌手建模" class="headerlink" title="敌手建模"></a>敌手建模</h5><p><strong>敌手行为：</strong></p>
+<ul>
+<li><strong>半诚实</strong>：遵循协议规范<ul>
+<li>尝试通过检查中间结果获得更多信息</li>
+</ul>
+</li>
+<li><strong>恶意</strong>：遵循任意策略</li>
+<li><strong>隐秘</strong>：遵循任意策略，但不愿被抓（？）</li>
+</ul>
+<p><strong>敌手力量：</strong></p>
+<ul>
+<li>多项式时间</li>
+<li>计算无界：信息论安全</li>
+</ul>
+<p><strong>腐败策略：</strong></p>
+<ul>
+<li>静态的：腐败方的集合在执行开始之前就已修复</li>
+<li>适应的：敌手可以在执行过程中根据发生的事情破坏各方<ul>
+<li>为现代”黑客行为“建模</li>
+<li>无法使用选择一小部分代表进行全部计算的策略</li>
+<li>总的来说，更加困难</li>
+</ul>
+</li>
+</ul>
+<h5 id="执行设定"><a href="#执行设定" class="headerlink" title="执行设定"></a>执行设定</h5><p><strong>单机：</strong></p>
+<ul>
+<li>只考虑一个单独的协议被执行（或者只有一个执行过程被攻击）</li>
+</ul>
+<p><strong>并发一般组合：</strong></p>
+<ul>
+<li>任意的协议是并发执行的</li>
+<li>现实的环境，非常重要的模型</li>
+</ul>
+<p><strong>单机对比组合：</strong></p>
+<ul>
+<li>单机：研究MPC的好的开始</li>
+<li>组合：构造的真正目的</li>
+</ul>
+<h4 id="安全计算的可行性"><a href="#安全计算的可行性" class="headerlink" title="安全计算的可行性"></a>安全计算的可行性</h4><ul>
+<li>假设占多数的诚实方可以安全地计算任何函数<ul>
+<li>甚至是具有自适应的信息论安全性</li>
+</ul>
+</li>
+<li>一般来说，没有占多数的诚实方就不可能实现公平</li>
+<li>没有占多数的诚实方，可以计算出函数，但没有实现公平</li>
+</ul>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><h4 id="记号法"><a href="#记号法" class="headerlink" title="记号法"></a>记号法</h4><ul>
+<li>安全参数 $n$</li>
+<li>我们希望只要 $n$ 足够大，对于任意输入都具有安全性</li>
+</ul>
+<h5 id="可忽略函数-mu-："><a href="#可忽略函数-mu-：" class="headerlink" title="可忽略函数 $\mu$ ："></a>可忽略函数 $\mu$ ：</h5><p>如果对于任意多项式 $p(\cdot)$ 存在一个 $N$ 使得 $n &gt; N$，有 $\mu(n) &lt; 1 / p(n)$。</p>
+<h5 id="概率集合-X-X-a-n"><a href="#概率集合-X-X-a-n" class="headerlink" title="概率集合 $X=\{X(a,n)\}$"></a>概率集合 $X=\{X(a,n)\}$</h5><ul>
+<li>无限集，由字符串 $a$ 和自然数 $n$ 索引</li>
+<li>每个 $X(a,n)$ 都是一个随机变量<ul>
+<li>在我们的上下文中：使用输入 $a$ 和安全参数 $n$ 进行协议执行的输出</li>
+<li>概率空间：各方的随机性</li>
+</ul>
+</li>
+</ul>
+<h5 id="计算的不可区分性-X-approx-Y"><a href="#计算的不可区分性-X-approx-Y" class="headerlink" title="计算的不可区分性 $X \approx Y$"></a>计算的不可区分性 $X \approx Y$</h5><p>对于每个（非均匀）多项式时间区分器 $D$ 存在一个可忽略函数 $\mu$ 使得对于每个 $a$ 和足够大的 $n$ 有：</p>
+<script type="math/tex; mode=display">
+| \Pr[D(X(a,n) = 1)] - \Pr[D(Y(a,n))=1] | < \mu(n)</script><h5 id="统计接近度"><a href="#统计接近度" class="headerlink" title="统计接近度"></a>统计接近度</h5><p>相同，但 $D$ 在运行时间上不受限制。</p>
+<h5 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h5><ul>
+<li>$f=(f_1,…,f_m)$：对于输入向量 $x$，每个 $f_i(x)$ 都是一个随机变量（对于概率函数）</li>
+<li>$P_i$ 方收到 $f_i$</li>
+<li>记为 $(x,y) \rightarrow (f_1(x,y), f_2(x,y))$</li>
+</ul>
+<h3 id="半诚实敌手"><a href="#半诚实敌手" class="headerlink" title="半诚实敌手"></a>半诚实敌手</h3><h4 id="模拟："><a href="#模拟：" class="headerlink" title="模拟："></a>模拟：</h4><ul>
+<li>给定输入和输出，就可以生成敌手执行协议的视图</li>
+<li>重要：由于各方遵循协议，因此输入定义明确</li>
+</ul>
+<p><strong>对于每个半诚实的 $A$，存在一个模拟器 $S$ 使得对于每组腐败方 $I$ 和输入 $x$ 的每个向量，以下内容都很接近</strong></p>
+<ul>
+<li>$A$ 的输出，以及协议执行后各方的输出</li>
+<li>对所有 $i \in I$ 给定 $x_i$ 和 $f_i(x)$ 的输出 $S$，以及所有的 $f_1(x),…,f_m(x)$ 的值</li>
+</ul>
+<h4 id="安全级别"><a href="#安全级别" class="headerlink" title="安全级别"></a>安全级别</h4><p>定义“接近”</p>
+<ul>
+<li>计算安全性=计算不可区分性</li>
+<li>统计安全性=统计接近度</li>
+<li>完美安全性=相同的发行</li>
+</ul>
+<p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201103185009.png" alt=""></p>
+<p>如图所示，这里参与的两方都是半诚实的，执行安全多方计算协议后，各方能获得最终的输出以及中间的一些结果，而这个中间结果不能透露更多的信息。</p>
+<p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201103185814.png" alt=""></p>
+<p>敌手的视图</p>
+<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><p>在半诚实的模型中，正确性，输入的独立性，公平性都不是问题。</p>
+<p><strong>为什么这个定义保证了隐私？</strong></p>
+<ul>
+<li>一次执行中，敌手的视图只能通过输入和输出来生成</li>
+<li>如果对手可以在实际协议执行后计算出某些内容，则仅能从输入/输出中进行计算</li>
+<li>与零知识证明非常类似</li>
+</ul>
+<h4 id="联合分布"><a href="#联合分布" class="headerlink" title="联合分布"></a>联合分布</h4><p>关键点：需要考虑对手的输出和诚实方的输出的联合分配</p>
+<p>在定义中：</p>
+<ul>
+<li>我们将所有输入和输出的分布与对手的输出进行比较</li>
+</ul>
+<p>例子：</p>
+<ul>
+<li>函数：A 输出一个随机比特，B 不输出任何东西<ul>
+<li>B 显然不应该学习 A 的输出比特</li>
+</ul>
+</li>
+<li>协议：A 选择一个随机比特并输出，然后发送给 B（后者直接忽略）</li>
+</ul>
+<p>当分别查看 B 的视图和实际输出的分布时，这是可模拟的。</p>
+<p>在确定性功能的情况下，输出完全由输入确定。</p>
+<p>足够单独进行证明：</p>
+<ul>
+<li>正确性</li>
+<li>模拟：仅提供输入和输出，即可生成半诚实的对手的视图（腐败方的视图）</li>
+</ul>
+<h3 id="恶意敌手"><a href="#恶意敌手" class="headerlink" title="恶意敌手"></a>恶意敌手</h3><p>敌手使用的输入不一定是写在输入磁带上的那些，并且不是明确的：敌手不执行协议而是执行任意代码。</p>
+<h4 id="理想以及现实范例"><a href="#理想以及现实范例" class="headerlink" title="理想以及现实范例"></a>理想以及现实范例</h4><h5 id="理想状态"><a href="#理想状态" class="headerlink" title="理想状态"></a>理想状态</h5><ul>
+<li>一个不能被腐败的可信第三方</li>
+<li>所有的输入都被发送到可信第三方（使用绝对安全的信道）</li>
+<li>可信第三方计算输出</li>
+<li>可信第三方将输出发送给各方（使用绝对安全的信道）</li>
+<li>敌手只能选择输入</li>
+</ul>
+<h5 id="现实情况"><a href="#现实情况" class="headerlink" title="现实情况"></a>现实情况</h5><ul>
+<li>对于攻击真实协议的每个对手 A，理想模型中都存在一个对手 S，以使（所有）输出分布都接近<ul>
+<li>计算不可区分，统计接近度或相同分布…</li>
+</ul>
+</li>
+<li>S 在理想世界中交互时模拟真实协议执行</li>
+<li>这里总是看输出的联合分布</li>
+</ul>
+<p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201103191735.png" alt=""></p>
+<h4 id="“正式”的安全定义"><a href="#“正式”的安全定义" class="headerlink" title="“正式”的安全定义"></a>“正式”的安全定义</h4><p>在以下情况下，协议 $\pi$ 安全地计算函数 $f$：</p>
+<ul>
+<li>对于每个非均匀多项式时间理想模型对手 A，都有一个非均匀多项式时间理想模型对手 S，这样对于所有输入向量和辅助输入：</li>
+<li>$\pi$ 的实际执行中 A 和诚实方的联合输出，与在理想执行中可信第三方计算 $f$ 下的理想执行中 S 和诚实方的联合输出无法区分</li>
+</ul>
+<h4 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h4><ul>
+<li>保密性：来自敌手的输出</li>
+<li>正确性：来自诚实方的输出</li>
+<li>输入独立性：来自理想执行</li>
+<li>公平性以及输出正确传递：来自理想执行</li>
+</ul>
+<h4 id="放宽理想模型"><a href="#放宽理想模型" class="headerlink" title="放宽理想模型"></a>放宽理想模型</h4><ul>
+<li><p>在一些情况下，理想模型很难实现。</p>
+</li>
+<li><p>一般情况下，如果没有诚实方占多数，公平性很难实现。</p>
+</li>
+<li>更改可信第三方的说明<ul>
+<li>可信第三方从所有方中接收输入</li>
+<li>可信第三方发送腐败方的输出给敌手</li>
+<li>敌手说“继续”或“停止”</li>
+<li>如果“继续”，可信第三方发送输出给诚实方；反之发送“终止”</li>
+</ul>
+</li>
+</ul>
+<h5 id="反应函数"><a href="#反应函数" class="headerlink" title="反应函数"></a>反应函数</h5><p>分阶段获取输入并提供输出的功能。</p>
+<p>例子：承诺方案</p>
+<p>这对于放松理想功能也很有用（将辅助信息提供给S）</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>半诚实：给定输入/输出的模拟器生成对手的视图<ul>
+<li>概率功能–必须考虑视图和输出的联合分布</li>
+<li>确定性功能：更容易，足以单独考虑正确性和视图仿真</li>
+</ul>
+</li>
+<li>恶意：理想-现实模拟</li>
+<li>顺序组成</li>
+</ul>
+<h2 id="Yao的构造及其安全性证明"><a href="#Yao的构造及其安全性证明" class="headerlink" title="Yao的构造及其安全性证明"></a>Yao的构造及其安全性证明</h2><h3 id="Yao的协议"><a href="#Yao的协议" class="headerlink" title="Yao的协议"></a>Yao的协议</h3><ul>
+<li>通用安全两方计算协议<ul>
+<li>固定轮数</li>
+<li>对于半诚实敌手是安全的</li>
+<li>安全计算外还有许多应用</li>
+</ul>
+</li>
+<li>通用安全计算<ul>
+<li>可用于安全地计算任何功能</li>
+<li>基于<strong>布尔电路</strong>的函数计算</li>
+</ul>
+</li>
+</ul>
+<h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><h4 id="乱码电路"><a href="#乱码电路" class="headerlink" title="乱码电路"></a>乱码电路</h4><ul>
+<li>一个加密电路，其中每条线都有一对密钥指定一个输入<ul>
+<li>可以计算输出（基于每条线上提供的键确定的输入）</li>
+<li>无法学到其他东西</li>
+</ul>
+</li>
+</ul>
+<h4 id="不经意传输"><a href="#不经意传输" class="headerlink" title="不经意传输"></a>不经意传输</h4><ul>
+<li>发送者有 $x_0, x_1$；接收者有 $b$</li>
+<li>接收者只获得 $x_b$</li>
+<li>发送者不能学习到任何东西</li>
+</ul>
+<h4 id="Yao的协议-1"><a href="#Yao的协议-1" class="headerlink" title="Yao的协议"></a>Yao的协议</h4><ol>
+<li>$P_1$ 构造一个乱码电路</li>
+<li>$P_1$ 发送在自己的输入线上与其输入相关联的密钥给 $P_2$<ul>
+<li>$P_1$ 仅仅发送密钥，因此 $P_2$ 不知道具体的输入是什么</li>
+</ul>
+</li>
+<li>$P_1$ 和 $P_2$ 使用不经意传输使得对于每条 $P_2$ 的输入线：<ul>
+<li>$P_2$ 获得对应于其输入的正确密钥</li>
+<li>$P_1$ 不能学习到关于 $P_2$ 输入的任何信息</li>
+</ul>
+</li>
+<li>$P_2$ 计算电路获得输出，然后将其发送给 $P_1$</li>
+</ol>
+<h3 id="不经意传输-1"><a href="#不经意传输-1" class="headerlink" title="不经意传输"></a>不经意传输</h3><h4 id="不经意传输协议"><a href="#不经意传输协议" class="headerlink" title="不经意传输协议"></a>不经意传输协议</h4><ul>
+<li>发送者的输入：$(z_0, z_1)$；接收者的输入 $b$</li>
+<li>发送者的第一条信息：<ul>
+<li>发送者使用算法1选择 $(f, t)$（这里 $f$ 是一个单向陷门函数，$t$ 是陷门）</li>
+<li>发送者发送 $f$ 给接收者</li>
+</ul>
+</li>
+<li>接收者的第一条信息：<ul>
+<li>接收者选择 $x_b$ 然后计算 $y_b = f(x_b)$</li>
+<li>接收者随机选取 $y_{1-b}$</li>
+<li>接收者发送 $(y_0, y_1)$ 给发送者</li>
+</ul>
+</li>
+<li>发送者的第二条信息：<ul>
+<li>发送者使用陷门计算 $(x_0, x_1)$</li>
+<li>发送者计算 $a_i = z_i \oplus B(x_i)$</li>
+<li>发送者发送 $(a_0, a_1)$ 给接收者</li>
+</ul>
+</li>
+<li>接收者输出 $z_b = a_b \oplus x_b$</li>
+</ul>
+<p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201105162820.png" alt=""></p>
+<h3 id="乱码电路-1"><a href="#乱码电路-1" class="headerlink" title="乱码电路"></a>乱码电路</h3><ul>
+<li><p>对于整个电路，为每条导线分配随机值/键（键 $k_0$ 表示0，键 $k_1$ 表示1）</p>
+</li>
+<li><p>加密每个门，以便为每个输入线指定一个密钥，就可以计算输出线上的适当密钥</p>
+</li>
+</ul>
+<h4 id="与门"><a href="#与门" class="headerlink" title="与门"></a>与门</h4><p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201105165216.png" alt=""></p>
+<h4 id="带乱码值的与门"><a href="#带乱码值的与门" class="headerlink" title="带乱码值的与门"></a>带乱码值的与门</h4><p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201105165328.png" alt=""></p>
+<h4 id="乱码与门"><a href="#乱码与门" class="headerlink" title="乱码与门"></a>乱码与门</h4><p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201105165515.png" alt=""></p>
+<ul>
+<li><p>实际乱码门：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+& E_{k^1_u}(E_{k^0_v}(k^0_w))\\
+& E_{k^0_u}(E_{k^1_v}(k^0_w))\\
+& E_{k^1_u}(E_{k^1_v}(k^1_w))\\
+& E_{k^0_u}(E_{k^0_v}(k^0_w))
+\end{align}</script></li>
+<li><p>给定 $k^0_u$ 和 $k^1_v$ 只能获得 $k^0_w$</p>
+</li>
+<li><p>此外，由于该表是排列的，因此该方不知道它是获得了0还是1的键</p>
+</li>
+</ul>
+<h4 id="输出翻译"><a href="#输出翻译" class="headerlink" title="输出翻译"></a>输出翻译</h4><ul>
+<li><p>如果门是输出门，则需要提供输出线的“解密”</p>
+</li>
+<li><p>输出翻译表：</p>
+<script type="math/tex; mode=display">
+[(0, k^0_w), (1, k^1_w)]</script></li>
+</ul>
+<h4 id="构造一个乱码电路"><a href="#构造一个乱码电路" class="headerlink" title="构造一个乱码电路"></a>构造一个乱码电路</h4><ul>
+<li>给定一个布尔电路<ul>
+<li>为所有导线分配乱码值</li>
+<li>使用乱码值构造乱码门</li>
+</ul>
+</li>
+<li>核心性质：<ul>
+<li>给定一组乱码，每条输入线一个，可以计算整个电路，并获得输出线的乱码</li>
+<li>给定输出线的转换表，可以获得输出</li>
+<li>除了输出外没有任何信息泄露</li>
+</ul>
+</li>
+</ul>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201105172542.png" alt=""></p>
+<h2 id="多方设置下的安全计算"><a href="#多方设置下的安全计算" class="headerlink" title="多方设置下的安全计算"></a>多方设置下的安全计算</h2><p>如前所述，加密下的计算自然可以看作是对秘密共享数据的操作。在乱码电路中，通过让一方(生成者)持有两个可能的有线标签 $w^0_i, w^1_i$，而另一方(评估者)持有活动标签 $w^i_b$ 来实现有效线值的秘密共享。在GMW协议(Goldreich等人，1987；Goldreich，2004)中，线值的秘密共享更直接：玩家持有有效线值的加法份额。</p>
+<p>GMW协议(或者简称为“GMW”)自然适用于两方以上的计算，而不像乱码电路，后者需要新的技术才能适用于两方以上的计算。</p>
+<h3 id="GMW协议"><a href="#GMW协议" class="headerlink" title="GMW协议"></a>GMW协议</h3><p>GMW协议既可以在布尔电路上工作，也可以在算术电路上工作。首先给出两方的布尔版本，然后简要解释如何将该协议推广到算术设置，以及如何推广到多于两方。与Yao的协议一样，假设输入为 $x$ 的参与方 $P_1$ 和输入为 $y$ 的参与方 $P_2$ 已经同意了表示计算函数 $\mathcal{F}(x, y)$ 的布尔电路 $\mathcal{C}$。</p>
+<p>假设 $P_1$ 和 $P_2$ 的输入均为长为 $n$ 的比特串，其中 $P_1$ 输入为比特串 $a$，$P_2$ 输入为比特串 $b$。</p>
+<p>对于比特串 $a$ 中的每个比特 $a_i$，$P_1$ 都生成一个随机的比特 $r_{1i}, \ i \in \{0,1\}, 1 \leq i \leq n$，并将这 $n$ 个随机产生的比特 $r_{1i}, 1 \leq i \leq n$ 发送给 $P_2$。</p>
+<p>对于 $b$ 中的每个比特 $b_i$，$P_2$ 也都生成一个随机比特 $r_{2i}$ 并发送给 $P_1$。$P_1$ 和 $P_2$ 分别将 $a_i \oplus r_{1i}$ 和 $b_i \oplus r_{2i}$、$r_{1i}$、$r_{2i}$ 作为协议输入 $a$ 和 $b$ 的子秘密。</p>
+<p>现在 $a$ 和 $b$ 都在 $P_1$ 和 $P_2$ 之间形成了秘密共享：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">$a$</th>
+<th style="text-align:center">$b$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$P_1$</td>
+<td style="text-align:center">$a \oplus r_{1i}$</td>
+<td style="text-align:center">$r_{1i}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$P_2$</td>
+<td style="text-align:center">$r_{2i}$</td>
+<td style="text-align:center">$b \oplus r_{2i}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>然后 $P_1$ 和 $P_2$ 对布尔电路中的每个门求值，直到完成整个电路的计算。</p>
+<h4 id="非门"><a href="#非门" class="headerlink" title="非门"></a>非门</h4><p>由于非门是单输入的，$P_1$ 和 $P_2$ 间无须交互，直接对输入求反即可。</p>
+<h4 id="异或门"><a href="#异或门" class="headerlink" title="异或门"></a>异或门</h4><p>对于异或门有</p>
+<script type="math/tex; mode=display">
+(a_{P_1} \oplus b_{P_1}) \oplus (a_{P_2} \oplus b_{P_2}) = a_{P_1} \oplus a_{P_2} \oplus b_{P_1} \oplus b_{P_2}</script><p>因此双方可以在本地对其所掌握的子秘密进行计算，</p>
+<p><img src="http://images.yingwai.top/picgo/59a1a742941d88b9a143cbe09e46a3a3.jpg" alt=""></p>
+<h4 id="与门-1"><a href="#与门-1" class="headerlink" title="与门"></a>与门</h4><p>对于与门有</p>
+<script type="math/tex; mode=display">
+\begin{align}
+a \and b &= (a_{P_1} \oplus a_{P_2}) \and (b_{P_1} \oplus b_{P_2}) \\
+&= (a_{P_1} \and b_{P_1}) \oplus (a_{P_1} \and b_{P_2}) \oplus (a_{P_2} \and b_{P_1}) \oplus (a_{P_2} \and b_{P_2})
+\end{align}</script><p>根据 $P_1$ 和 $P_2$ 的份额，$P_1$ 可以本地计算 $a_{P_1} \and b_{P_1}$ 而 $P_2$ 可以本地计算 $a_{P_2} \and b_{P_2}$。剩下的 $a_{P_1} \and b_{P_2}$ 和 $a_{P_2} \and b_{P_1}$ 双方必须协同完成。</p>
+<p>$(a_{P_1} \and b_{P_2}) \oplus (a_{P_2} \and b_{P_1})$ 的计算可以通过四选一不经意传输协议完成。对于 $P_1$ 来说，$P_2$ 掌握的 $a_{P_2}$ 和 $b_{P_2}$ 都是单比特值，只有四种情况：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$a_{P_2}$</th>
+<th style="text-align:center">$b_{P_2}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>而 $P_1$ 手中又有 $a_{P_1}$ 和 $b_{P_1}$，因此 $P_1$ 可以直接计算出四种情况下 $a \and b$ 的值：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$a_{P_2}$</th>
+<th style="text-align:center">$b_{P_2}$</th>
+<th style="text-align:center">$a \and b$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">$c_{00}$</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">$c_{01}$</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">$c_{10}$</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">$c_{11}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>$P_1$ 再生成一个随机比特 $r$，将计算出的 $c$ 的四个可能取值异或上 $r$，将 $c_{00} \oplus r$、$c_{01} \oplus r$、$c_{10} \oplus r$、$c_{11} \oplus r$ 作为四选一不经意传输协议的输入，$P_2$ 将其所掌握的 $a_{P_2}$ 和 $b_{P_2}$ 作为四选一不经意传输的输入，双方执行该OT协议，$P_2$ 得到对应的 $c_{a_{P_2} b_{P_2}} \oplus r$。</p>
+<p>$P_1$ 将 $r$ 作为该与门的输出的子秘密，$P_2$ 将 $c_{a_{P_2} b_{P_2}} \oplus r$ 作为该与门的输出子秘密。</p>
+<p>由于双方执行的是不经意传输协议，因此 $P_1$ 不知道 $P_2$ 在四个可能的值中选择了哪个，而 $P_2$ 也不知道随机比特 $r$ 的值，只有在最后双方都公布自己手中的计算结果才能正确地计算该门。</p>
+<h4 id="扩展到多方的情况"><a href="#扩展到多方的情况" class="headerlink" title="扩展到多方的情况"></a>扩展到多方的情况</h4><p>参与者为 $P_1, P_2, … , P_n$，假设输入为 $m$ 个比特，那么每个参与者 $P_i$ 产生 $m$ 组，每组 $n-1$ 个随机比特，分别将每组的 $n-1$ 个随机比特发送给除了自己之外的 $n-1$ 个参与者。</p>
+<p>假设输入数据为 $1$ 个比特，那么每个参与者 $P_i$ 向参与者 $P_j$ 发送 $r_{ij}$，$1 \leq j \leq n$ 且 $j \neq i$。在所有参与者发送完成后，参与者 $P_i$ 掌握了 $r_{1i}, r_{2i}, … , r_{ni}$。假设 $P_i$ 的输入为 $a$，那么 $P_i$ 将 $a \oplus r_{1i} \oplus r_{2i} \oplus … \oplus r_{ni}$ 作为 $a$ 的子秘密 $a_i$。</p>
+<p>对应的收到 $P_i$ 发送的随机比特 $r_{ij}$ 的参与者 $P_j$，将 $r_{ij}$ 当做秘密 $a$ 的子秘密 $a_j$。因此 $a = a_1 \oplus a_2 \oplus … \oplus a_n$。</p>
+<p>对于异或门以及非门，和双方情况下相同，每个参与者直接在本地进行计算即可。对于与门，与门的输入为 $a$ 和 $b$，参与者 $P_i$ 手中掌握了 $a$ 和 $b$ 的子秘密 $a_i$ 和 $b_i$，因为 $a = a_1 \oplus a_2 \oplus … \oplus a_n$，可得：</p>
+<script type="math/tex; mode=display">
+a \and b = (a_1 \oplus a_2 \oplus ... \oplus a_n) \and (b_1 \oplus b_2 \oplus ... \oplus b_n) = (\oplus^{n,}_{j=1, i=1} a_i \and b_j)</script><p>这其中对于 $P_i$ 来说，每个 $a_i \and b_i$ 都可由参与者 $P_i$ 在本地进行计算。而对于 $a_i \and b_j, i \neq j$，可由参与者 $P_i$ 和 $P_j$ 通过上述的两方 GMW 协议共同计算出 $a_i \and b_j$ 的两个子秘密。当电路计算完成，每个参与者公布自己所掌握的子秘密，再将所有的子秘密进行异或，即可得到最后的计算结果。</p>
+<h3 id="BMR协议"><a href="#BMR协议" class="headerlink" title="BMR协议"></a>BMR协议</h3><p>之前介绍的姚氏混淆电路只支持双方计算，BMR（<em>Beaver-Micali-Rogaway</em>）协议将姚氏混淆电路扩充到了多方情景。</p>
+<p>混淆电路的加密由一方对每条导线的真实输入值生成一个随机加密值，并根据每个门的真值表生成对应的加密表来实现。</p>
+<p>因此如果直接把混淆电路协议扩展到多方，由一方对整个电路进行加密，或者对电路的一部分门进行加密，那么当加密方与参与者中的某个求值方进行串通或者这两者的信息都被收买时，就会破坏协议的安全性。</p>
+<p>为了安全性，需要让<strong>所有参与者共同生成所有导线的加密值和门的加密真值表</strong>。</p>
+<p>具体而言，需要每个参加者随机生成每条导线的加密值，之后将自己生成的加密值进行掩盖后提交到多方计算协议，协议将每个参与者提交的关于同一条导线加密值进行异或，得到多方协同生成的布尔电路中该条导线的加密值。</p>
+<h4 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h4><p>首先协议根据需要实现的目标函数生成布尔电路 $\mathcal{C}$，并向所有参与者公开。将 $\mathcal{C}$ 中的各条导线分别标记为 $w_1, w_2, …, w_t$。协议参与者为 $P_1, P_2,…,P_n$，其输入分别为 $x_1, x_2, …,x_n \in \{0,1\}$。</p>
+<p>对于 $\mathcal{C}$ 中的每一条导线 $w_i$，参与者 $P_j$ 随机生成 $w_i$ 的真值 $0,1$ 对应的随机值，分别记为 $w^0_{i,j},w^1_{i,j}$。其中 $w^b_{i, j} = (k^b_{i, j},p^b_{i,j}) \in \{0,1\}^{l+1}, b \in \{0,1\}$，$p^b_{i,j}$ 满足 $p^b_{i,j} = 1 - p^{1-b}_{i,j}$，即 $k^b_{i,j}$ 为 $l$ 比特的随机比特串，$p^b_{i,j}$ 为 $1$ 比特的随机比特。再生成一个随机翻转比特 $f_{i,j} \in \{0,1\}$。对于每一条导线，参与者 $P_i$ 计算</p>
+<script type="math/tex; mode=display">
+S_{i,j} = (F(w^0_{i,j}),F(w^1_{i,j}),p^0_{i,j},f_{i,j})</script><p>因为 $p^b_{i,j} = 1 - p^{1-b}_{i,j}$，因此只需要发送 $p^0_{i,j}$ 或者 $p^1_{i,j}$ 即可。函数 $F$ 可以看做是哈希函数，其将 $l$ 位的输入扩展为 $n \cdot (l + 1)$ 位，$n$ 是参与者数量。</p>
+<p><img src="http://images.yingwai.top/picgo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20201109145645.png" alt=""></p>
+<p>对于 $\mathcal{C}$ 中的每一个门 $G_i$，所有参与者共同参与一个计算乱码表的多方安全计算协议。该协议的输入是每个参与者之前计算的 $S_{i,j}$ 和参与者的输入 $x_1, x_2,…,x_n$。该协议的目标为：</p>
+<p>假设 $\mathcal{C}$ 中门 $G_i$ 的输入线为 $w_a, w_b$，输出线为 $w_c$。$G_i$ 实现的函数为 $w_c = g(w_a, w_b)$。</p>
+<p><img src="http://images.yingwai.top/picgo/b3864a04e1a6e3aaf7fdc53e53bad727.jpg" alt=""></p>
+<p>计算指针比特：</p>
+<script type="math/tex; mode=display">
+p^0_a = \oplus_{j = 1,...,n} p^0_{a,j}, \ \ p^0_b = \oplus_{j = 1,...,n} p^0_{b,j}, \ \ p^0_c = \oplus_{j = 1,...,n} p^0_{c,j}</script><p>并设置：</p>
+<script type="math/tex; mode=display">
+p^1_a=1-p^0_a, \ \ p^1_b=1-p^0_b, \ \ p^1_c=1-p^0_c</script><p>同理，对所有参加者提交的翻转比特求异或，</p>
+<script type="math/tex; mode=display">
+f_a = \oplus_{j=1,...,n}f_{a,j}, \ \ f_b = \oplus_{j=1,...,n}f_{b,j}, \ \ f_c = \oplus_{j=1,...,n}f_{c,j}</script><p>得到翻转比特 $f_a, f_b, f_c$，翻转比特用于掩盖参与者 $P_i$ 的输入，使得 $P_i$ 无法得知其对每条导线加密值的具体贡献。</p>
+<p>接着创建门 $G_i$ 的乱码表，让 $v_a, v_b$ 分别是导线 $w_a, w_b$ 的输入，对于 $G_i$ 的输入 $v_a, v_b \in \{0,1\}$，一共只有四种可能的组合。</p>
+<p>让 $v_c$ 表示导线 $w_c$ 的真实输出值，$e_{v_a, v_b}$ 是导线 $w_c$ 的加密值。设定</p>
+<script type="math/tex; mode=display">
+e_{v_a, v_b} = w^{v_c \oplus f_c}_c \oplus_{j=1,...,n} \left( F(i, w^{v_a\oplus f_a}_{a,j}) \oplus F(i, w^{v_b\oplus f_b}_{b,j}) \right)</script><p>即 $e_{v_a, v_b}$ 共有四个可能的值，如下表所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$v_a$</th>
+<th style="text-align:center">$v_b$</th>
+<th style="text-align:center">$e_{v_a, v_b}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$0$</td>
+<td style="text-align:center">$0$</td>
+<td style="text-align:center">$e_{0,1} = w^{v_c \oplus f_c}_c \oplus_{j=1,…,n} \left( F(i, w^{0\oplus f_a}_{a,j}) \oplus F(i, w^{0\oplus f_b}_{b,j}) \right)$</td>
+</tr>
+<tr>
+<td style="text-align:center">$0$</td>
+<td style="text-align:center">$1$</td>
+<td style="text-align:center">$e_{0,1} = w^{v_c \oplus f_c}_c \oplus_{j=1,…,n} \left( F(i, w^{0\oplus f_a}_{a,j}) \oplus F(i, w^{1\oplus f_b}_{b,j}) \right)$</td>
+</tr>
+<tr>
+<td style="text-align:center">$1$</td>
+<td style="text-align:center">$0$</td>
+<td style="text-align:center">$e_{0,1} = w^{v_c \oplus f_c}_c \oplus_{j=1,…,n} \left( F(i, w^{1\oplus f_a}_{a,j}) \oplus F(i, w^{0\oplus f_b}_{b,j}) \right)$</td>
+</tr>
+<tr>
+<td style="text-align:center">$1$</td>
+<td style="text-align:center">$1$</td>
+<td style="text-align:center">$e_{0,1} = w^{v_c \oplus f_c}_c \oplus_{j=1,…,n} \left( F(i, w^{1\oplus f_a}_{a,j}) \oplus F(i, w^{1\oplus f_b}_{b,j}) \right)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中 $w^b_c = w^b_{c,1} | \cdots | w^b_{c,n} | p^b_{c}, \ b\in \{0,1\}$，即将各个 $w^b_{c,i}$ 和 $p^b_c$ 进行级联。之后对乱码表中 $e_{v_a, v_b}$ 的条目进行重新排序，并将条目 $e_{v_a, v_b}$ 放在 $(p^{v_a}_a, p^{v_b}_b)$ 的位置上。</p>
+<p>向参与者 $P_1$ 输出计算得到的乱码表，向 $P_1$ 发送各个参与方的输入 $x_1, x_2,…,x_n$ 所对应的电路 $\mathcal{C}$ 的加密导线值。</p>
+<h2 id="信息理论环境下的BGW构建"><a href="#信息理论环境下的BGW构建" class="headerlink" title="信息理论环境下的BGW构建"></a>信息理论环境下的BGW构建</h2><p>BGW 协议也是支持多方的安全计算协议，BGW 协议基于 Shamir(t, n) 门限秘密共享机制，利用了 Shamir 秘密共享机制的加法同态和乘法同态的性质。</p>
+<ul>
+<li>该构造提供了无条件的安全性<ul>
+<li>可以抵抗半诚实敌手控制 $t &lt; n / 2$ 方</li>
+<li>可以抵抗恶意敌手控制 $t &lt; n / 3$ 方</li>
+</ul>
+</li>
+<li>与基于加密假设的GMW结构不同</li>
+</ul>
+<h3 id="Shamir门限秘密共享方案"><a href="#Shamir门限秘密共享方案" class="headerlink" title="Shamir门限秘密共享方案"></a>Shamir门限秘密共享方案</h3><h4 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h4><p>假设我们存在一个秘密 $s$，把秘密 $s$ 进行特定运算，得到 $n$ 个秘密碎片 $s_i(0 &lt; i \leq n)$，交给 $n$ 个人保存，当至少 $t$ 个人同时拿出自己所拥有的秘密碎片 $s_i$ 时，即可还原出最初的秘密 $s$。</p>
+<h4 id="秘密碎片生成"><a href="#秘密碎片生成" class="headerlink" title="秘密碎片生成"></a>秘密碎片生成</h4><p>构造一个多项式</p>
+<script type="math/tex; mode=display">
+F(x) = s + a_1 \cdot x + a_2 \cdot x^2 + \cdots + a_{t-1} \cdot x^{t-1} \bmod(p)</script><p>其中 $p$ 为素数且 $s &lt; p$。</p>
+<p>取 $n$ 个不相等的 $x$ 代入到 $F(x)$ 中，得到 $n$ 组 $(x_i, y_i)$，分配给 $n$ 个人；公开 $p$，销毁多项式，每个人负责保密自己的 $(x_i, y_i)$。</p>
+<h4 id="秘密恢复"><a href="#秘密恢复" class="headerlink" title="秘密恢复"></a>秘密恢复</h4><p>当 $x=0$ 时，$F(0)=s$ 即可恢复出 $s$。</p>
+<p>利用拉格朗日插值法，将 $t$ 组 $(x_i, y_i)$ 代入下式即可</p>
+<script type="math/tex; mode=display">
+F(x) = \sum^t_{i=1} \left(y_i \prod_{1 \leq j \leq t, j\neq t} \left(x-x_j \right) \left(\prod_{1 \leq j \leq t, j \neq t} \left(x_j - x_i \right )\right)^{-1} \right) \bmod (p)</script><p>将 $t$ 组 $(x_i, y_i)$ 代入即可得到 $s$。</p>
+<h3 id="BGW协议"><a href="#BGW协议" class="headerlink" title="BGW协议"></a>BGW协议</h3><p>假设 BGW 协议的参与者一共有 $n$ 人，假设参与者 $P_i$ 需要输入秘密 $a$，则参与者 $P_i$ 首先利用 Shamir(t,n) 门限秘密共享机制将秘密 $a$ 共享给其他所有参与者，阈值 $t$ 的选择根据具体使用情景下的安全性要求决定。</p>
+<p>当所有参与者的输入都通过 Shamir(t, n) 门限秘密共享机制分享后，每个参与者都掌握了协议输入的子秘密。假设一个门的输入分别为 $a$ 和 $b$，秘密 $a$ 和 $b$ 已经分别由秘密分配函数</p>
+<script type="math/tex; mode=display">
+f_a(x) = \alpha_{t-1} x^{t-1} + \cdots + \alpha_1 x + a, \ \ f_b(x) = \beta_{t-1} x^{t-1} + \cdots + \beta_1 x + b</script><p>分配完成，$f_a(0) = a, f_b(0) = b$，参与者 $P_i$ 掌握 $a$ 和 $b$ 的子秘密 $a_i, b_i$。在布尔电路上，可将异或门和与门分别看成在有限域 $F_2$ 上的加法和乘法。将异或用模为 $2$ 的加法进行计算，与用模为 $2$ 的乘法进行计算。</p>
+<h4 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h4><p>考虑一个加法门，具有输入线 $\alpha$，$\beta$ 和输出线 $\gamma$。各方共同持有输入线 $[v_\alpha]$ 和 $[v_\beta]$ 的共享，目标是获得 $[v_\alpha + v_\beta]$ 的共享。假设传入的共享分别对应于多项式 $p_\alpha$ 和 $p_\beta$。如果每一方在本地将他们的份额 $p_\alpha(i) + p_\beta(i)$ 相加，则结果是每一方在多项式 $p_\gamma (x) \overset{\rm{def}}{=} p_\alpha(x) + p_\beta(x)$ 上持有一个点。由于 $p_\gamma$ 的次数也为 $t$，因此这些新值构成有效的共享 $p_\gamma(0) = p_\alpha(0) + p_\beta(0) = v_\alpha + v_\beta$。</p>
+<p>请注意，加法门不需要各方之间进行通信。所有步骤都是本地计算。同样的想法也适用于将秘密共享值乘以公共常量——每一方只需在本地将其份额乘以该常量即可。</p>
+<h4 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h4><p>考虑具有输入线 $\alpha$，$\beta$ 和输出线 $\gamma$ 的乘法门。各方共同持有输入线 $[v_\alpha]$ 和 $[v_\beta]$ 的共享，目标是获得 $[v_\alpha \cdot v_\beta]$ 的共享。如上所述，各方可以在本地乘以各自的份额，结果是每一方都持有多项式 $q(x) = p_\alpha(x) \cdot p_\beta(x)$ 上的一个点。然而，在这种情况下，得到的多项式的次数可能高达 $2t<br>$，这太高了。</p>
+<p>为了纠正这种秘密分享过高的次数，双方进行了次数降低的步骤。每一方 $P_i$ 值为 $q(i)$，其中 $q$ 是次数为 $2t$ 的多项式。目标是获得 $q(0)$ 的有效秘密共享，但具有正确的门限。</p>
+<p>主要观察到，$q(0)$可以写成各方份额的线性函数。特别地，</p>
+<script type="math/tex; mode=display">
+q(0) = \sum^{2t+1}_{i=1} \lambda_iq(i)</script><p>其中 $λ_i$ 项是适当的拉格朗日系数。因此，降低度数的步骤如下所示：</p>
+<ol>
+<li>每个 $P_i$ 生成并分配阈值 $t$ 共享 $[q(i)]$。为了简化记法，本文没有给出低于这些份额的多项式。然而，重要的是要记住，每一方 $P_i$ 选择一个次数为 $t$ 的多项式，其常系数为 $q(i)$。</li>
+<li>各方在本地计算 $[q(0)] = \sum^{2t+1}_{i=1} \lambda_i[q(i)]$。请注意，该表达式是应用于秘密共享值的加法和乘以常量。</li>
+</ol>
+<p>由于值 $[q(i)]$ 是具有阈值 $t$ 的共享，因此 $[q(0)]$ 的最终共享也如所希望的那样具有阈值 $t$。</p>
+<p>注意，BGW协议中的乘法门需要通信/交互，形式是各方发送 $[q(i)]$ 的份额。还要注意，我们需要 $2t+1 \leq n$，否则 $n$ 方集体没有足够的信息来确定值 $q(0)$，因为 $q$ 可能具有 $2t$ 次。因此，对于 $2t&lt;n$(即诚实的多数)，BGW协议是针对 $t$ 个被破坏方是安全的。</p>
+<h2 id="零知识证明与Sigma协议"><a href="#零知识证明与Sigma协议" class="headerlink" title="零知识证明与Sigma协议"></a>零知识证明与Sigma协议</h2><h3 id="Sigma协议"><a href="#Sigma协议" class="headerlink" title="Sigma协议"></a>Sigma协议</h3><p>Sigma协议是Alice想要向Bob证明一些东西的协议（Alice知道一些秘密）。他们有下面的一般范式：Alice知道一个秘密，Alice和Bob都分享了一些相同的信息。因此：</p>
+<ul>
+<li>Alice给Bob发送了一个值，这个值叫做<em>承诺</em>(commitment)。</li>
+<li>Bob均匀的随机选择一个<em>挑战</em>(challenge)发送给Alice。</li>
+<li>Alice计算一个<em>回应</em>(response)发送给Bob。</li>
+<li>Bob检查回应，接受或者拒绝Alice的解释。</li>
+</ul>
+<blockquote>
+<p>传说中，如果你把上面的过程画成一个图，这个图看起来像sigma($σ$)，所以这个协议就叫Sigma协议。</p>
+</blockquote>
+<p>在密码学中，希望Sigma协议有下面的属性:</p>
+<ul>
+<li><strong>正确性</strong>，如果每个人都做了他们应该做的，Bob应该接受。</li>
+<li><strong>公正性</strong>，如果Alice撒谎了，Bob可以知道（Alice不能欺骗Bob让他接受错误的结果）。</li>
+<li><strong>零知识性</strong>，如果Alice说真话了，那么Bob不能知道她的秘密输入是什么。</li>
+</ul>
+<h4 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h4><p><strong>Definition 1: (Effective relation).</strong> Effective relation 指的是一组二元关系 $R \subseteq X \times Y$ 其中 $X,Y,R$ 为有效的可辨认的有限集合。$Y$ 中的元素被称作statements。如果 $(x,y) \in R$，则称 $x$ 为 $y$ 的witness。</p>
+<p><strong>Definition 2: (Sigma protocol).</strong> 设 $R \subseteq X \times Y$ 是一个effective relation。那么一对 $(P,V)$ 构建在 $R$ 上的一个 Sigma protocol 为：</p>
+<ul>
+<li>$P$ 是一个叫做 $prover$ 的交互式协议，其输入为一个witness-statement对 $(x,y) \in R$</li>
+<li>$V$ 是一个叫做 $verifier$ 的交互式协议，其输入为一个statement $y \in Y$</li>
+<li>$P$ 和 $V$ 的交互过程为：<ol>
+<li>首先 $P$ 计算一个承诺(commitment) $t$，将其发送给 $V$；</li>
+<li>在收到了来自 $P$ 的消息 $t$ 后，$V$ 在有限的挑战空间 $C$ 中随机选取一个挑战元素(challenge)，并将其发送给 $P$；</li>
+<li>在接收到来自 $V$ 的挑战 $c$ 后，$P$ 计算出一个反馈(response) $z$，将其发送给 $V$；</li>
+<li>在收到了来自 $P$ 的消息 $t$ 后，$V$ 输出accept或者reject。$V$ 的输出由statement $y$ 和交互中的消息 $conversation(t,c,z)$ 严格计算得出。</li>
+</ol>
+</li>
+</ul>
+<h4 id="例子——Schnorr’s-identification-protocol"><a href="#例子——Schnorr’s-identification-protocol" class="headerlink" title="例子——Schnorr’s identification protocol"></a>例子——Schnorr’s identification protocol</h4><h5 id="协议过程"><a href="#协议过程" class="headerlink" title="协议过程"></a>协议过程</h5><p>设 $\mathbb{G}$ 是一个阶为素数 $q$ 的循环群，其生成元为 $g \in \mathbb{G}$。设证明人 $P$ 保存私钥 $\alpha \in \mathbb{Z}_q$，对应的公钥为 $u = g^\alpha \in \mathbb{G}$。$P$ 需要向 $V$ 证明其拥有 $\alpha$。这里 $\alpha$ 是witness，$u = g^\alpha$ 是statement。Shnorr’s identification protocol的协议过程为：</p>
+<ul>
+<li><p>密钥生成算法产生公私钥：</p>
+<script type="math/tex; mode=display">
+\alpha \overset{R}{\leftarrow} \mathbb{Z}_q , \quad u \overset{R}{\leftarrow} g^\alpha</script><p>其中验证密钥 $vk := u$，私钥为 $sk := \alpha$。</p>
+</li>
+<li><p>$P$ 使用 $sk := \alpha$ 初始化，$V$ 使用 $vk := u$ 初始化，$P$ 和 $V$ 之间的交互过程为：</p>
+<ol>
+<li>$P$ 计算 $\alpha_t \overset{R}{\leftarrow} \mathbb{Z}_q, \ u_t \overset{R}{\leftarrow} g^\alpha_t$，并将 $u_t$ 发送给 $V$；</li>
+<li>$V$ 计算 $c \overset{R}{\leftarrow} C, \ C \subset \mathbb{Z}_q$，并将 $c$ 发送给 $P$；</li>
+<li>$P$ 计算 $\alpha_z \leftarrow \alpha_t + \alpha c$，并将 $\alpha_z$ 发送给 $V$；</li>
+<li>$V$ 进行检查：如果 $g^{\alpha_z} = u_t \cdot u^c$，$V$ 输出 accept，否则输出 reject。</li>
+</ol>
+</li>
+</ul>
+<h3 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h3><p>零知识证明 zero-knowledge proofs，指的是证明者能够在不向验证者提供任何有用信息的情况下，使验证者相信某个论断是正确的。允许证明者 prover、验证者 verifier 证明某项提议的真实，却不必泄露除了「提议是真实的」之外的任何信息。</p>
+<p>其实质是一种涉及两方或更多方的协议，即两方或更多方完成一项任务所需采取的一系列步骤。证明者向验证者证明并使其相信自己知道或拥有某一消息，但证明过程不能向验证者泄漏任何关于被证明消息的信息。大量事实证明，零知识证明在密码学中非常有用，尤其在 NP 问题、身份验证、数字签名、水印检测、密钥交换等，可以有效解决许多问题。加密数字货币与区块链为零知识证明的应用提供了新的方向。</p>
+<p>综上，零知识证明是一种特殊的交互式证明，其中证明者知道问题的答案，他需要向验证者证明「他知道答案」这一事实，但是要求验证者不能获得答案的任何信息。</p>
+<h4 id="零知识证明的性质"><a href="#零知识证明的性质" class="headerlink" title="零知识证明的性质"></a>零知识证明的性质</h4><p>根据零知识证明的定义和有关例子，可以得出零知识证明具有以下三个性质：</p>
+<ol>
+<li>完备性 completeness：如果证明方和验证方都是诚实的，并遵循证明过程的每一步，进行正确的计算，那么这个证明一定是成功的，验证方一定能够接受证明方。</li>
+<li>合理性 soundness：没有人能够假冒证明方，使这个证明成功。</li>
+<li>零知识性 zero-knowledge：证明过程执行完之后，验证方只获得了「证明方拥有这个知识」的信息，而没有获得关于这个知识本身的任何信息。</li>
+</ol>
+<p>零知识证明及其相关的协议的优点</p>
+<blockquote>
+<p>1.随着零知识证明的使用，安全性不会降级，因为该证明具有零知识性质。</p>
+<p>2.高效性。该过程计算量小，双方交换的信息量少。</p>
+<p>3.安全性依赖于未解决的数学难题，如离散对数、大整数因子分解、平方根等。</p>
+<p>4.许多零知识证明相关的技术避免了直接使用有政府限制的加密算法，为相关产品的出口带去优势。</p>
+</blockquote>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><p>地图三染色问题和数独问题。</p>
+<h2 id="不经意传输-2"><a href="#不经意传输-2" class="headerlink" title="不经意传输"></a>不经意传输</h2><p>不经意传输是安全计算协议的基本构建块，也是一种固有的非对称协议。Impagliazzo和Rudich(1989)证明了从OT到对称密钥协议(单向函数，PRF)的约化意味着 $P \neq NP$。然而，正如Beaver(1996)首次观察到的那样，OT的批量执行只需要少量的公钥操作。Beaver的构造是非黑盒的，因为PRF需要被表示为一个电路，并被评估为MPC。因此，Beaver的研究结果主要是理论上的兴趣。Ishai等人。(2003年)提出了一种非常高效的批处理OT，它只需要对整个批处理进行 $\kappa$ 的公钥操作，每个OT只需要两到三个哈希。</p>
+<blockquote>
+<p>设S有一个秘密，想以1/2的概率传递给R，即B有50%的机会收到这个秘密，另外50%的机会什么也没有收到，协议执行完后，B知道自己是否收到了这个秘密，但S却不知道R是否收到了这个秘密。这种协议就称为不经意传输协议。</p>
+</blockquote>
+<h3 id="基于公钥的OT"><a href="#基于公钥的OT" class="headerlink" title="基于公钥的OT"></a>基于公钥的OT</h3><p><img src="http://images.yingwai.top/picgo/Snipaste_2020-11-12_17-44-39.png" alt=""></p>
+<p>该结构的安全性假设存在公钥加密，能够在不获得相应私钥的情况下对随机公钥进行采样。该方案在半诚实模型下是安全的。发送方 $\mathcal{S}$ 只看到 $\mathcal{R}$ 发送的两个公钥，因此不能以比 $\frac{1}{2}$ 更高的概率预测哪个密钥是在不知道私钥的情况下生成的。因此，可以简单地通过发送两个随机选择的公钥来模拟 $\mathcal{S}$ 的视图。</p>
+<p>接收器 $\mathcal{R}$ 看到两个密文，并且具有仅解密其中一个的秘密密钥。在给定 $\mathcal{R}$ 的输入和输出的情况下，也可以很容易地模拟 $\mathcal{R}$ 的视图。$\mathsf{Sim}_{\mathcal{S}}$ 将生成公钥对和随机公钥，并将模拟接收到的密文设置为</p>
+<ol>
+<li>在生成的密钥对下对接收到的秘密进行加密；</li>
+<li>在随机选择的密钥下对 $0$ 进行加密。</li>
+</ol>
+<p>由于与实际执行的区别仅在于第二次加密，因此模拟进行，并且由于加密安全性的保证，将不会区分加密的 $0$ 和另一个值。注意，该半诚实协议不提供针对恶意接收者的安全性——接收者 $\mathcal{R}$ 可以生成两个公私钥对 $(sk_0, pk_0)$ 和 $(sk_1,pk_1)$ 并将 $(pk_0, pk_1)$ 发送给 $\mathcal{S}$，并且解密两个接收到的密文以学习 $x_1$ 和 $x_2$。</p>
+<h3 id="OT中的公钥操作"><a href="#OT中的公钥操作" class="headerlink" title="OT中的公钥操作"></a>OT中的公钥操作</h3><p>图3.7中的简单协议要求发送方和接收方对每个选择位都进行一次公钥操作。正如在基于布尔电路的MPC协议(例如姚氏GC)中使用的那样，有必要为执行电路的一方的每一个输入位执行OT。对于像GMW这样的协议，评估每个门都需要OT。因此一些研究集中在减少公钥操作的数量以执行大量的OT。</p>
+<h4 id="Beaver的非黑盒构造"><a href="#Beaver的非黑盒构造" class="headerlink" title="Beaver的非黑盒构造"></a>Beaver的非黑盒构造</h4><p>Beaver(1996)建议对Yao的GC协议进行自举，从少量的公钥操作生成多项式的OT。用于计算电路 $\mathcal{C}$ 的GC协议需要 $m$ 个OT，其中 $m$ 是由 $P_2$ 提供的输入比特数。下面是OT中的记号，将 $P_1$ (GC中的生成者)称为发送方 $\mathcal{S}$，将 $P_2$ (GC中的评估者)称为接收方 $\mathcal{R}$。设 $m$ 是现在将作为批处理执行的所需的OT数量。$\mathcal{S}$ 的输入将是 $m$ 对秘密 $(x^0_1, x^1_1),…,(x^0_m, x^1_m)$，而 $\mathcal{R}$ 的输入将是 $m$ 位选择字符串 $b = (b_1, …, b_m)$。</p>
+<p>我们现在构造一个实现函数 $F$ 的电路 $\mathcal{C}$，该函数 $F$ 仅从 $\mathcal{R}$ 获得少量的输入比特，但是将多项式数量的OT的结果输出给 $\mathcal{R}$。$\mathcal{R}$ 到 $F$ 的输入将是随机选择的 $\kappa$ 比特串 $r$。设 $G$ 是将 $\kappa$ 比特扩展成 $m$ 比特的伪随机生成器。$\mathcal{R}$ 将用伪随机字符串 $b \oplus G(r)$ 将其输入字符串发送给 $\mathcal{S}$。那么，$\mathcal{S}$ 对 $F$ 的输入将是 $m$ 对秘密 $(x^0_1, x^1_1),…,(x^0_m,x^1_m)$ 以及 $m$ 位串 $b\oplus G(r)$。函数 $F$ 计算 $m$ 比特展开 $G(r)$，并对输入 $b \oplus G(r)$ 进行去屏蔽，得到选择串 $b$，然后 $F$ 简单地将对应的秘密 $x_{b_i}$ 输出给 $\mathcal{R}$。电路评估者 $\mathcal{R}$ 只提供 $\kappa$ 输入位，因此执行 $m$ 个OT只需要固定数量的 $\kappa$ OT。</p>
+<h4 id="减少公钥操作次数"><a href="#减少公钥操作次数" class="headerlink" title="减少公钥操作次数"></a>减少公钥操作次数</h4><p>Beaver(1996)的构造展示了一种简单的方法，可以将执行 $m$ OT所需的非对称操作的数量减少到固定的安全参数，但由于需要执行大型GC，因此在实践中效率不高。回想一下，我们的目标是使用少量 $k$ 个基本OT，加上仅对称密钥运算，来实现 $m \gg k$ 个有效的OT。这里，$k$ 的选择取决于计算安全参数 $\kappa$；下面说明如何选择 $k$。下面描述Ishai等人的OT扩展(2003)，在半诚实的敌手存在的情况下，实现了 $m$ 个随机串的二选一OT。</p>
+<p>假设接收器 $\mathcal{R}$ 具有选择位 $r \in \{0,1\}^m$，$\mathcal{R}$ 选择两个 $m \times k$ 矩阵($m$ 行，$k$ 列)，$T$ 和 $U$。设 $\boldsymbol{t}_j, \boldsymbol{u}_j \in \{0,1 \}^k$ 分别表示 $T$ 和 $U$ 的第 $j$ 行。矩阵是随机选择的，因此：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{t}_{j} \oplus \boldsymbol{u}_{j}=r_{j} \cdot 1^{k} \stackrel{\text { def }}{=}\left\{\begin{array}{ll}
+1^{k} & \text { if } r_{j}=1 \\
+0^{k} & \text { if } r_{j}=0
+\end{array}\right.</script><p>发送者 $\mathcal{S}$ 选择随机串 $s \in \{0,1 \}^k$。各方参与二选一OT的 $k$ 个实例，其角色颠倒，以根据发送者在其选择的串 $s$ 中的比特 $s_i$ 将 $T$ 或 $U$ 的列传送给发送者 $\mathcal{S}$。在第 $i$ 个OT中，$\mathcal{R}$ 提供输入 $\boldsymbol{t}^i$ 和 $\boldsymbol{u}^i$，其中它们分别指 $T$ 和 $U$ 的第 $i$ 列。$\mathcal{S}$ 使用 $s_i$ 作为其选择位，并接收输出 $\boldsymbol{q}^i \in \{\boldsymbol{t}^i, \boldsymbol{u}^i \}$。请注意，这些OT串的长度 $m \gg k$ ——OT消息的长度很容易扩展，例如通过加密和发送两个 $m$ 位长的字符串，并在短字符串上使用OT来发送正确的解密密钥。</p>
+<p>现在设 $Q$ 表示发送者获得的矩阵，其列为 $\boldsymbol{q}^i$。让 $\boldsymbol{q}_j$ 表示第 $j$ 行。关键是观察到</p>
+<script type="math/tex; mode=display">
+\boldsymbol{q}_{j}=\boldsymbol{t}_{j} \oplus\left[r_{j} \cdot s\right]=\left\{\begin{array}{ll}
+\boldsymbol{t}_{j} & \text { if } r_{j}=0 \\
+\boldsymbol{t}_{j} \oplus s & \text { if } r_{j}=1
+\end{array}\right. \tag{3.2}</script><p>令 $H$ 为一个随机预言机，于是 $\mathcal{S}$ 就能计算两个随机串 $H(\boldsymbol{q}_j)$ 和 $H(\boldsymbol{q}_j \oplus s)$，而 $\mathcal{R}$ 只能通过 $H(\boldsymbol{t}_j)$，根据其选择计算一个。实际上，根据等式3.2，$\boldsymbol{q}_j$ 等于 $\boldsymbol{t}_j$ 或 $\boldsymbol{t}_j \oplus s$，这取决于 $\mathcal{R}$ 的选择位 $r_j$。则根据 $\mathcal{R}$ 的选择位 $r_j$，$\boldsymbol{t}_j$ 等于 $\boldsymbol{q}_j$ 或 $\boldsymbol{q}_j \oplus s$。请注意，$\mathcal{R}$ 没有关于 $s$ 的信息，因此直观上它只能学习两个随机字符串 $H(\boldsymbol{q}_j)$ 和 $H(\boldsymbol{q}_j \oplus s)$ 中的一个。因此，矩阵的 $m$ 行中的每一行都可用于产生随机串的单个二选一OT。</p>
+<p>为了将其扩展到两个给定秘密 $s_0, s_1$ 的更常见的二选一OT，在上面添加以下步骤。现在，$\mathcal{S}$ 另外用两个密钥 $H(\boldsymbol{q}_j)$ 和 $H(\boldsymbol{q}_j \oplus s)$ 来加密两个OT秘密，并将这两个加密(例如 $H(\boldsymbol{q}_j) \oplus s_0$ 和 $H(\boldsymbol{q}_j \oplus s) \oplus s_1$)发送给 $\mathcal{R}$。由于 $\mathcal{R}$ 可以恰好获得 $H(\boldsymbol{q}_j)$ 和 $H(\boldsymbol{q}_j \oplus s)$ 中的一个，所以他只能获得相应的秘密 $s_i$。</p>
+<h3 id="OT扩展"><a href="#OT扩展" class="headerlink" title="OT扩展"></a>OT扩展</h3><p>上面提到的方案为IKNP，IKNP第一个、也是最重要的步骤是将 $n$ 个OT规约为传输 $n$ 比特字符的 $k$ 个OT。这一步骤将引入额外的、线性数量级的对称密码学操作。下一步是长度扩展步骤，我们之前已经讲解过这一步骤了。这可以让我们把长字符串OT协议归约为短字符串OT协议。这一步骤进一步引入了线性数量级的对称密码学操作。</p>
+<p><img src="http://images.yingwai.top/picgo/IKNPf1.png" alt=""></p>
+<p>在核心规约步骤中，IKNP让接收方随机选择一个 $n \times k$ 的矩阵 $T$，然后发送方选择一个随机的行向量 $s$。接下来，接收方和发送方执行 $k$ 个OT协议，但此OT协议中两个参与方的角色互换。在每个OT协议中，接收方要选择长度为 $n$ 的两列比特值。每对比特值中，第一列为矩阵 $T$ 的某一列，第二列为第一列比特值与接收方的选择向量 $r$ 的异或结果。发送方实际上应用他随机选择的行向量在接收方的两列比特值中选择一列。</p>
+<p>这样，发送方通过OT协议得到了一个矩阵 $Q$。$Q$ 满足如下性质：</p>
+<ul>
+<li>如果 $r_i = 0$，则 $q_i = t_i$；</li>
+<li>如果 $r_i = 1$，则 $q_i = t_i \oplus s$。</li>
+</ul>
+<p>在第一种情况下，接收方知道 $t_i$，但无法知道 $t_i \oplus s$。因此在第一种情况下，接收方能得到 $q_i$，但无法得到 $q_i \oplus s$。在第二种情况下，接收方能得到 $q_i \oplus s$，也就是 $t_i$，但无法得到 $q_i$。这意味着或许可以使用 $q_i$ 和 $q_i \oplus s$ 作为OT协议中的数据加密密钥。但需要注意，必须要破坏矩阵中 $q_i$ 和 $q_i \oplus s$ 的相互关系。应用随机预言机 $H$ 来破坏 $q_i$ 和 $q_i \oplus s$ 的相互关系。最后，接收方根据 $t_i$ 选择得到他的输出，也就是应用 $t_i$ 进行解密。</p>
+<p><img src="http://images.yingwai.top/picgo/IKNPf2.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>Study</category>
+      </categories>
+      <tags>
+        <tag>MPC</tag>
+        <tag>HE</tag>
+        <tag>Garbled Circuit</tag>
+        <tag>Oblivious Transfer</tag>
+        <tag>GMW</tag>
+        <tag>BGW</tag>
+        <tag>Zero Knowledge Proof</tag>
       </tags>
   </entry>
 </search>
