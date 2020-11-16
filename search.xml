@@ -5900,6 +5900,7 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
       </categories>
       <tags>
         <tag>密码学</tag>
+        <tag>MPC</tag>
       </tags>
   </entry>
   <entry>
@@ -6540,6 +6541,7 @@ q(0) = \sum^{2t+1}_{i=1} \lambda_iq(i)</script><p>其中 $λ_i$ 项是适当的�
         <category>Study</category>
       </categories>
       <tags>
+        <tag>密码学</tag>
         <tag>MPC</tag>
         <tag>HE</tag>
         <tag>Garbled Circuit</tag>
