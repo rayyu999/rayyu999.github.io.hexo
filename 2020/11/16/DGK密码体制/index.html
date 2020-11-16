@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Ray&#39;s Blog">
 <meta property="og:description" content="这是一个由Damgård，Geisler和Krøigaard (DGK)提出的密码体制，它是一种加法同态的密码体制，专用于小明文，非常适合于安全比较协议。">
 <meta property="article:published_time" content="2020-11-16T15:37:20.000Z">
-<meta property="article:modified_time" content="2020-11-16T15:51:52.200Z">
+<meta property="article:modified_time" content="2020-11-16T15:53:33.388Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="HE">
 <meta property="article:tag" content="DGK comparison protocol">
@@ -382,7 +382,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  842 字
+                  851 字
                 </span>
               
 
@@ -433,7 +433,7 @@ E_{pk}(m,r)^{v_pv_q} = (g^{v_pv_q})^m \bmod n</script><p>显然，$g^{v_pv_q}$ �
 <p>当逐位比较两个整数 $x$ 和 $y$ 时，最明显的方法是从左(最高有效部分)到右扫描两个位行，搜索第一个不同的位。这些不同位的比较结果将确定两个整数的比较结果。DGK协议遵循类似的方法。假设两个整数都包含分别由 $x$ 和 $y$ 表示的 $\ell$ 位，因此 $x = x_{\ell -1}…x_1x_0$，$x_{\ell - 1}$ 是 $x$ 的最高有效位。然后计算数字 $c_i$，$0 \leq i &lt; \ell$，对于每个 $j$，$i&lt;j&lt;\ell$，当 $x_j=y_j$，$i&lt;j&lt;\ell$ 并且同时 $x_i \neq y_i$ 时，该数字才为零。</p>
 <p>更具体地，</p>
 <script type="math/tex; mode=display">
-c_i = s + x_i - y_i + 3\sum^{\ell -1}_{j=i+1}(x_i \oplus y_i)</script><p>显然，当 $x_j=y_j$ 对于每个 $j$，$i &lt; j &lt; \ell$ 时，异或之和正好为零。变量 $s$ 可以设置为 $−1$ 或 $1$，具体取决于执行的比较。例如，当 $s=−1$ 时，当 $x_i=1$ 且 $y_i=0$ 时，$c_i$ 仅为零(对于每个 $j$，$i<j$，$x_j=y_j$)，从而 $x \>y$。为了避免一方获知比较结果，一方将设置参数 $s$，而另一方将获知 $c_i$ 是否 $=0$。</p>
+c_i = s + x_i - y_i + 3\sum^{\ell -1}_{j=i+1}(x_i \oplus y_i)</script><p>显然，当 $x_j=y_j$ 对于每个 $j$，$i &lt; j &lt; \ell$ 时，异或之和正好为零。变量 $s$ 可以设置为 $−1$ 或 $1$，具体取决于执行的比较。例如，当 $s=−1$ 时，当 $x_i=1$ 且 $y_i=0$ 时，$c_i$ 仅为零(对于每个 $j$，$i&lt;j$，$x_j=y_j$)，从而 $y &lt; x$。为了避免一方获知比较结果，一方将设置参数 $s$，而另一方将获知 $c_i$ 是否 $=0$。</p>
 
       
     </div>
