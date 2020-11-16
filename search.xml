@@ -6554,7 +6554,7 @@ q(0) = \sum^{2t+1}_{i=1} \lambda_iq(i)</script><p>其中 $λ_i$ 项是适当的�
   <entry>
     <title>DGK密码体制</title>
     <url>/2020/11/16/DGK%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6/</url>
-    <content><![CDATA[<p>这是一个由Damgård，Geisler和<br>Krøigaard (DGK)提出的密码体制，它是一种加法同态的密码体制，专用于小明文，非常适合于安全比较协议。</p>
+    <content><![CDATA[<p>这是一个由Damgård，Geisler和Krøigaard (DGK)提出的密码体制，它是一种加法同态的密码体制，专用于小明文，非常适合于安全比较协议。</p>
 <a id="more"></a>
 <h2 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h2><p>为了生成密钥，将 $k,t$ 和 $\ell$ 作为输入参数，其中 $k &gt; t &gt; \ell$。首先为素数 $p,q$ 生成 $k$ 位RSA模数 $n=pq$。选择 $u$ 作为大于 $\ell + 2$ 的最小素数，它整除 $p−1$ 和 $q−1$，然后生成两个 $t$ 位素数 $v_p$ 和 $v_q$ 使得 $v_p | (p-1)$ 以及 $v_q | (q-1)$。公钥为 $pk = (n, g, h, u)$，私钥为 $sk = (p, q, v_p, v_q)$。</p>
 <p>最后，我们选择随机元素 $g,h \in \mathbb{Z}^<em>_n$ 使得 $h$ 的乘法阶为 $v$ 模 $p$ 和 $q$，$g$ 的阶为 $uv$。公钥现在是 $pk = (n,g,h,u)$，而私钥是 $sk = (p,q,v)$。明文空间为 $\mathbb{Z}_u$，密文空间为 $\mathbb{Z}^</em>_n$。</p>
