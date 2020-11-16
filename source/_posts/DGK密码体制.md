@@ -7,8 +7,7 @@ tags: [HE, DGK comparison protocol, Secure Comparison]
 
 
 
-这是一个由Damgård，Geisler和
-Krøigaard (DGK)提出的密码体制，它是一种加法同态的密码体制，专用于小明文，非常适合于安全比较协议。
+这是一个由Damgård，Geisler和Krøigaard (DGK)提出的密码体制，它是一种加法同态的密码体制，专用于小明文，非常适合于安全比较协议。
 
 <!--more-->
 
