@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/jm.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/jm32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/jm16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/jm.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Redis,Spring Boot," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Redis（Remote Dictionary Server )，即远程字典服务，是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis笔记">
+<meta property="og:url" content="http://yoursite.com/2020/11/17/Redis%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="Redis（Remote Dictionary Server )，即远程字典服务，是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
+<meta property="og:image" content="http://images.yingwai.top/picgo/image001.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/image002.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/image003.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/20201117153422.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/20201117153525.png">
+<meta property="article:published_time" content="2020-11-17T11:19:55.000Z">
+<meta property="article:modified_time" content="2020-11-17T11:21:12.434Z">
+<meta property="article:author" content="yyw">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="Spring Boot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/image001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/17/Redis笔记/"/>
+
+
+
+
+
+  <title>Redis笔记 | Ray's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ray's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/17/Redis%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Redis笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-17T19:19:55+08:00">
+                2020-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Coding/" itemprop="url" rel="index">
+                    <span itemprop="name">Coding</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/11/17/Redis%E7%AC%94%E8%AE%B0/" class="leancloud_visitors" data-flag-title="Redis笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  24 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Redis（Remote Dictionary Server )，即远程字典服务，是一个开源的使用ANSI <a href="https://baike.baidu.com/item/C语言" target="_blank" rel="noopener">C语言</a>编写、支持网络、可基于内存亦可持久化的日志型、Key-Value<a href="https://baike.baidu.com/item/数据库/103728" target="_blank" rel="noopener">数据库</a>，并提供多种语言的API。</p>
+<a id="more"></a>
+<h1 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h1><p>在实际的开发过程中，多多少少都会涉及到缓存，而 Redis 通常来说是我们分布式缓存的最佳选择。Redis 也是我们熟知的 NoSQL（非关系性数据库）之一，虽然其不能完全的替代关系性数据库，但它可作为其良好的补充。</p>
+<p>Redis 是一个开源（BSD 许可）、内存存储的数据结构服务器，可用作数据库，高速缓存和消息队列代理。它支持字符串、哈希表、列表、集合、有序集合等数据类型。内置复制、Lua 脚本、LRU 收回、事务以及不同级别磁盘持久化功能，同时通过 Redis Sentinel 提供高可用，通过 Redis Cluster 提供自动分区。</p>
+<h2 id="Redis使用场景"><a href="#Redis使用场景" class="headerlink" title="Redis使用场景"></a>Redis使用场景</h2><p>微服务以及分布式被广泛使用后，Redis 的使用场景就越来越多了，下面罗列几种主要的场景：</p>
+<ol>
+<li><strong>分布式缓存</strong>：在分布式的系统架构中，将缓存存储在内存中显然不当，因为缓存需要与其他机器共享，这时 Redis 便挺身而出了，缓存也是 Redis 使用最多的场景。</li>
+<li><strong>分布式锁</strong>：在高并发的情况下，我们需要一个锁来防止并发带来的脏数据，Java 自带的锁机制显然对进程间的并发并不好使，此时可以利用 Redis 单线程的特性来实现我们的分布式锁，如何实现，可以<a href="https://www.ibm.com/developerworks/cn/java/j-spring-boot-aop-web-log-processing-and-distributed-locking/index.html" target="_blank" rel="noopener">参考这篇文章</a>。</li>
+<li><strong>Session 存储/共享</strong>：Redis 可以将 Session 持久化到存储中，这样可以避免由于机器宕机而丢失用户会话信息。</li>
+<li><strong>发布/订阅</strong>：Redis 还有一个发布/订阅的功能，您可以设定对某一个 key 值进行消息发布及消息订阅，当一个 key 值上进行了消息发布后，所有订阅它的客户端都会收到相应的消息。这一功能最明显的用法就是用作实时消息系统。</li>
+<li><strong>任务队列</strong>：Redis 的 <code>lpush+brpop</code> 命令组合即可实现阻塞队列，生产者客户端使用 <code>lrpush</code> 从列表左侧插入元素，多个消费者客户端使用 <code>brpop</code> 命令阻塞式的”抢”列表尾部的元素，多个客户端保证了消费的负载均衡和高可用性。</li>
+<li><strong>限速，接口访问频率限制</strong>：比如发送短信验证码的接口，通常为了防止别人恶意频刷，会限制用户每分钟获取验证码的频率，例如一分钟不能超过 5 次。</li>
+</ol>
+<p>当然 Redis 的使用场景并不仅仅只有这么多，还有很多未列出的场景，如计数、排行榜等，可见 Redis 的强大。不过 Redis 说到底还是一个数据库（非关系型），那么我们还是有必要了解一下它支持存储的数据结构。</p>
+<h2 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h2><p>Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。</p>
+<h3 id="String（字符串）"><a href="#String（字符串）" class="headerlink" title="String（字符串）"></a>String（字符串）</h3><p>string 是 redis 最基本的类型，一个 key 对应一个 value。</p>
+<p>string 类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。</p>
+<p>string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB。</p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; SET ray "靓仔"</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; GET ray</span><br><span class="line">"靓仔"</span><br></pre></td></tr></table></figure>
+<p>在 Redis 中 string 表示的是一个可变的字节数组，我们初始化字符串的内容、可以拿到字符串的长度，可以获取 string 的子串，可以覆盖 string 的子串内容，可以追加子串。</p>
+<p><img src="http://images.yingwai.top/picgo/image001.png" alt=""></p>
+<p>如上图所示，在 Redis 中我们初始化一个字符串时，会采用预分配冗余空间的方式来减少内存的频繁分配，如图所示，实际分配的空间 capacity 一般要高于实际字符串长度 len。如果你看过 Java 的 ArrayList 的源码相信会对这种模式很熟悉。</p>
+<h3 id="Hash（哈希）"><a href="#Hash（哈希）" class="headerlink" title="Hash（哈希）"></a>Hash（哈希）</h3><p>hash 是一个键值(key=&gt;value)对集合。</p>
+<p>hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象。</p>
+<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><p><code>DEL ray</code> 用于删除前面测试用过的 key，否则会报错：<strong>(error) WRONGTYPE Operation against a key holding the wrong kind of value</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; DEL ray</span><br><span class="line">redis 127.0.0.1:6379&gt; HMSET ray field1 "Hello" field2 "World"</span><br><span class="line">"OK"</span><br><span class="line">redis 127.0.0.1:6379&gt; HGET ray field1</span><br><span class="line">"Hello"</span><br><span class="line">redis 127.0.0.1:6379&gt; HGET ray field2</span><br><span class="line">"World"</span><br></pre></td></tr></table></figure>
+<p><code>HMSET</code> 设置了两个 <code>field=&gt;value</code> 对，<code>HGET</code> 获取对应 <code>field</code> 对应的 <code>value</code>。</p>
+<p>每个 hash 可以存储 $2^{32} - 1$ 个键值对（4294967295，40多亿）。</p>
+<p>hash 与 Java 中的 HashMap 差不多，实现上采用二维结构，第一维是数组，第二维是链表。hash 的 key 与 value 都存储在链表中，而数组中存储的则是各个链表的表头。在检索时，首先计算 key 的 hashcode，然后通过 hashcode 定位到链表的表头，再遍历链表得到 value 值。可能你比较好奇为啥要用链表来存储 key 和 value，直接用 key 和 value 一对一存储不就可以了吗？其实是因为有些时候我们无法保证 hashcode 值的唯一，若两个不同的 key 产生了相同的 hashcode，我们需要一个链表在存储两对键值对，这就是所谓的 hash 碰撞。</p>
+<h3 id="List（列表）"><a href="#List（列表）" class="headerlink" title="List（列表）"></a>List（列表）</h3><p>列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。</p>
+<h4 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; DEL ray</span><br><span class="line">redis 127.0.0.1:6379&gt; lpush ray redis</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; lpush ray mongodb</span><br><span class="line">(integer) 2</span><br><span class="line">redis 127.0.0.1:6379&gt; lpush ray rabitmq</span><br><span class="line">(integer) 3</span><br><span class="line">redis 127.0.0.1:6379&gt; lrange ray 0 10</span><br><span class="line">1) "rabitmq"</span><br><span class="line">2) "mongodb"</span><br><span class="line">3) "redis"</span><br></pre></td></tr></table></figure>
+<p>列表最多可以存储 $2^{32} - 1$ 个元素。</p>
+<p>在 Redis 中列表 list 采用的存储结构是双向链表，由此可见其随机定位性能较差，比较适合首位插入删除。像 Java 中的数组一样，Redis 中的列表支持通过下标访问，不同的是 Redis 还为列表提供了一种负下标，<code>-1</code> 表示倒数一个元素，<code>-2</code> 表示倒数第二个数，依此类推。综合列表首尾增删性能优异的特点，通常我们使用 <code>rpush/rpop/lpush/lpop</code> 四条指令将列表作为队列来使用。</p>
+<p><img src="http://images.yingwai.top/picgo/image002.png" alt=""></p>
+<p>如上图所示，在列表元素较少的情况下会使用一块连续的内存存储，这个结构是 ziplist，也即是压缩列表。它将所有的元素紧挨着一起存储，分配的是一块连续的内存。当数据量比较多的时候才会改成 quicklist。因为普通的链表需要的附加指针空间太大，会比较浪费空间。比如这个列表里存的只是 int 类型的数据，结构上还需要两个额外的指针 prev 和 next。所以 Redis 将链表和 ziplist 结合起来组成了 quicklist。也就是将多个 ziplist 使用双向指针串起来使用。这样既满足了快速的插入删除性能，又不会出现太大的空间冗余。</p>
+<h3 id="Set（集合）"><a href="#Set（集合）" class="headerlink" title="Set（集合）"></a>Set（集合）</h3><p>Set 是 string 类型的无序集合。</p>
+<p>集合是通过哈希表实现的，所有的 value 都指向同一个内部值，所以添加，删除，查找的复杂度都是 O(1)。</p>
+<h4 id="sadd命令"><a href="#sadd命令" class="headerlink" title="sadd命令"></a>sadd命令</h4><p>添加一个 string 元素到 key 对应的 set 集合中，成功返回 1，如果元素已经在集合中返回 0。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sadd key member</span><br></pre></td></tr></table></figure>
+<h4 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; DEL ray</span><br><span class="line">redis 127.0.0.1:6379&gt; sadd ray redis</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; sadd ray mongodb</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; sadd ray rabitmq</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; sadd ray rabitmq</span><br><span class="line">(integer) 0</span><br><span class="line">redis 127.0.0.1:6379&gt; smembers ray</span><br><span class="line"></span><br><span class="line">1) "redis"</span><br><span class="line">2) "rabitmq"</span><br><span class="line">3) "mongodb"</span><br></pre></td></tr></table></figure>
+<p>以上实例中 rabitmq 添加了两次，但根据集合内元素的唯一性，第二次插入的元素将被忽略。</p>
+<p>集合中最多可以存储 $2^{32} - 1$ 个成员。</p>
+<h3 id="zset（sorted-set：有序集合）"><a href="#zset（sorted-set：有序集合）" class="headerlink" title="zset（sorted set：有序集合）"></a>zset（sorted set：有序集合）</h3><p>zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。</p>
+<p>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。</p>
+<p>zset的成员是唯一的,但分数(score)却可以重复。</p>
+<h4 id="zadd命令"><a href="#zadd命令" class="headerlink" title="zadd命令"></a>zadd命令</h4><p>添加元素到集合，元素在集合中存在则更新对应score</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zadd key score member</span><br></pre></td></tr></table></figure>
+<h4 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; DEL ray</span><br><span class="line">redis 127.0.0.1:6379&gt; zadd ray 0 redis</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; zadd ray 0 mongodb</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; zadd ray 0 rabitmq</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; zadd ray 0 rabitmq</span><br><span class="line">(integer) 0</span><br><span class="line">redis 127.0.0.1:6379&gt; &gt; ZRANGEBYSCORE ray 0 1000</span><br><span class="line">1) "mongodb"</span><br><span class="line">2) "rabitmq"</span><br><span class="line">3) "redis"</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>简介</th>
+<th>特性</th>
+<th>场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>二进制安全</td>
+<td>可以包含任何数据，比如jpg图片或者序列化的对象，一个键最大能存储512M</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>键值对集合，即编程语言中的Map类型</td>
+<td>适合存储对象，并且可以像数据库中update一个属性一样只修改某一项属性值</td>
+<td>存储、读取、修改用户属性</td>
+</tr>
+<tr>
+<td>List</td>
+<td>（双向）链表</td>
+<td>增删快，提供了操作某一段元素的API</td>
+<td>1. 最新消息排行等功能（比如朋友圈的时间线）<br />2. 消息队列</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>哈希表实现，元素不重复</td>
+<td>1. 添加、删除、查找的复杂度都是 $O(1)$<br />2. 为集合提供了求交集、并集、差集等操作</td>
+<td>1. 共同好友<br />2. 利用唯一性，统计访问网站的所有独立ip<br />3. 好友推荐时，根据tag求交集，大于某个阈值就可以推荐</td>
+</tr>
+<tr>
+<td>Sorted Set</td>
+<td>将Set中的元素增加一个权重参数score，元素按score有序排列</td>
+<td>数据插入集合时，已经进行天然排序</td>
+<td>1. 排行榜<br />2. 带权重的消息队列</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="Java使用Redis"><a href="#Java使用Redis" class="headerlink" title="Java使用Redis"></a>Java使用Redis</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>开始在 Java 中使用 Redis 前， 我们需要确保已经安装了 redis 服务及 Java redis 驱动，且你的机器上能正常使用 Java。</p>
+<ul>
+<li>首先你需要下载驱动包 <a href="https://mvnrepository.com/artifact/redis.clients/jedis" target="_blank" rel="noopener"><strong>下载 jedis.jar</strong></a>，确保下载最新驱动包。</li>
+<li>在你的 classpath 中包含该驱动包。</li>
+</ul>
+<h2 id="连接到Redis服务"><a href="#连接到Redis服务" class="headerlink" title="连接到Redis服务"></a>连接到Redis服务</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisJava</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//连接本地的 Redis 服务</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"localhost"</span>);</span><br><span class="line">        <span class="comment">// 如果 Redis 服务设置来密码，需要下面这行，没有就不需要</span></span><br><span class="line">        <span class="comment">// jedis.auth("123456"); </span></span><br><span class="line">        System.out.println(<span class="string">"连接成功"</span>);</span><br><span class="line">        <span class="comment">//查看服务是否运行</span></span><br><span class="line">        System.out.println(<span class="string">"服务正在运行: "</span>+jedis.ping());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">连接成功</span><br><span class="line">服务正在运行：PONG</span><br></pre></td></tr></table></figure>
+<h2 id="Redis-Java-String（字符串）实例"><a href="#Redis-Java-String（字符串）实例" class="headerlink" title="Redis Java String（字符串）实例"></a>Redis Java String（字符串）实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisStringJava</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//连接本地的 Redis 服务</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"localhost"</span>);</span><br><span class="line">        System.out.println(<span class="string">"连接成功"</span>);</span><br><span class="line">        <span class="comment">//设置 redis 字符串数据</span></span><br><span class="line">        jedis.set(<span class="string">"raykey"</span>, <span class="string">"yuyingwai.cn"</span>);</span><br><span class="line">        <span class="comment">// 获取存储的数据并输出</span></span><br><span class="line">        System.out.println(<span class="string">"redis 存储的字符串为: "</span>+ jedis.get(<span class="string">"raykey"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">连接成功</span><br><span class="line">redis 存储的字符串为：yuyingwai.cn</span><br></pre></td></tr></table></figure>
+<h2 id="Redis-Java-List（列表）实例"><a href="#Redis-Java-List（列表）实例" class="headerlink" title="Redis Java List（列表）实例"></a>Redis Java List（列表）实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisListJava</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//连接本地的 Redis 服务</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"localhost"</span>);</span><br><span class="line">        System.out.println(<span class="string">"连接成功"</span>);</span><br><span class="line">        <span class="comment">//存储数据到列表中</span></span><br><span class="line">        jedis.lpush(<span class="string">"site-list"</span>, <span class="string">"Ray"</span>);</span><br><span class="line">        jedis.lpush(<span class="string">"site-list"</span>, <span class="string">"Google"</span>);</span><br><span class="line">        jedis.lpush(<span class="string">"site-list"</span>, <span class="string">"Tencent"</span>);</span><br><span class="line">        <span class="comment">// 获取存储的数据并输出</span></span><br><span class="line">        List&lt;String&gt; list = jedis.lrange(<span class="string">"site-list"</span>, <span class="number">0</span> ,<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;list.size(); i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"列表项为: "</span>+list.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">连接成功</span><br><span class="line">列表项为：Tencent</span><br><span class="line">列表项为：Google</span><br><span class="line">列表项为：Ray</span><br></pre></td></tr></table></figure>
+<h2 id="Redis-Java-Keys实例"><a href="#Redis-Java-Keys实例" class="headerlink" title="Redis Java Keys实例"></a>Redis Java Keys实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisKeyJava</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//连接本地的 Redis 服务</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"localhost"</span>);</span><br><span class="line">        System.out.println(<span class="string">"连接成功"</span>);</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// 获取数据并输出</span></span><br><span class="line">        Set&lt;String&gt; keys = jedis.keys(<span class="string">"*"</span>); </span><br><span class="line">        Iterator&lt;String&gt; it=keys.iterator() ;   </span><br><span class="line">        <span class="keyword">while</span>(it.hasNext())&#123;   </span><br><span class="line">            String key = it.next();   </span><br><span class="line">            System.out.println(key);   </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">连接成功</span><br><span class="line">raykey</span><br><span class="line">site-list</span><br></pre></td></tr></table></figure>
+<h1 id="在-Spring-Boot-项目中使用-Redis"><a href="#在-Spring-Boot-项目中使用-Redis" class="headerlink" title="在 Spring Boot 项目中使用 Redis"></a>在 Spring Boot 项目中使用 Redis</h1><h2 id="添加Redis依赖"><a href="#添加Redis依赖" class="headerlink" title="添加Redis依赖"></a>添加Redis依赖</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--SpringBoot 的 Redis 支持--&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>添加完依赖之后，我们还需要配置 Redis 的地址等信息才能使用，在 <code>application.yml</code> 中添加如下配置即可。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">  	<span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">  	<span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">  	<span class="comment"># Redis 数据库索引（默认为0）</span></span><br><span class="line">  	<span class="attr">database:</span> <span class="number">0</span></span><br><span class="line">  	<span class="comment"># Redis 服务器连接密码（默认为空）</span></span><br><span class="line">  	<span class="attr">password:</span> </span><br><span class="line">  	<span class="comment"># 连接超时时间，单位毫秒（默认0永不超时）</span></span><br><span class="line">  	<span class="attr">timeout:</span> <span class="number">2000</span></span><br><span class="line">  	<span class="comment"># 连接池配置</span></span><br><span class="line">  	<span class="attr">jedis:</span></span><br><span class="line">  	  <span class="attr">pool:</span></span><br><span class="line">  	  	<span class="comment"># 最大连接数（使用负值表示没有限制）</span></span><br><span class="line">  	  	<span class="attr">max-active:</span> <span class="number">8</span></span><br><span class="line">  	  	<span class="comment"># 最大阻塞等待时间（使用负值表示没有限制）</span></span><br><span class="line">  	  	<span class="attr">max-wait:</span> <span class="number">-1</span></span><br><span class="line">  	  	<span class="comment"># 最大空闲连接</span></span><br><span class="line">  	  	<span class="attr">max-idle:</span> <span class="number">9</span></span><br><span class="line">  	  	<span class="comment"># 最小空闲连接</span></span><br><span class="line">  	  	<span class="attr">min-idle:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>Spring Boot 的 <code>spring-boot-starter-data-redis</code> 为 Redis 的相关操作提供了一个高度封装的 RedisTemplate 类，而且对每种类型的数据结构都进行了归类，将同一类型操作封装为 operation 接口。<code>RedisTemplate</code> 对五种数据结构分别定义了操作，如下所示：</p>
+<ul>
+<li>操作字符串：<code>redisTemplate.opsForValue()</code></li>
+<li>操作 Hash：<code>redisTemplate.opsForHash()</code></li>
+<li>操作 List：<code>redisTemplate.opsForList()</code></li>
+<li>操作 Set：<code>redisTemplate.opsForSet()</code></li>
+<li>操作 ZSet：<code>redisTemplate.opsForZSet()</code></li>
+</ul>
+<p>但是对于 string 类型的数据，Spring Boot 还专门提供了 <code>StringRedisTemplate</code> 类，而且官方也建议使用该类来操作 String 类型的数据。那么它和 <code>RedisTemplate</code> 又有啥区别呢？</p>
+<ol>
+<li><code>RedisTemplate</code> 是一个泛型类，而 <code>StringRedisTemplate</code> 不是，后者只能对键和值都为 String 类型的数据进行操作，而前者则可以操作任何类型。</li>
+<li>两者的数据是不共通的，<code>StringRedisTemplate</code> 只能管理 <code>StringRedisTemplate</code> 里面的数据，<code>RedisTemplate</code> 只能管理 <code>RedisTemplate</code> 中的数据。</li>
+</ol>
+<h2 id="RedisTemplate-的配置"><a href="#RedisTemplate-的配置" class="headerlink" title="RedisTemplate 的配置"></a>RedisTemplate 的配置</h2><p>一个 Spring Boot 项目中，我们只需要维护一个 <code>RedisTemplate</code> 对象和一个 <code>StringRedisTemplate</code> 对象就可以了。所以我们需要通过一个 <code>Configuration</code> 类来初始化这两个对象并且交由的 <code>BeanFactory</code> 管理。我们在 <code>cn.yuyingwai.config</code> 包下面新建了一个 <code>RedisConfig</code> 类，其内容如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span>(name = <span class="string">"redisTemplate"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Object&gt; <span class="title">redisTemplate</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            RedisConnectionFactory redisConnectionFactory)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Object&gt; jackson2JsonRedisSerializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;Object&gt;(Object<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        ObjectMapper om = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">        jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line"></span><br><span class="line">        RedisTemplate&lt;String, Object&gt; template = <span class="keyword">new</span> RedisTemplate&lt;String, Object&gt;();</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        template.setKeySerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        template.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        template.setHashKeySerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        template.setHashValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        template.afterPropertiesSet();</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span>(StringRedisTemplate<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">    <span class="title">public</span> <span class="title">StringRedisTemplate</span> <span class="title">stringRedisTemplate</span>(</span></span><br><span class="line"><span class="class">            <span class="title">RedisConnectionFactory</span> <span class="title">redisConnectionFactory</span>) </span>&#123;</span><br><span class="line">        StringRedisTemplate template = <span class="keyword">new</span> StringRedisTemplate();</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="操作字符串"><a href="#操作字符串" class="headerlink" title="操作字符串"></a>操作字符串</h2><p><code>StringRedisTempalte</code> 在上面已经初始化好了，我们只需要在需要用到的地方通过 <code>@AutoWired</code> 注解注入就行。</p>
+<ol>
+<li><p>设置值，对于设置值，可以使用 <code>opsForValue().void set(K var1, V var2)</code>;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(<span class="string">"test-string-value"</span>, <span class="string">"Hello Redis"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取值，与 set 方法相对于 StringRedisTemplate 还提供了 <code>.opsForValue().get(Object var1)</code> 方法来获取指定 key 对应的 value 值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String value = stringRedisTemplate.opsForValue().get(<span class="string">"test-string-value"</span>);</span><br><span class="line">    System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置值的时候设置过期时间。在设置缓存的时候，我们通常都会给他设置一个过期时间，让其能够达到定时刷新的效果。<code>StringRedisTemplate</code> 提供了 <code>void set(K var1, V var2, long var3, TimeUnit var5)</code> 方法来达到设置过期时间的目的，其中 <code>var3</code> 这个参数就是过期时间的数值，而 <code>TimeUnit</code> 是个枚举类型，我们用它来设置过期时间的单位，是小时或是秒等等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSetTimeOut</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(<span class="string">"test-string-key-time-out"</span>, <span class="string">"Hello Redis"</span>, <span class="number">3</span>, TimeUnit.HOURS);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上面代码所示，我们保存了一个 key 为 test-string-key-time-out 的 String 类型的数据，而这条数据将会在 3 个小时之后被自动删除（失效）。</p>
+</li>
+<li><p>删除数据，我们同样可以通过 StringRedisTmeplate 来删除数据， <code>Boolean delete(K key)</code>方法提供了这个功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.delete(<span class="string">"test-string-value"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="操作数组"><a href="#操作数组" class="headerlink" title="操作数组"></a>操作数组</h2><p>在 Redis 数据类型小节中，我们提到过我们经常使用 Redis 的 lpush/rpush/lpop/rpop 四条指令来实现一个队列。那么这四条指令在 RedisTemplate 中也有相应的实现。</p>
+<ol>
+<li><p><code>leftPush(K key, V value)</code>，往 List 左侧插入一个元素，如 从左边往数组中 push 元素：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLeftPush</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        redisTemplate.opsForList().leftPush(<span class="string">"TestList"</span>, <span class="string">"TestLeftPush"</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>rightPush(K key, V value)</code>，往 List 右侧插入一个元素， 如从右边往数组中 push 元素：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRightPush</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        redisTemplate.opsForList().rightPush(<span class="string">"TestList"</span>, <span class="string">"TestRightPush"</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>执行完上面两个 Test 之后，我们可以使用 Redis 客户端工具 RedisDesktopManager 来查看 TestList 中的内容，如下图 （Push 之后 TestList 中的内容）所示：</p>
+<p><img src="http://images.yingwai.top/picgo/image003.png" alt=""></p>
+<p>此时我们再一次执行 leftPush 方法，TestList 的内容就会变成下图（第二次执行 leftPush 之后的内容）所示：</p>
+<p><img src="http://images.yingwai.top/picgo/20201117153422.png" alt=""></p>
+<p>可以看到 <code>leftPush</code> 实际上是往数组的头部新增一个元素，那么 <code>rightPush</code> 就是往数组尾部插入一个元素。</p>
+</li>
+<li><p><code>leftPop(K key)</code>，从 List 左侧取出第一个元素，并移除， 如从数组头部获取并移除值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLeftPop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object leftFirstElement = redisTemplate.opsForList().leftPop(<span class="string">"TestList"</span>);</span><br><span class="line">        System.out.println(leftFirstElement);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行上面的代码之后，您会看到控制台会打印出 <code>TestLeftPush</code>，然后再去 <code>RedisDesktopManager</code> 中查看 TestList 的内容，如下图 （同数组顶端移除一个元素后）所示。您会发现数组中的第一个元素已经被移除了。</p>
+<p><img src="http://images.yingwai.top/picgo/20201117153525.png" alt=""></p>
+</li>
+<li><p><code>rightPop(K key)</code>，从 List 右侧取出第一个元素，并移除， 如从数组尾部获取并移除值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRightPop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object rightFirstElement = redisTemplate.opsForList().rightPop(<span class="string">"TestList"</span>);</span><br><span class="line">        System.out.println(rightFirstElement);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="操作Hash"><a href="#操作Hash" class="headerlink" title="操作Hash"></a>操作Hash</h2><p>Redis 中的 Hash 数据结构实际上与 Java 中的 HashMap 是非常类似的，提供的 API 也很类似。下面我们就一起来看下 <code>RedisTemplate</code> 为 Hash 提供了哪些 API。</p>
+<ol>
+<li><p>Hash 中新增元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPut</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        redisTemplate.opsForHash().put(<span class="string">"TestHash"</span>, <span class="string">"FirstElement"</span>, <span class="string">"Hello,Redis hash."</span>);</span><br><span class="line">        Assert.assertTrue(redisTemplate.opsForHash().hasKey(<span class="string">"TestHash"</span>, <span class="string">"FirstElement"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断指定 key 对应的 Hash 中是否存在指定的 map 键，使用用法可以见上方代码所示。</p>
+</li>
+<li><p>获取指定 key 对应的 Hash 中指定键的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object element = redisTemplate.opsForHash().get(<span class="string">"TestHash"</span>, <span class="string">"FirstElement"</span>);</span><br><span class="line">        Assert.assertEquals(<span class="string">"Hello,Redis hash."</span>, element);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除指定 key 对应 Hash 中指定键的键值对。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        redisTemplate.opsForHash().delete(<span class="string">"TestHash"</span>, <span class="string">"FirstElement"</span>);</span><br><span class="line">        Assert.assertFalse(redisTemplate.opsForHash().hasKey(<span class="string">"TestHash"</span>, <span class="string">"FirstElement"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="操作集合"><a href="#操作集合" class="headerlink" title="操作集合"></a>操作集合</h2><p>集合很类似于 Java 中的 Set，RedisTemplate 也为其提供了丰富的 API。</p>
+<ol>
+<li><p>向集合中添加元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        redisTemplate.opsForSet().add(<span class="string">"TestSet"</span>, <span class="string">"e1"</span>, <span class="string">"e2"</span>, <span class="string">"e3"</span>);</span><br><span class="line">        <span class="keyword">long</span> size = redisTemplate.opsForSet().size(<span class="string">"TestSet"</span>);</span><br><span class="line">        Assert.assertEquals(<span class="number">3L</span>, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取集合中的元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Set&lt;String&gt; testSet = redisTemplate.opsForSet().members(<span class="string">"TestSet"</span>);</span><br><span class="line">        System.out.println(testSet);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行上面的代码后，控制台输出的是[e1, e3, e2]，当然你可能会看到其他结果，因为 Set 是无序的，并不是按照我们添加的顺序来排序的。</p>
+</li>
+<li><p>获取集合的长度，在向集合中添加元素的示例代码中展示了如何获取集合长度。</p>
+</li>
+<li><p>移除集合中的元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRemove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        redisTemplate.opsForSet().remove(<span class="string">"TestSet"</span>, <span class="string">"e1"</span>, <span class="string">"e2"</span>);</span><br><span class="line">        Set testSet = redisTemplate.opsForSet().members(<span class="string">"TestSet"</span>);</span><br><span class="line">        Assert.assertEquals(<span class="string">"e3"</span>, testSet.toArray()[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="操作有序集合"><a href="#操作有序集合" class="headerlink" title="操作有序集合"></a>操作有序集合</h2><p>与 Set 不一样的地方是，ZSet 对于集合中的每个元素都维护了一个权重值，那么 RedisTemplate 提供了不少与这个权重值相关的 API。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add(K key, V value, double score)</code></td>
+<td>添加元素到变量中同时指定元素的分值。</td>
+</tr>
+<tr>
+<td><code>range(K key, long start, long end)</code></td>
+<td>获取变量指定区间的元素。</td>
+</tr>
+<tr>
+<td><code>rangeByLex(K key, RedisZSetCommands.Range range)</code></td>
+<td>用于获取满足非 <code>score</code> 的排序取值。这个排序只有在有相同分数的情况下才能使用，如果有不同的分数则返回值不确定。</td>
+</tr>
+<tr>
+<td><code>angeByLex(K key, RedisZSetCommands.Range range, RedisZSetCommands.Limit limit)</code></td>
+<td>用于获取满足非 <code>score</code> 的设置下标开始的长度排序取值。</td>
+</tr>
+<tr>
+<td><code>add(K key, Set&lt;ZSetOperations.TypedTuple&lt;V&gt;&gt; tuples)</code></td>
+<td>通过 <code>TypedTuple</code> 方式新增数据。</td>
+</tr>
+<tr>
+<td><code>rangeByScore(K key, double min, double max)</code></td>
+<td>根据设置的 <code>score</code> 获取区间值。</td>
+</tr>
+<tr>
+<td><code>rangeByScore(K key, double min, double max,long offset, long count)</code></td>
+<td>根据设置的 <code>score</code> 获取区间值从给定下标和给定长度获取最终值。</td>
+</tr>
+<tr>
+<td><code>rangeWithScores(K key, long start, long end)</code></td>
+<td>获取 <code>RedisZSetCommands.Tuples</code> 的区间值。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>以上只是简单的介绍了一些最常用的 API，<code>RedisTemplate</code> 针对字符串、数组、Hash、集合以及有序集合还提供了很多 API，具体有哪些 API，可以参考 <a href="https://blog.csdn.net/sinat_27629035/article/details/102652185" target="_blank" rel="noopener">RedisTemplate 提供的 API 列表</a> 这篇文章。</p>
+<h2 id="实现分布式锁"><a href="#实现分布式锁" class="headerlink" title="实现分布式锁"></a>实现分布式锁</h2><p>上面基本列出了 <code>RedisTemplate</code> 和 <code>StringRedisTemplate</code> 两个类所提供的对 Redis 操作的相关 API，但是有些时候这些 API 并不能完成我们所有的需求，这个时候我们其实还可以在 Spring Boot 项目中直接与 Redis 交互来完成操作。比如，我们在实现分布式锁的时候其实就是使用了 <code>RedisTemplate</code> 的 <code>execute</code> 方法来执行 Lua 脚本来获取和释放锁的。</p>
+<ul>
+<li><p>获取锁：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Boolean lockStat = stringRedisTemplate.execute((RedisCallback&lt;Boolean&gt;)connection -&gt;</span><br><span class="line">                    connection.set(key.getBytes(Charset.forName(<span class="string">"UTF-8"</span>)), value.getBytes(Charset.forName(<span class="string">"UTF-8"</span>)),</span><br><span class="line">                            Expiration.from(timeout, timeUnit), RedisStringCommands.SetOption.SET_IF_ABSENT));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>释放锁：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String script = <span class="string">"if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end"</span>;</span><br><span class="line">            <span class="keyword">boolean</span> unLockStat = stringRedisTemplate.execute((RedisCallback&lt;Boolean&gt;)connection -&gt;</span><br><span class="line">                    connection.eval(script.getBytes(), ReturnType.BOOLEAN, <span class="number">1</span>,</span><br><span class="line">                            key.getBytes(Charset.forName(<span class="string">"UTF-8"</span>)), value.getBytes(Charset.forName(<span class="string">"UTF-8"</span>))));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="关于Redis的几个经典问题"><a href="#关于Redis的几个经典问题" class="headerlink" title="关于Redis的几个经典问题"></a>关于Redis的几个经典问题</h1><h2 id="缓存与数据库一致性问题"><a href="#缓存与数据库一致性问题" class="headerlink" title="缓存与数据库一致性问题"></a>缓存与数据库一致性问题</h2><p>对于既有数据库操作又有缓存操作的接口，一般分为两种执行顺序。</p>
+<ol>
+<li>先操作数据库，再操作缓存。这种情况下如果数据库操作成功，缓存操作失败就会导致缓存和数据库不一致。</li>
+<li>第二种情况就是先操作缓存再操作数据库，这种情况下如果缓存操作成功，数据库操作失败也会导致数据库和缓存不一致。</li>
+</ol>
+<p>大部分情况下，我们的缓存理论上都是需要可以从数据库恢复出来的，所以基本上采取第一种顺序都是不会有问题的。针对那些必须保证数据库和缓存一致的情况，通常是不建议使用缓存的。</p>
+<h2 id="缓存击穿问题"><a href="#缓存击穿问题" class="headerlink" title="缓存击穿问题"></a>缓存击穿问题</h2><p>缓存击穿表示恶意用户频繁的模拟请求缓存中不存在的数据，以致这些请求短时间内直接落在了数据库上，导致数据库性能急剧下降，最终影响服务整体的性能。这个在实际项目很容易遇到，如抢购活动、秒杀活动的接口 API 被大量的恶意用户刷，导致短时间内数据库宕机。对于缓存击穿的问题，有以下几种解决方案，这里只做简要说明。</p>
+<ol>
+<li>使用互斥锁排队。当从缓存中获取数据失败时，给当前接口加上锁，从数据库中加载完数据并写入后再释放锁。若其它线程获取锁失败，则等待一段时间后重试。</li>
+<li>使用布隆过滤器。将所有可能存在的数据缓存放到布隆过滤器中，当黑客访问不存在的缓存时迅速返回避免缓存及 DB 挂掉。</li>
+</ol>
+<h2 id="缓存雪崩问题"><a href="#缓存雪崩问题" class="headerlink" title="缓存雪崩问题"></a>缓存雪崩问题</h2><p>在短时间内有大量缓存失效，如果这期间有大量的请求发生同样也有可能导致数据库发生宕机。在 Redis 机群的数据分布算法上如果使用的是传统的 hash 取模算法，在增加或者移除 Redis 节点的时候就会出现大量的缓存临时失效的情形。</p>
+<ol>
+<li>像解决缓存穿透一样加锁排队。</li>
+<li>建立备份缓存，缓存 A 和缓存 B，A 设置超时时间，B 不设值超时时间，先从 A 读缓存，A 没有读 B，并且更新 A 缓存和 B 缓存。</li>
+<li>计算数据缓存节点的时候采用一致性 hash 算法，这样在节点数量发生改变时不会存在大量的缓存数据需要迁移的情况发生。</li>
+</ol>
+<h2 id="缓存并发问题"><a href="#缓存并发问题" class="headerlink" title="缓存并发问题"></a>缓存并发问题</h2><p>这里的并发指的是多个 Redis 的客户端同时 set 值引起的并发问题。比较有效的解决方案就是把 set 操作放在队列中使其串行化，必须得一个一个执行。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+          
+            <a href="/tags/Spring-Boot/" rel="tag"><i class="fa fa-tag"></i> Spring Boot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/16/DGK%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6/" rel="next" title="DGK密码体制">
+                <i class="fa fa-chevron-left"></i> DGK密码体制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/20200417221334.jpg"
+                alt="yyw" />
+            
+              <p class="site-author-name" itemprop="name">yyw</p>
+              <p class="site-description motion-element" itemprop="description">Do not go gentle into that good night.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis简介"><span class="nav-number">1.</span> <span class="nav-text">Redis简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis使用场景"><span class="nav-number">1.1.</span> <span class="nav-text">Redis使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis数据类型"><span class="nav-number">1.2.</span> <span class="nav-text">Redis数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String（字符串）"><span class="nav-number">1.2.1.</span> <span class="nav-text">String（字符串）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash（哈希）"><span class="nav-number">1.2.2.</span> <span class="nav-text">Hash（哈希）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List（列表）"><span class="nav-number">1.2.3.</span> <span class="nav-text">List（列表）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-2"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set（集合）"><span class="nav-number">1.2.4.</span> <span class="nav-text">Set（集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sadd命令"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">sadd命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-3"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zset（sorted-set：有序集合）"><span class="nav-number">1.2.5.</span> <span class="nav-text">zset（sorted set：有序集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zadd命令"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">zadd命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-4"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.2.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java使用Redis"><span class="nav-number">2.</span> <span class="nav-text">Java使用Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接到Redis服务"><span class="nav-number">2.2.</span> <span class="nav-text">连接到Redis服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Java-String（字符串）实例"><span class="nav-number">2.3.</span> <span class="nav-text">Redis Java String（字符串）实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Java-List（列表）实例"><span class="nav-number">2.4.</span> <span class="nav-text">Redis Java List（列表）实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Java-Keys实例"><span class="nav-number">2.5.</span> <span class="nav-text">Redis Java Keys实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-Spring-Boot-项目中使用-Redis"><span class="nav-number">3.</span> <span class="nav-text">在 Spring Boot 项目中使用 Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加Redis依赖"><span class="nav-number">3.1.</span> <span class="nav-text">添加Redis依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RedisTemplate-的配置"><span class="nav-number">3.2.</span> <span class="nav-text">RedisTemplate 的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作字符串"><span class="nav-number">3.3.</span> <span class="nav-text">操作字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数组"><span class="nav-number">3.4.</span> <span class="nav-text">操作数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作Hash"><span class="nav-number">3.5.</span> <span class="nav-text">操作Hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作集合"><span class="nav-number">3.6.</span> <span class="nav-text">操作集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作有序集合"><span class="nav-number">3.7.</span> <span class="nav-text">操作有序集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现分布式锁"><span class="nav-number">3.8.</span> <span class="nav-text">实现分布式锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Redis的几个经典问题"><span class="nav-number">4.</span> <span class="nav-text">关于Redis的几个经典问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存与数据库一致性问题"><span class="nav-number">4.1.</span> <span class="nav-text">缓存与数据库一致性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存击穿问题"><span class="nav-number">4.2.</span> <span class="nav-text">缓存击穿问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存雪崩问题"><span class="nav-number">4.3.</span> <span class="nav-text">缓存雪崩问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存并发问题"><span class="nav-number">4.4.</span> <span class="nav-text">缓存并发问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-tree" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yyw</span>
+
+  
+</div>
+
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">127k</span>
+  
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("MBnx5KMN6Xa38rtMNPzvIQ32-gzGzoHsz", "FKAkDtnA4nrgcfOo5c8Xnwjh");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
