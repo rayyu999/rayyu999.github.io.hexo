@@ -6903,4 +6903,31 @@ c_i = s + x_i - y_i + 3\sum^{\ell -1}_{j=i+1}(x_i \oplus y_i)</script><p>显然�
         <tag>链表</tag>
       </tags>
   </entry>
+  <entry>
+    <title>3. 无重复字符的最长子串</title>
+    <url>/2020/11/18/3-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/</url>
+    <content><![CDATA[<p><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/</a></p>
+<a id="more"></a>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。</p>
+<p>示例 1:</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: "abcabcbb"</span></span><br><span class="line"><span class="section">输出: 3 </span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。</span></span><br></pre></td></tr></table></figure>
+<p>示例 2:</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: "bbbbb"</span></span><br><span class="line"><span class="section">输出: 1</span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。</span></span><br></pre></td></tr></table></figure>
+<p>示例 3:</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: "pwwkew"</span></span><br><span class="line"><span class="section">输出: 3</span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。</span></span><br><span class="line">     请注意，你的答案必须是 子串 的长度，<span class="string">"pwke"</span> 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>滑动窗口，用两个指针 <code>left</code> 和 <code>right</code> 分别指向当前窗口的起始字符和终止字符，用一个哈希表 <code>map</code> 存储窗口中已经出现的元素在 <code>s</code> 中的索引。<code>right</code> 每次自增 1，每访问到一个新的元素 <code>s[right]</code> 则查看窗口中是否已经含有该元素，若有则先计算当前窗口的长度，更新 <code>ans</code> 的值。然后将 <code>left</code> 指向窗口中该重复元素的下一个元素。</p>
+<p>要注意</p>
+<ol>
+<li>在哈希表中查找时要确保返回的索引值在窗口范围内；</li>
+<li>有可能整个字符串都没有重复元素，因此最后返回结果的时候还要计算一次当前窗口的长度。</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (right &lt; s.length()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(s.charAt(right)) &amp;&amp; map.get(s.charAt(right)) &gt;= left) &#123;</span><br><span class="line">                <span class="comment">// 当前访问的元素在窗口内有重复时才更新答案，并移动左指针</span></span><br><span class="line">                <span class="keyword">int</span> len = right - left;</span><br><span class="line">                ans = len &gt; ans ? len : ans;</span><br><span class="line">                left = map.get(s.charAt(right)) + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(s.charAt(right), right++);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.max(right - left, ans);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
 </search>
