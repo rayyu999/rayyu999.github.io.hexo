@@ -55,7 +55,7 @@ MyBatis Generator工具用于将数据库中的表反转成对应的 Domain、XM
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
         
-		<!-- 实体类生成配置 -->
+        <!-- 实体类生成配置 -->
         <javaModelGenerator targetPackage="cn.yuyingwai.crud.bean" targetProject=".\src\main\java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
