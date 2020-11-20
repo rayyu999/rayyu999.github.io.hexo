@@ -6881,6 +6881,7 @@ c_i = s + x_i - y_i + 3\sum^{\ell -1}_{j=i+1}(x_i \oplus y_i)</script><p>显然�
       </categories>
       <tags>
         <tag>数组</tag>
+        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -6901,6 +6902,7 @@ c_i = s + x_i - y_i + 3\sum^{\ell -1}_{j=i+1}(x_i \oplus y_i)</script><p>显然�
       </categories>
       <tags>
         <tag>链表</tag>
+        <tag>medium</tag>
       </tags>
   </entry>
   <entry>
@@ -6928,6 +6930,40 @@ c_i = s + x_i - y_i + 3\sum^{\ell -1}_{j=i+1}(x_i \oplus y_i)</script><p>显然�
       </categories>
       <tags>
         <tag>字符串</tag>
+        <tag>medium</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>4. 寻找两个正序数组的中位数</title>
+    <url>/2020/11/20/4-%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
+    <content><![CDATA[<p><a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/median-of-two-sorted-arrays/</a></p>
+<a id="more"></a>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定两个大小为 m 和 n 的正序（从小到大）数组 <code>nums1</code> 和 <code>nums2</code>。</p>
+<p>请你找出这两个正序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。</p>
+<p>你可以假设 <code>nums1</code> 和 <code>nums2</code> 不会同时为空。</p>
+<p>示例 1:</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">nums1 = [<span class="number">1</span>, <span class="number">3</span>]</span><br><span class="line">nums2 = [<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">则中位数是 <span class="number">2.0</span></span><br></pre></td></tr></table></figure>
+<p>示例 2:</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">nums1 = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">nums2 = [<span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"></span><br><span class="line">则中位数是 (<span class="number">2</span> + <span class="number">3</span>)/<span class="number">2</span> = <span class="number">2.5</span></span><br></pre></td></tr></table></figure>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>题目要求时间复杂度为 O(log(m + n))，知道要用二分查找，但是具体方法想不出来，看了一篇题解中的<a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-2/" target="_blank" rel="noopener">找第 k 小的数的方法</a>。</p>
+<p>利用二分查找每次剔除一半的元素，主要思想是：</p>
+<ul>
+<li>比较两个数组的第 <code>k/2</code> 个数字（向下取整），哪个小则可以直接排除那个数组的前 <code>k/2</code> 个数字（因为两个数组都是有序的）；</li>
+<li>上一步已经排除了 <code>k/2</code> 个数（或整个数组剩余的元素），因此 <code>k = k - k/2</code>（或 <code>k = k - len</code>，其中 <code>len</code> 为对应数组剩余元素的个数），再次比较两个数组（其中一个数组为排除了 <code>k/2</code> 个数后的新数组）的第 <code>k/2</code> 个数字，直到 <code>k = 1</code> 或其中一个数组中的元素全部都被排除：<ol>
+<li>若 <code>k = 1</code> 则返回当前两个数组的第一个元素中较小的那一个；</li>
+<li>若其中一个数组被全部排除，则返回另一个数组中的第 <code>k</code> 个元素。</li>
+</ol>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums1.length, m = nums2.length;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 合并数组长度为奇数和偶数的情况</span></span><br><span class="line">        <span class="keyword">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (findKthSmall(left, nums1, nums2, <span class="number">0</span>, n-<span class="number">1</span>, <span class="number">0</span>, m-<span class="number">1</span>) + findKthSmall(right, nums1, nums2, <span class="number">0</span>, n-<span class="number">1</span>, <span class="number">0</span>, m-<span class="number">1</span>)) * <span class="number">0.5</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKthSmall</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2, <span class="keyword">int</span> s1, <span class="keyword">int</span> e1, <span class="keyword">int</span> s2, <span class="keyword">int</span> e2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len1 = e1 - s1 + <span class="number">1</span>, len2 = e2 - s2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 始终令数组1的长度小于数组2</span></span><br><span class="line">        <span class="keyword">if</span> (len1 &gt; len2) <span class="keyword">return</span> findKthSmall(k, nums2, nums1, s2, e2, s1, e1);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第一个数组已被全部排除，则直接输出数组2中的第k个元素</span></span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>) <span class="keyword">return</span> nums2[s2 + k - <span class="number">1</span>];</span><br><span class="line">        <span class="comment">// 若k为1，则对比两个数组的首元素，输出较小的元素</span></span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">1</span>) <span class="keyword">return</span> Math.min(nums1[s1], nums2[s2]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 比较两个数组的第k/2个元素（每次剔除k/2个元素），注意不要越界</span></span><br><span class="line">        <span class="keyword">int</span> m1 = s1 + Math.min(k/<span class="number">2</span>, len1) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> m2 = s2 + Math.min(k/<span class="number">2</span>, len2) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums1[m1] &gt; nums2[m2]) &#123;</span><br><span class="line">            <span class="comment">// 这种情况下数组2中的前k/2个元素都不可能为第k大的数，将其剔除</span></span><br><span class="line">            <span class="keyword">return</span> findKthSmall(k-Math.min(k/<span class="number">2</span>, len2), nums1, nums2, s1, e1, m2+<span class="number">1</span>, e2);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 反之数组1中的前k/2个元素都不可能为第k大的数，将其剔除</span></span><br><span class="line">            <span class="keyword">return</span> findKthSmall(k-Math.min(k/<span class="number">2</span>, len1), nums1, nums2, m1+<span class="number">1</span>, e1, s2, e2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+        <tag>二分查找</tag>
+        <tag>hard</tag>
       </tags>
   </entry>
 </search>
