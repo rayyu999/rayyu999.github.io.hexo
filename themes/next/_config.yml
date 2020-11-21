@@ -157,8 +157,8 @@ links_icon: link
 links_title: Links
 links_layout: block
 #links_layout: inline
-#links:
-  #Title: http://example.com/
+links:
+  Google: https://www.google.com/
 
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
@@ -232,7 +232,7 @@ auto_excerpt:
 post_meta:
   item_text: true
   created_at: true
-  updated_at: false
+  updated_at: true
   categories: true
 
 # Post wordcount display settings

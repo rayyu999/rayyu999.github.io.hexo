@@ -23,7 +23,7 @@ tags: [Mysql, Java]
 
 
 
-### mysql-connector-java与Java对应版本
+## mysql-connector-java与Java对应版本
 
 | **Connector/J version** | **JRE Supported**                | **JDK required for compiling source code** |
 | ----------------------- | -------------------------------- | ------------------------------------------ |
