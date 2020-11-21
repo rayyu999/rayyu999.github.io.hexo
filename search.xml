@@ -7066,4 +7066,29 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
         <tag>hard</tag>
       </tags>
   </entry>
+  <entry>
+    <title>5. 最长回文子串</title>
+    <url>/2020/11/21/5-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</url>
+    <content><![CDATA[<p><a href="https://leetcode-cn.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-palindromic-substring/</a></p>
+<a id="more"></a>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个字符串 <code>s</code>，找到 <code>s</code> 中最长的回文子串。你可以假设 <code>s</code> 的最大长度为 1000。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">输入: <span class="string">"babad"</span></span><br><span class="line">输出: <span class="string">"bab"</span></span><br><span class="line">注意: <span class="string">"aba"</span> 也是一个有效答案。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">输入: <span class="string">"cbbd"</span></span><br><span class="line">输出: <span class="string">"bb"</span></span><br></pre></td></tr></table></figure>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>动态规划，用 <code>dp[i][j]</code> 表示第 <code>i</code> 到第 <code>j</code> 个字符组成的子串是否是回文串。</p>
+<ul>
+<li>对于字符串中的第 <code>i</code> 和第 <code>j</code> 个字符，如果 <code>s[i] == s[j]</code> 且 <code>dp[i+1][j-1] == true</code>，那么可得 <code>dp[i][j] == true</code>，否则为 <code>false</code>；</li>
+<li>边界条件为 <code>dp[i][i] == true</code> 和 <code>dp[i][i+1] = (s[i] == s[i+1])</code>。</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length(), maxLen = <span class="number">0</span>, start = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">boolean</span>[][] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[n][n];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 枚举子串长度</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">0</span>; len &lt; n; ++len) &#123;</span><br><span class="line">            <span class="comment">// 枚举起始位置</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - len; ++i) &#123;</span><br><span class="line">                <span class="keyword">int</span> j = i + len;    <span class="comment">// 判断子串首尾字符是否相等</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">/* </span></span><br><span class="line"><span class="comment">                    当:</span></span><br><span class="line"><span class="comment">                    1. 子串只有单个字符</span></span><br><span class="line"><span class="comment">                    2. 子串首尾字符相同且子串只有两个字符</span></span><br><span class="line"><span class="comment">                    3. 子串首尾相同且撇除首尾字符后的子串依旧为回文串</span></span><br><span class="line"><span class="comment">                    时，当前子串也为回文串</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                <span class="keyword">if</span> (i == j || (s.charAt(i) == s.charAt(j) &amp;&amp; (len == <span class="number">1</span> || dp[i+<span class="number">1</span>][j-<span class="number">1</span>]))) &#123;</span><br><span class="line">                    dp[i][j] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="keyword">if</span> (len + <span class="number">1</span> &gt; maxLen) &#123;</span><br><span class="line">                        maxLen = len + <span class="number">1</span>;   <span class="comment">// 更新最长子串长度</span></span><br><span class="line">                        start = i;  <span class="comment">// 记录最长子串的起始下标</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxLen &gt; <span class="number">0</span> ? s.substring(start, start + maxLen) : <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>字符串</tag>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
 </search>
