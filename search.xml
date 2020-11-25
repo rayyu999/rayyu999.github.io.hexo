@@ -7151,4 +7151,41 @@ dp[i] = (dp[i], dp[i-1]+1)</script><p>最后 $dp$ 数组中的最后一个元素
         <tag>数学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Git 使用</title>
+    <url>/2020/11/25/Git-%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>Git是目前世界上最先进的分布式版本控制系统。</p>
+<a id="more"></a>
+<h2 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h2><p>版本库又名仓库，英文名<strong>repository</strong>，你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
+<p>创建一个版本库非常简单，首先，选择一个合适的地方，创建一个空目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir learngit</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> learngit</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">pwd</span></span></span><br><span class="line">Path</span><br><span class="line">----</span><br><span class="line">D:\Coding\Java\crud-demo</span><br></pre></td></tr></table></figure>
+<p>第二步，通过 <code>git init</code> 命令把这个目录变成Git可以管理的仓库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git init</span></span><br><span class="line">Initialized empty Git repository in D:/Coding/Java/crud-demo/.git/</span><br></pre></td></tr></table></figure>
+<h2 id="把文件添加到版本库"><a href="#把文件添加到版本库" class="headerlink" title="把文件添加到版本库"></a>把文件添加到版本库</h2><p>编写一个 <code>readme.md</code> 文件，放在版本库的目录下，然后通过两个步骤将文件放到仓库：</p>
+<p>第一步，用 <code>git add</code> 告诉Git，把文件添加到仓库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add readme.md</span></span><br></pre></td></tr></table></figure>
+<p>第二步，用命令 <code>git commit</code> 告诉Git，把文件提交到仓库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"wrote a readme file"</span></span></span><br><span class="line">[master (root-commit) 863006a] wrote a readme file</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"> create mode 100644 readme.md</span><br></pre></td></tr></table></figure>
+<p><code>-m</code> 后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。</p>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><h3 id="GitHub设置添加SSH"><a href="#GitHub设置添加SSH" class="headerlink" title="GitHub设置添加SSH"></a>GitHub设置添加SSH</h3><p>由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置：</p>
+<h4 id="创建SSH-Key"><a href="#创建SSH-Key" class="headerlink" title="创建SSH Key"></a>创建SSH Key</h4><p>在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -t rsa -C <span class="string">"youremail@example.com"</span></span></span><br></pre></td></tr></table></figure>
+<p>把邮件地址换成自己的邮件地址，然后一路回车，使用默认值即可。</p>
+<p>如果一切顺利的话，可以在用户主目录里找到 <code>.ssh</code> 目录，里面有 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件，这两个就是SSH Key的秘钥对，<code>id_rsa</code> 是私钥，不能泄露出去，<code>id_rsa.pub</code> 是公钥，可以放心地告诉任何人。</p>
+<h4 id="在GitHub设置中添加"><a href="#在GitHub设置中添加" class="headerlink" title="在GitHub设置中添加"></a>在GitHub设置中添加</h4><p>登陆GitHub，打开”Account settings”，”SSH Keys”页面。然后，点”Add SSH Key”，填上任意Title，在Key文本框里粘贴 <code>id_rsa.pub</code> 文件的内容。最后点击 “Add Key”即可。</p>
+<h3 id="添加远程库"><a href="#添加远程库" class="headerlink" title="添加远程库"></a>添加远程库</h3><p>首先在GitHub创建一个Git仓库，然后将本地的仓库与远程仓库关联：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git remote add origin git@github.com:yourgithubname/yourreponame.git</span></span><br></pre></td></tr></table></figure>
+<p>把上面的 <code>yourgithubname</code> 替换成你自己的GitHub账户名，把 <code>yourreponame</code> 换成你的仓库名。</p>
+<p>下一步，就可以把本地库的所有内容推送到远程库上：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin master</span></span><br><span class="line">Enumerating objects: 3, done.</span><br><span class="line">Counting objects: 100% (3/3), done.</span><br><span class="line">Writing objects: 100% (3/3), 224 bytes | 224.00 KiB/s, done.</span><br><span class="line">Total 3 (delta 0), reused 0 (delta 0), pack-reused 0</span><br><span class="line">To github.com:rayyu999/staff-crud-demo.git</span><br><span class="line"> * [new branch]      master -&gt; master</span><br><span class="line">Branch 'master' set up to track remote branch 'master' from 'origin'.</span><br></pre></td></tr></table></figure>
+<p>把本地库的内容推送到远程，用 <code>git push</code> 命令，实际上是把当前分支 <code>master</code> 推送到远程。</p>
+<p>由于远程库是空的，我们第一次推送 <code>master</code> 分支时，加上了 <code>-u</code> 参数，Git不但会把本地的 <code>master</code> 分支内容推送的远程新的 <code>master</code> 分支，还会把本地的 <code>master</code> 分支和远程的 <code>master</code> 分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
+]]></content>
+      <categories>
+        <category>Env</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
 </search>
