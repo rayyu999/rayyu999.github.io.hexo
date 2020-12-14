@@ -1773,21 +1773,6 @@ public class PageQueryUtil extends LinkedHashMap<String, Object> {
 ##### 控制层代码
 
 ```java
-package cn.yuyingwai.springbootblog.controller.admin;
-
-import cn.yuyingwai.springbootblog.entity.BlogCategory;
-import cn.yuyingwai.springbootblog.service.CategoryService;
-import cn.yuyingwai.springbootblog.util.Result;
-import cn.yuyingwai.springbootblog.util.ResultGenerator;
-import cn.yuyingwai.springbootblog.util.PageQueryUtil
-import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-
 @Controller
 @RequestMapping("/admin")
 public class CategoryController {
@@ -1816,6 +1801,54 @@ public class CategoryController {
         return ResultGenerator.genSuccessResult(categoryService.getBlogCategoryPage(pageUtil));
     }
 
+}
+```
+
+##### 业务层代码
+
+```java
+@Service
+public class CategoryServiceImpl implements CategoryService {
+
+    @Autowired
+    private BlogCategoryDao blogCategoryDao;
+
+    /**
+     * 利用PageQueryUtil封装的前端参数，获得当前页的分页数据，
+     * 并将其封装为PageResult，方便前端的JqGrid使用
+     * @param pageUtil
+     * @return
+     */
+    @Override
+    public PageResult getBlogCategoryPage(PageQueryUtil pageUtil) {
+        List<BlogCategory> categoryList = blogCategoryDao.findCategoryList(pageUtil);
+        int total = blogCategoryDao.getTotalCategories(pageUtil);
+        PageResult pageResult = new PageResult(categoryList, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+    
+   /**
+     * 获得总分类数
+     * @return
+     */
+    @Override
+    public int getTotalCategories() {
+        return blogCategoryDao.getTotalCategories(null);
+    }
+}
+```
+
+
+
+#### 添加分类接口
+
+添加接口负责接收前端的 POST 请求并处理其中的参数，接收的参数为 categoryName 字段和 categoryIcon 字段，categoryName 为分类名称，categoryIcon 字段为分类的图标字段。
+
+##### 控制层代码
+
+在 CategoryController.java 中添加如下方法：
+
+```java
     /**
      * 分类添加
      * @param categoryName
@@ -1838,7 +1871,92 @@ public class CategoryController {
             return ResultGenerator.genFailResult("分类名称重复");
         }
     }
+```
 
+##### 业务层代码
+
+在 CategoryServiceImpl.java 中添加如下方法：
+
+```java
+    /**
+     * 给定类名和类图标保存分类
+     * @param categoryName
+     * @param categoryIcon
+     * @return
+     */
+    @Override
+    public Boolean saveCategory(String categoryName, String categoryIcon) {
+        BlogCategory temp = blogCategoryDao.selectByCategoryName(categoryName);
+        if (temp == null) {
+            BlogCategory blogCategory = new BlogCategory();
+            blogCategory.setCategoryName(categoryName);
+            blogCategory.setCategoryIcon(categoryIcon);
+            return blogCategoryDao.insertSelective(blogCategory) > 0;
+        }
+        return false;
+    }
+```
+
+添加接口中，首先会对参数进行校验，之后交给业务层代码进行操作，在 `saveCategory()` 方法中，首先会根据名称查询是否已经存在该分类，之后才会进行数据封装并进行数据库 insert 操作。
+
+
+
+#### 删除分类接口
+
+删除接口负责接收前端的分类删除请求，处理前端传输过来的数据后，将这些记录从数据库中删除，这里的“删除”功能并不是真正意义上的删除，而是逻辑删除，将接受的参数设置为一个数组，可以同时删除多条记录，只需要在前端将用户选择的记录 id 封装好再传参到后端即可。
+
+##### 控制层代码
+
+```java
+    /**
+     * 分类删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/categories/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (categoryService.deleteBatch(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
+    }
+```
+
+##### 业务层代码
+
+```java
+    /**
+     * 根据id删除分类数据
+     * @param ids
+     * @return
+     */
+    @Override
+    @Transactional
+    public Boolean deleteBatch(Integer[] ids) {
+        if (ids.length < 1) {
+            return false;
+        }
+        //删除分类数据
+        return blogCategoryDao.deleteBatch(ids) > 0;
+    }
+```
+
+接口的请求路径为 /categories/delete，并使用 `@RequestBody` 将前端传过来的参数封装为 id 数组，参数验证通过后则调用 `deleteBatch()` 批量删除方法进行数据库操作，否则将向前端返回错误信息。
+
+
+
+#### 其它
+
+还有根据 id 获取详情的接口，路径为 categories/info/{id}，请求方法为 GET；分类修改接口，路径为 categories/update，请求方法为 POST。
+
+##### 控制层代码
+
+```java
     /**
      * 分类修改
      * @param categoryId
@@ -1881,89 +1999,11 @@ public class CategoryController {
         BlogCategory category = categoryService.selectById(id);
         return ResultGenerator.genSuccessResult(category);
     }
-
-    /**
-     * 分类删除
-     * @param ids
-     * @return
-     */
-    @RequestMapping(value = "/categories/delete", method = RequestMethod.POST)
-    @ResponseBody
-    public Result delete(@RequestBody Integer[] ids) {
-        if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
-        if (categoryService.deleteBatch(ids)) {
-            return ResultGenerator.genSuccessResult();
-        } else {
-            return ResultGenerator.genFailResult("删除失败");
-        }
-    }
-
-}
 ```
 
 ##### 业务层代码
 
 ```java
-package cn.yuyingwai.springbootblog.service.impl;
-
-import cn.yuyingwai.springbootblog.dao.BlogCategoryDao;
-import cn.yuyingwai.springbootblog.entity.BlogCategory;
-import cn.yuyingwai.springbootblog.service.CategoryService;
-import cn.yuyingwai.springbootblog.util.PageQueryUtil;
-import cn.yuyingwai.springbootblog.util.PageResult;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-public class CategoryServiceImpl implements CategoryService {
-
-    @Autowired
-    private BlogCategoryDao blogCategoryDao;
-
-    /**
-     * 利用PageQueryUtil封装的前端参数，获得当前页的分页数据，
-     * 并将其封装为PageResult，方便前端的JqGrid使用
-     * @param pageUtil
-     * @return
-     */
-    @Override
-    public PageResult getBlogCategoryPage(PageQueryUtil pageUtil) {
-        List<BlogCategory> categoryList = blogCategoryDao.findCategoryList(pageUtil);
-        int total = blogCategoryDao.getTotalCategories(pageUtil);
-        PageResult pageResult = new PageResult(categoryList, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
-    }
-
-    /**
-     * 获得总分类数
-     * @return
-     */
-    @Override
-    public int getTotalCategories() {
-        return blogCategoryDao.getTotalCategories(null);
-    }
-
-    /**
-     * 给定类名和类图标保存分类
-     * @param categoryName
-     * @param categoryIcon
-     * @return
-     */
-    @Override
-    public Boolean saveCategory(String categoryName, String categoryIcon) {
-        BlogCategory temp = blogCategoryDao.selectByCategoryName(categoryName);
-        if (temp == null) {
-            BlogCategory blogCategory = new BlogCategory();
-            blogCategory.setCategoryName(categoryName);
-            blogCategory.setCategoryIcon(categoryIcon);
-            return blogCategoryDao.insertSelective(blogCategory) > 0;
-        }
-        return false;
-    }
-
     /**
      * 根据id，给定类名和类图标更新类别信息
      * @param categoryId
@@ -1983,31 +2023,2259 @@ public class CategoryServiceImpl implements CategoryService {
         return false;
     }
 
-    /**
-     * 根据id删除分类数据
-     * @param ids
-     * @return
-     */
-    @Override
-    @Transactional
-    public Boolean deleteBatch(Integer[] ids) {
-        if (ids.length < 1) {
-            return false;
-        }
-        //删除分类数据
-        return blogCategoryDao.deleteBatch(ids) > 0;
-    }
-
-    @Override
-    public List<BlogCategory> getAllCategories() {
-        return blogCategoryDao.findCategoryList(null);
-    }
-
     @Override
     public BlogCategory selectById(Integer id) {
         return blogCategoryDao.selectByPrimaryKey(id);
+    }
+```
+
+
+
+### 前端页面实现
+
+#### category.html
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+</header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains 图标content -->
+    <div class="content-wrapper">
+        <!-- Content Header (图标header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">分类管理</h3>
+                    </div> <!-- /.card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <button class="btn btn-info" onclick="categoryAdd()"><i
+                                    class="fa fa-plus"></i>&nbsp;新增
+                            </button>
+                            <button class="btn btn-info" onclick="categoryEdit()"><i
+                                    class="fa fa-pencil-square-o"></i>&nbsp;修改
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteCagegory()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;删除
+                            </button>
+                        </div>
+                        <br>
+                        <table id="jqGrid" class="table table-bordered">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div><!-- /.card-body -->
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+        <div class="content">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title" id="categoryModalLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="categoryForm" onsubmit="return false;">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+                                <input type="hidden" class="form-control" id="categoryId" name="categoryId">
+                                <div class="form-group">
+                                    <label for="categoryName" class="control-label">分类名称:</label>
+                                    <input type="text" class="form-control" id="categoryName" name="categoryName"
+                                           placeholder="请输入分类名称" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="categoryIcon" class="control-label">分类图标:</label>
+                                    <input type="hidden" class="form-control" id="categoryIcon" name="categoryIcon">
+                                    <div class="col-sm-4">
+                                        <img id="categoryIconImg" src="/admin/dist/img/img-upload.png"
+                                             style="height: 64px;width: 64px;">
+                                        <button class="btn btn-secondary" style="margin-top: 5px;margin-bottom: 5px;"
+                                                id="categoryIconButton"><i
+                                                class="fa fa-random"></i>&nbsp;图标切换
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:src="@{/admin/dist/js/category.js}"></script>
+</body>
+</html>
+```
+
+#### 功能按钮
+
+分类管理模块也设计了常用的几个功能：分类信息增加、分类信息编辑、分类信息删除，因此在页面中添加对应的功能按钮以及触发事件，代码如下：
+
+```html
+<div class="grid-btn">
+  <button class="btn btn-info" onclick="categoryAdd()">
+    <i class="fa fa-plus"></i>&nbsp;新增
+  </button>
+  <button class="btn btn-info" onclick="categoryEdit()">
+    <i class="fa fa-pencil-square-o"></i>&nbsp;修改
+  </button>
+  <button class="btn btn-danger" onclick="deleteCagegory()">
+    <i class="fa fa-trash-o"></i>&nbsp;删除
+  </button>
+</div>
+```
+
+分别是添加按钮，对应的触发事件是 `categoryAdd()` 方法，修改按钮，对应的触发事件是 `categoryEdit()` 方法，删除按钮，对应的触发事件是 `deleteCagegory()` 方法。
+
+#### 分页信息展示区域
+
+页面中已经引入 JqGrid 的相关静态资源文件，需要在页面中展示分页数据的区域增加如下代码：
+
+```html
+<table id="jqGrid" class="table table-bordered"></table>
+<div id="jqGridPager"></div>
+```
+
+此时只是静态效果展示，并没有与后端进行数据交互，接下来将结合 Ajax 和后端接口实现具体的功能。
+
+
+
+### 分页模块前端功能实现
+
+#### 分页功能
+
+在 resources/static/admin/dist/js 目录下新增 category.js 文件，并添加如下代码：
+
+```javascript
+$(function () {
+  $('#jqGrid').jqGrid({
+    url: '/admin/categories/list',
+    datatype: 'json',
+    colModel: [
+      {
+        label: 'id',
+        name: 'categoryId',
+        index: 'categoryId',
+        width: 50,
+        key: true,
+        hidden: true,
+      },
+      {
+        label: '分类名称',
+        name: 'categoryName',
+        index: 'categoryName',
+        width: 240,
+      },
+      {
+        label: '分类图标',
+        name: 'categoryIcon',
+        index: 'categoryIcon',
+        width: 120,
+        formatter: imgFormatter,
+      },
+      {
+        label: '添加时间',
+        name: 'createTime',
+        index: 'createTime',
+        width: 120,
+      },
+    ],
+    height: 560,
+    rowNum: 10,
+    rowList: [10, 20, 50],
+    styleUI: 'Bootstrap',
+    loadtext: '信息读取中...',
+    rownumbers: false,
+    rownumWidth: 20,
+    autowidth: true,
+    multiselect: true,
+    pager: '#jqGridPager',
+    jsonReader: {
+      root: 'data.list',
+      page: 'data.currPage',
+      total: 'data.totalPage',
+      records: 'data.totalCount',
+    },
+    prmNames: {
+      page: 'page',
+      rows: 'limit',
+      order: 'order',
+    },
+    gridComplete: function () {
+      //隐藏grid底部滚动条
+      $('#jqGrid').closest('.ui-jqgrid-bdiv').css({ 'overflow-x': 'hidden' });
+    },
+  });
+
+  $(window).resize(function () {
+    $('#jqGrid').setGridWidth($('.card-body').width());
+  });
+});
+```
+
+以上代码的主要功能为分页数据展示、字段格式化 jqGrid DOM 宽度的自适应，在页面加载时，调用 JqGrid 的初始化方法，将页面中 id 为 jqGrid 的 DOM 渲染为分页表格，并向后端发送请求，之后按照后端返回的 json 数据填充表格以及表格下方的分页按钮。
+
+#### 按钮事件及 Modal 框实现
+
+添加和修改两个按钮分别绑定了触发事件，需要在 category.js 文件中新增 `categoryAdd()` 方法和 `categoryEdit()` 方法，两个方法中的实现为打开信息编辑框，下面实现信息编辑框和两个触发事件，代码如下：
+
+```html
+<div class="content">
+  <!-- 模态框（Modal） -->
+  <div
+    class="modal fade"
+    id="categoryModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="categoryModalLabel"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h6 class="modal-title" id="categoryModalLabel">Modal</h6>
+        </div>
+        <div class="modal-body">
+          <form id="categoryForm" onsubmit="return false;">
+            <div class="form-group">
+              <div
+                class="alert alert-danger"
+                id="edit-error-msg"
+                style="display: none;"
+              >
+                错误信息展示栏。
+              </div>
+            </div>
+            <input
+              type="hidden"
+              class="form-control"
+              id="categoryId"
+              name="categoryId"
+            />
+            <div class="form-group">
+              <label for="categoryName" class="control-label">分类名称:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="categoryName"
+                name="categoryName"
+                placeholder="请输入分类名称"
+                required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label for="categoryIcon" class="control-label">分类图标:</label>
+              <input
+                type="hidden"
+                class="form-control"
+                id="categoryIcon"
+                name="categoryIcon"
+              />
+              <div class="col-sm-4">
+                <img
+                  id="categoryIconImg"
+                  src="/admin/dist/img/img-upload.png"
+                  style="height: 64px;width: 64px;"
+                />
+                <button
+                  class="btn btn-secondary"
+                  style="margin-top: 5px;margin-bottom: 5px;"
+                  id="categoryIconButton"
+                >
+                  <i class="fa fa-random"></i>&nbsp;图标切换
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            取消
+          </button>
+          <button type="button" class="btn btn-primary" id="saveButton">
+            确认
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+`categoryAdd()` 方法和 `categoryEdit()` 方法实现如下：
+
+```javascript
+function categoryAdd() {
+    reset();
+    $('.modal-title').html('分类添加');
+    $('#categoryModal').modal('show');
+}
+
+function categoryEdit() {
+    reset();
+    var id = getSelectedRow();
+    if (id == null) {
+        return;
+    }
+    $('.modal-title').html('分类编辑');
+    $('#categoryModal').modal('show');
+    //请求数据
+    $.get("/admin/categories/info/" + id, function (r) {
+        if (r.resultCode == 200 && r.data != null) {
+            //填充数据至modal
+            $("#categoryIconImg").attr("src", r.data.categoryIcon);
+            $("#categoryIconImg").attr("style", "width:64px ;height: 64px;display:block;");
+            $("#categoryIcon").val(r.data.categoryIcon);
+            $("#categoryName").val(r.data.categoryName);
+        }
+    });
+    $("#categoryId").val(id);
+}
+```
+
+添加方法仅仅是将 Modal 框显示，修改功能则多了一个步骤，需要将选择的记录回显到编辑框中以供修改，因此需要请求 categories/info/{id} 详情接口获取被修改的分类数据信息。
+
+#### 添加功能和编辑功能
+
+在信息录入完成后可以点击信息编辑框下方的**确认**按钮，此时会进行数据的交互，js 实现代码如下：
+
+```javascript
+//绑定modal上的保存按钮
+$('#saveButton').click(function () {
+    var categoryName = $("#categoryName").val();
+    if (!validCN_ENString2_18(categoryName)) {
+        $('#edit-error-msg').css("display", "block");
+        $('#edit-error-msg').html("请输入符合规范的分类名称！");
+    } else {
+        var params = $("#categoryForm").serialize();
+        var url = '/admin/categories/save';
+        var id = getSelectedRowWithoutAlert();
+        if (id != null) {
+            url = '/admin/categories/update';
+        }
+        $.ajax({
+            type: 'POST',//方法类型
+            url: url,
+            data: params,
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    $('#categoryModal').modal('hide');
+                    swal("保存成功", {
+                        icon: "success",
+                    });
+                    reload();
+                }
+                else {
+                    $('#categoryModal').modal('hide');
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+                ;
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+});
+```
+
+由于传参和后续处理逻辑类似，为了避免太多重复代码因此将两个方法写在一起了，通过 id 是否大于 0 来确定是修改操作还是添加操作，方法步骤如下：
+
+1. 前端对用户输入的数据进行简单的正则验证
+2. 封装数据
+3. 向对应的后端接口发送 Ajax 请求
+4. 请求成功后提醒用户请求成功并隐藏当前的信息编辑框，同时刷新列表数据
+5. 请求失败则提醒对应的错误信息
+
+`getSelectedRowWithoutAlert()` 方法（在 `public.js` 中）：
+
+```javascript
+/**
+ * 获取jqGrid选中的一条记录(不出现弹框)
+ * @returns {*}
+ */
+function getSelectedRowWithoutAlert() {
+    var grid = $("#jqGrid");
+    var rowKey = grid.getGridParam("selrow");
+    if (!rowKey) {
+        return;
+    }
+    var selectedIDs = grid.getGridParam("selarrrow");
+    if (selectedIDs.length > 1) {
+        return;
+    }
+    return selectedIDs[0];
+}
+```
+
+#### 删除功能
+
+删除按钮的点击触发事件为 `deleteCagegory()`，在 category.js 文件中新增如下代码：
+
+```javascript
+function deleteCagegory() {
+  var ids = getSelectedRows();
+  if (ids == null) {
+    return;
+  }
+  swal({
+    title: '确认弹框',
+    text: '确认要删除数据吗?',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true,
+  }).then((flag) => {
+    if (flag) {
+      $.ajax({
+        type: 'POST',
+        url: '/admin/categories/delete',
+        contentType: 'application/json',
+        data: JSON.stringify(ids),
+        success: function (r) {
+          if (r.resultCode == 200) {
+            swal('删除成功', {
+              icon: 'success',
+            });
+            $('#jqGrid').trigger('reloadGrid');
+          } else {
+            swal(r.message, {
+              icon: 'error',
+            });
+          }
+        },
+      });
+    }
+  });
+}
+```
+
+`getSelectedRows()` 方法（`public.js`）：
+
+```javascript
+/**
+ * 获取jqGrid选中的多条记录
+ * @returns {*}
+ */
+function getSelectedRows() {
+    var grid = $("#jqGrid");
+    var rowKey = grid.getGridParam("selrow");
+    if (!rowKey) {
+        swal("请选择一条记录", {
+            icon: "warning",
+        });
+        return;
+    }
+    return grid.getGridParam("selarrrow");
+}
+```
+
+获取用户在 jqgrid 表格中选择的需要删除的所有记录的 id，之后将参数封装并向后端发送 Ajax 请求，请求地址为 categories/delete。
+
+
+
+## 侧边栏抽取
+
+sidebar.html 这个模板文件是抽取出来的左侧导航栏文件，由于每个页面都需要加上侧边导航栏的代码，为了精简代码就将这部分代码提取出来作为公共代码，代码简化的同时，也方便维护和修改，代码如下：
+
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<aside th:fragment="sidebar-fragment(path)" class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a th:href="@{/admin/index}" class="brand-link">
+        <img th:src="@{/admin/dist/img/logo.png}" alt="ssm-cluster Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">my blog</span>
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img th:src="@{/admin/dist/img/avatar5.png}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block" th:text="${session.loginUser}"></a>
+            </div>
+        </div>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-header">Dashboard</li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/index}" th:class="${path}=='index'?'nav-link active':'nav-link'">
+                        <i class="nav-icon fa fa-dashboard"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">管理模块</li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/categories}" th:class="${path}=='categories'?'nav-link active':'nav-link'">
+                        <i class="fa fa-bookmark nav-icon" aria-hidden="true"></i>
+                        <p>
+                            分类管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/tags}" th:class="${path}=='tags'?'nav-link active':'nav-link'">
+                        <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
+                        <p>
+                            标签管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">系统管理</li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/profile}"
+                       th:class="${path}=='profile'?'nav-link active':'nav-link'">
+                        <i class="fa fa-user-secret nav-icon"></i>
+                        <p>修改密码</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/logout}" class="nav-link">
+                        <i class="fa fa-sign-out nav-icon"></i>
+                        <p>安全退出</p>
+                    </a>
+                </li>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+</html>
+```
+
+接下来解释一下具体的实现逻辑，首先，以上这部分代码如果不进行抽取的话，在添加其他模块的时候需要在每一个模块的页面代码中添加一遍，但是基本上所有的代码都是重复的，只有一处不同，那就是导航栏中当前模块的选中状态，比如在分类管理页面中，左侧导航栏中的“分类管理”即为选中状态，其他页面与此相同。
+
+这里的实现方式是通过添加一个 path 变量来控制当前导航栏中的选中状态，在模板文件中的 Thymeleaf 判断语句中通过 path 字段来确定是哪个功能模块，并对应的将左侧导航栏上当前模块的 css 样式给修改掉，判断语句如下：
+
+```html
+th:class="${path}=='categories'?'nav-link active':'nav-link'"
+```
+
+如果当前的 path 字段值为 'categories'，那么“分类管理”这个选项的 css 样式就修改为选中状态，如果当前的 path 字段值为 'tags'，那么“标签管理”这个选项的 css 样式就修改为选中状态，其他模块依次类推，path 字段的值是在哪里进行赋值的呢？答案是 admin 包下的 Controller 类中，在进行页面跳转时，会分别将对应的 path 字段进行赋值，代码如下：
+
+- TagController：
+
+```java
+    @GetMapping("/tags")
+    public String tagPage(HttpServletRequest request) {
+        request.setAttribute("path", "tags");
+        return "admin/tag";
+    }
+```
+
+- CategoryController：
+
+```java
+    @GetMapping("/categories")
+    public String categoryPage(HttpServletRequest request) {
+        request.setAttribute("path", "categories");
+        return "admin/category";
+    }
+```
+
+通过这种方式，以后如果需要在系统中新增一个模块，就可以对应的增加一个导航栏按钮在 sidebar.html 文件中，并在后端的控制器方法中赋值对应的 path 字段即可，比如博客管理、配置管理等之后的功能模块。
+
+
+
+## 标签管理模块
+
+### 标签模块简介
+
+标签是一种更为灵活、更有趣的分类方式，在书写博客时可以为每篇文章添加一个或多个标签，在博客系统中，文章的标签设计被广泛应用，我们可以看到大部分的博客网站中都会有标签设计，因此，在设计 personal-blog 这个项目时，也将标签运用了进来。
+
+标签最明显的作用有如下两点：
+
+1. 传统意义上分类的作用，类似分类名称
+
+2. 对文章内容进行一定程度的描述，类似于关键词
+
+虽然与分类设计类似，但是标签和分类还有一些细区别：
+
+- 同一篇文章标签可以用多个，但通常只能属于一个分类
+- 标签一般是在写作完成后，根据文章内容自行添加的内容
+- 标签可以把文章中重点词语提炼出来，有关键词的意义，但是分类没有
+- 标签通常更为主观，其内容相较于分类来说更加具体一些
+
+与分类的功能和设计思想类似，但是又有一定的不同，标签可以算是分类的细化版本，同时，一篇博客的分类最好只有一个，但是在设计的时候，一篇博客的标签是可以有多个的，标签设计的介绍就到这里，接下来是功能开发的讲解。
+
+
+
+### 持久层相关
+
+#### 标签与文章的关系
+
+一篇文章可以有多个标签字段，一个标签字段也可以被标注在多个文章中，这个情况与分类设计是有一些差别的，标签实体与文章实体的关系是多对多的关系，因此在表结构设计时不仅仅需要标签实体和文章实体的字段映射，还需要存储二者之间的关系数据，本系统采用的方式是新增一张关系表来维护二者多对多的关联关系。
+
+#### 表结构设计
+
+标签表以及标签文章关系表的 SQL 设计如下：
+
+```sql
+USE `my_blog_db`;
+
+DROP TABLE IF EXISTS `tb_blog_tag`;
+
+CREATE TABLE `tb_blog_tag` (
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标签表主键id',
+  `tag_name` varchar(100) NOT NULL COMMENT '标签名称',
+  `is_deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除 0=否 1=是',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tb_blog_tag_relation`;
+
+CREATE TABLE `tb_blog_tag_relation` (
+  `relation_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '关系表id',
+  `blog_id` bigint(20) NOT NULL COMMENT '博客id',
+  `tag_id` int(11) NOT NULL COMMENT '标签id',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
+  PRIMARY KEY (`relation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
+在关系表中有一个 blog_id 字段，是文章表的主键 id，这张表存储的就是标签记录对应的文章记录，以多对多的方式进行记录的，把表结构导入到数据库中即可；另外标签表以及关系表的大部分的实现逻辑是在后续管理模块中进行调用和实现的。
+
+#### BlogTag 实体类
+
+```java
+package cn.yuyingwai.springbootblog.entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class BlogTag {
+
+    private Integer tagId;
+
+    private String tagName;
+
+    private Byte isDeleted;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", tagId=").append(tagId);
+        sb.append(", tagName=").append(tagName);
+        sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", createTime=").append(createTime);
+        sb.append("]");
+        return sb.toString();
     }
 
 }
 ```
 
+#### BlogTagRelation 实体类
+
+```java
+package cn.yuyingwai.springbootblog.entity;
+
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class BlogTagRelation {
+
+    private Long relationId;
+
+    private Long blogId;
+
+    private Integer tagId;
+
+    private Date createTime;
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", relationId=").append(relationId);
+        sb.append(", blogId=").append(blogId);
+        sb.append(", tagId=").append(tagId);
+        sb.append(", createTime=").append(createTime);
+        sb.append("]");
+        return sb.toString();
+    }
+
+}
+```
+
+#### BlogTagDao.java
+
+```java
+package cn.yuyingwai.springbootblog.dao;
+
+import cn.yuyingwai.springbootblog.entity.BlogTag;
+import cn.yuyingwai.springbootblog.util.PageQueryUtil;
+
+import java.util.List;
+
+public interface BlogTagDao {
+
+    int deleteByPrimaryKey(Integer tagId);
+
+    int insert(BlogTag record);
+
+    int insertSelective(BlogTag record);
+
+    BlogTag selectByPrimaryKey(Integer tagId);
+
+    BlogTag selectByTagName(String tagName);
+
+    int updateByPrimaryKeySelective(BlogTag record);
+
+    int updateByPrimaryKey(BlogTag record);
+
+    List<BlogTag> findTagList(PageQueryUtil pageUtil);
+
+    int getTotalTags(PageQueryUtil pageUtil);
+
+    int deleteBatch(Integer[] ids);
+
+}
+```
+
+#### BlogTagMapper.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.yuyingwai.springbootblog.dao.BlogTagDao">
+    <resultMap id="BaseResultMap" type="cn.yuyingwai.springbootblog.entity.BlogTag">
+        <id column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tag_id, tag_name, is_deleted, create_time
+    </sql>
+
+    <select id="findTagList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_blog_tag
+        where is_deleted=0
+        order by tag_id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalTags" parameterType="Map" resultType="int">
+        select count(*)  from tb_blog_tag
+        where is_deleted=0
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_blog_tag
+        where tag_id = #{tagId,jdbcType=INTEGER} AND is_deleted = 0
+    </select>
+
+    <select id="selectByTagName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_blog_tag
+        where tag_name = #{tagName,jdbcType=VARCHAR} AND is_deleted = 0
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        update tb_blog_tag set is_deleted = 1
+        where tag_id = #{tagId,jdbcType=INTEGER}
+    </update>
+
+    <update id="deleteBatch">
+        update tb_blog_tag
+        set is_deleted=1 where tag_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <insert id="insert" parameterType="cn.yuyingwai.springbootblog.entity.BlogTag">
+        insert into tb_blog_tag (tag_id, tag_name, is_deleted,
+                                 create_time)
+        values (#{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{isDeleted,jdbcType=TINYINT},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.yuyingwai.springbootblog.entity.BlogTag">
+        insert into tb_blog_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.yuyingwai.springbootblog.entity.BlogTag">
+        update tb_blog_tag
+        <set>
+            <if test="tagName != null">
+                tag_name = #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where tag_id = #{tagId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.yuyingwai.springbootblog.entity.BlogTag">
+        update tb_blog_tag
+        set tag_name = #{tagName,jdbcType=VARCHAR},
+            is_deleted = #{isDeleted,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where tag_id = #{tagId,jdbcType=INTEGER}
+    </update>
+</mapper>
+```
+
+#### BlogTagRelationDao.java
+
+```java
+package cn.yuyingwai.springbootblog.dao;
+
+import cn.yuyingwai.springbootblog.entity.BlogTagRelation;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface BlogTagRelationDao {
+
+    int deleteByPrimaryKey(Long relationId);
+
+    int insert(BlogTagRelation record);
+
+    int insertSelective(BlogTagRelation record);
+
+    BlogTagRelation selectByPrimaryKey(Long relationId);
+
+    List<Long> selectDistinctTagIds(Integer[] tagIds);
+
+    int updateByPrimaryKeySelective(BlogTagRelation record);
+
+    int updateByPrimaryKey(BlogTagRelation record);
+    
+}
+```
+
+#### BlogTagRelationMapper.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.yuyingwai.springbootblog.dao.BlogTagRelationDao">
+    <resultMap id="BaseResultMap" type="cn.yuyingwai.springbootblog.entity.BlogTagRelation">
+        <id column="relation_id" jdbcType="BIGINT" property="relationId"/>
+        <result column="blog_id" jdbcType="BIGINT" property="blogId"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        relation_id, blog_id, tag_id, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_blog_tag_relation
+        where relation_id = #{relationId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectDistinctTagIds" resultType="java.lang.Long">
+        select
+        DISTINCT(tag_id)
+        from tb_blog_tag_relation
+        where tag_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from tb_blog_tag_relation
+        where relation_id = #{relationId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="cn.yuyingwai.springbootblog.entity.BlogTagRelation">
+        insert into tb_blog_tag_relation (relation_id, blog_id, tag_id,
+                                          create_time)
+        values (#{relationId,jdbcType=BIGINT}, #{blogId,jdbcType=BIGINT}, #{tagId,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.yuyingwai.springbootblog.entity.BlogTagRelation">
+        insert into tb_blog_tag_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="relationId != null">
+                relation_id,
+            </if>
+            <if test="blogId != null">
+                blog_id,
+            </if>
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="relationId != null">
+                #{relationId,jdbcType=BIGINT},
+            </if>
+            <if test="blogId != null">
+                #{blogId,jdbcType=BIGINT},
+            </if>
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.yuyingwai.springbootblog.entity.BlogTagRelation">
+        update tb_blog_tag_relation
+        <set>
+            <if test="blogId != null">
+                blog_id = #{blogId,jdbcType=BIGINT},
+            </if>
+            <if test="tagId != null">
+                tag_id = #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where relation_id = #{relationId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.yuyingwai.springbootblog.entity.BlogTagRelation">
+        update tb_blog_tag_relation
+        set blog_id = #{blogId,jdbcType=BIGINT},
+            tag_id = #{tagId,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where relation_id = #{relationId,jdbcType=BIGINT}
+    </update>
+</mapper>
+```
+
+
+
+### 标签模块接口设计及实现
+
+#### 标签列表分页接口
+
+列表接口负责接收前端传来的分页参数，如 page 、limit 等参数，之后将数据总数和对应页面的数据列表查询出来并封装为分页数据返回给前端。
+
+##### 控制层
+
+TagController.java：接口的映射地址为 /tags/list，请求方法为 GET，代码如下：
+
+```java
+package cn.yuyingwai.springbootblog.controller.admin;
+
+import cn.yuyingwai.springbootblog.service.TagService;
+import cn.yuyingwai.springbootblog.util.PageQueryUtil;
+import cn.yuyingwai.springbootblog.util.Result;
+import cn.yuyingwai.springbootblog.util.ResultGenerator;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
+@Controller
+@RequestMapping("/admin")
+public class TagController {
+
+    @Resource
+    private TagService tagService;
+
+    @GetMapping("/tags")
+    public String tagPage(HttpServletRequest request) {
+        request.setAttribute("path", "tags");
+        return "admin/tag";
+    }
+
+    @GetMapping("/tags/list")
+    @ResponseBody
+    public Result list(@RequestParam Map<String, Object> params) {
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        return ResultGenerator.genSuccessResult(tagService.getBlogTagPage(pageUtil));
+    }
+
+}
+```
+
+##### 业务层
+
+TagServiceImpl.java：
+
+```java
+package cn.yuyingwai.springbootblog.service.impl;
+
+import cn.yuyingwai.springbootblog.dao.BlogTagDao;
+import cn.yuyingwai.springbootblog.dao.BlogTagRelationDao;
+import cn.yuyingwai.springbootblog.entity.BlogTag;
+import cn.yuyingwai.springbootblog.service.TagService;
+import cn.yuyingwai.springbootblog.util.PageQueryUtil;
+import cn.yuyingwai.springbootblog.util.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+@Service
+public class TagServiceImpl implements TagService {
+
+    @Autowired
+    private BlogTagDao blogTagDao;
+
+    @Autowired
+    private BlogTagRelationDao relationDao;
+
+    /**
+     * 查询标签的分页数据
+     * @param pageUtil
+     * @return
+     */
+    @Override
+    public PageResult getBlogTagPage(PageQueryUtil pageUtil) {
+        List<BlogTag> tags = blogTagDao.findTagList(pageUtil);
+        int total = blogTagDao.getTotalTags(pageUtil);
+        PageResult pageResult = new PageResult(tags, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+}
+```
+
+
+
+#### 添加标签接口
+
+添加接口负责接收前端的 POST 请求并处理其中的参数，接收的参数为 tagName 字段，tagName 为标签名称。
+
+##### 控制层
+
+```java
+    @PostMapping("/tags/save")
+    @ResponseBody
+    public Result save(@RequestParam("tagName") String tagName) {
+        if (StringUtils.isEmpty(tagName)) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (tagService.saveTag(tagName)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("标签名称重复");
+        }
+    }
+```
+
+##### 业务层
+
+```java
+    /**
+     * 添加标签
+     * @param tagName
+     * @return
+     */
+    @Override
+    public Boolean saveTag(String tagName) {
+        BlogTag temp = blogTagDao.selectByTagName(tagName);
+        if (temp == null) {
+            BlogTag blogTag = new BlogTag();
+            blogTag.setTagName(tagName);
+            return blogTagDao.insertSelective(blogTag) > 0;
+        }
+        return false;
+    }
+```
+
+#### 删除标签接口
+
+删除接口负责接收前端的标签删除请求，处理前端传输过来的数据后，将这些记录从数据库中删除，这里的“删除”功能并不是真正意义上的删除，而是逻辑删除，我们将接受的参数设置为一个数组，可以同时删除多条记录，只需要在前端将用户选择的记录 id 封装好再传参到后端即可。
+
+接口的请求路径为 /tags/delete，并使用 @RequestBody 将前端传过来的参数封装为 id 数组，参数验证通过后则调用 deleteBatch() 批量删除方法进行数据库操作，否则将向前端返回错误信息。
+
+##### 控制层
+
+```java
+    @PostMapping("/tags/delete")
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (tagService.deleteBatch(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("有关联数据请勿强行删除");
+        }
+    }
+```
+
+##### 业务层
+
+```java
+    /**
+     * 删除没有关联关系的标签
+     * @param ids
+     * @return
+     */
+    @Override
+    public Boolean deleteBatch(Integer[] ids) {
+        // 已存在关联关系不删除
+        List<Long> relations = relationDao.selectDistinctTagIds(ids);
+        if (!CollectionUtils.isEmpty(relations)) {
+            return false;
+        }
+        // 删除tag
+        return blogTagDao.deleteBatch(ids) > 0;
+    }
+```
+
+在业务方法实现中，需要判断该标签是否已经与文章表中的数据进行了关联，如果已经存在关联关系，就不进行删除操作，这是其中的一种处理方式，因为在添加文章数据时，也会对应的向数据库中新增标签数据和关系数据，因此在数据删除时需要进行确认以免造成数据混乱，当然也可以使用另外一种处理方法，就是在删除标签记录时，将标签记录以及对应的关系表中所有与此标签有关联的记录删除掉，这样也是可以的，本系统选择的是第一种方式。
+
+
+
+### 前端页面实现
+
+#### tag.html
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">标签管理</h3>
+                    </div> <!-- /.card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <input type="text" class="form-control col-1" id="tagName" name="tagName"
+                                   placeholder="标签名称" required="true">&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-info" onclick="tagAdd()"><i
+                                    class="fa fa-plus"></i>&nbsp;新增
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteTag()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;删除
+                            </button>
+                        </div>
+                        <table id="jqGrid" class="table table-bordered">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div><!-- /.card-body -->
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:src="@{/admin/dist/js/tag.js}"></script>
+</body>
+</html>
+```
+
+##### 功能按钮及信息编辑框
+
+在页面中添加对应的功能按钮以及触发事件，由于标签信息的字段并不多，因此在按钮区新增了一个标签名称的输入框，代码如下：
+
+```html
+<div class="grid-btn">
+  <input
+    type="text"
+    class="form-control col-1"
+    id="tagName"
+    name="tagName"
+    placeholder="标签名称"
+    required="true"
+  />&nbsp;&nbsp;&nbsp;
+  <button class="btn btn-info" onclick="tagAdd()">
+    <i class="fa fa-plus"></i>&nbsp;新增
+  </button>
+  <button class="btn btn-danger" onclick="deleteTag()">
+    <i class="fa fa-trash-o"></i>&nbsp;删除
+  </button>
+</div>
+```
+
+##### 分页信息展示区域
+
+页面中已经引入 JqGrid 的相关静态资源文件，需要在页面中展示分页数据的区域增加如下代码：
+
+```html
+<table id="jqGrid" class="table table-bordered"></table>
+<div id="jqGridPager"></div>
+```
+
+#### sidebar.html
+
+在菜单中添加以下代码：
+
+```html
+<li class="nav-item">
+    <a th:href="@{/admin/tags}" th:class="${path}=='tags'?'nav-link active':'nav-link'">
+        <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
+        <p>
+            标签管理
+        </p>
+    </a>
+</li>
+```
+
+
+
+### 前端功能实现
+
+#### 分页功能
+
+在 resources/static/admin/dist/js 目录下新增 tag.js 文件，并添加如下代码：
+
+```javascript
+$(function () {
+  $('#jqGrid').jqGrid({
+    url: '/admin/tags/list',
+    datatype: 'json',
+    colModel: [
+      {
+        label: 'id',
+        name: 'tagId',
+        index: 'tagId',
+        width: 50,
+        key: true,
+        hidden: true,
+      },
+      { label: '标签名称', name: 'tagName', index: 'tagName', width: 240 },
+      {
+        label: '添加时间',
+        name: 'createTime',
+        index: 'createTime',
+        width: 120,
+      },
+    ],
+    height: 560,
+    rowNum: 10,
+    rowList: [10, 20, 50],
+    styleUI: 'Bootstrap',
+    loadtext: '信息读取中...',
+    rownumbers: false,
+    rownumWidth: 20,
+    autowidth: true,
+    multiselect: true,
+    pager: '#jqGridPager',
+    jsonReader: {
+      root: 'data.list',
+      page: 'data.currPage',
+      total: 'data.totalPage',
+      records: 'data.totalCount',
+    },
+    prmNames: {
+      page: 'page',
+      rows: 'limit',
+      order: 'order',
+    },
+    gridComplete: function () {
+      //隐藏grid底部滚动条
+      $('#jqGrid').closest('.ui-jqgrid-bdiv').css({ 'overflow-x': 'hidden' });
+    },
+  });
+  $(window).resize(function () {
+    $('#jqGrid').setGridWidth($('.card-body').width());
+  });
+});
+
+/**
+ * jqGrid重新加载
+ */
+function reload() {
+    var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+    $("#jqGrid").jqGrid('setGridParam', {
+        page: page
+    }).trigger("reloadGrid");
+}
+```
+
+以上代码的主要功能为分页数据展示、字段格式化 jqGrid DOM 宽度的自适应，在页面加载时，调用 JqGrid 的初始化方法，将页面中 id 为 jqGrid 的 DOM 渲染为分页表格，并向后端发送请求，之后按照后端返回的 json 数据填充表格以及表格下方的分页按钮。
+
+#### 添加功能
+
+在标签名称输入框中输入完成后可以点击右侧的**添加**按钮，此时会触发 `tagAdd()` 方法进行数据的交互，js 实现代码如下：
+
+```javascript
+function tagAdd() {
+  var tagName = $('#tagName').val();
+  if (!validCN_ENString2_18(tagName)) {
+    swal('标签名称不规范', {
+      icon: 'error',
+    });
+  } else {
+    var url = '/admin/tags/save?tagName=' + tagName;
+    $.ajax({
+      type: 'POST', //方法类型
+      url: url,
+      success: function (result) {
+        if (result.resultCode == 200) {
+          $('#tagName').val('');
+          swal('保存成功', {
+            icon: 'success',
+          });
+          reload();
+        } else {
+          $('#tagName').val('');
+          swal(result.message, {
+            icon: 'error',
+          });
+        }
+      },
+      error: function () {
+        swal('操作失败', {
+          icon: 'error',
+        });
+      },
+    });
+  }
+}
+```
+
+按钮点击后会触发对应的 js 方法，在该方法中首先会对用户输入的数据进行简单的正则验证，之后会封装数据并向对应的后端接口发送 Ajax 请求添加标签数据，之后根据后端返回的结果进行提示。
+
+#### 删除功能
+
+删除按钮的点击触发事件为 `deleteTag()`，在 tag.js 文件中新增如下代码：
+
+```js
+function deleteTag() {
+  var ids = getSelectedRows();
+  if (ids == null) {
+    return;
+  }
+  swal({
+    title: '确认弹框',
+    text: '确认要删除数据吗?',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true,
+  }).then((flag) => {
+    if (flag) {
+      $.ajax({
+        type: 'POST',
+        url: '/admin/tags/delete',
+        contentType: 'application/json',
+        data: JSON.stringify(ids),
+        success: function (r) {
+          if (r.resultCode == 200) {
+            swal('删除成功', {
+              icon: 'success',
+            });
+            $('#jqGrid').trigger('reloadGrid');
+          } else {
+            swal(r.message, {
+              icon: 'error',
+            });
+          }
+        },
+      });
+    }
+  });
+}
+```
+
+获取用户在 jqgrid 表格中选择的需要删除的所有记录的 id，之后将参数封装并向后端发送 Ajax 请求，请求地址为 tags/delete。
+
+
+
+## 文章编辑模块
+
+### 富文本编译器
+
+在 form 表单中通常会用 input 标签和 textarea 标签，简单的如登录信息的获取可能使用 input 标签即可，字数多一些的会用 textarea 标签来获取用户输入的内容，而博客文章排版比较丰富，各种内容和元素都会出现，此时就出现了问题，需要复杂排版的图文混合的内容或者更多内容录入的时候，这两个标签显然就无法满足需求。
+
+#### 什么是富文本编译器？
+
+> 富文本编辑器，是一种可内嵌于浏览器，所见即所得的文本编辑器。 富文本编辑器不同于文本编辑器(如 textarea 标签、input 标签)，也可以叫做图文编辑器，在富文本编辑器里可以编辑非常丰富的内容，如文字、图片、表情、代码……应有尽有，满足你的大部分需求。 像一些新闻排版，基本是以图文排版为主，而淘宝京东这些电商的商品详情页，基本都是多张已经排版好的设计图拼接而来的，富文本编辑器可以很完美的支持者两种需求。
+
+目前的富文本编辑器主要有 markdown 版本和非 markdown 版本的编辑器，一般企业开发中使用非 markdown 版本比较多，常见的有 UEditor 和 KindEditor 等，因为运营人员可能不太懂 markdown 语法，而博客文章的编辑通常是使用 markdown 编辑器（即 md 编辑器），因为这部分人员掌握 markdown 语法也很快，所以大部分博客网站都会默认使用 markdown 编辑器作为用户的文章编辑器。
+
+#### 为什么要使用富文本编辑器
+
+以下是使用富文本编辑器的原因，也是富文本编辑器的优点：
+
+- 需求变更导致，业务方提出的编辑需求越来越复杂
+- 编辑的内容变得越来越复杂、越来越丰富
+- 比起编辑 html，富文本编辑器更灵活
+- 富文本编辑器功能丰富，满足大部分需求
+
+
+
+### 文章编辑页面制作
+
+#### 导航栏
+
+首先在左侧导航栏中新增编辑页的导航按钮，在 sidebar.html 文件中新增如下代码（管理模块上面）：
+
+```html
+<li class="nav-item">
+  <a
+    th:href="@{/admin/blogs/edit}"
+    th:class="${path}=='edit'?'nav-link active':'nav-link'"
+  >
+    <i class="nav-icon fa fa fa-pencil-square-o"></i>
+    <p>
+      发布博客
+    </p>
+  </a>
+</li>
+```
+
+点击后的跳转路径为 /admin/blogs/edit，之后新建 Controller 来处理该路径并跳转到对应的页面。
+
+#### Controller 处理跳转
+
+首先在 controller/admin 包下新建 BlogController.java，之后新增如下代码：
+
+```java
+package cn.yuyingwai.springbootblog.controller.admin;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+
+@Controller
+@RequestMapping("/admin")
+public class BlogController {
+
+    @GetMapping("/blogs/edit")
+    public String edit(HttpServletRequest request) {
+        request.setAttribute("path", "edit");
+        return "admin/edit";
+    }
+
+}
+```
+
+该方法用于处理 /admin/blogs/edit 请求，并设置 path 字段，之后跳转到 admin 目录下的 edit.html 中。
+
+
+
+#### edit.html 页面制作
+
+接下来就是博客编辑页面的模板文件制作了，在 resources/templates/admin 目录下新建 edit.html，并引入对应的 js 文件和 css 样式文件，代码如下：
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <header th:replace="admin/header::header-fragment"></header>
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <!-- 引入页面头header-fragment -->
+      <div th:replace="admin/header::header-nav"></div>
+      <!-- 引入工具栏sidebar-fragment -->
+      <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid"></div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <div class="content">
+          <div class="container-fluid">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <h3 class="card-title">发布文章</h3>
+              </div>
+              <div class="card-body">
+                编辑页面
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+      </div>
+      <!-- /.content-wrapper -->
+      <!-- 引入页脚footer-fragment -->
+      <div th:replace="admin/footer::footer-fragment"></div>
+    </div>
+    <!-- jQuery -->
+    <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+    <!-- Bootstrap 4 -->
+    <script
+      th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
+</html>
+```
+
+
+
+### Editor.md 编辑器整合
+
+#### 整合步骤
+
+1. 下载 Editor.md 插件代码并放进项目的 plugins 目录
+
+2. 在 html 代码中引入 Editor.md 相关文件
+
+   代码如下，首先是 css 文件：
+
+   ```html
+   <link
+     th:href="@{/admin/plugins/editormd/css/editormd.css}"
+     rel="stylesheet"
+   />
+   ```
+
+   之后是引入编辑器的 js 文件：
+
+   ```html
+   <!-- editor.md -->
+   <script th:src="@{/admin/plugins/editormd/editormd.min.js}"></script>
+   ```
+
+3. 添加编辑框 DOM 元素
+
+   ```html
+   <div class="card-body">
+     <form id="blogForm" onsubmit="return false;">
+       <div class="form-group" id="blog-editormd">
+         <textarea style="display:none;"></textarea>
+       </div>
+       <div class="form-group">
+         <!-- 按钮 -->
+         &nbsp;<button
+           class="btn btn-info float-right"
+           style="margin-left: 5px;"
+           id="confirmButton"
+         >
+           保存文章
+         </button>
+       </div>
+     </form>
+   </div>
+   ```
+
+   我们会在这里初始化 Editor.md 编辑器，这里首先定义将要初始化时的 id 名称为 blog-editormd，之后调用 Editor.md 插件的方法在这里将编辑器生成出来。
+
+4. 初始化 Editor.md 对象
+
+   添加如下 js 代码：
+
+   ```html
+   <script type="text/javascript">
+     var blogEditor;
+     $(function () {
+       blogEditor = editormd('blog-editormd', {
+         width: '100%',
+         height: 640,
+         syncScrolling: 'single',
+         path: '/admin/plugins/editormd/lib/',
+         toolbarModes: 'full',
+       });
+     });
+   </script>
+   ```
+
+   通过调用 `editormd()` 方法并传入前文中定义的 DOM id，之后再次重启项目就能够看到编辑器的效果了。
+
+#### 获取文档内容
+
+在输入完成后，我们需要将 Editor.md 编辑器中输入的文字内容取出来，并传给后端以进行逻辑处理，提供了 `getMarkdown()` 方法来获取其中的内容，添加如下代码：
+
+```javascript
+$('#confirmButton').bind('click', function () {
+  console.log(blogEditor.getMarkdown());
+  alert(blogEditor.getMarkdown());
+});
+```
+
+这里是添加了“保存文章”按钮的点击事件，点击该按钮后，会将编辑器中的内容给打印或者 alert 出来。
+
+#### Editor.md 编辑器图片上传功能完善
+
+在整合之后，默认是不可以上传图片的，需要略作配置修改，在 Editor.md 编辑器初始化时新增如下配置项：
+
+```js
+    /**图片上传配置*/
+    imageUpload: true,//开启图片上传
+    imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"], //图片上传格式
+    imageUploadURL: "/admin/blogs/md/uploadfile",//图片上传的后端路径
+    onload: function (obj) { //上传成功之后的回调
+    }
+```
+
+配置项的相关参数及参数释义已经给出，之后需要在后台 Controller 代码中新增一个方法用于接收图片上传请求并返回图片路径给 Editor.md 编辑器。
+
+在 BlogController.java 中新增如下代码用于文件上传：
+
+```java
+    /**
+     * 接收图片上传请求并返回图片路径给 Editor.md 编辑器
+     * @param request
+     * @param response
+     * @param file
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    @PostMapping("/blogs/md/uploadfile")
+    public void uploadFileByEditormd(HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     @RequestParam(name = "editormd-image-file", required = true) MultipartFile file) throws IOException, URISyntaxException {
+        String FILE_UPLOAD_DIC = "D:\\upload\\";   // 上传文件的默认url前缀，根据部署设置自行修改
+        String fileName = file.getOriginalFilename();
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        // 生成文件名称通用方法
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        Random r = new Random();
+        StringBuilder tempName = new StringBuilder();
+        tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
+        String newFileName = tempName.toString();
+        // 创建文件
+        File destFile = new File(FILE_UPLOAD_DIC + newFileName);
+        String fileUrl = MyBlogUtils.getHost(new URI(request.getRequestURI() + "")) + "/upload/" + newFileName;
+        File fileDirectory = new File(FILE_UPLOAD_DIC);
+        try {
+            if (!fileDirectory.exists()) {
+                if (!fileDirectory.mkdir()) {
+                    throw new IOException("文件夹创建失败，路径为：" + fileDirectory);
+                }
+            }
+            file.transferTo(destFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            request.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Type", "text/html");
+            response.getWriter().write("{\"success\": 1, \"message\":\"success\",\"url\":\"" + fileUrl + "\"}");
+        } catch (UnsupportedEncodingException e) {
+            response.getWriter().write("{\"success\":0}");
+        } catch (IOException e) {
+            response.getWriter().write("{\"success\":0}");
+        }
+    }
+```
+
+**MyBlogUtils.java：**
+
+```java
+package cn.yuyingwai.springbootblog.util;
+
+import java.net.URI;
+
+public class MyBlogUtils {
+
+    public static URI getHost(URI uri) {
+        URI effectiveURI = null;
+        try {
+            effectiveURI = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), null, null, null);
+        } catch (Throwable var4) {
+            effectiveURI = null;
+        }
+        return effectiveURI;
+    }
+
+}
+```
+
+之后在 MyBlogWebMvcConfigurer.java 中新增拦截器，代码如下：
+
+```java
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:D:\\upload\\");
+    }
+```
+
+
+
+### 持久层相关
+
+#### 表结构设计
+
+这里以 CSDN 平台的文章编辑模块为例，来确定一下文章表的字段设计，编辑模块如下图所示：
+
+![](http://images.yingwai.top/picgo/20201214211057.jpg)
+
+通过上图可以得出以下字段：
+
+- 文章标题
+- 文章内容
+- 文章标签
+- 文章分类
+- 发布状态
+
+以上是字段是博客文章实体应该具有的基础字段，不管是哪个博客平台都会存在这些字段，本博客系统上在此基础上增加了几个字段：
+
+- 文章封面图(为了页面美观)
+- 阅读量(博客文章的基本字段)
+- 是否允许评论(有评论模块，可以控制评论模块的开放和关闭)
+
+文章表的 SQL 设计如下，直接执行如下 SQL 语句即可：
+
+```sql
+USE `my_blog_db`;
+
+DROP TABLE IF EXISTS `tb_blog`;
+
+CREATE TABLE `tb_blog` (
+  `blog_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '博客表主键id',
+  `blog_title` varchar(200) NOT NULL COMMENT '博客标题',
+  `blog_sub_url` varchar(200) NOT NULL COMMENT '博客自定义路径url',
+  `blog_cover_image` varchar(200) NOT NULL COMMENT '博客封面图',
+  `blog_content` mediumtext NOT NULL COMMENT '博客内容',
+  `blog_category_id` int(11) NOT NULL COMMENT '博客分类id',
+  `blog_category_name` varchar(50) NOT NULL COMMENT '博客分类(冗余字段)',
+  `blog_tags` varchar(200) NOT NULL COMMENT '博客标签',
+  `blog_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0-草稿 1-发布',
+  `blog_views` bigint(20) NOT NULL DEFAULT '0' COMMENT '阅读量',
+  `enable_comment` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0-允许评论 1-不允许评论',
+  `is_deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除 0=否 1=是',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`blog_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
+在 tb_blog 表中，设计了一个 is_deleted 字段，用于逻辑删除的标志位，由于 is_deleted 的字段设计，对表中数据的删除都是软删除，因为是个人博客，这么做的目的主要也是为了防止误删。
+
+#### Blog 实体类
+
+```java
+package cn.yuyingwai.springbootblog.entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class Blog {
+
+    private Long blogId;
+
+    private String blogTitle;
+
+    private String blogSubUrl;
+
+    private String blogCoverImage;
+
+    private Integer blogCategoryId;
+
+    private String blogCategoryName;
+
+    private String blogTags;
+
+    private Byte blogStatus;
+
+    private Long blogViews;
+
+    private Byte enableComment;
+
+    private Byte isDeleted;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+
+    private Date updateTime;
+
+    private String blogContent;
+
+    public void setBlogTitle(String blogTitle) {
+        this.blogTitle = blogTitle == null ? null : blogTitle.trim();
+    }
+
+    public void setBlogSubUrl(String blogSubUrl) {
+        this.blogSubUrl = blogSubUrl == null ? null : blogSubUrl.trim();
+    }
+
+    public void setBlogCoverImage(String blogCoverImage) {
+        this.blogCoverImage = blogCoverImage == null ? null : blogCoverImage.trim();
+    }
+
+    public void setBlogCategoryName(String blogCategoryName) {
+        this.blogCategoryName = blogCategoryName == null ? null : blogCategoryName.trim();
+    }
+
+    public void setBlogTags(String blogTags) {
+        this.blogTags = blogTags == null ? null : blogTags.trim();
+    }
+
+    public void setBlogContent(String blogContent) {
+        this.blogContent = blogContent == null ? null : blogContent.trim();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", blogId=").append(blogId);
+        sb.append(", blogTitle=").append(blogTitle);
+        sb.append(", blogSubUrl=").append(blogSubUrl);
+        sb.append(", blogCoverImage=").append(blogCoverImage);
+        sb.append(", blogCategoryId=").append(blogCategoryId);
+        sb.append(", blogCategoryName=").append(blogCategoryName);
+        sb.append(", blogTags=").append(blogTags);
+        sb.append(", blogStatus=").append(blogStatus);
+        sb.append(", blogViews=").append(blogViews);
+        sb.append(", enableComment=").append(enableComment);
+        sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", blogContent=").append(blogContent);
+        sb.append("]");
+        return sb.toString();
+    }
+
+}
+```
+
+#### BlogDao.java
+
+```java
+package cn.yuyingwai.springbootblog.dao;
+
+import cn.yuyingwai.springbootblog.entity.BlogCategory;
+import cn.yuyingwai.springbootblog.util.PageQueryUtil;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+@Mapper
+public interface BlogDao {
+
+    int deleteByPrimaryKey(Integer categoryId);
+
+    int insert(BlogCategory record);
+
+    int insertSelective(BlogCategory record);
+
+    BlogCategory selectByPrimaryKey(Integer categoryId);
+
+    BlogCategory selectByCategoryName(String categoryName);
+
+    int updateByPrimaryKeySelective(BlogCategory record);
+
+    int updateByPrimaryKey(BlogCategory record);
+
+    List<BlogCategory> findCategoryList(PageQueryUtil pageUtil);
+
+    List<BlogCategory> selectByCategoryIds(@Param("categoryIds") List<Integer> categoryIds);
+
+    int getTotalCategories(PageQueryUtil pageUtil);
+
+    int deleteBatch(Integer[] ids);
+    
+}
+```
+
+#### BlogMapper.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.yuyingwai.springbootblog.dao.BlogDao">
+    <resultMap id="BaseResultMap" type="cn.yuyingwai.springbootblog.entity.Blog">
+        <id column="blog_id" jdbcType="BIGINT" property="blogId"/>
+        <result column="blog_title" jdbcType="VARCHAR" property="blogTitle"/>
+        <result column="blog_sub_url" jdbcType="VARCHAR" property="blogSubUrl"/>
+        <result column="blog_cover_image" jdbcType="VARCHAR" property="blogCoverImage"/>
+        <result column="blog_category_id" jdbcType="INTEGER" property="blogCategoryId"/>
+        <result column="blog_category_name" jdbcType="VARCHAR" property="blogCategoryName"/>
+        <result column="blog_tags" jdbcType="VARCHAR" property="blogTags"/>
+        <result column="blog_status" jdbcType="TINYINT" property="blogStatus"/>
+        <result column="blog_views" jdbcType="BIGINT" property="blogViews"/>
+        <result column="enable_comment" jdbcType="TINYINT" property="enableComment"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.yuyingwai.springbootblog.entity.Blog">
+        <result column="blog_content" jdbcType="LONGVARCHAR" property="blogContent"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        blog_id, blog_title, blog_sub_url, blog_cover_image, blog_category_id, blog_category_name, 
+    blog_tags, blog_status, blog_views, enable_comment, is_deleted, create_time, update_time
+    </sql>
+    <sql id="Blob_Column_List">
+        blog_content
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_blog
+        where blog_id = #{blogId,jdbcType=BIGINT} and is_deleted = 0
+    </select>
+    <insert id="insert" parameterType="cn.yuyingwai.springbootblog.entity.Blog">
+        insert into tb_blog (blog_id, blog_title, blog_sub_url,
+                             blog_cover_image, blog_category_id, blog_category_name,
+                             blog_tags, blog_status, blog_views,
+                             enable_comment, is_deleted, create_time,
+                             update_time, blog_content)
+        values (#{blogId,jdbcType=BIGINT}, #{blogTitle,jdbcType=VARCHAR}, #{blogSubUrl,jdbcType=VARCHAR},
+                #{blogCoverImage,jdbcType=VARCHAR}, #{blogCategoryId,jdbcType=INTEGER}, #{blogCategoryName,jdbcType=VARCHAR},
+                #{blogTags,jdbcType=VARCHAR}, #{blogStatus,jdbcType=TINYINT}, #{blogViews,jdbcType=BIGINT},
+                #{enableComment,jdbcType=TINYINT}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{blogContent,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="blogId"
+            parameterType="cn.yuyingwai.springbootblog.entity.Blog">
+        insert into tb_blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogId != null">
+                blog_id,
+            </if>
+            <if test="blogTitle != null">
+                blog_title,
+            </if>
+            <if test="blogSubUrl != null">
+                blog_sub_url,
+            </if>
+            <if test="blogCoverImage != null">
+                blog_cover_image,
+            </if>
+            <if test="blogCategoryId != null">
+                blog_category_id,
+            </if>
+            <if test="blogCategoryName != null">
+                blog_category_name,
+            </if>
+            <if test="blogTags != null">
+                blog_tags,
+            </if>
+            <if test="blogStatus != null">
+                blog_status,
+            </if>
+            <if test="blogViews != null">
+                blog_views,
+            </if>
+            <if test="enableComment != null">
+                enable_comment,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="blogContent != null">
+                blog_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blogId != null">
+                #{blogId,jdbcType=BIGINT},
+            </if>
+            <if test="blogTitle != null">
+                #{blogTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="blogSubUrl != null">
+                #{blogSubUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCoverImage != null">
+                #{blogCoverImage,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCategoryId != null">
+                #{blogCategoryId,jdbcType=INTEGER},
+            </if>
+            <if test="blogCategoryName != null">
+                #{blogCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogTags != null">
+                #{blogTags,jdbcType=VARCHAR},
+            </if>
+            <if test="blogStatus != null">
+                #{blogStatus,jdbcType=TINYINT},
+            </if>
+            <if test="blogViews != null">
+                #{blogViews,jdbcType=BIGINT},
+            </if>
+            <if test="enableComment != null">
+                #{enableComment,jdbcType=TINYINT},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogContent != null">
+                #{blogContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.yuyingwai.springbootblog.entity.Blog">
+        update tb_blog
+        <set>
+            <if test="blogTitle != null">
+                blog_title = #{blogTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="blogSubUrl != null">
+                blog_sub_url = #{blogSubUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCoverImage != null">
+                blog_cover_image = #{blogCoverImage,jdbcType=VARCHAR},
+            </if>
+            <if test="blogContent != null">
+                blog_content = #{blogContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="blogCategoryId != null">
+                blog_category_id = #{blogCategoryId,jdbcType=INTEGER},
+            </if>
+            <if test="blogCategoryName != null">
+                blog_category_name = #{blogCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogTags != null">
+                blog_tags = #{blogTags,jdbcType=VARCHAR},
+            </if>
+            <if test="blogStatus != null">
+                blog_status = #{blogStatus,jdbcType=TINYINT},
+            </if>
+            <if test="blogViews != null">
+                blog_views = #{blogViews,jdbcType=BIGINT},
+            </if>
+            <if test="enableComment != null">
+                enable_comment = #{enableComment,jdbcType=TINYINT},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogContent != null">
+                blog_content = #{blogContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where blog_id = #{blogId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.yuyingwai.springbootblog.entity.Blog">
+        update tb_blog
+        set blog_title = #{blogTitle,jdbcType=VARCHAR},
+            blog_sub_url = #{blogSubUrl,jdbcType=VARCHAR},
+            blog_cover_image = #{blogCoverImage,jdbcType=VARCHAR},
+            blog_category_id = #{blogCategoryId,jdbcType=INTEGER},
+            blog_category_name = #{blogCategoryName,jdbcType=VARCHAR},
+            blog_tags = #{blogTags,jdbcType=VARCHAR},
+            blog_status = #{blogStatus,jdbcType=TINYINT},
+            blog_views = #{blogViews,jdbcType=BIGINT},
+            enable_comment = #{enableComment,jdbcType=TINYINT},
+            is_deleted = #{isDeleted,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            blog_content = #{blogContent,jdbcType=LONGVARCHAR}
+        where blog_id = #{blogId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.yuyingwai.springbootblog.entity.Blog">
+        update tb_blog
+        set blog_title = #{blogTitle,jdbcType=VARCHAR},
+            blog_sub_url = #{blogSubUrl,jdbcType=VARCHAR},
+            blog_cover_image = #{blogCoverImage,jdbcType=VARCHAR},
+            blog_category_id = #{blogCategoryId,jdbcType=INTEGER},
+            blog_category_name = #{blogCategoryName,jdbcType=VARCHAR},
+            blog_tags = #{blogTags,jdbcType=VARCHAR},
+            blog_status = #{blogStatus,jdbcType=TINYINT},
+            blog_views = #{blogViews,jdbcType=BIGINT},
+            enable_comment = #{enableComment,jdbcType=TINYINT},
+            is_deleted = #{isDeleted,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where blog_id = #{blogId,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        UPDATE tb_blog SET is_deleted = 1
+        where blog_id = #{blogId,jdbcType=BIGINT} and is_deleted = 0
+    </update>
+</mapper>
+```
+
+通过以上代码可以看出，在删除操作时并不是执行 delete 语句，而是将需要删除的文章记录的 is_deleted 字段修改为 1，这样就表示该文章已经被执行了删除操作，那么其他的 select 查询语句就需要在查询条件中添加 is_deleted = 0 将“被删除”的记录给过滤出去。
+
+
+
+### 编辑页面完善
+
+接下来，把编辑页面按照字段来完善一下，将其他需要输入内容的字段填充到页面 DOM 中，目前编辑页面只有一个编辑框来输入文章字段。某些字段只需要一个 input 框即可，比如文章标题字段，而其他一些字段的输入则需要一些前端插件来完成，比如标签、博客封面图，仅仅是 input 框肯定是无法满足需求的，比如标签字段和分类字段。
+
+#### 引入相关依赖
+
+编辑页面中有如下字段需要使用插件来完善交互：
+
+- 标签字段
+- 分类字段
+- 文章内容字段(已实现)
+- 封面图字段
+
+以上字段所需要的插件也是使用的比较常用的开源插件，插件如下：
+
+- tagsinput（标签）
+- select2（分类）
+- Editor.md（文章内容）
+- ajaxupload（图片上传）
+
+引入插件首先需要把这些依赖文件放到 resources/static/admin/plugins 目录下，目录结构如下：
