@@ -194,3 +194,19 @@ $$
 
 
 ## Round 4 (Unmasking)
+
+![](http://images.yingwai.top/picgo/20201222222442.png)
+
+对于用户 $u$：
+
+* 从服务器处收到列表 $\{ v, \sigma'_v \}_{v \in \mathcal{U}_4}$。验证是否满足 $\mathcal{U}_4 \subseteq \mathcal{U}_3$、$|\mathcal{U}_4| \geq t$ 以及对于所有 $v \in \mathcal{U}_4$ 有 $\mathbf{SIG.ver}(d^{PK}, \mathcal{U}_3, \sigma'_v) = 1$（否则中止协议）
+* 对于每个用户 $v \in \mathcal{U}_2 \backslash \{u\}$，解密从**MaskedInputCollection**步骤中收到的密文 $v' \| u' \| s^{SK}_{v,u} \| b_{v,u} \leftarrow \mathbf{AE.dec}(\mathbf{KA.agree}(c^{SK}_u, c^{PK}_v), e_{v,u})$ 然后定义 $u = u' \and v = v'$
+* 如果任何解密操作失败，中止协议
+* 发送份额列表给服务器，份额包括了用户 $v \in \mathcal{U}_2 \backslash \mathcal{U}_3$ 的 $s^{SK}_{u,v}$ 以及用户 $v \in \mathcal{U}_3$ 的 $b_{v,u}$
+
+对于服务器：
+
+* 收集至少 $t$ 个用户的响应（用户集合表示为 $\mathcal{U}_5$）
+* 对于每个用户 $u \in \mathcal{U}_2 \backslash \mathcal{U}_3$，重构 $s_{u}^{S K} \leftarrow \mathbf{SS.recon}\left(\left\{s_{u, v}^{S K}\right\}_{v \in \mathcal{U}_{5}}, t\right)$ 然后使用它（以及在**AdvertiseKeys**步骤收到的公钥）使用 $\mathbf{PRG}$ 来计算所有 $v \in \mathcal{U}_3$ 的 $\boldsymbol{p}_{v,u}$
+* 对于每个用户 $u \in \mathcal{U}_3$，重构 $b_u \leftarrow \mathbf{SS.recon}\left(\left\{ b_{u,v} \right\}_{v \in \mathcal{U}_{5}}, t\right)$ 然后使用 $\mathbf{PRG}$ 来计算 $\boldsymbol{p}_{u}$
+* 根据 $\sum_{u \in \mathcal{U}_{3}} \boldsymbol{x}_{u}=\sum_{u \in \mathcal{U}_{3}} \boldsymbol{y}_{u}-\sum_{u \in \mathcal{U}_{3}} \boldsymbol{p}_{u}+\sum_{u \in \mathcal{U}_{3}, v \in \mathcal{U}_{2} \backslash \mathcal{U}_{3}} \boldsymbol{p}_{v, u}$ 计算然后输出 $z=\sum_{u \in \mathcal{U}_{3}} \boldsymbol{x}_{u}$
