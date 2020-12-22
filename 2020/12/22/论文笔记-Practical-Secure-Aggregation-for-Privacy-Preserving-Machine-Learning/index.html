@@ -94,8 +94,9 @@
 <meta property="og:image" content="http://images.yingwai.top/picgo/20201222145435.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/20201222194737.png">
 <meta property="og:image" content="http://images.yingwai.top/picgo/20201222195915.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/20201222222442.png">
 <meta property="article:published_time" content="2020-12-22T14:14:06.000Z">
-<meta property="article:modified_time" content="2020-12-22T14:18:21.429Z">
+<meta property="article:modified_time" content="2020-12-22T15:02:16.898Z">
 <meta property="article:author" content="yyw">
 <meta property="article:tag" content="PPML">
 <meta property="article:tag" content="Federated Learning">
@@ -343,7 +344,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-12-22T22:18:21+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2020-12-22T23:02:16+08:00">
                 2020-12-22
               </time>
             
@@ -404,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.9k 字
+                  3.3k 字
                 </span>
               
 
@@ -420,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  11 分钟
+                  13 分钟
                 </span>
               
             </div>
@@ -542,7 +543,22 @@ z &=\sum_{u \in \mathcal{U}} y_{u} \\
 <ul>
 <li>从至少 $t$ 个用户处收集 $\sigma’_u$（用户集合表示为 $\mathcal{U}_4 \subseteq \mathcal{U}_3$），发送集合 $\{v, \sigma’_v \}_{v \in \mathcal{U}_4}$ 给 $\mathcal{U}_4$ 中的所有用户</li>
 </ul>
-<h2 id="Round-4-Unmasking"><a href="#Round-4-Unmasking" class="headerlink" title="Round 4 (Unmasking)"></a>Round 4 (Unmasking)</h2>
+<h2 id="Round-4-Unmasking"><a href="#Round-4-Unmasking" class="headerlink" title="Round 4 (Unmasking)"></a>Round 4 (Unmasking)</h2><p><img src="http://images.yingwai.top/picgo/20201222222442.png" alt=""></p>
+<p>对于用户 $u$：</p>
+<ul>
+<li>从服务器处收到列表 $\{ v, \sigma’_v \}_{v \in \mathcal{U}_4}$。验证是否满足 $\mathcal{U}_4 \subseteq \mathcal{U}_3$、$|\mathcal{U}_4| \geq t$ 以及对于所有 $v \in \mathcal{U}_4$ 有 $\mathbf{SIG.ver}(d^{PK}, \mathcal{U}_3, \sigma’_v) = 1$（否则中止协议）</li>
+<li>对于每个用户 $v \in \mathcal{U}_2 \backslash \{u\}$，解密从<strong>MaskedInputCollection</strong>步骤中收到的密文 $v’ | u’ | s^{SK}_{v,u} | b_{v,u} \leftarrow \mathbf{AE.dec}(\mathbf{KA.agree}(c^{SK}_u, c^{PK}_v), e_{v,u})$ 然后定义 $u = u’ \and v = v’$</li>
+<li>如果任何解密操作失败，中止协议</li>
+<li>发送份额列表给服务器，份额包括了用户 $v \in \mathcal{U}_2 \backslash \mathcal{U}_3$ 的 $s^{SK}_{u,v}$ 以及用户 $v \in \mathcal{U}_3$ 的 $b_{v,u}$</li>
+</ul>
+<p>对于服务器：</p>
+<ul>
+<li>收集至少 $t$ 个用户的响应（用户集合表示为 $\mathcal{U}_5$）</li>
+<li>对于每个用户 $u \in \mathcal{U}_2 \backslash \mathcal{U}_3$，重构 $s_{u}^{S K} \leftarrow \mathbf{SS.recon}\left(\left\{s_{u, v}^{S K}\right\}_{v \in \mathcal{U}_{5}}, t\right)$ 然后使用它（以及在<strong>AdvertiseKeys</strong>步骤收到的公钥）使用 $\mathbf{PRG}$ 来计算所有 $v \in \mathcal{U}_3$ 的 $\boldsymbol{p}_{v,u}$</li>
+<li>对于每个用户 $u \in \mathcal{U}_3$，重构 $b_u \leftarrow \mathbf{SS.recon}\left(\left\{ b_{u,v} \right\}_{v \in \mathcal{U}_{5}}, t\right)$ 然后使用 $\mathbf{PRG}$ 来计算 $\boldsymbol{p}_{u}$</li>
+<li>根据 $\sum_{u \in \mathcal{U}_{3}} \boldsymbol{x}_{u}=\sum_{u \in \mathcal{U}_{3}} \boldsymbol{y}_{u}-\sum_{u \in \mathcal{U}_{3}} \boldsymbol{p}_{u}+\sum_{u \in \mathcal{U}_{3}, v \in \mathcal{U}_{2} \backslash \mathcal{U}_{3}} \boldsymbol{p}_{v, u}$ 计算然后输出 $z=\sum_{u \in \mathcal{U}_{3}} \boldsymbol{x}_{u}$</li>
+</ul>
+
       
     </div>
     
@@ -781,7 +797,7 @@ z &=\sum_{u \in \mathcal{U}} y_{u} \\
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">168.1k</span>
+    <span title="Site words total count">168.5k</span>
   
 
 <!--
