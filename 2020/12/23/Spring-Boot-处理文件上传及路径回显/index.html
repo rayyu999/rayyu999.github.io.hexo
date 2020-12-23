@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Spring Boot," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
-<meta name="description" content="Do not go gentle into that good night.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ray&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/page/6/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot 处理文件上传及路径回显">
+<meta property="og:url" content="http://yoursite.com/2020/12/23/Spring-Boot-%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8A%E8%B7%AF%E5%BE%84%E5%9B%9E%E6%98%BE/index.html">
 <meta property="og:site_name" content="Ray&#39;s Blog">
-<meta property="og:description" content="Do not go gentle into that good night.">
+<meta property="og:image" content="http://images.yingwai.top/picgo/20201214121218.png">
+<meta property="og:image" content="http://images.yingwai.top/picgo/20201214121310.png">
+<meta property="article:published_time" content="2020-12-23T14:43:33.000Z">
+<meta property="article:modified_time" content="2020-12-23T14:44:43.658Z">
 <meta property="article:author" content="yyw">
+<meta property="article:tag" content="Spring Boot">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.yingwai.top/picgo/20201214121218.png">
 
 
 
@@ -116,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/page/6/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/12/23/Spring-Boot-处理文件上传及路径回显/"/>
 
 
 
 
 
-  <title>归档 | Ray's Blog</title>
+  <title>Spring Boot 处理文件上传及路径回显 | Ray's Blog</title>
   
 
 
@@ -141,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,409 +273,264 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/23/Spring-Boot-%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8A%E8%B7%AF%E5%BE%84%E5%9B%9E%E6%98%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yyw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/20200417221334.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">Spring Boot 处理文件上传及路径回显</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-23T22:43:33+08:00">
+                2020-12-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-12-23T22:44:43+08:00">
+                2020-12-23
+              </time>
+            
+          </span>
+
           
-        好! 目前共计 63 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Coding/" itemprop="url" rel="index">
+                    <span itemprop="name">Coding</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2020">2020</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2020/12/23/Spring-Boot-%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8A%E8%B7%AF%E5%BE%84%E5%9B%9E%E6%98%BE/" class="leancloud_visitors" data-flag-title="Spring Boot 处理文件上传及路径回显">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/20/%E4%BD%BF%E7%94%A8you-get%E4%B8%8B%E8%BD%BD%E7%BD%91%E5%9D%80%E8%A7%86%E9%A2%91/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">使用you-get下载网址视频</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k 字
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-20T18:50:10+08:00"
-              content="2020-05-20" >
-          05-20
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Designing-an-e-commerce-recommender-system-based-on-collaborative-filtering-using-a-data-mining-approach/" itemprop="url">
-              
-                <span itemprop="name">论文笔记 Designing an e-commerce recommender system based on collaborative filtering using a data mining approach</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-18T21:10:49+08:00"
-              content="2020-05-18" >
-          05-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E6%8C%89%E9%92%AE%E6%98%BE%E7%A4%BA%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" itemprop="url">
-              
-                <span itemprop="name">Hexo博客NexT主题翻页按钮显示不正常的解决方法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-11T18:23:29+08:00"
-              content="2020-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E7%82%B9%E5%87%BB%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%97%A5%E5%BF%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" itemprop="url">
-              
-                <span itemprop="name">Hexo博客NexT主题点击侧边栏日志出现问题的解决办法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-11T18:08:08+08:00"
-              content="2020-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <hr>
+<a id="more"></a>
+<h2 id="Spring-MVC-文件上传流程"><a href="#Spring-MVC-文件上传流程" class="headerlink" title="Spring MVC 文件上传流程"></a>Spring MVC 文件上传流程</h2><p>以往在使用 Spring 的 web 项目开发中，通常会使用 Spring MVC 框架提供的文件上传工具类进行文件上传，也就是 <strong>MultipartResolver</strong> ，利用 SpringMVC 实现文件上传功能，离不开对 MultipartResolver 的设置。</p>
+<p>MultipartResolver 这个类，可以将其视为 SpringMVC 实现文件上传功能时的工具类，这个类也只会在文件上传中发挥作用，在配置了具体实现类之后，SpringMVC 中的 DispatcherServlet 在处理请求时会调用 MultipartResolver 中的方法判断此请求是不是文件上传请求，如果是的话 DispatcherServlet 将调用 MultipartResolver 的 <code>resolveMultipart(request)</code> 方法对该请求对象进行装饰，并返回一个新的 MultipartHttpServletRequest 供后继处理流程使用。 注意！此时的请求对象会由 HttpServletRequest 类型转换成 MultipartHttpServletRequest 类型，这个类中会包含所上传的文件对象可供后续流程直接使用，而无需自行在代码中实现对文件内容的读取和对象封装的逻辑。</p>
+<p>在 Spring Boot 中也是通过该工具类进行文件上传，与普通的 Spring web 项目不同的是，Spring Boot 在自动配置 DispatcherServlet 时也配置好了 MultipartResolver ，而无需再像原来那样在 Spring MVC 配置文件中增加文件上传配置的 bean。</p>
+<h2 id="Spring-Boot-文件上传功能实现"><a href="#Spring-Boot-文件上传功能实现" class="headerlink" title="Spring Boot 文件上传功能实现"></a>Spring Boot 文件上传功能实现</h2><h3 id="常用配置"><a href="#常用配置" class="headerlink" title="常用配置"></a>常用配置</h3><p>由于 Spring Boot 自动配置机制的存在，我们并不需要进行多余的设置，只要已经在 pom 文件中引入了 web starter 模块即可直接进行文件上传功能，在前面的实验中我们已经将 web 模块整合到项目中，因此无需再进行整合。虽然不用配置也可以使用文件上传，但是有些开发者可能会在文件上传时有一些特殊的需求，因此也需要对 Spring Boot 中 MultipartFile 的常用设置进行介绍，配置和默认值如下：</p>
+<p><img src="http://images.yingwai.top/picgo/20201214121218.png" alt=""></p>
+<p>配置含义注释：</p>
+<ul>
+<li><p><strong>spring.servlet.multipart.enabled</strong></p>
+<p>是否支持 multipart 上传文件，默认支持</p>
+</li>
+<li><p><strong>spring.servlet.multipart.file-size-threshold</strong></p>
+<p>文件大小阈值，当大于这个阈值时将写入到磁盘，否则存在内存中，（默认值 0 ，一般情况下不用特意修改）</p>
+</li>
+<li><p><strong>spring.servlet.multipart.location</strong></p>
+<p>上传文件的临时目录</p>
+</li>
+<li><p><strong>spring.servlet.multipart.max-file-size</strong></p>
+<p>最大支持文件大小，默认 1 M ，该值可适当的调整</p>
+</li>
+<li><p><strong>spring.servlet.multipart.max-request-size</strong></p>
+<p>最大支持请求大小，默认 10 M</p>
+</li>
+<li><p><strong>spring.servlet.multipart.resolve-lazily</strong></p>
+<p>判断是否要延迟解析文件（相当于懒加载，一般情况下不用特意修改），默认 false</p>
+</li>
+</ul>
+<h3 id="上传功能实现"><a href="#上传功能实现" class="headerlink" title="上传功能实现"></a>上传功能实现</h3><h4 id="新建文件上传页面"><a href="#新建文件上传页面" class="headerlink" title="新建文件上传页面"></a>新建文件上传页面</h4><p>在 static 目录中新建 upload-test.html，上传页面代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Spring Boot 文件上传测试<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/upload"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"文件上传"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>文件上传的请求地址为 /upload，请求方法为 post，需要注意的是在文件上传时要设置 <code>enctype=&quot;multipart/form-data&quot;</code>，页面中包含一个文件选择框和一个提交框，如下所示：</p>
+<p><img src="http://images.yingwai.top/picgo/20201214121310.png" alt=""></p>
+<h4 id="新建文件上传处理-Controller"><a href="#新建文件上传处理-Controller" class="headerlink" title="新建文件上传处理 Controller"></a>新建文件上传处理 Controller</h4><p>在 controller 包下新建 UploadController 并编写实际的文件上传逻辑代码，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UploadController</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 文件保存路径为 /home/project/upload/ 即当前 project 目录下的 upload 文件夹</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String FILE_UPLOAD_PATH = <span class="string">"/home/project/upload/"</span>;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/upload"</span>, method = RequestMethod.POST)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">upload</span><span class="params">(@RequestParam(<span class="string">"file"</span>)</span> MultipartFile file) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"上传失败"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        String fileName = file.getOriginalFilename();</span><br><span class="line">        String suffixName = fileName.substring(fileName.lastIndexOf(<span class="string">"."</span>));</span><br><span class="line">        <span class="comment">//生成文件名称通用方法</span></span><br><span class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyyMMdd_HHmmss"</span>);</span><br><span class="line">        Random r = <span class="keyword">new</span> Random();</span><br><span class="line">        StringBuilder tempName = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        tempName.append(sdf.format(<span class="keyword">new</span> Date())).append(r.nextInt(<span class="number">100</span>)).append(suffixName);</span><br><span class="line">        String newFileName = tempName.toString();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 保存文件</span></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = file.getBytes();</span><br><span class="line">            Path path = Paths.get(FILE_UPLOAD_PATH + newFileName);</span><br><span class="line">            Files.write(path, bytes);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"上传成功"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于已经自动配置了 MultipartFile ，因此能够直接在控制器方法中使用 MultipartFile 读取文件信息， <strong>@RequestParam</strong> 中的文件名称需要与文件上传前端页面设置的 name 属性一致，如果文件为空则返回上传失败，如果不为空则生成一个新的文件名，之后读取文件流并写入到指定的上传路径中，最后返回上传成功。</p>
+<h3 id="上传路径"><a href="#上传路径" class="headerlink" title="上传路径"></a>上传路径</h3><p>需要注意的是文件上传路径的设置，我们在代码中设置的文件保存路径为 <code>/home/project/upload/</code> 即当前 project 目录下的 upload 文件夹，<code>/home/project/upload/</code> 这种写法是 Linux 系统下的路径写法。 如果本机是 Windows 系统的话，写法与此不同，比如想把文件上传到 D 盘下的 upload 文件夹下，就需要把路径设置代码改为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String FILE_UPLOAD_PATH = <span class="string">"D:\\upload\\"</span></span><br></pre></td></tr></table></figure>
+<p>需要注意，两种系统的写法存在一些差异。</p>
+<h2 id="Spring-Boot-文件上传路径回显"><a href="#Spring-Boot-文件上传路径回显" class="headerlink" title="Spring Boot 文件上传路径回显"></a>Spring Boot 文件上传路径回显</h2><p>正常情况下，上传文件是要实际应用到业务中的，比如图片上传，上传后需要知道它的路径，最好能够在页面中直接看到它的回显效果，像前一个步骤中只是成功的完成了文件上传，但是如何去访问这个文件还不得而知。Spring Boot 不像普通的 web 项目可以上传到 webapp 指定目录中，通常的做法是<strong>使用自定义静态资源映射目录，以此来实现文件上传整个流程的闭环</strong>，比如前一小节中的实际案例，在文件上传到 upload 目录后，增加一个自定义静态资源映射，使得 upload 下的静态资源可以通过该映射地址被访问到，新建 config 包，并在包中新增 SpringBootWebMvcConfigurer 类，实现方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.yuyingwai.springboot.config;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringBootWebMvcConfigurer</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        registry.addResourceHandler(<span class="string">"/files/**"</span>).addResourceLocations(<span class="string">"file:/home/project/upload/"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过该设置，所有以 /files/ 开头的静态资源请求都会映射到 /home/project/upload 目录下，与前面上传文件时设置目录类似，不同的系统比如 Linux 和 Windows，文件路径的写法不同。</p>
+<p>之后修改一下文件上传时的返回信息，把路径拼装并返回到页面上，以便于进行测试，代码修改如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="string">"上传成功，图片地址为：/files/"</span> + newFileName;</span><br></pre></td></tr></table></figure>
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/11/Hexo%E5%8D%9A%E5%AE%A2NexT%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E4%B8%8D%E8%92%9C%E5%AD%90%E7%BB%9F%E8%AE%A1%E8%AE%BF%E5%AE%A2%E6%95%B0/" itemprop="url">
-              
-                <span itemprop="name">Hexo博客NexT主题使用不蒜子统计访客数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-11T18:06:33+08:00"
-              content="2020-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/01/JupyterLab%E5%AE%89%E8%A3%85/" itemprop="url">
-              
-                <span itemprop="name">JupyterLab安装</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-01T15:50:47+08:00"
-              content="2020-05-01" >
-          05-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/26/LaTeX%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/" itemprop="url">
-              
-                <span itemprop="name">LaTeX常用符号表示方法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-26T21:19:50+08:00"
-              content="2020-04-26" >
-          04-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/25/%E4%B8%8D%E7%BB%8F%E6%84%8F%E4%BC%A0%E8%BE%93%EF%BC%88Oblivious-Transfer%EF%BC%89/" itemprop="url">
-              
-                <span itemprop="name">不经意传输（Oblivious Transfer）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-25T16:22:21+08:00"
-              content="2020-04-25" >
-          04-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/24/%E8%A7%A3%E5%86%B3Ubuntu-deepin-wine%E5%BE%AE%E4%BF%A1%E5%AD%97%E4%BD%93%E4%B9%B1%E7%A0%81/" itemprop="url">
-              
-                <span itemprop="name">解决Ubuntu deepin-wine微信字体乱码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-24T00:30:22+08:00"
-              content="2020-04-24" >
-          04-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-ASTRA-High-Throughput-3PC-over-Rings-with-Application-to-Secure-Prediction/" itemprop="url">
-              
-                <span itemprop="name">论文笔记 ASTRA: High Throughput 3PC over Rings with Application to Secure Prediction</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-20T21:37:26+08:00"
-              content="2020-04-20" >
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"><i class="fa fa-tag"></i> Spring Boot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Practical-Secure-Aggregation-for-Privacy-Preserving-Machine-Learning/" rel="next" title="论文笔记 Practical Secure Aggregation for Privacy-Preserving Machine Learning">
+                <i class="fa fa-chevron-left"></i> 论文笔记 Practical Secure Aggregation for Privacy-Preserving Machine Learning
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
- <nav class="pagination">
-   <a class="extend prev" rel="prev" href="/archives/page/5/"><i class="fa fa-angle-left" aria-label="accessibility.prev_page"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/7/"><i class="fa fa-angle-right" aria-label="accessibility.next_page"></i></a>
- </nav>
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -679,6 +538,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -699,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -778,6 +653,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-MVC-文件上传流程"><span class="nav-number">1.</span> <span class="nav-text">Spring MVC 文件上传流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot-文件上传功能实现"><span class="nav-number">2.</span> <span class="nav-text">Spring Boot 文件上传功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用配置"><span class="nav-number">2.1.</span> <span class="nav-text">常用配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传功能实现"><span class="nav-number">2.2.</span> <span class="nav-text">上传功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新建文件上传页面"><span class="nav-number">2.2.1.</span> <span class="nav-text">新建文件上传页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建文件上传处理-Controller"><span class="nav-number">2.2.2.</span> <span class="nav-text">新建文件上传处理 Controller</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传路径"><span class="nav-number">2.3.</span> <span class="nav-text">上传路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot-文件上传路径回显"><span class="nav-number">3.</span> <span class="nav-text">Spring Boot 文件上传路径回显</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -953,6 +844,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
